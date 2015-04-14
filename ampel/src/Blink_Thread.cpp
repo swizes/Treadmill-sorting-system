@@ -84,9 +84,9 @@ void Blink_Thread::execute(void*){
             usleep(500000);
             turnGreenOff();
             usleep(500000);
-            turnOrangeOn();
+            turnYellowOn();
             usleep(500000);
-            turnOrangeOff();
+            turnYellowOff();
             usleep(500000);
             turnRedOn();
             usleep(500000);
@@ -110,7 +110,7 @@ void Blink_Thread::shutdown(){
 
 
 /**
- * Schaltet gruenes Ampellicht ein.
+ *Hier kommen die Funktionen um alle 3 Leds einszuschalten
  * @return liefert immer 0 zurueck. 
  */
 uint8_t Blink_Thread::turnGreenOn() const {
@@ -121,13 +121,13 @@ uint8_t Blink_Thread::turnGreenOn() const {
 }
 
 uint8_t Blink_Thread::turnRedOn() const {
-    cout << "Turning Red light on." << endl;
+    cout << "Turning red light on." << endl;
     /* Bit fuer Rotes Licht setzen. */
     out8(registerAddress_, in8(registerAddress_) | redLightBitmask_);
     return 0;
 }
 uint8_t Blink_Thread::turnYellowOn() const {
-    cout << "Turning Yellow light on." << endl;
+    cout << "Turning yellow light on." << endl;
     /* Bit fuer Gelbes Licht setzen. */
     out8(registerAddress_, in8(registerAddress_) | yellowLightBitmask_);
     return 0;
@@ -135,7 +135,7 @@ uint8_t Blink_Thread::turnYellowOn() const {
 
 
 /**
- * Schaltet gruenes Ampellicht ein.
+ * Hier kommen die Funktionen um alle 3 Leds auszuschalten
  * @return liefert immer 0 zurueck. 
  */
 uint8_t Blink_Thread::turnGreenOff() const {
