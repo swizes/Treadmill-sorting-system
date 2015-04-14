@@ -46,6 +46,10 @@ class Blink_Thread: public HAWThread {
 
         uint8_t turnGreenOn() const;   ///< Einfache Methode, const versichert das diese Methode keine Instanzvariable veraendert.
         uint8_t turnGreenOff() const;  ///< Schaltet gruenes Licht aus.
+        uint8_t turnOrangeOn() const;   
+        uint8_t turnOrangeOff() const;  
+        uint8_t turnRedOn() const;   
+        uint8_t turnRedOff() const;  
 };
 
 #endif

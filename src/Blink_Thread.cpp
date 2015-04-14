@@ -40,6 +40,8 @@ Blink_Thread::Blink_Thread(uint16_t times): times_(times) {
 
     ioControlBitmask_  = 0b10001010;
     greenLightBitmask_ = 0b00100000;
+    redLigtBitmask_ =0b00000000;
+    orangeLigtBitmask_ =0b00000000;
 }
 
 
@@ -81,6 +83,16 @@ void Blink_Thread::execute(void*){
             usleep(500000);
             turnGreenOff();
             usleep(500000);
+           /* turnOrangeOn();
+            usleep(500000);
+            turnOrangeOff();
+            usleep(500000);
+            usleep(500000);
+            turnRedOn();
+            usleep(500000);
+            turnRedOff();
+            usleep(500000); */
+            
 	}
     }
 }
@@ -108,6 +120,19 @@ uint8_t Blink_Thread::turnGreenOn() const {
     return 0;
 }
 
+uint8_t Blink_Thread::turnRedOn() const {
+    cout << "Turning green light on." << endl;
+    /* Bit fuer gruenes Licht setzen. */
+    out8(registerAddress_, in8(registerAddress_) | redLightBitmask_);
+    return 0;
+}
+uint8_t Blink_Thread::turnOrangeOn() const {
+    cout << "Turning green light on." << endl;
+    /* Bit fuer gruenes Licht setzen. */
+    out8(registerAddress_, in8(registerAddress_) | orangeLightBitmask_);
+    return 0;
+}
+
 
 /**
  * Schaltet gruenes Ampellicht ein.
@@ -117,5 +142,19 @@ uint8_t Blink_Thread::turnGreenOff() const {
     cout << "Turning green light off." << endl;
     /* Bit fuer gruenes Licht loeschen. */
     out8(registerAddress_, in8(registerAddress_) & ~greenLightBitmask_);
+    return 0;
+}
+
+uint8_t Blink_Thread::turnRedOff() const {
+    cout << "Turning green light off." << endl;
+    /* Bit fuer gruenes Licht loeschen. */
+    out8(registerAddress_, in8(registerAddress_) & ~redLightBitmask_);
+    return 0;
+}
+
+uint8_t Blink_Thread::turnOrangeOff() const {
+    cout << "Turning green light off." << endl;
+    /* Bit fuer gruenes Licht loeschen. */
+    out8(registerAddress_, in8(registerAddress_) & ~orangeLightBitmask_);
     return 0;
 }
