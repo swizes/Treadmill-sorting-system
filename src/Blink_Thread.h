@@ -29,6 +29,8 @@ class Blink_Thread: public HAWThread {
 
         uint8_t ioControlBitmask_ ;  ///< Setzen der Richtungsbits.
         uint8_t greenLightBitmask_;  ///< Bitmaske zum Ansteuern der gruenen Lampe.
+        uint8_t orangeLightBitmask_;  ///< Bitmaske zum Ansteuern der orangenen Lampe.
+        uint8_t redLightBitmask_;  ///< Bitmaske zum Ansteuern der roten Lampe.
 
         static pthread_mutex_t mtx_; ///< Synchronisationsmutex.
 
@@ -45,7 +47,7 @@ class Blink_Thread: public HAWThread {
         virtual void shutdown();     ///< Geerbt aus HAWThread. Muss implementiert werden.
 
         uint8_t turnGreenOn() const;   ///< Einfache Methode, const versichert das diese Methode keine Instanzvariable veraendert.
-        uint8_t turnGreenOff() const;  ///< Schaltet gruenes Licht aus.
+        uint8_t turnGreenOff() const;  
         uint8_t turnOrangeOn() const;   
         uint8_t turnOrangeOff() const;  
         uint8_t turnRedOn() const;   
