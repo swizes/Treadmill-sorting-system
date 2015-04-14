@@ -25,8 +25,8 @@ int main(int argc, char *argv[]) {
 
     cout << "First QNX Demo, let there be light!." << endl;
 
-    Blink_Thread th1(5); // Thread 1, soll 5 mal blinken
-    Blink_Thread th2(3); // Thread 2, soll 3 mal blinken
+    Blink_Thread th1(5); // Thread 1, soll 5 mal die Ampel durchlaufen
+    Blink_Thread th2(3); // Thread 2, soll 3 mal die Ampel durchlaufen
 
     th1.start(NULL);     // Start Thread 1
     th2.start(NULL);     // Start Thread 2
