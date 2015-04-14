@@ -39,9 +39,10 @@ Blink_Thread::Blink_Thread(uint16_t times): times_(times) {
     registerAddress_  = 0x300;
 
     ioControlBitmask_  = 0b10001010;
+    redLightBitmask_ =0b10000000; //not set at the Moment
+    yellowLightBitmask_ =0b01000000;
     greenLightBitmask_ = 0b00100000;
-    redLigtBitmask_ =0b00000000;
-    orangeLigtBitmask_ =0b00000000;
+
 }
 
 
@@ -83,7 +84,7 @@ void Blink_Thread::execute(void*){
             usleep(500000);
             turnGreenOff();
             usleep(500000);
-           /* turnOrangeOn();
+            turnOrangeOn();
             usleep(500000);
             turnOrangeOff();
             usleep(500000);
@@ -91,7 +92,7 @@ void Blink_Thread::execute(void*){
             turnRedOn();
             usleep(500000);
             turnRedOff();
-            usleep(500000); */
+            usleep(500000);
             
 	}
     }
@@ -129,7 +130,7 @@ uint8_t Blink_Thread::turnRedOn() const {
 uint8_t Blink_Thread::turnOrangeOn() const {
     cout << "Turning green light on." << endl;
     /* Bit fuer gruenes Licht setzen. */
-    out8(registerAddress_, in8(registerAddress_) | orangeLightBitmask_);
+    out8(registerAddress_, in8(registerAddress_) | yellowLightBitmask_);
     return 0;
 }
 
@@ -155,6 +156,6 @@ uint8_t Blink_Thread::turnRedOff() const {
 uint8_t Blink_Thread::turnOrangeOff() const {
     cout << "Turning green light off." << endl;
     /* Bit fuer gruenes Licht loeschen. */
-    out8(registerAddress_, in8(registerAddress_) & ~orangeLightBitmask_);
+    out8(registerAddress_, in8(registerAddress_) & ~yellowLightBitmask_);
     return 0;
 }

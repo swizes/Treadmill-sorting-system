@@ -29,7 +29,7 @@ class Blink_Thread: public HAWThread {
 
         uint8_t ioControlBitmask_ ;  ///< Setzen der Richtungsbits.
         uint8_t greenLightBitmask_;  ///< Bitmaske zum Ansteuern der gruenen Lampe.
-        uint8_t orangeLightBitmask_;  ///< Bitmaske zum Ansteuern der orangenen Lampe.
+        uint8_t yellowLightBitmask_;  ///< Bitmaske zum Ansteuern der orangenen Lampe.
         uint8_t redLightBitmask_;  ///< Bitmaske zum Ansteuern der roten Lampe.
 
         static pthread_mutex_t mtx_; ///< Synchronisationsmutex.
