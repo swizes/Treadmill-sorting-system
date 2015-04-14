@@ -1,0 +1,10 @@
+Simultaion verwenden im Labor
+
+1.) open terminal in QNX
+2.) start Simulation : ./festosim
+3.) Project-> Properties -> Qnx C++ Project -> Compiler  -> In Definitions SIMULATION eintragen
+Nun wie gewohnt builden und run as QNX application
+
+Simulation abschalten
+
+Wie oben zu sehen die Definitions wieder entfernen
