@@ -13,6 +13,10 @@
 #ifndef BLINK_THREAD_H_
 #define BLINK_THREAD_H_
 
+#define RED 2
+#define YELLOW 1
+#define GREEN 0
+
 #include <stdint.h>
 #include <pthread.h>
 #include "lib/HAWThread.h"
@@ -31,12 +35,13 @@ class Blink_Thread: public HAWThread {
         uint8_t greenLightBitmask_;  ///< Bitmaske zum Ansteuern der gruenen Lampe.
         uint8_t yellowLightBitmask_;  ///< Bitmaske zum Ansteuern der orangenen Lampe.
         uint8_t redLightBitmask_;  ///< Bitmaske zum Ansteuern der roten Lampe.
+        uint8_t color_;
 
         static pthread_mutex_t mtx_; ///< Synchronisationsmutex.
 
     /* Methoden deklarationen */
     public:
-        Blink_Thread(uint16_t times); ///< Standard Konstruktor. Offentlich Aufrufbar.
+        Blink_Thread(uint16_t times, uint8_t color); ///< Standard Konstruktor. Offentlich Aufrufbar.
         virtual ~Blink_Thread();      ///< Standard Dekonstruktor.
 
     private:

@@ -1,15 +1,9 @@
 /**
  * @file    Blink_Thread.cpp
- * @author  Simon Brummer
+ * @author
  * @version 0.1
  *
- * Demoklasse fuer das SEP2 Tutorium. Es wird folgendes gezeigt:
- * - Grundlegende Syntax von C++. Variablen und Methodendeklaration 
- *   sowie statische Methoden.
- * - Implementierung des HAW-Threads
- * - Einsatz des "scoped locking"-Pattern. Lock in Blink_Thread::execute
- * - Grundlegende initialisierung und Ansteuerung der Hardware
- * - Kommentierung in einem Format mit das Doxygen parsen kann. 
+ * Ampelsteurerung alle LEDs werden ein und ausgeschaltet
  */
 
 #include <unistd.h>
@@ -26,7 +20,7 @@ pthread_mutex_t Blink_Thread::mtx_ = PTHREAD_MUTEX_INITIALIZER;
  *  Genauer beschreibender Text für Doxygen...
  *  @param times bestimmt wie oft das gruene Licht blinken soll. 
  */
-Blink_Thread::Blink_Thread(uint16_t times): times_(times) {
+Blink_Thread::Blink_Thread(uint16_t times, uint8_t color ): times_(times), color_ (color) {
     /* Einfacher Konstruktor, setzt die Werte der Instanzvariablen.
      * Methode bei Times ist vorzuziehen. Direktes kopieren bei 
      * Objekterzeugung, gilt nicht als Zuweisung und verstösst 
@@ -65,7 +59,7 @@ Blink_Thread::~Blink_Thread() {
  */
 void Blink_Thread::execute(void*){
     /* Klassenweiten Mutex, locken. */
-    Lock lock(&mtx_);
+    //Lock lock(&mtx_);
     cout << "Blink_Thread executing" << endl;
 
     /* Zugriffsrechte von QNX fuer diesen Thread, auf die Hardware erbitten. */
@@ -80,18 +74,31 @@ void Blink_Thread::execute(void*){
     for(int i = 0; i < times_; i++){
         /* Pruefen ob der Thread durch stop() beendet wurde. */
         if( !isStopped() ){ 
-            turnGreenOn();
-            usleep(500000);
-            turnGreenOff();
-            usleep(500000);
-            turnYellowOn();
-            usleep(500000);
-            turnYellowOff();
-            usleep(500000);
-            turnRedOn();
-            usleep(500000);
-            turnRedOff();
-            usleep(500000);
+           if(color_ == GREEN){
+        	   Lock lock(&mtx_);
+        	   turnGreenOn();
+        	   usleep(500000);
+        	   turnGreenOff();
+        	   usleep(500000);
+
+           }
+           if(color_ == YELLOW){
+        	   Lock lock(&mtx_);
+               turnYellowOn();
+               usleep(500000);
+               turnYellowOff();
+               usleep(500000);
+           }
+           if(color_ == RED){
+        	   Lock lock(&mtx_);
+        	    turnRedOn();
+        	    usleep(500000);
+        	     turnRedOff();
+        	      usleep(500000);
+
+           }
+
+
             
 	}
     }
