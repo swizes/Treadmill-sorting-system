@@ -17,6 +17,18 @@
 #define YELLOW 1
 #define GREEN 0
 
+#define IO_CONTROL_ADDRESS 0x303
+#define PORT_A 0x300
+#define PORT_B 0x301
+#define PORT_C 0x302
+#define BM_IO_CONTROL 0b10001010
+#define BM_GREEN 0b00100000
+#define BM_YELLOW 0b01000000
+#define BM_RED 0b10000000
+#define BM_MOTOR_RIGHT 0b00000001
+#define BM_MOTOR_LEFT 0b00000010
+
+
 #include <stdint.h>
 #include <pthread.h>
 #include "lib/HAWThread.h"
@@ -37,6 +49,8 @@ class Blink_Thread: public HAWThread {
         uint8_t greenLightBitmask_;  ///< Bitmaske zum Ansteuern der gruenen Lampe.
         uint8_t yellowLightBitmask_;  ///< Bitmaske zum Ansteuern der orangenen Lampe.
         uint8_t redLightBitmask_;  ///< Bitmaske zum Ansteuern der roten Lampe.
+        uint8_t motorRightRunBitmask_;
+        uint8_t motorLeftRunBitmask_;
         uint8_t color_;
 
         static pthread_mutex_t mtx_; ///< Synchronisationsmutex.
@@ -53,7 +67,7 @@ class Blink_Thread: public HAWThread {
         virtual void execute(void*); ///< Geerbt aus HAWThread. Muss implementiert werden.
         virtual void shutdown();     ///< Geerbt aus HAWThread. Muss implementiert werden.
 
-        uint8_t turnGreenOn() const;   ///< Einfache Methode, const versichert das diese Methode keine Instanzvariable veraendert.
+        uint8_t turnGreenOn() const;    ///< Einfache Methode, const versichert das diese Methode keine Instanzvariable veraendert.
         uint8_t turnGreenOff() const;  
         uint8_t turnYellowOn() const;
         uint8_t turnYellowOff() const;

@@ -29,7 +29,7 @@ Blink_Thread::Blink_Thread(uint16_t times, uint8_t color ): times_(times), color
   
     cout << "ctor: Blink_Thread" << endl;
 
-    ioControlAddress_ = 0x303;
+    ioControlAddress_  = 0x303;
     registerAddressA_  = 0x300;
     registerAddressB_  = 0x301;
     registerAddressC_  = 0x302;
@@ -76,6 +76,7 @@ void Blink_Thread::execute(void*){
     /* Gruenes Licht blinken lassen inkl. Pruefung ob der Thread extern gestoppt wurde. */
     for(int i = 0; i < times_; i++){
         /* Pruefen ob der Thread durch stop() beendet wurde. */
+    //	out8(registerAddressA_, in8(registerAddressA_) | 00000001); Motor An test
         if( !isStopped() ){ 
         	turnResetLedOn();
         	checkLichtschranke();
@@ -103,9 +104,9 @@ void Blink_Thread::execute(void*){
 
            }
 
-
             
 	}
+      //  out8(registerAddressA_, in8(registerAddressA_) & ~00000001); Motor Aus test
     }
 }
 
@@ -128,7 +129,7 @@ void Blink_Thread::shutdown(){
 uint8_t Blink_Thread::turnGreenOn() const {
     cout << "Turning green light on." << endl;
     /* Bit fuer gruenes Licht setzen. */
-    out8(registerAddressA_, in8(registerAddressA_) | greenLightBitmask_);
+    out8(PORT_A, in8(PORT_A) | BM_GREEN);
     return 0;
 }
 
