@@ -30,10 +30,13 @@ Blink_Thread::Blink_Thread(uint16_t times, uint8_t color ): times_(times), color
     cout << "ctor: Blink_Thread" << endl;
 
     ioControlAddress_ = 0x303;
-    registerAddress_  = 0x300;
+    registerAddressA_  = 0x300;
+    registerAddressB_  = 0x301;
+    registerAddressC_  = 0x302;
+
 
     ioControlBitmask_  = 0b10001010;
-    redLightBitmask_ =0b10000000; //not set at the Moment
+    redLightBitmask_ =   0b10000000; //not set at the Moment
     yellowLightBitmask_ =0b01000000;
     greenLightBitmask_ = 0b00100000;
 
@@ -74,6 +77,8 @@ void Blink_Thread::execute(void*){
     for(int i = 0; i < times_; i++){
         /* Pruefen ob der Thread durch stop() beendet wurde. */
         if( !isStopped() ){ 
+        	turnResetLedOn();
+        	checkLichtschranke();
            if(color_ == GREEN){
         	   Lock lock(&mtx_);
         	   turnGreenOn();
@@ -93,8 +98,8 @@ void Blink_Thread::execute(void*){
         	   Lock lock(&mtx_);
         	    turnRedOn();
         	    usleep(500000);
-        	     turnRedOff();
-        	      usleep(500000);
+        	    turnRedOff();
+        	    usleep(500000);
 
            }
 
@@ -123,20 +128,33 @@ void Blink_Thread::shutdown(){
 uint8_t Blink_Thread::turnGreenOn() const {
     cout << "Turning green light on." << endl;
     /* Bit fuer gruenes Licht setzen. */
-    out8(registerAddress_, in8(registerAddress_) | greenLightBitmask_);
+    out8(registerAddressA_, in8(registerAddressA_) | greenLightBitmask_);
     return 0;
 }
 
 uint8_t Blink_Thread::turnRedOn() const {
     cout << "Turning red light on." << endl;
     /* Bit fuer Rotes Licht setzen. */
-    out8(registerAddress_, in8(registerAddress_) | redLightBitmask_);
+    out8(registerAddressA_, in8(registerAddressA_) | redLightBitmask_);
     return 0;
 }
 uint8_t Blink_Thread::turnYellowOn() const {
     cout << "Turning yellow light on." << endl;
     /* Bit fuer Gelbes Licht setzen. */
-    out8(registerAddress_, in8(registerAddress_) | yellowLightBitmask_);
+    out8(registerAddressA_, in8(registerAddressA_) | yellowLightBitmask_);
+    return 0;
+}
+
+uint8_t Blink_Thread::turnResetLedOn() const {
+    cout << "Turning yellow light on." << endl;
+    /* Bit fuer Gelbes Licht setzen. */
+    out8(registerAddressC_, in8(registerAddressC_) | 0b00000001);
+    return 0;
+}
+uint8_t Blink_Thread::checkLichtschranke() const {
+    cout << "Turning yellow light on." << endl;
+    /* Bit fuer Gelbes Licht setzen. */
+    cout << (int)in8(registerAddressB_) << endl;
     return 0;
 }
 
@@ -148,20 +166,20 @@ uint8_t Blink_Thread::turnYellowOn() const {
 uint8_t Blink_Thread::turnGreenOff() const {
     cout << "Turning green light off." << endl;
     /* Bit fuer gruenes Licht loeschen. */
-    out8(registerAddress_, in8(registerAddress_) & ~greenLightBitmask_);
+    out8(registerAddressA_, in8(registerAddressA_) & ~greenLightBitmask_);
     return 0;
 }
 
 uint8_t Blink_Thread::turnRedOff() const {
     cout << "Turning red light off." << endl;
     /* Bit fuer Rotes Licht loeschen. */
-    out8(registerAddress_, in8(registerAddress_) & ~redLightBitmask_);
+    out8(registerAddressA_, in8(registerAddressA_) & ~redLightBitmask_);
     return 0;
 }
 
 uint8_t Blink_Thread::turnYellowOff() const {
     cout << "Turning yellow light off." << endl;
     /* Bit fuer Gelbes Licht loeschen. */
-    out8(registerAddress_, in8(registerAddress_) & ~yellowLightBitmask_);
+    out8(registerAddressA_, in8(registerAddressA_) & ~yellowLightBitmask_);
     return 0;
 }

@@ -29,7 +29,9 @@ class Blink_Thread: public HAWThread {
         uint16_t const times_ ;      ///< Anzahl der Blinkvorgaenge.
 
         uint16_t ioControlAddress_;  ///< Registeradresse IO Controlregister.
-        uint16_t registerAddress_ ;  ///< Registeradresse mit gruener Lampe.
+        uint16_t registerAddressA_ ;  ///< Registeradresse Port A
+        uint16_t registerAddressB_ ;  ///< Registeradresse Port B
+        uint16_t registerAddressC_ ;  ///< Registeradresse Port C
 
         uint8_t ioControlBitmask_ ;  ///< Setzen der Richtungsbits.
         uint8_t greenLightBitmask_;  ///< Bitmaske zum Ansteuern der gruenen Lampe.
@@ -57,6 +59,8 @@ class Blink_Thread: public HAWThread {
         uint8_t turnYellowOff() const;
         uint8_t turnRedOn() const;   
         uint8_t turnRedOff() const;  
+        uint8_t turnResetLedOn() const;
+        uint8_t checkLichtschranke() const;
 };
 
 #endif
