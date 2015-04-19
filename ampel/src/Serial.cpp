@@ -54,4 +54,19 @@ int Serial::recvPacket(Packet* p){
 	}
 	return -1;
 }
+int Serial::startreq(){
+	Packet p;
+	memset(&p, 0 , sizeof(p));
+	p.num = 0;
+	sendPacket(&p);
+	return -1;
+}
+
+int Serial::startresp(){
+	Packet p;
+	memset(&p, 0 , sizeof(p));
+	p.num = 0;
+	recvPacket(&p);
+	return -1;
+}
 

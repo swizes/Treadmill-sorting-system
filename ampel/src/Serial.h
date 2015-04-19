@@ -15,14 +15,16 @@ typedef struct {
 }Packet;
 public:
 	Serial();
-	virtual ~Serial();
+	~Serial();
+	void config(void);
 	int sendPacket(Packet* p);
 	int recvPacket(Packet* p);
+	int startreq();
+	int startresp();
 
 private:
 	const char* dev_;
 	int fdesc_;
-	void config(void);
 };
 
 

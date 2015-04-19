@@ -7,6 +7,8 @@
 
 #include "CommunnicationThread.h"
 
+
+
 Communnication_Thread::Communnication_Thread() {
 
 
