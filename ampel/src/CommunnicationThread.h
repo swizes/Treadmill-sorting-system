@@ -13,7 +13,7 @@ public:
 	Communnication_Thread();
 	virtual ~Communnication_Thread();
 private:
-	Serial ser();
+
 };
 
 #endif /* COMMUNNICATIONTHREAD_H_ */
