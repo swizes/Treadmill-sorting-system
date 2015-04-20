@@ -1,4 +1,6 @@
 #include "HAL.h"
+#include "lib/HWaccess.h"
+#include "lib/Lock.h"
 
 
 // Implementation

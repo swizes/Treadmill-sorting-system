@@ -12,6 +12,7 @@
 #include <cstdlib>
 #include <iostream>
 #include "Blink_Thread.h"
+#include "Hal_Test_Thread.h"
 #include "lib/HWaccess.h"
 #include "Serial.h"
 
@@ -29,6 +30,8 @@ int main(int argc, char *argv[]) {
     Blink_Thread th1(5,GREEN); // Thread 1, soll 5 mal die Ampel durchlaufen
     Blink_Thread th2(5,YELLOW); // Thread 2, soll 3 mal die Ampel durchlaufen
     Blink_Thread th3(5,RED); // Thread 2, soll 3 mal die Ampel durchlaufen
+
+    Hal_Test_Thread htt();
 
     /*Serielle Verbindung funkitoniert nur wenn sich System nicht in der Simulation befindet
     /dev/ser1 steht nicht zur Verfuegung. 		*/
@@ -48,6 +51,8 @@ int main(int argc, char *argv[]) {
     #endif
 
 
+    htt.start(NULL);
+    htt.join();
 
     th3.start(NULL);     // Start Thread 3
     th2.start(NULL);     // Start Thread 2
