@@ -14,6 +14,8 @@
 #include "lib/HAWThread.h"
 #include "Serial.h"
 
+#define CHECKSUM 10
+
 using namespace thread;
 
 class Communnication_Thread: public HAWThread {
@@ -28,7 +30,6 @@ private:
 	virtual void shutdown();
 
 	Serial ser;
-
 };
 
 #endif /* COMMUNNICATIONTHREAD_H_ */

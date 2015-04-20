@@ -2,11 +2,14 @@
  * CommunnicationThread.cpp
  *
  *  Created on: 17.04.2015
- *      Author: lukasTest
+ *  Author: lukasTest, Tobi
+ *
+ *	
  */
 
 #include "CommunnicationThread.h"
 
+//Only One PC can be the SENDER! 
 #define SENDER
 
 
@@ -22,6 +25,7 @@ Communnication_Thread::~Communnication_Thread() {
 void Communnication_Thread::execute(void*){
 
 	Packet p;
+	
 	//allokieren und init
 	memset(&p, 0 , sizeof(p));
 	p.data = 0;
@@ -30,7 +34,7 @@ void Communnication_Thread::execute(void*){
 		ser->sendPacket(&p);
 	#endif
 
-	while(p.data < 10){
+	while(p.data < CHECKSUM){
 		ser.recvPacket(&p);
 		//printf("Pong: %d\n",p.data);
 
@@ -38,7 +42,13 @@ void Communnication_Thread::execute(void*){
 
 		ser.sendPacket(&p);
 		//printf("Ping: %d\n",p.data);
-		usleep(1000000);
+		//usleep(1000000);				//no need, recvPacket blocked?
+	}
+	
+	if(p.data == CHECKSUM){
+		cout << "Serial Communication finished correct" << endl;
+	}else{
+		cout << "Error in Serial Communication" << endl;
 	}
 
 }

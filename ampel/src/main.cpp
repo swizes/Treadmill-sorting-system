@@ -23,53 +23,25 @@ int main(int argc, char *argv[]) {
     // Baut Verbindung zu Simulation auf
 	#ifdef SIMULATION
         IOaccess_open();
+		cout << "WARNING: SYSTEM IN SIMULATION!!!" << endl;
     #endif
 
-    cout << "First QNX Demo, let there be light!." << endl;
-
-    Hal_Test_Thread htt;
-    /*
-    Blink_Thread th1(5,GREEN); // Thread 1, soll 5 mal die Ampel durchlaufen
-    Blink_Thread th2(5,YELLOW); // Thread 2, soll 3 mal die Ampel durchlaufen
-    Blink_Thread th3(5,RED); // Thread 2, soll 3 mal die Ampel durchlaufen
-	*/
-
-
-
+    //Hal_Test_Thread htt;
+	
     /*Serielle Verbindung funkitoniert nur wenn sich System nicht in der Simulation befindet
     /dev/ser1 steht nicht zur Verfuegung. 		*/
 	#ifndef SIMULATION
-    	Serial ser;
-    	uint8_t i = 2;
-        if(i == 0){
-       	 ser.startreq();
-       	 cout << "Start sending" << endl;
-
-
-       }else if(i == 1){
-       	ser.startresp();
-
-       }
+		CommunicationThread ct;
+		ct.start(NULL);
     #endif
 
 
     //htt.start(NULL);
-
-    //th3.start(NULL);     // Start Thread 3
-    //th2.start(NULL);     // Start Thread 2
-    //th1.start(NULL);     // Start Thread 1
-    //th1.join();          // Warten auf das Ende von Thread 2
-
-    //th2.join();          // Warten auf das Ende von Thread 1
-    //th3.join();          // Warten auf das Ende von Thread 1
-
-
-
-
-    //Erst wenn zweiter Rechner verfügbar ist
-
-
-
+	
+	
+	#ifndef SIMULATION
+		ct.join();;
+    #endif
 
 
 
