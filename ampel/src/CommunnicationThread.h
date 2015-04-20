@@ -5,17 +5,20 @@
  *      Author: lukasTest
  */
 
+
+#ifndef COMMUNNICATIONTHREAD_H_
+#define COMMUNNICATIONTHREAD_H_
+
 #include <stdint.h>
 #include <pthread.h>
 #include "lib/HAWThread.h"
 #include "Serial.h"
 
-#ifndef COMMUNNICATIONTHREAD_H_
-#define COMMUNNICATIONTHREAD_H_
+using namespace thread;
 
 class Communnication_Thread: public HAWThread {
 public:
-	Communnication_Thread(Serial& ser);
+	Communnication_Thread(void);
 	virtual ~Communnication_Thread();
 
 private:
@@ -24,7 +27,7 @@ private:
 	virtual void execute(void*); ///< Geerbt aus HAWThread. Muss implementiert werden.
 	virtual void shutdown();
 
-	Serial& ser;
+	Serial ser;
 
 };
 

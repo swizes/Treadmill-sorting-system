@@ -10,7 +10,7 @@
 #define SENDER
 
 
-Communnication_Thread::Communnication_Thread(Serial& ser) {
+Communnication_Thread::Communnication_Thread(void) {
 	cout << "ctor Communication Test" << endl;
 }
 
@@ -21,10 +21,29 @@ Communnication_Thread::~Communnication_Thread() {
 
 void Communnication_Thread::execute(void*){
 
+	Packet p;
+	//allokieren und init
+	memset(&p, 0 , sizeof(p));
+	p.data = 0;
+
+	#ifdef SENDER
+		ser->sendPacket(&p);
+	#endif
+
+	while(p.data < 10){
+		ser.recvPacket(&p);
+		//printf("Pong: %d\n",p.data);
+
+		p.data += 1;
+
+		ser.sendPacket(&p);
+		//printf("Ping: %d\n",p.data);
+		usleep(1000000);
+	}
 
 }
 
 
 void Communnication_Thread::shutdown(){
-    cout << "Hal Test shutdown" << endl;
+    cout << "Communication Test shutdown" << endl;
 }
