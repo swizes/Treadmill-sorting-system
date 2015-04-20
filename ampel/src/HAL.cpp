@@ -1,7 +1,10 @@
 #include "HAL.h"
 #include "lib/HWaccess.h"
 #include "lib/Lock.h"
+#include <pthread.h>
+#include <iostream>
 
+using namespace std;
 
 // Implementation
 HAL* HAL::instance_ = NULL;
@@ -21,42 +24,61 @@ HAL* HAL::getInstance(){
 
 HAL::HAL(){
 	printf("ctor DCLP Singleton\n");
+    if( ThreadCtl(_NTO_TCTL_IO_PRIV,0) == -1 ){
+        cout << "Can't get Hardware access, therefore can't do anything." << endl;
+    }
+
+	out8(IO_CONTROL_ADDRESS, BM_IO_CONTROL);
 }
 
 HAL::~HAL(){
 	printf("dtor DCLP Singleton\n");
 }
 
+//Reset Port A
+void HAL::reset_port_a(void){
+	out8(PORT_A, in8(PORT_A) & RESET_PORT_A);
+}
+
+void HAL::reset_port_c(void){
+	out8(PORT_C, in8(PORT_C) & RESET_PORT_C);
+}
+void HAL::reset(void){
+	reset_port_a();
+	reset_port_c();
+}
+
 //Port A Functions Aktorik
 void HAL:: band_right_normal(void){
 	//Reset Band_stop and Slowly Bit
-	out8(PORT_A, in8(PORT_A) & ~BM_MOTOR_STOP & ~BM_MOTOR_SLOWLY);
+	out8(PORT_A, in8(PORT_A) & ~BM_MOTOR_STOP & ~BM_MOTOR_SLOWLY & ~BM_MOTOR_LEFT);
 	
 	out8(PORT_A, in8(PORT_A) | BM_MOTOR_RIGHT);
 }
 
 void HAL:: band_right_slowly(void){
 	//Reset Band_stop Bit
-	out8(PORT_A, in8(PORT_A) & ~BM_MOTOR_STOP);
+	out8(PORT_A, in8(PORT_A) & ~BM_MOTOR_STOP &~BM_MOTOR_LEFT);
 	
 	out8(PORT_A, in8(PORT_A) | BM_MOTOR_RIGHT | BM_MOTOR_SLOWLY);
 }
 
 void HAL:: band_left_normal(void){
 	//Reset Band_stop and Slowly Bit
-	out8(PORT_A, in8(PORT_A) & ~BM_MOTOR_STOP & ~BM_MOTOR_SLOWLY);
+	out8(PORT_A, in8(PORT_A) & ~BM_MOTOR_STOP & ~BM_MOTOR_SLOWLY & ~BM_MOTOR_RIGHT);
 	
 	out8(PORT_A, in8(PORT_A) | BM_MOTOR_LEFT);
 }
 
 void HAL:: band_left_slowly(void){
 	//Reset Band_stop Bit
-	out8(PORT_A, in8(PORT_A) & ~BM_MOTOR_STOP);
+	out8(PORT_A, in8(PORT_A) & ~BM_MOTOR_STOP &~BM_MOTOR_RIGHT);
 	
 	out8(PORT_A, in8(PORT_A) | BM_MOTOR_LEFT | BM_MOTOR_SLOWLY);
 }
 
 void HAL:: band_stop(void){
+	//out8(PORT_A, in8(PORT_A) & ~BM_MOTOR_LEFT &~BM_MOTOR_RIGHT);
 	out8(PORT_A, in8(PORT_A) | BM_MOTOR_STOP);
 }
 
@@ -73,6 +95,7 @@ void HAL:: turn_greenLight_on(void){
 }
 
 void HAL:: turn_yellowLight_on(void){
+	cout << "Yellow" << endl;
 	out8(PORT_A, in8(PORT_A) | BM_YELLOW);
 }
 

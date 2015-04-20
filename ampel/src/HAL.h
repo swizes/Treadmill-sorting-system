@@ -14,8 +14,8 @@
 //defines Port A
 #define BM_MOTOR_RIGHT 0x01
 #define BM_MOTOR_LEFT 0x02
-#define BM_MOTOR_SLOWLY 0x03
-#define BM_MOTOR_STOP 0x04
+#define BM_MOTOR_SLOWLY 0x04
+#define BM_MOTOR_STOP 0x08
 #define BM_OPEN_GATE 0x10
 #define BM_GREEN 0x20
 #define BM_YELLOW 0x40
@@ -24,20 +24,24 @@
 //defines Sensorik Port B
 #define BM_RUNNING_IN 0x01
 #define BM_HEIGHT_DETERM 0x02
-#define BM_HEIGHT_OK 0x03
-#define BM_PUCK_IN_GATE 0x04
+#define BM_HEIGHT_OK 0x04
+#define BM_PUCK_IN_GATE 0x08
 #define BM_METAL_DETECTOR 0x10
 #define BM_GATE_STATUS 0x20
-#define BM_SLIDE_STATUS 0x30
-#define BM_RUNNING_OUT 0x40
+#define BM_SLIDE_STATUS 0x40
+#define BM_RUNNING_OUT 0x80
 
 //Port C
 #define BM_START_LED 0x01
 #define BM_RESET_LED 0x02
 #define BM_START_BUTTON_STATUS 0x10
 #define BM_STOP_BUTTON_STATUS 0x20
-#define BM_RESET_BUTTON_STATUS 0x30
-#define BM_ESTOP_BUTTON_STATUS 0x40
+#define BM_RESET_BUTTON_STATUS 0x40
+#define BM_ESTOP_BUTTON_STATUS 0x80
+
+//Reset
+#define RESET_PORT_A 0x0
+#define RESET_PORT_C 0xF0
 
  
 
@@ -54,6 +58,10 @@ private:
 public:
     static HAL* getInstance();
 	
+    void reset_port_a(void);
+    void reset_port_c(void);
+    void reset(void);
+
 	void band_right_normal(void);
 	void band_right_slowly(void);
 	void band_left_normal(void);

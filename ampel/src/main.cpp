@@ -38,29 +38,29 @@ int main(int argc, char *argv[]) {
     /*Serielle Verbindung funkitoniert nur wenn sich System nicht in der Simulation befindet
     /dev/ser1 steht nicht zur Verfuegung. 		*/
 	#ifndef SIMULATION
-    	//Serial ser;
+    	Serial ser;
     	uint8_t i = 2;
         if(i == 0){
-       	// ser.startreq();
+       	 ser.startreq();
        	 cout << "Start sending" << endl;
 
 
        }else if(i == 1){
-       	//ser.startresp();
+       	ser.startresp();
 
        }
     #endif
 
 
-  htt.start(NULL);
+    //htt.start(NULL);
 
-    th3.start(NULL);     // Start Thread 3
-    th2.start(NULL);     // Start Thread 2
-    th1.start(NULL);     // Start Thread 1
-    th1.join();          // Warten auf das Ende von Thread 2
+    //th3.start(NULL);     // Start Thread 3
+    //th2.start(NULL);     // Start Thread 2
+    //th1.start(NULL);     // Start Thread 1
+    //th1.join();          // Warten auf das Ende von Thread 2
 
-    th2.join();          // Warten auf das Ende von Thread 1
-    th3.join();          // Warten auf das Ende von Thread 1
+    //th2.join();          // Warten auf das Ende von Thread 1
+    //th3.join();          // Warten auf das Ende von Thread 1
 
 
 
