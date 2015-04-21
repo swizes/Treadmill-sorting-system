@@ -54,6 +54,7 @@ int Serial::recvPacket(Packet* p){
 	}
 	return -1;
 }
+
 int Serial::startreq(){
 	Packet p;
 	memset(&p, 0 , sizeof(p));
