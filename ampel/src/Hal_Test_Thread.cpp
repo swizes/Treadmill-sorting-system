@@ -74,37 +74,63 @@ void Hal_Test_Thread::execute(void*){
     cout << "Der Test wird nun die Weiche oeffnen Bestaetigen bitte mit Start" << endl;
     hal->open_gate();
     startPressed();
-    cout << "Gate open: " << hal->is_gate_open();
+    cout << "Gate open: " << hal->is_gate_open() << endl;
 
-    cout << "Der Test wird nun die Weiche oeffnen Bestaetigen bitte mit Start" << endl;
+
+    cout << "Der Test wird nun die Weiche schliessen Bestaetigen bitte mit Start" << endl;
     hal->close_gate();
     startPressed();
-    cout << "Gate open: " << hal->is_gate_open();
+    cout << "Gate open: " << hal->is_gate_open() << endl;
 
-    cout << "Puk in Eingangs Lichschranke legen";
+    cout << "Puk in Eingangs Lichschranke legen : " << hal->is_puck_running_in() << endl;
     while(hal->is_puck_running_in()==0);
     usleep(500);
 
-    cout << "Puk wieder runter nehmen";
-    while(hal->is_puck_running_in()!=0);
+    cout << "Puk wieder runter nehmen : " << hal->is_puck_running_in() << endl;
+    while(hal->is_puck_running_in()==1);
     usleep(500);
 
-    cout << "Puk in Ausgangs Lichschranke legen";
+    cout << "Puk in Ausgangs Lichschranke legen : " << hal->is_puck_running_out() << endl;
     while(hal->is_puck_running_out()==0);
     usleep(500);
 
-    cout << "Puk wieder runter nehmen";
-    while(hal->is_puck_running_out()!=0);
+    cout << "Puk wieder runter nehmen : " << hal->is_puck_running_out() << endl;
+    while(hal->is_puck_running_out()==1);
     usleep(500);
 
-    cout << "Rutsche voll packen";
+    cout << "Rutsche voll packen" << endl;
     while(hal->is_slide_full()==0){}
 
-    cout << "Puk in Metalldetektor";
+    cout << "Puk in Metalldetektor" << endl;
     while(hal->is_metal_detected()==0){}
+    cout << "Puk wieder runternehmen" << endl;
+    while(hal->is_metal_detected()==1){}
 
-    cout << "Puk in Gate legen";
+    cout << "Puk in Gate legen" << endl;
     while(hal->is_puck_in_gate()==0){}
+    cout << "Puk wieder rausnehmen" << endl;
+    while(hal->is_puck_in_gate()==1){}
+
+    cout << "Puk in Eingangs Lichschranke legen : " << hal->is_puck_running_in() << endl;
+    while(hal->is_puck_running_in()==0);
+    usleep(500);
+    hal->band_right_normal();
+    while(hal->is_puck_in_gate()==0){}
+    hal->open_gate();
+    while(hal->is_puck_running_out()==0);
+    hal->band_stop();
+    hal->close_gate();
+
+    cout << "Puk in Eingangs Lichschranke legen : " << hal->is_puck_running_in() << endl;
+    while(hal->is_puck_running_in()==0);
+    usleep(500);
+    hal->open_gate();
+    hal->band_right_normal();
+    while(hal->is_puck_in_gate()==0){}
+    usleep(300);
+    hal->close_gate();
+    usleep(500);
+    hal->band_stop();
 
 
 

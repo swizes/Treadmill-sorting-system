@@ -219,7 +219,7 @@ void HAL:: turn_resetLED_off(void){
 * @return 0 = true, 1 = false
 */
 int HAL:: is_puck_running_in(void){
-	return (in8(PORT_B) & BM_RUNNING_IN);
+	return !(in8(PORT_B) & BM_RUNNING_IN);
 }
 
 /**
@@ -227,7 +227,7 @@ int HAL:: is_puck_running_in(void){
 * @return 0 = true, 1 = false
 */
 int HAL:: is_puck_in_height_determination(void){
-	return (in8(PORT_B) & BM_HEIGHT_DETERM);
+	return !(in8(PORT_B) & BM_HEIGHT_DETERM);
 }
 
 /**
@@ -235,7 +235,7 @@ int HAL:: is_puck_in_height_determination(void){
 * @return 0 = false, 1 = true
 */
 int HAL:: is_height_ok(void){
-	return (in8(PORT_B) & BM_HEIGHT_OK);
+	return !(in8(PORT_B) & BM_HEIGHT_OK);
 }
 
 /** 
@@ -243,7 +243,7 @@ int HAL:: is_height_ok(void){
 * @return 0 = true, 1 = false
 */
 int HAL:: is_puck_in_gate(void){
-	return (in8(PORT_B) & BM_PUCK_IN_GATE);
+	return !(in8(PORT_B) & BM_PUCK_IN_GATE);
 }
 
 /**
@@ -267,7 +267,7 @@ int HAL:: is_gate_open(void){
 * @return 0 = true, 1 = false
 */
 int HAL:: is_slide_full(void){
-	return (in8(PORT_B) & BM_SLIDE_STATUS);
+	return !(in8(PORT_B) & BM_SLIDE_STATUS);
 }
 
 /**
@@ -275,7 +275,7 @@ int HAL:: is_slide_full(void){
 * @return 0 = false, 1 = true
 */
 int HAL:: is_puck_running_out(void){
-	return (in8(PORT_B) & BM_RUNNING_OUT);
+	return !(in8(PORT_B) & BM_RUNNING_OUT);
 }
 
 //Port C Functions Sensorik
@@ -285,15 +285,15 @@ int HAL:: is_puck_running_out(void){
 * @return 0 = false, 1 = true
 */
 int HAL:: is_startButton_pushed(void){
-	return (in8(PORT_C) & BM_START_BUTTON_STATUS);
+	return !(in8(PORT_C) & BM_START_BUTTON_STATUS);
 }
 
 /**
 * Shows if the stop button is pushed
-* @return 0 = true, 1 = false
+* @return 1 = true, 0 = false
 */
 int HAL:: is_stopButton_pushed(void){
-	return (in8(PORT_C) & BM_STOP_BUTTON_STATUS);
+	return !(in8(PORT_C) & BM_STOP_BUTTON_STATUS);
 }
 
 /**
