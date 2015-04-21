@@ -24,6 +24,7 @@ private:
 	Hal_Test_Thread& operator=(Hal_Test_Thread& b);
 	virtual void execute(void*); ///< Geerbt aus HAWThread. Muss implementiert werden.
 	virtual void shutdown();
+	void startPressed();
 
 };
 
