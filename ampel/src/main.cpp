@@ -15,7 +15,7 @@
 #include "Hal_Test_Thread.h"
 #include "lib/HWaccess.h"
 #include "Serial.h"
-#include "CommunnicationThread.h"
+#include "CommunicationThread.h"
 
 using namespace std;
 
@@ -32,7 +32,7 @@ int main(int argc, char *argv[]) {
     /*Serielle Verbindung funkitoniert nur wenn sich System nicht in der Simulation befindet
     /dev/ser1 steht nicht zur Verfuegung. 		*/
 	#ifndef SIMULATION
-		CommunnicationThread ct;
+		CommunicationThread ct;
 		ct.start(NULL);
     #endif
 		//Hal_Test_Thread htt;
