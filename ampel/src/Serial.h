@@ -8,11 +8,12 @@
 #ifndef SERIAL_H_
 #define SERIAL_H_
 
-class Serial {
-
 typedef struct {
 		uint8_t num;
 }Packet;
+
+class Serial {
+
 public:
 	Serial();
 	~Serial();

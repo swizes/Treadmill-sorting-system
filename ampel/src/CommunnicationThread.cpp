@@ -22,7 +22,7 @@
 
 //Only One PC can be the SENDER! 
 
-#define SENDER
+//#define SENDER
 
 
 
@@ -57,7 +57,7 @@ void Communnication_Thread::execute(void*){
 
 	memset(&p, 0 , sizeof(p));
 
-	p.data = 0;
+	p.num = 0;
 
 
 
@@ -69,7 +69,7 @@ void Communnication_Thread::execute(void*){
 
 
 
-	while(p.data < CHECKSUM){
+	while(p.num < CHECKSUM){
 
 		ser.recvPacket(&p);
 
@@ -77,7 +77,7 @@ void Communnication_Thread::execute(void*){
 
 
 
-		p.data += 1;
+		p.num += 1;
 
 
 
@@ -90,7 +90,7 @@ void Communnication_Thread::execute(void*){
 	}
 
 	
-	if(p.data == CHECKSUM){
+	if(p.num == CHECKSUM){
 
 		cout << "Serial Communication finished correct" << endl;
 

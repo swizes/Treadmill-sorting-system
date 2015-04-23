@@ -14,6 +14,12 @@
 #include "lib/HAWThread.h"
 #include "Serial.h"
 
+#include <fcntl.h>
+#include <termios.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
 #define CHECKSUM 10
 
 using namespace thread;
