@@ -31,16 +31,19 @@ int main(int argc, char *argv[]) {
     /*Serielle Verbindung funkitoniert nur wenn sich System nicht in der Simulation befindet
     /dev/ser1 steht nicht zur Verfuegung. 		*/
 	#ifndef SIMULATION
-		CommunicationThread ct;
-		ct.start(NULL);
+		//CommunicationThread ct;
+		//ct.start(NULL);
     #endif
+		Hal_Test_Thread htt;
+		htt.start(NULL);
+		htt.join();
 
 
     //htt.start(NULL);
 	
 	
 	#ifndef SIMULATION
-		ct.join();;
+		//ct.join();;
     #endif
 
 
