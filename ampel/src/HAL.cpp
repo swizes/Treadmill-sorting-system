@@ -212,6 +212,34 @@ void HAL:: turn_resetLED_off(void){
 	out8(PORT_C, in8(PORT_C) & ~BM_RESET_LED);
 }
 
+/**
+* turns the Q1 LED on
+*/
+void HAL:: turn_Q1_LED_on(void){
+	out8(PORT_C, in8(PORT_C) | BM_Q1_LED);
+}
+
+/**
+* turns the Q2 LED on
+*/
+void HAL:: turn_Q2_LED_on(void){
+	out8(PORT_C, in8(PORT_C) | BM_Q2_LED);
+}
+
+/**
+* turns the Q1 LED off
+*/
+void HAL:: turn_Q1_LED_off(void){
+	out8(PORT_C, in8(PORT_C) & ~BM_Q1_LED);
+}
+
+/**
+* turns the Q2 LED off
+*/
+void HAL:: turn_Q2_LED_off(void){
+	out8(PORT_C, in8(PORT_C) & ~BM_Q2_LED);
+}
+
 //Port B Functions Sensorik
 
 /**
