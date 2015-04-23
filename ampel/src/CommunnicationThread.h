@@ -24,14 +24,14 @@
 
 using namespace thread;
 
-class Communnication_Thread: public HAWThread {
+class CommunnicationThread: public HAWThread {
 public:
-	Communnication_Thread(void);
-	virtual ~Communnication_Thread();
+	CommunnicationThread(void);
+	virtual ~CommunnicationThread();
 
 private:
-	Communnication_Thread(const Communnication_Thread& b);      ///< Copy-Konstruktor. Privat, deshalb kann dieses Objekt nicht als "Call-by-value" uebergeben werden.
-	Communnication_Thread& operator=(Communnication_Thread& b);
+	CommunnicationThread(const CommunnicationThread& b);      ///< Copy-Konstruktor. Privat, deshalb kann dieses Objekt nicht als "Call-by-value" uebergeben werden.
+	CommunnicationThread& operator=(CommunnicationThread& b);
 	virtual void execute(void*); ///< Geerbt aus HAWThread. Muss implementiert werden.
 	virtual void shutdown();
 

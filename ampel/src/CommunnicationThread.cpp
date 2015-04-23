@@ -28,7 +28,7 @@
 
 
 
-Communnication_Thread::Communnication_Thread(void) {
+CommunnicationThread::CommunnicationThread(void) {
 
 	cout << "ctor Communication Test" << endl;
 
@@ -36,7 +36,7 @@ Communnication_Thread::Communnication_Thread(void) {
 
 
 
-Communnication_Thread::~Communnication_Thread() {
+CommunnicationThread::~CommunnicationThread() {
 
 	// TODO Auto-generated destructor stub
 
@@ -45,7 +45,7 @@ Communnication_Thread::~Communnication_Thread() {
 
 
 
-void Communnication_Thread::execute(void*){
+void CommunnicationThread::execute(void*){
 
 
 
@@ -108,7 +108,7 @@ void Communnication_Thread::execute(void*){
 
 
 
-void Communnication_Thread::shutdown(){
+void CommunnicationThread::shutdown(){
     cout << "Communication Test shutdown" << endl;
 
 }
