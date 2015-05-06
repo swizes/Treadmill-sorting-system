@@ -16,6 +16,8 @@
 #include "lib/HWaccess.h"
 #include "Serial.h"
 #include "CommunicationThread.h"
+#include "Dispatcher.h"
+#include "State.cpp"
 
 using namespace std;
 
@@ -40,7 +42,15 @@ int main(int argc, char *argv[]) {
 		//htt.join();
 
 
-    //htt.start(NULL);
+		//htt.start(NULL);
+
+		Dispatcher disp;
+		State* s1 = new State("State 1");
+		State* s2 = new State("State 2");
+
+		disp.addListeners(s1, RUNNING_IN);
+		disp.addListeners(s2, IN_HEIGHT);
+		disp.listenForEvents();
 	
 	
 	#ifndef SIMULATION
