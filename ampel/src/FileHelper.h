@@ -15,6 +15,8 @@ public:
 	virtual ~FileHelper();
 
 	void test1();
+	char* getConfigDir();
+	char* getLogDir();
 
 private:
 
