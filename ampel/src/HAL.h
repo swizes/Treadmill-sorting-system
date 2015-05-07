@@ -34,6 +34,8 @@
 //Port C
 #define BM_START_LED 0x01
 #define BM_RESET_LED 0x02
+#define BM_Q1_LED 0x04
+#define BM_Q2_LED 0x08
 #define BM_START_BUTTON_STATUS 0x10
 #define BM_STOP_BUTTON_STATUS 0x20
 #define BM_RESET_BUTTON_STATUS 0x40
@@ -82,7 +84,10 @@ public:
 	void turn_resetLED_on(void);
 	void turn_startLED_off(void);
 	void turn_resetLED_off(void);
-	
+	void turn_Q1_LED_on(void);
+	void turn_Q2_LED_on(void);
+	void turn_Q1_LED_off(void);
+	void turn_Q2_LED_off(void);
 
 	int is_puck_running_in(void);
 	int is_puck_in_height_determination(void);

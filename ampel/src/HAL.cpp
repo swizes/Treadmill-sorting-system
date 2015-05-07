@@ -212,11 +212,39 @@ void HAL:: turn_resetLED_off(void){
 	out8(PORT_C, in8(PORT_C) & ~BM_RESET_LED);
 }
 
+/**
+* turns the Q1 LED on
+*/
+void HAL:: turn_Q1_LED_on(void){
+	out8(PORT_C, in8(PORT_C) | BM_Q1_LED);
+}
+
+/**
+* turns the Q2 LED on
+*/
+void HAL:: turn_Q2_LED_on(void){
+	out8(PORT_C, in8(PORT_C) | BM_Q2_LED);
+}
+
+/**
+* turns the Q1 LED off
+*/
+void HAL:: turn_Q1_LED_off(void){
+	out8(PORT_C, in8(PORT_C) & ~BM_Q1_LED);
+}
+
+/**
+* turns the Q2 LED off
+*/
+void HAL:: turn_Q2_LED_off(void){
+	out8(PORT_C, in8(PORT_C) & ~BM_Q2_LED);
+}
+
 //Port B Functions Sensorik
 
 /**
 * Shows if a Puck is running in
-* @return 0 = true, 1 = false
+* @return 0 = false, 1 = true
 */
 int HAL:: is_puck_running_in(void){
 	return !(in8(PORT_B) & BM_RUNNING_IN);
@@ -224,7 +252,7 @@ int HAL:: is_puck_running_in(void){
 
 /**
 * Shows if a puck is in height determination
-* @return 0 = true, 1 = false
+* @return 0 = false, 1 = true
 */
 int HAL:: is_puck_in_height_determination(void){
 	return !(in8(PORT_B) & BM_HEIGHT_DETERM);
@@ -240,7 +268,7 @@ int HAL:: is_height_ok(void){
 
 /** 
 * Shows if the puck is in gate
-* @return 0 = true, 1 = false
+* @return 0 = false, 1 = true
 */
 int HAL:: is_puck_in_gate(void){
 	return !(in8(PORT_B) & BM_PUCK_IN_GATE);
@@ -264,7 +292,7 @@ int HAL:: is_gate_open(void){
 
 /**
 * Shows if the slide is full
-* @return 0 = true, 1 = false
+* @return 0 = false, 1 = true
 */
 int HAL:: is_slide_full(void){
 	return !(in8(PORT_B) & BM_SLIDE_STATUS);
