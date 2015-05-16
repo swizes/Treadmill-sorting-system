@@ -25,14 +25,29 @@ public:
 	virtual ~State(){
 		printf("~State()\n");
 	}
-    virtual void Transition1(void){
-    	printf("State=%s Method=Transition1\n", name_.c_str());
+    virtual void Running_In(void){
+    	printf("State=%s Method=Running_In\n", name_.c_str());
     }
-    virtual void Transition2(void){
-    	printf("State=%s Method=Transition2\n", name_.c_str());
+    virtual void In_Height(void){
+    	printf("State=%s Method=In_Height\n", name_.c_str());
     }
-    virtual void Transition3(void){
-    	printf("State=%s Method=Transition3\n", name_.c_str());
+    virtual void Height_Status(void){
+    	printf("State=%s Method=Height_Status\n", name_.c_str());
+    }
+	virtual void Puck_in_Gate(void){
+    	printf("State=%s Method=Puck_in_Gate\n", name_.c_str());
+    }
+    virtual void Metal_detection(void){
+    	printf("State=%s Method=Metal_detection\n", name_.c_str());
+    }
+    virtual void Gate_open(void){
+    	printf("State=%s Method=Gate_open\n", name_.c_str());
+    }
+    virtual void Slide_full(void){
+    	printf("State=%s Method=Slide_full\n", name_.c_str());
+    }
+    virtual void Running_out(void){
+    	printf("State=%s Method=Running_out\n", name_.c_str());
     }
 };
 

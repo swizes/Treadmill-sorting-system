@@ -23,9 +23,15 @@ Dispatcher:: Dispatcher(){
 	}
 
 	// Add Method pointer to Call Method Array
-	methods[0] = &Transitions::Transition1;
-	methods[1] = &Transitions::Transition2;
-	methods[2] = &Transitions::Transition3;
+	methods[0] = &Transitions::Running_In;
+	methods[1] = &Transitions::In_Height;
+	methods[2] = &Transitions::Height_Status;
+	methods[3] = &Transitions::Puck_in_Gate;
+	methods[4] = &Transitions::Metal_detection;
+	methods[5] = &Transitions::Gate_open;
+	methods[6] = &Transitions::Slide_full;
+	methods[7] = &Transitions::Running_out;
+	
 
 
 }

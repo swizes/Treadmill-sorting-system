@@ -18,7 +18,7 @@
 #define MAXLISTENERS 5
 
 // Events in the System. Each EVENT needs a corresponding Method in class Transactions
-enum EVENTS{RUNNING_IN, IN_HEIGHT, HEIGHT_STATUS, PUCK_IN_GATE, METAL, GATE_OPEN, SLIDE_FULL, RUNNING_OUT, NEVENTS};
+enum EVENTS{RUNNING_IN, IN_HEIGHT, HEIGHT_STATUS, PUCK_IN_GATE, METAL_DETECTION, GATE_OPEN, SLIDE_FULL, RUNNING_OUT, NEVENTS};
 
 
 // typedef: Method from Class "Transactions"
