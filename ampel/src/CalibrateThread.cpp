@@ -6,7 +6,7 @@
 
  *  Created on: 17.04.2015
 
- *  Author: lukasTest, Tobi
+ *  Author: Lukas Wendt
 
  *
 
@@ -17,15 +17,7 @@
 
 
 #include "CalibrateThread.h"
-
-
-
-//Only One PC can be the SENDER! 
-
-#define SENDER
-
-
-
+#include "HAL.h"
 
 
 CalibrateThread::CalibrateThread(void) {
@@ -34,8 +26,6 @@ CalibrateThread::CalibrateThread(void) {
 
 }
 
-
-
 CalibrateThread::~CalibrateThread() {
 
 	// TODO Auto-generated destructor stub
@@ -43,12 +33,17 @@ CalibrateThread::~CalibrateThread() {
 	cout << "dtor Calibrate" << endl;
 }
 
-
-
 void CalibrateThread::execute(void*){
 
-
 	cout << "Calibration started" << endl;
+	HAL *hal = HAL::getInstance();
+	while(hal->is_puck_running_in()==0){}
+	hal->band_right_normal();
+	while(hal->is_puck_in_height_determination()==0){}
+	//TIME
+	while(hal->is_puck_in_gate()==0){}
+	//TIME
+
 
 
 }
