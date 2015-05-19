@@ -29,6 +29,38 @@ public:
 	CalibrateThread(void);
 	virtual ~CalibrateThread();
 
+	int getGatetoL1Fast() const {
+		return GatetoL1Fast;
+	}
+
+	int getGatetoL1Slow() const {
+		return GatetoL1Slow;
+	}
+
+	int getHeighttoGateFast() const {
+		return HeighttoGateFast;
+	}
+
+	int getHeighttoGateSlow() const {
+		return HeighttoGateSlow;
+	}
+
+	int getL0toHeightFast() const {
+		return L0toHeightFast;
+	}
+
+	int getL0toHeightSlow() const {
+		return L0toHeightSlow;
+	}
+
+	int getL0toL1Fast() const {
+		return L0toL1Fast;
+	}
+
+	int getL0toL1Slow() const {
+		return L0toL1Slow;
+	}
+
 private:
 	CalibrateThread(const CalibrateThread& b);      ///< Copy-Konstruktor. Privat, deshalb kann dieses Objekt nicht als "Call-by-value" uebergeben werden.
 	CalibrateThread& operator=(CalibrateThread& b);
