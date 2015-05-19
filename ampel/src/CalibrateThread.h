@@ -34,8 +34,16 @@ private:
 	CalibrateThread& operator=(CalibrateThread& b);
 	virtual void execute(void*); ///< Geerbt aus HAWThread. Muss implementiert werden.
 	virtual void shutdown();
+	int timespecToMs(struct timespec *);
 
-	Serial ser;
+	int L0toHeightFast;
+	int HeighttoGateFast;
+	int L0toL1Fast;
+	int GatetoL1Fast;
+	int L0toHeightSlow;
+	int HeighttoGateSlow;
+	int L0toL1Slow;
+	int GatetoL1Slow;
 };
 
 #endif /* COMMUNNICATIONTHREAD_H_ */
