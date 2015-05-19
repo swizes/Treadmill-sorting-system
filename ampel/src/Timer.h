@@ -21,9 +21,9 @@ class Timer {
 
 private:
 	timer_t timerid;
-	struct itimerspec val;
 	struct itimerspec result;
-	struct timespec timeval;
+	struct itimerspec val;
+	struct sigevent timerEvent;
 
 
 public:

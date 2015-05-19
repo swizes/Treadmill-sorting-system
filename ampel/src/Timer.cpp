@@ -23,16 +23,15 @@ Timer::~Timer() {
 
 void Timer::createTimer(){
 
-	if((timer_create(CLOCK_REALTIME, NULL, &timerid))==-1){
+	if((timer_create(CLOCK_REALTIME, &timerEvent, &timerid))==-1){
 		std::cout << "Timer not created" << std::endl;
 		exit(1);
 	}
 }
 
 void Timer::setTimer(int s, int ns){
-	timeval.tv_sec=s;
-	timeval.tv_nsec=ns;
-	val.it_value = timeval;
+	val.it_value.tv_sec = s;
+	val.it_value.tv_nsec= ns;
 	if(timerid != -1){
 		timer_settime(timerid, NULL, &val,NULL);
 
@@ -49,7 +48,6 @@ void Timer::deleteTimer(){
 }
 
 void Timer::getTime(struct timespec *offset){
-		result.it_value = timeval;
 
 		timer_gettime(timerid,&result);
 
