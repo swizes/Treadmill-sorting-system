@@ -52,7 +52,7 @@ void CalibrateThread::execute(void*){
 	//LO to Height
 	time.setTimer(10,0);
 	hal->band_right_normal();
-	while(hal->is_puck_in_height_determination()==0)
+	while(hal->is_puck_in_height_determination()==0){}
 	time.getTime(&offset);
 	L0toHeightFast = 10000-timespecToMs(&offset);
 	printf("L0ToHeightFast : %d\n",L0toHeightFast);
@@ -60,12 +60,12 @@ void CalibrateThread::execute(void*){
 
 	//Height to Gate
 	time.setTimer(10,0);
-	while(hal->is_puck_in_gate()==0)
+	while(hal->is_puck_in_gate()==0){}
 	time.getTime(&offset);
 	HeighttoGateFast = 10000-timespecToMs(&offset);
 	printf("HeighttoGateFast : %d\n",HeighttoGateFast);
 	hal->close_gate();
-	while(hal->is_slide_full()==0)
+	while(hal->is_slide_full()==0){}
 	hal->band_stop();
 
 
@@ -93,7 +93,7 @@ void CalibrateThread::execute(void*){
 		//LO to Height
 		time.setTimer(10,0);
 		hal->band_right_slowly();
-		while(hal->is_puck_in_height_determination()==0)
+		while(hal->is_puck_in_height_determination()==0){}
 		time.getTime(&offset);
 		L0toHeightSlow = 10000-timespecToMs(&offset);
 		printf("L0ToHeighSlow : %d\n",L0toHeightSlow);
@@ -101,12 +101,12 @@ void CalibrateThread::execute(void*){
 
 		//Height to Gate
 		time.setTimer(10,0);
-		while(hal->is_puck_in_gate()==0)
+		while(hal->is_puck_in_gate()==0){}
 		time.getTime(&offset);
 		HeighttoGateSlow = 10000-timespecToMs(&offset);
 		printf("HeighttoGateSlow : %d\n",HeighttoGateSlow);
 		hal->close_gate();
-		while(hal->is_slide_full()==0)
+		while(hal->is_slide_full()==0){}
 		hal->band_stop();
 
 
