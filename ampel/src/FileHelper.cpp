@@ -32,3 +32,13 @@ void FileHelper::test1() {
 	else
 	perror ("Couldn't open the directory");
 }
+
+//bool FileHelper::
+
+char* FileHelper::getConfigDir() {
+
+}
+
+char* FileHelper::getLogDir() {
+
+}
