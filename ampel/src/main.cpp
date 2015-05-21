@@ -16,6 +16,7 @@
 #include "lib/HWaccess.h"
 #include "Serial.h"
 #include "CommunicationThread.h"
+//#include "CalibrateThread.h"
 #include "Dispatcher.h"
 #include "State.cpp"
 
@@ -40,6 +41,9 @@ int main(int argc, char *argv[]) {
 		//Hal_Test_Thread htt;
 		//htt.start(NULL);
 		//htt.join();
+//		CalibrateThread cal;
+//		cal.start(NULL);
+//		cal.join();
 
 
 		//htt.start(NULL);
@@ -63,6 +67,8 @@ int main(int argc, char *argv[]) {
 		disp.addListeners(s7, SLIDE_FULL);
 		disp.addListeners(s8, RUNNING_OUT);
 		
+		printf("RunIn: %d  RunOut: %d  nEvents: %d \n\n", RUNNING_IN, RUNNING_OUT, NEVENTS);
+
 		disp.listenForEvents();
 	
 	

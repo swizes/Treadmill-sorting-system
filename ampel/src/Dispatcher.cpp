@@ -101,16 +101,23 @@ void Dispatcher:: listenForEvents(){
 		cout << "Wait for Interrupt" << endl;
 		MsgReceivePulse(isrChannel,&pulse,sizeof(pulse),NULL);
 
+		uint8_t sival = pulse.value.sival_int;
+
 		// old XOR new
-		uint8_t stateChanged = oldPort ^ pulse.value.sival_int;
+		uint8_t stateChanged = oldPort ^ sival;
+		//printf("oldPort: %x     %d\n", pulse.value.sival_int, stateChanged);
 
 		//old = new
-		oldPort = pulse.value.sival_int;
+		oldPort = sival;
+
+		uint8_t val = oldPort & stateChanged;
 
 		//log2 for changed bit
-		stateChanged = log(stateChanged) / log(2);
+		stateChanged = (float) log(stateChanged) / (float) log(2);
 
-		printf("Got an Interrupt, Bit: %d\n", stateChanged);
+		val = !(val << stateChanged);
+
+		printf("Got an Interrupt, Bit: %d value: %d\n", stateChanged, val);
 		callListeners((EVENTS)stateChanged);
 
 		cout << endl;
