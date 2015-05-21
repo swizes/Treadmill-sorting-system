@@ -103,18 +103,20 @@ void Dispatcher:: listenForEvents(){
 
 		uint8_t sival = pulse.value.sival_int;
 
-		// old XOR new
+		// old XOR new = stateChanged
 		uint8_t stateChanged = oldPort ^ sival;
 		//printf("oldPort: %x     %d\n", pulse.value.sival_int, stateChanged);
 
 		//old = new
 		oldPort = sival;
 
+		//Register Value
 		uint8_t val = oldPort & stateChanged;
 
-		//log2 for changed bit
+		//log2 for changed registerbit
 		stateChanged = (float) log(stateChanged) / (float) log(2);
 
+		//Shift -> 0 or 1
 		val = !(val << stateChanged);
 
 		printf("Got an Interrupt, Bit: %d value: %d\n", stateChanged, val);
