@@ -7,11 +7,11 @@
 
 
 #include "ConfigManager.h"
-#include <string>
+#include <map>
 
 char* configDir = null;
 char* defaultConfigFileName = null;
-std::map<string, string> configMap;
+std::map<char*, char*> configMap;
 
 ConfigManager::ConfigManager(){
 
@@ -38,13 +38,30 @@ bool ConfigManager::writeConfig(char* configFileName) {
 }
 
 bool ConfigManager::hasKey(char* key) {
+	for (std::map<char*,char*>::iterator it=configMap.begin(); it!=configMap.end(); ++it)
+	{
+		if(strcmp(it->first, key) == 0)
+		{
+			return true;
+		}
+	}
 
+	return false;
 }
 
 bool ConfigManager::getConfigValue(char* key, char &outVal) {
+	for (std::map<char*,char*>::iterator it=configMap.begin(); it!=configMap.end(); ++it)
+	{
+		if(strcmp(it->first, key) == 0)
+		{
+			outVal = it->second;
+			return true;
+		}
+	}
 
+	return false;
 }
 
 bool ConfigManager::setConfigValue(char* key, char* inVal) {
-
+	configMap[key] = inVal;
 }

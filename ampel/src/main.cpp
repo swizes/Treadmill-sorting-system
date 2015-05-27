@@ -17,40 +17,23 @@
 #include "Serial.h"
 #include "CommunnicationThread.h"
 #include "FileHelper.h"
+#include "ConfigManager.h"
 
 using namespace std;
 
 int main(int argc, char *argv[]) {
 
-    // Baut Verbindung zu Simulation auf
-	#ifdef SIMULATION
-        IOaccess_open();
-		cout << "WARNING: SYSTEM IN SIMULATION!!!" << endl;
-    #endif
+   ConfigManager cf = new ConfigManager();
+   cf.setConfigValue("test1", "value1");
+   cf.setConfigValue("test2", "value2");
 
-    //Hal_Test_Thread htt;
-	
-    /*Serielle Verbindung funkitoniert nur wenn sich System nicht in der Simulation befindet
-    /dev/ser1 steht nicht zur Verfuegung. 		*/
-	#ifndef SIMULATION
-		//CommunnicationThread ct;
-		//ct.start(NULL);
-    #endif
-		//Hal_Test_Thread htt;
-		//htt.start(NULL);
-		//htt.join();
+   cout << "val1:" << cf.getConfigValue("test1") << endl;
+   cout << "val2:" << cf.getConfigValue("test2") << endl;
 
 
-    //htt.start(NULL);
-	
-	
-	#ifndef SIMULATION
-		//ct.join();;
-    #endif
-
-	cout << "check file system";
-	FileHelper fhelper;// = new FileHelper();
-	fhelper.test1();
+	//cout << "check file system";
+	//FileHelper fhelper;// = new FileHelper();
+	//fhelper.test1();
 
 
     #ifdef SIMULATION
