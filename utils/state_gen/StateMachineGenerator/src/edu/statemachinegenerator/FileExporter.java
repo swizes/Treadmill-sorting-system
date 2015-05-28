@@ -9,8 +9,8 @@ import java.util.ArrayList;
 import java.util.Date;
 
 public class FileExporter {
-	public static String stateFile = "stateList.h";
-	public static String transitionFile = "transitions.h";
+	public static String stateFile = "StateList.h";
+	public static String transitionFile = "Transitions.h";
 	
 	static void exportFile(String outputPath, ArrayList<GState> states, ArrayList<GTransition> transitions)
 	{
@@ -85,7 +85,6 @@ public class FileExporter {
 	{
 		try {
 			if(outputPath.charAt(outputPath.length()-1) != '/') outputPath += "/";
-			System.out.print("Write statefile to " + outputPath + stateFile+"..");
 			
 			PrintWriter writer = new PrintWriter(outputPath + transitionFile, "UTF-8");
 			DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
