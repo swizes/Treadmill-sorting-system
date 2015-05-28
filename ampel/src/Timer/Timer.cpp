@@ -12,7 +12,6 @@ TimerManagement *timeM;
 Timer::Timer() {
 	std::cout << "ctor Timer" << std::endl;
 	TimerManagement *time = TimerManagement::getInstance();
-	//timerM = TimerManagement::getInstance();
 	timeM = time;
 	timerid = -1;
 

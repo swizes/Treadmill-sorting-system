@@ -10,16 +10,23 @@
 
 #include <iostream>
 #include <vector>
-#include "Timer.h"
+#include "./Timer.h"
+
+using namespace std;
+
+
 
 class TimerManagement {
 
 private:
-	std::vector<int> data;
 	static TimerManagement* instance_;
 	TimerManagement();
 public:
 	static TimerManagement* getInstance();
+	void addTimer(class Timer);
+	void deleteTimer(class Timer);
+	void stopTimer();
+	void deleteTimer();
 	virtual ~TimerManagement();
 };
 
