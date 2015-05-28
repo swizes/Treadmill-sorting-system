@@ -8,12 +8,14 @@
 #include "Puk.h"
 
 
-
+int Puk::idCount = 0;
 Puk::Puk() {
 	metal = false;
 	holeOnTop = false;
 	size = 0;
 	sizeTyp = UNKNOWN;
+	id = idCount++;
+
 
 
 }

@@ -17,6 +17,8 @@ private:
 	bool holeOnTop;
 	int size;
 	SIZE sizeTyp;
+	int id;
+	static int idCount;
 
 public:
 	Puk();
@@ -44,6 +46,19 @@ public:
 
 	void setSize(int size) {
 		this->size = size;
+	}
+
+	int getId() const {
+		return id;
+	}
+
+
+	SIZE getSizeTyp() const {
+		return sizeTyp;
+	}
+
+	void setSizeTyp(SIZE sizeTyp) {
+		this->sizeTyp = sizeTyp;
 	}
 };
 

@@ -26,7 +26,7 @@ EXTRA_SRCVPATH+=$(PROJECT_ROOT)/src $(PROJECT_ROOT)/src/lib
 LIBS+=IOaccess cpt_terminal
 
 #===== CCFLAGS - add the flags to the C compiler command line. 
-CCFLAGS+=-Y _gpp -DSIMULATION
+CCFLAGS+=-Y _gpp
 
 include $(MKFILES_ROOT)/qmacros.mk
 ifndef QNX_INTERNAL
