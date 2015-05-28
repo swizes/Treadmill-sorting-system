@@ -23,7 +23,8 @@ VFLAG_g=-gstabs+
 EXTRA_SRCVPATH+= \
 	$(PROJECT_ROOT)/src  \
 	$(PROJECT_ROOT)/src/lib  \
-	$(PROJECT_ROOT)/src/states
+	$(PROJECT_ROOT)/src/states  \
+	$(PROJECT_ROOT)/src/states/pukLifecycle
 
 #===== LIBS - a space-separated list of library items to be included in the link.
 LIBS+=IOaccess cpt_terminal
