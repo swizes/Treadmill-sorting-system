@@ -1,7 +1,7 @@
 #ifndef PuckStates_H_
 #define PuckStates_H_
-#include "../State.cpp"
-#include "../Context.cpp"
+#include "State.cpp"
+#include "Context.cpp"
 #include "../Dispatcher.h"
 
 
