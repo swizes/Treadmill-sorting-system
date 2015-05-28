@@ -1,5 +1,5 @@
 /*
- * Birth.cpp
+ * Road_to_Height.cpp
  *
  *  Created on: 28.05.2015
  *      Author: Roland
@@ -10,6 +10,8 @@
 Road_to_Height::Road_to_Height(Context* con): State::State(con){
 	printf("Road_to_Height()\n");
 	//STARTE TIMER!
+	//TimeOut?!
+	Dispatcher* dsp = Dispatcher::getInstance();
 	dsp->addListeners( this->con_, IN_HEIGHT_TRUE);
 }
 
@@ -18,7 +20,7 @@ Road_to_Height::~Road_to_Height(){
 
 }
 
-void Road_to_Height:: /*Lambda???*/ (void){
+void Road_to_Height::In_Height_true (void){
 
 
 	// Stop listen to Event Transmission1

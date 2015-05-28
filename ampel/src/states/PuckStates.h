@@ -38,4 +38,14 @@ private:
 	Road_to_Height(const Road_to_Height& other);
 	Road_to_Height& operator=(const Road_to_Height& other);
 };
+
+class Height_Measurement: public State {
+public:
+	Height_Measurement(Context* con);
+	virtual ~Height_Measurement();
+	virtual void Height_Status_OK(void);
+private:
+	Height_Measurement(const Height_Measurement& other);
+	Height_Measurement& operator=(const Height_Measurement& other);
+};
 #endif
