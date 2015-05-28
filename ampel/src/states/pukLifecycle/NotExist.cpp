@@ -21,13 +21,11 @@ NotExist::~NotExist(){
 }
 
 void NotExist::Running_In_true(void){
-
-	 HAL *hal = HAL::getInstance();
 	// Stop listen to Event Transmission1
 	Dispatcher* dsp = Dispatcher::getInstance();
 	dsp->remListeners( this->con_, RUNNING_IN_TRUE);
 
-	// Move to State S2.
+	// Move to State Birth.
 	new (this) Birth(this->con_);
 }
 

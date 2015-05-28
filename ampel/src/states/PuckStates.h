@@ -33,7 +33,7 @@ class Road_to_Height: public State {
 public:
 	Road_to_Height(Context* con);
 	virtual ~Road_to_Height();
-	//Lambda???
+	virtual void In_Height_true(void);
 private:
 	Road_to_Height(const Road_to_Height& other);
 	Road_to_Height& operator=(const Road_to_Height& other);

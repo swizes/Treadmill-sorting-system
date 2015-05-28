@@ -10,7 +10,7 @@
 Road_to_Height::Road_to_Height(Context* con): State::State(con){
 	printf("Road_to_Height()\n");
 	//STARTE TIMER!
-
+	dsp->addListeners( this->con_, IN_HEIGHT_TRUE);
 }
 
 Road_to_Height::~Road_to_Height(){
@@ -19,6 +19,12 @@ Road_to_Height::~Road_to_Height(){
 }
 
 void Road_to_Height:: /*Lambda???*/ (void){
+
+
+	// Stop listen to Event Transmission1
+	Dispatcher* dsp = Dispatcher::getInstance();
+	dsp->remListeners( this->con_, IN_HEIGHT_TRUE);
+
 	// Move to State Height_Measurement.
 	//new (this) Height_Measurement(this->con_);
 }
