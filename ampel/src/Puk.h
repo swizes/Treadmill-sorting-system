@@ -8,12 +8,15 @@
 #ifndef PUK_H_
 #define PUK_H_
 
+enum SIZE{OK,NOT_OK,UNKNOWN};
+
 class Puk {
 
 private:
 	bool metal;
 	bool holeOnTop;
 	int size;
+	SIZE sizeTyp;
 
 public:
 	Puk();

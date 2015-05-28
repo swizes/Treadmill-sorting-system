@@ -7,10 +7,14 @@
 
 #include "Puk.h"
 
+
+
 Puk::Puk() {
 	metal = false;
 	holeOnTop = false;
 	size = 0;
+	sizeTyp = UNKNOWN;
+
 
 }
 
