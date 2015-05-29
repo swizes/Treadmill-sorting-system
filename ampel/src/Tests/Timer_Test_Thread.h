@@ -11,8 +11,9 @@
 #define TIMER_TEST_THREAD_H_
 
 #include <stdint.h>
+#include <stdio.h>
 #include <pthread.h>
-#include "lib/HAWThread.h"
+#include "../lib/HAWThread.h"
 
 using namespace thread;
 

@@ -9,8 +9,9 @@
 
 TimerManagement *timeM;
 
+
 Timer::Timer() {
-	std::cout << "ctor Timer" << std::endl;
+	//std::cout << "ctor Timer" << std::endl;
 	TimerManagement *time = TimerManagement::getInstance();
 	timeM = time;
 	timerid = -1;
@@ -19,7 +20,7 @@ Timer::Timer() {
 }
 
 Timer::~Timer() {
-	std::cout << "dtor Timer" << std::endl;
+	//std::cout << "dtor Timer" << std::endl;
 	// TODO Auto-generated destructor stub
 }
 
@@ -28,46 +29,63 @@ void Timer::createTimer(){
 	if((timer_create(CLOCK_REALTIME, &timerEvent, &timerid))==-1){
 		std::cout << "Timer not created" << std::endl;
 		exit(1);
+	}else{
+		 timeM->addTimer(*this);
+		 stop = 1;
+		 cout << "Timer" << endl;
 	}
 }
 
 void Timer::setTimer(int s, int ns){
-	val.it_value.tv_sec = s;
-	val.it_value.tv_nsec= ns;
-	if(timerid != -1){
-		timer_settime(timerid, 0, &val,NULL);
-
-	}else{
-		std::cout << "Timer not set" << std::endl;
-		exit(1);
+	if(timerid != -1 && stop){
+		cout << "SET" << endl;
+		val.it_value.tv_sec = s;
+		val.it_value.tv_nsec= ns;
+		if(timerid != -1){
+			timer_settime(timerid, 0, &val,NULL);
+			stop = 0;
+		}else{
+			std::cout << "Timer not set" << std::endl;
+			exit(1);
+		}
 	}
 }
 
 void Timer::deleteTimer(){
-
 	timer_delete(timerid);
+	timeM->deleteTimer(*this);
+	stop = 1;
+	timerid = -1;
 
 }
 
 void Timer::stopTimer(){
-
-	getTime(&stop);
-	deleteTimer();
+	if(timerid != -1 && !stop){
+		getTime(&stopval);
+		setTimer(0,0);
+		stop = 1;
+	}
 
 }
 
 void Timer::continueTimer(){
-	createTimer();
-	setTimer(stop.tv_sec,stop.tv_nsec);
+	if(timerid != -1 && stop){
+		setTimer(stopval.tv_sec,stopval.tv_nsec);
+		stop = 0;
+	}
+
 }
 
 void Timer::getTime(struct timespec *offset){
 
-		timer_gettime(timerid,&result);
-
-		offset->tv_nsec = result.it_value.tv_nsec;
-		offset->tv_sec = result.it_value.tv_sec;
-
+		if(!stop){
+			timer_gettime(timerid,&result);
+			offset->tv_nsec = result.it_value.tv_nsec;
+			offset->tv_sec = result.it_value.tv_sec;
+		}else{
+			offset->tv_nsec = stopval.tv_nsec;
+			offset->tv_sec = stopval.tv_sec;
+		}
 
 }
 

@@ -18,7 +18,7 @@
 
 #include "CalibrateThread.h"
 #include "HAL.h"
-#include "Timer.h"
+#include "./Timer/Timer.h"
 
 
 CalibrateThread::CalibrateThread(void) {

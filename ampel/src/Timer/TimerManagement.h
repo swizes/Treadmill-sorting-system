@@ -27,6 +27,7 @@ public:
 	void deleteTimer(class Timer);
 	void stopTimer();
 	void deleteTimer();
+	void continueTimer();
 	virtual ~TimerManagement();
 };
 

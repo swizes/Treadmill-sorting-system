@@ -24,8 +24,9 @@ private:
 	timer_t timerid;
 	struct itimerspec result;
 	struct itimerspec val;
-	struct timespec stop;
+	struct timespec stopval;
 	struct sigevent timerEvent;
+	bool stop;
 
 
 public:

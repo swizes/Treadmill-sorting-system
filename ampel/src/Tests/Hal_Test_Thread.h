@@ -10,7 +10,7 @@
 
 #include <stdint.h>
 #include <pthread.h>
-#include "lib/HAWThread.h"
+#include "../lib/HAWThread.h"
 
 using namespace thread;
 
