@@ -13,7 +13,6 @@
 #include "lib/Lock.h"
 #include <pthread.h>
 #include <iostream>
-#include "Timer.h"
 
 using namespace std;
 
