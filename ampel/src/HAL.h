@@ -8,6 +8,8 @@
 #define PORT_A 0x300
 #define PORT_B 0x301
 #define PORT_C 0x302
+#define PORT_ADC_LOW 0x322
+#define PORT_ADC_HIGH 0x323
 
 #define BM_IO_CONTROL 0b10001010
 
@@ -40,6 +42,9 @@
 #define BM_STOP_BUTTON_STATUS 0x20
 #define BM_RESET_BUTTON_STATUS 0x40
 #define BM_ESTOP_BUTTON_STATUS 0x80
+
+// ADC
+#define BM_START_MEASURE 0x10
 
 //Reset
 #define RESET_PORT_A 0x0
@@ -102,6 +107,8 @@ public:
 	int is_stopButton_pushed(void);
 	int is_resetButton_pushed(void);
 	int is_eStopButton_pushed(void);
+
+	int get_height_measure(void);
 };
 
 
