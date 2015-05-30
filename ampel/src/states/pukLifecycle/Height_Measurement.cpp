@@ -9,10 +9,12 @@
 
 Height_Measurement::Height_Measurement(Context* con): State::State(con){
 	printf("Road_to_Height()\n");
-	//Kill TIMER! von Road_to_Height
-	//HÖHENMESSUNG
+	//TODO: Kill TIMER! von Road_to_Height
+	//TODO: HÖHENMESSUNG + SAVE DATA
+	HAL *hal = HAL::getInstance();
+	hal->band_right_slowly();
 	Dispatcher* dsp = Dispatcher::getInstance();
-	dsp->addListeners( this->con_, HEIGHT_STATUS_OK);
+	dsp->addListeners( this->con_, GATE_OPEN_TRUE);
 }
 
 Height_Measurement::~Height_Measurement(){
@@ -20,13 +22,13 @@ Height_Measurement::~Height_Measurement(){
 
 }
 
-void Height_Measurement::Height_Status_OK(void){
+void Height_Measurement::Gate_open_true(void){
 
 
 	// Stop listen to Event Transmission1
 	Dispatcher* dsp = Dispatcher::getInstance();
-	dsp->remListeners( this->con_, HEIGHT_STATUS_OK);
+	dsp->remListeners( this->con_, GATE_OPEN_TRUE);
 
 	// Move to State Search_for_Hole.
-	//new (this) Search_for_Hole(this->con_);
+	new (this) Search_for_Hole(this->con_);
 }
