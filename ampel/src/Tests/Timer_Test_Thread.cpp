@@ -62,22 +62,42 @@ void Timer_Test_Thread::execute(void*){
 	delay(500);
 
 	struct timespec time15;
-	timer15.getTime(&result);
+	timer15.getTime(&time15);
 	struct timespec time10;
 	timer10.getTime(&time10);
 	delay(500);
 
-	printf("S: %ld, NS: %ld, S: %ld, NS: %ld\n",result.tv_sec,result.tv_sec,time10.tv_sec,time10.tv_nsec);
-
+	printf("S: %ld, NS: %ld, S: %ld, NS: %ld\n",time15.tv_sec,time15.tv_nsec,time10.tv_sec,time10.tv_nsec);
+	//timer15.stopTimer();
 	delay(500);
 	timeM->stopTimer();
-	delay(100);
+
+	delay(1000);
 	timeM->continueTimer();
+	delay(1000);
+
+	timer10.getTime(&time10);
+	timer15.getTime(&time15);
+	printf("S: %ld, NS: %ld, S: %ld, NS: %ld\n",time15.tv_sec,time15.tv_nsec,time10.tv_sec,time10.tv_nsec);
 
 
 
 
-    cout << "Test erfolgreich" << endl;
+    cout << "Test erfolgreich Timer" << endl;
+
+    cout << "Pulse Timer" << endl;
+    timeM->deleteTimer();
+    Timer pulseTimer;
+
+    struct _pulse  pulse;
+    int channel = pulseTimer.createTimerPulse();
+    pulseTimer.setTimer(2,0);
+    timeM->stopTimer();
+    delay(1000);
+    timeM->continueTimer();
+    //Blockiert bis Pulse
+    MsgReceivePulse(channel, &pulse, sizeof (pulse), NULL);
+
 
 }
 

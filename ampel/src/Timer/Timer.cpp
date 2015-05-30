@@ -8,6 +8,8 @@
 #include "Timer.h"
 
 TimerManagement *timeM;
+int channel;
+int connection;
 
 
 Timer::Timer() {
@@ -36,8 +38,27 @@ void Timer::createTimer(){
 	}
 }
 
+int Timer::createTimerPulse(){
+    if( (channel  = ChannelCreate(0)) == -1){
+        exit(EXIT_FAILURE);
+    }
+    if( (connection = ConnectAttach(0, 0, channel, 0, 0)) == -1){
+        exit(EXIT_FAILURE);
+    }
+
+    SIGEV_PULSE_INIT (&timerEvent, connection, SIGEV_PULSE_PRIO_INHERIT, 0, 0);
+
+    createTimer();
+    return channel;
+
+}
+
 void Timer::setTimer(int s, int ns){
+	if(timerid == -1){
+		createTimer();
+	}
 	if(timerid != -1 && stop){
+
 		cout << "SET" << endl;
 		val.it_value.tv_sec = s;
 		val.it_value.tv_nsec= ns;
@@ -49,6 +70,7 @@ void Timer::setTimer(int s, int ns){
 			exit(1);
 		}
 	}
+
 }
 
 void Timer::deleteTimer(){
