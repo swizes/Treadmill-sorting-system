@@ -34,7 +34,6 @@ void Timer::createTimer(){
 	}else{
 		 timeM->addTimer(*this);
 		 stop = 1;
-		 cout << "Timer" << endl;
 	}
 }
 
@@ -58,8 +57,6 @@ void Timer::setTimer(int s, int ns){
 		createTimer();
 	}
 	if(timerid != -1 && stop){
-
-		cout << "SET" << endl;
 		val.it_value.tv_sec = s;
 		val.it_value.tv_nsec= ns;
 		if(timerid != -1){
