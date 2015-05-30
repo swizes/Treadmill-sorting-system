@@ -339,3 +339,15 @@ int HAL:: is_resetButton_pushed(void){
 int HAL:: is_eStopButton_pushed(void){
 	return (in8(PORT_C) & BM_ESTOP_BUTTON_STATUS);
 }
+
+/**
+ * Get the height from the height measure sensor.
+ * This functions blocks for 5ms
+ * @return converted value between 4090 and 0 (~4050 = empty, 0 = ~800 = max allowed height)
+ */
+int HAL:: get_height_measure(void) {
+	out8(PORT_ADC_LOW,  BM_START_MEASURE);
+	delay(5);
+	return in16(PORT_ADC_LOW);
+	return -1;
+}
