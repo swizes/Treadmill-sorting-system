@@ -65,6 +65,7 @@ public:
 	Road_to_Metal(Context* con);
 	virtual ~ Road_to_Metal();
 	virtual void Metal_detection_true(void);
+	virtual void Puck_in_Gate_true(void);
 private:
 	Road_to_Metal(const Road_to_Metal& other);
 	Road_to_Metal& operator=(const Serial& other);
@@ -128,5 +129,26 @@ public:
 private:
 	Road_To_Exit(const Road_To_Exit& other);
 	Road_To_Exit& operator=(const Serial& other);
+};
+
+class Timeout: public State {
+public:
+	Timeout(Context* con);
+	virtual ~ Timeout();
+	//TODO: Timeout function
+private:
+	Timeout(const Timeout& other);
+	Timeout& operator=(const Serial& other);
+};
+
+
+class Error_Handling: public State {
+public:
+	Error_Handling(Context* con);
+	virtual ~ Error_Handling();
+	//TODO: Error Handling function
+private:
+	Error_Handling(const Error_Handling& other);
+	Error_Handling& operator=(const Serial& other);
 };
 #endif

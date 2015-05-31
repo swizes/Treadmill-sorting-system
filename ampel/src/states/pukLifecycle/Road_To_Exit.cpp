@@ -9,11 +9,12 @@
 Road_To_Exit::Road_To_Exit(Context* con): State::State(con){
 	printf("Road_to_Metal()\n");
 	Dispatcher* dsp = Dispatcher::getInstance();
-	dsp->addListeners( this->con_, RUNNING_IN_TRUE);
+	dsp->addListeners( this->con_, RUNNING_OUT_TRUE);
 	/*
-	AFTER X SECONDS
+	TODO: AFTER X SECONDS
 	HAL *hal = HAL::getInstance();
 	hal->close_gate();
+	TODO: TIMEOUT AFTER X SECONDS
 	*/
 }
 
@@ -27,9 +28,9 @@ void Road_To_Exit::Running_out_true(void){
 
 	// Stop listen to Event Transmission1
 	Dispatcher* dsp = Dispatcher::getInstance();
-	dsp->remListeners( this->con_, RUNNING_IN_TRUE);
+	dsp->remListeners( this->con_, RUNNING_OUT_TRUE);
 
 	// Move to State Band2
-	//new (this) Band2(this->con_);
+	//new (this) Is_Band2_Free?(this->con_);
 }
 

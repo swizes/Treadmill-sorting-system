@@ -10,9 +10,10 @@
 Height_Measurement::Height_Measurement(Context* con): State::State(con){
 	printf("Road_to_Height()\n");
 	//TODO: Kill TIMER! von Road_to_Height
-	//TODO: HÖHENMESSUNG + SAVE DATA
 	HAL *hal = HAL::getInstance();
 	hal->band_right_slowly();
+	//TODO: HÖHENMESSUNG + SAVE DATA
+	//TODO: PRECONDITION is_height_ok return true
 	Dispatcher* dsp = Dispatcher::getInstance();
 	dsp->addListeners( this->con_, GATE_OPEN_TRUE);
 }

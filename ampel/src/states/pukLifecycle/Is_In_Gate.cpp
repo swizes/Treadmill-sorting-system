@@ -26,7 +26,7 @@ void Is_In_Gate::Puck_in_Gate_false(void){
 	dsp->remListeners( this->con_, PUCK_IN_GATE_FALSE);
 
 	// Move to State Metal_Detected
-	new (this) Is_In_Gate(this->con_);
+	new (this) Road_To_Exit(this->con_);
 }
 
 

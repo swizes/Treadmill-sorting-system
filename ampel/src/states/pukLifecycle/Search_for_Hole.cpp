@@ -9,7 +9,7 @@
 
 Search_for_Hole::Search_for_Hole(Context* con): State::State(con){
 	printf("SearchSearch_for_Hole for Hole\n");
-	//TODO: Identify Hole
+	//TODO: Set the type of Puck and save it
 	Dispatcher* dsp = Dispatcher::getInstance();
 	dsp->addListeners( this->con_, IN_HEIGHT_FALSE);
 }
@@ -27,12 +27,18 @@ void Search_for_Hole::In_Height_false(void){
 	dsp->remListeners( this->con_, IN_HEIGHT_FALSE);
 
 
-	//If(type==ok)
-	// Move to State Road_to_Metal
-	//new (this) Road_to_Metal(this->con_);
-	//If(type==trash)
-	// Move to State Road to Sorting Out
-	//new (this) Road_to_Sorting_Out(this->con_);
+//	if(type==ok){
+//	  if(!loch){
+//		  Mark the puck for userinteraction
+//	  }
+//	  //Move to State Road_to_Metal
+//	  new (this) Road_to_Metal(this->con_);
+//	}
+//
+//	If(type==trash){
+//	 Move to State Road to Sorting Out
+//	new (this) Road_to_Sorting_Out(this->con_);
+//	}
 }
 
 
