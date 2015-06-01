@@ -40,17 +40,13 @@ void TimerManagement::addTimer(Timer timer){
 
 void TimerManagement::deleteTimer(Timer timer){
 	for(uint8_t i = 0;i < data.size();i++){
-		/*if(data.at(i) == timer){
+		if(&data.at(i) == &timer){
 			data.erase(data.begin()+i,data.begin()+i);
-		}*/
+		}
 	}
-
 }
 void TimerManagement::deleteTimer(){
-	for(uint8_t i = 0; i < data.size();i++){
-		data.erase(data.begin()+i,data.begin()+i);
-	}
-
+	data.clear();
 }
 
 void TimerManagement::stopTimer(){
