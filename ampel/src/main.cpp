@@ -16,6 +16,7 @@
 #include "lib/HWaccess.h"
 #include "Serial.h"
 #include "CommunicationThread.h"
+#include "Tests/Timer_Test_Thread.h"
 //#include "CalibrateThread.h"
 #include "Dispatcher.h"
 #include "State.cpp"
@@ -44,33 +45,11 @@ int main(int argc, char *argv[]) {
 //		CalibrateThread cal;
 //		cal.start(NULL);
 //		cal.join();
-
-
+		Timer_Test_Thread ttt;
+		ttt.start(NULL);
+		ttt.join();
 		//htt.start(NULL);
-
-		Dispatcher disp;
-		State* s1 = new State("New Puck");
-		State* s2 = new State("In height measure");
-		State* s3 = new State("height ok");
-		State* s4 = new State("in gate");
-		State* s5 = new State("in metal detection");
-		State* s6 = new State("gate open?");
-		State* s7 = new State("is slide full?");
-		State* s8 = new State("running out?");
-
-		disp.addListeners(s1, RUNNING_IN);
-		disp.addListeners(s2, IN_HEIGHT);
-		disp.addListeners(s3, HEIGHT_STATUS);
-		disp.addListeners(s4, PUCK_IN_GATE);
-		disp.addListeners(s5, METAL_DETECTION);
-		disp.addListeners(s6, GATE_OPEN);
-		disp.addListeners(s7, SLIDE_FULL);
-		disp.addListeners(s8, RUNNING_OUT);
 		
-		printf("RunIn: %d  RunOut: %d  nEvents: %d \n\n", RUNNING_IN, RUNNING_OUT, NEVENTS);
-
-		disp.listenForEvents();
-	
 	
 	#ifndef SIMULATION
 		ct.join();;
