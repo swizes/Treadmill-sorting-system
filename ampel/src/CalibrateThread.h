@@ -61,6 +61,18 @@ public:
 		return L0toL1Slow;
 	}
 
+	int getBigPuk() const {
+		return bigPuk;
+	}
+
+	int getHoleHeight() const {
+		return holeHeight;
+	}
+
+	int getSmallPuk() const {
+		return smallPuk;
+	}
+
 private:
 	CalibrateThread(const CalibrateThread& b);      ///< Copy-Konstruktor. Privat, deshalb kann dieses Objekt nicht als "Call-by-value" uebergeben werden.
 	CalibrateThread& operator=(CalibrateThread& b);
@@ -76,6 +88,9 @@ private:
 	int HeighttoGateSlow;
 	int L0toL1Slow;
 	int GatetoL1Slow;
+	int bigPuk;
+	int smallPuk;
+	int holeHeight;
 };
 
 #endif /* COMMUNNICATIONTHREAD_H_ */

@@ -16,7 +16,7 @@
 #include "lib/HWaccess.h"
 #include "Serial.h"
 #include "CommunicationThread.h"
-//#include "CalibrateThread.h"
+#include "CalibrateThread.h"
 #include "Dispatcher.h"
 #include "State.cpp"
 
@@ -41,14 +41,14 @@ int main(int argc, char *argv[]) {
 		//Hal_Test_Thread htt;
 		//htt.start(NULL);
 		//htt.join();
-//		CalibrateThread cal;
-//		cal.start(NULL);
-//		cal.join();
+		CalibrateThread cal;
+		cal.start(NULL);
+		cal.join();
 
 
 		//htt.start(NULL);
 
-		Dispatcher disp;
+	/*	Dispatcher disp;
 		State* s1 = new State("New Puck");
 		State* s2 = new State("In height measure");
 		State* s3 = new State("height ok");
@@ -69,7 +69,7 @@ int main(int argc, char *argv[]) {
 		
 		printf("RunIn: %d  RunOut: %d  nEvents: %d \n\n", RUNNING_IN, RUNNING_OUT, NEVENTS);
 
-		disp.listenForEvents();
+		disp.listenForEvents();*/
 	
 	
 	#ifndef SIMULATION
