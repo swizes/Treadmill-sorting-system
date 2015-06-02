@@ -12,7 +12,7 @@
 #include <cstdlib>
 #include <iostream>
 #include "Blink_Thread.h"
-#include "Hal_Test_Thread.h"
+#include "./Tests/Hal_Test_Thread.h"
 #include "lib/HWaccess.h"
 #include "Serial.h"
 #include "CommunicationThread.h"
