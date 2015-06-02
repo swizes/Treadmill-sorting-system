@@ -39,6 +39,8 @@ void Search_for_Hole::In_Height_false(void){
 //	 Move to State Road to Sorting Out
 //	new (this) Road_to_Sorting_Out(this->con_);
 //	}
+
+	new (this) Road_to_Metal(this->con_);
 }
 
 

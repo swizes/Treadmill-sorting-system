@@ -16,6 +16,8 @@ Road_To_Exit::Road_To_Exit(Context* con): State::State(con){
 	hal->close_gate();
 	TODO: TIMEOUT AFTER X SECONDS
 	*/
+	HAL *hal = HAL::getInstance();
+	hal->close_gate();
 }
 
 Road_To_Exit::~Road_To_Exit(){

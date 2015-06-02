@@ -8,28 +8,17 @@
 
 
 Height_Measurement::Height_Measurement(Context* con): State::State(con){
-	printf("Road_to_Height()\n");
+	printf("Height_Measurement()\n");
 	//TODO: Kill TIMER! von Road_to_Height
 	HAL *hal = HAL::getInstance();
 	hal->band_right_slowly();
 	//TODO: HÖHENMESSUNG + SAVE DATA
 	//TODO: PRECONDITION is_height_ok return true
-	Dispatcher* dsp = Dispatcher::getInstance();
-	dsp->addListeners( this->con_, GATE_OPEN_TRUE);
+
+	new (this) Search_for_Hole(this->con_);
 }
 
 Height_Measurement::~Height_Measurement(){
 	printf("~Road_to_Height()\n");
 
-}
-
-void Height_Measurement::Gate_open_true(void){
-
-
-	// Stop listen to Event Transmission1
-	Dispatcher* dsp = Dispatcher::getInstance();
-	dsp->remListeners( this->con_, GATE_OPEN_TRUE);
-
-	// Move to State Search_for_Hole.
-	new (this) Search_for_Hole(this->con_);
 }

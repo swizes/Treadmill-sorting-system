@@ -112,7 +112,7 @@ void Dispatcher:: listenForEvents(){
 	// React on Pulsemessage
 	struct _pulse pulse;
 	do{
-		cout << "Wait for Interrupt" << endl;
+		//cout << "Wait for Interrupt" << endl;
 		MsgReceivePulse(isrChannel,&pulse,sizeof(pulse),NULL);
 
 		uint8_t sival = pulse.value.sival_int;
@@ -135,9 +135,10 @@ void Dispatcher:: listenForEvents(){
 
 		if (val == 1){
 			callListeners((EVENTS)stateChanged);
-
+			printf("Got an Interrupt, Bit: %d value: %d\n", stateChanged, val);
 		} else {
 			callListeners((EVENTS)(stateChanged+EVENT_OFFSET));
+			printf("Got an Interrupt, Bit: %d value: %d\n", stateChanged+EVENT_OFFSET, val);
 		}
 		//printf("Got an Interrupt, Bit: %d value: %d\n", stateChanged, val);
 

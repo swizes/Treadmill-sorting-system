@@ -23,7 +23,7 @@ private:
 
 public:
 	State(Context* con): con_(con){
-		printf("State(Context* con)\n");
+
 	}
 	virtual ~State() {
 		printf("~State()\n");
