@@ -8,7 +8,7 @@
 
 
 Road_to_Height::Road_to_Height(Context* con): State::State(con){
-	printf("Road_to_Height()\n");
+	printf("Road to Height()\n");
 	//TODO:STARTE TIMER!
 	//TODO: TimeOut?!
 	Dispatcher* dsp = Dispatcher::getInstance();
@@ -17,7 +17,7 @@ Road_to_Height::Road_to_Height(Context* con): State::State(con){
 }
 
 Road_to_Height::~Road_to_Height(){
-	printf("~Road_to_Height()\n");
+	printf("~Road to Height()\n");
 
 }
 
@@ -26,9 +26,9 @@ void Road_to_Height::In_Height_true (void){
 
 	// Stop listen to Event Transmission1
 	Dispatcher* dsp = Dispatcher::getInstance();
-	//TODO: oder 	dsp->remListeners( this->con_, HEIGHT_STATUS_OK);
+	//TODO: or?	dsp->remListeners( this->con_, HEIGHT_STATUS_OK);
 	dsp->remListeners( this->con_, IN_HEIGHT_TRUE);
 
-	// Move to State Height_Measurement.
+	// Move to State Height Measurement.
 	new (this) Height_Measurement(this->con_);
 }
