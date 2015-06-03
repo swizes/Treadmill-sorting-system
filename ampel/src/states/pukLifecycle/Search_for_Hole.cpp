@@ -6,6 +6,7 @@
  */
 
 #include "PuckStates.h"
+int alternate = 0;
 
 Search_for_Hole::Search_for_Hole(Context* con): State::State(con){
 	printf("SearchSearch_for_Hole for Hole\n");
@@ -40,7 +41,14 @@ void Search_for_Hole::In_Height_false(void){
 //	new (this) Road_to_Sorting_Out(this->con_);
 //	}
 
-	new (this) Road_to_Metal(this->con_);
+	//abwechselnd aussortieren oder durchlassen
+	if(alternate == 1){
+		new(this) Road_to_Sorting_Out(this->con_);
+		alternate = 0;
+	}else{
+		new (this) Road_to_Metal(this->con_);
+		alternate = 1;
+	}
 }
 
 
