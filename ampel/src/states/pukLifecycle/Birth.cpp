@@ -13,6 +13,7 @@ Birth::Birth(Context* con): State::State(con){
 	hal->band_right_normal();
 	Dispatcher* dsp = Dispatcher::getInstance();
 	dsp->addListeners( this->con_, RUNNING_IN_FALSE);
+
 }
 
 Birth::~Birth(){
