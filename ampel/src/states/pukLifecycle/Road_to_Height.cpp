@@ -12,8 +12,20 @@ Road_to_Height::Road_to_Height(Context* con): State::State(con){
 	//TODO:STARTE TIMER!
 	//TODO: TimeOut?!
 	Dispatcher* dsp = Dispatcher::getInstance();
+	HAL *hal = HAL::getInstance();
 	//TODO: oder 	dsp->addListeners( this->con_, HEIGHT_STATUS_OK);
 	dsp->addListeners( this->con_, IN_HEIGHT_TRUE);
+
+	Timer *pulse = new Timer();
+	//Timer timer;
+	pulse->waitForTimeOut(3,0);
+
+
+
+	cout << "Timer expire" << endl;
+
+	hal->band_stop();
+	cout << "Timer expire" << endl;
 }
 
 Road_to_Height::~Road_to_Height(){

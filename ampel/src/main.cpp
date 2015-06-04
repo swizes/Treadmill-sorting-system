@@ -12,12 +12,12 @@
 #include <cstdlib>
 #include <iostream>
 #include "Blink_Thread.h"
-#include "Hal_Test_Thread.h"
+#include "./Tests/Hal_Test_Thread.h"
 #include "lib/HWaccess.h"
 #include "Serial.h"
 #include "CommunicationThread.h"
 #include "states/PuckStates.h"
-//#include "CalibrateThread.h"
+#include "CalibrateThread.h"
 #include "Dispatcher.h"
 #include "State.cpp"
 
@@ -30,14 +30,18 @@ int main(int argc, char *argv[]) {
         IOaccess_open();
 		cout << "WARNING: SYSTEM IN SIMULATION!!!" << endl;
     #endif
+	//RUN Calibration
+	CalibrateThread *cal = CalibrateThread::getInstance();
+	cal->start(NULL);
+	cal->join();
 
     //Hal_Test_Thread htt;
 	
     /*Serielle Verbindung funkitoniert nur wenn sich System nicht in der Simulation befindet
     /dev/ser1 steht nicht zur Verfuegung. 		*/
 	#ifndef SIMULATION
-		CommunicationThread ct;
-		ct.start(NULL);
+	CommunicationThread ct;
+	ct.start(NULL);
     #endif
 		//Hal_Test_Thread htt;
 		//htt.start(NULL);

@@ -8,9 +8,9 @@
 #include <unistd.h>
 #include <time.h>
 #include "Hal_Test_Thread.h"
-#include "lib/Lock.h"
-#include "lib/HWaccess.h"
-#include "Hal.h"
+#include "../lib/Lock.h"
+#include "../lib/HWaccess.h"
+#include "../Hal.h"
 
 
 Hal_Test_Thread::Hal_Test_Thread() {

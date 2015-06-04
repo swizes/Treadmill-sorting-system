@@ -18,10 +18,30 @@
 
 #include "CalibrateThread.h"
 #include "HAL.h"
-#include "Timer.h"
+#include "./Timer/Timer.h"
+
+CalibrateThread* CalibrateThread::instance_ = NULL;
+
+/**
+* c'tor for the Thread-safe singleton Calibration implementation
+* @param none
+* @return A Pointer to the Singleton Calibration Object
+*/
+CalibrateThread* CalibrateThread::getInstance(){
+	static pthread_mutex_t mtx_ = PTHREAD_MUTEX_INITIALIZER;
+
+	if( instance_ == NULL){
+		pthread_mutex_lock(&mtx_);
+		if( instance_ == NULL){
+		    instance_ = new CalibrateThread();
+		}
+		pthread_mutex_unlock(&mtx_);
+	}
+	return instance_;
+}
 
 
-CalibrateThread::CalibrateThread(void) {
+CalibrateThread::CalibrateThread() {
 
 	cout << "ctor Calibrate" << endl;
 

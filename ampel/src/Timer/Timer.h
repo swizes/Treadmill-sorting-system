@@ -14,6 +14,8 @@
 #include <time.h>
 #include <iostream>
 #include <unistd.h>
+#include <sys/neutrino.h>
+#include "TimerManagement.h"
 
 
 
@@ -23,14 +25,20 @@ private:
 	timer_t timerid;
 	struct itimerspec result;
 	struct itimerspec val;
+	struct timespec stopval;
 	struct sigevent timerEvent;
+	bool stop;
 
 
 public:
 	void createTimer();
+	int createTimerPulse();
+	void waitForTimeOut(int, int);
 	void deleteTimer();
 	void setTimer(int,int);
 	void getTime(struct timespec *);
+	void stopTimer();
+	void continueTimer();
 	Timer();
 	virtual ~Timer();
 };
