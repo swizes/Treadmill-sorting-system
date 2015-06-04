@@ -12,7 +12,7 @@
 #include <cstdlib>
 #include <iostream>
 #include "Blink_Thread.h"
-#include "Hal_Test_Thread.h"
+//#include "Hal_Test_Thread.h"
 #include "lib/HWaccess.h"
 #include "Serial.h"
 #include "CommunicationThread.h"
@@ -20,46 +20,33 @@
 //#include "CalibrateThread.h"
 #include "Dispatcher.h"
 #include "State.cpp"
+#include "HAL.h"
+#include "HoleDetector.h"
 
 using namespace std;
 
 int main(int argc, char *argv[]) {
 
-    // Baut Verbindung zu Simulation auf
-	#ifdef SIMULATION
-        IOaccess_open();
-		cout << "WARNING: SYSTEM IN SIMULATION!!!" << endl;
-    #endif
+	HAL* hal = HAL::getInstance();
+	/*
+	cout << "start hole detection" << endl;
+	bool x = HoleDetector::detectHole(hal, false);
 
-    //Hal_Test_Thread htt;
-	
-    /*Serielle Verbindung funkitoniert nur wenn sich System nicht in der Simulation befindet
-    /dev/ser1 steht nicht zur Verfuegung. 		*/
-	#ifndef SIMULATION
-		CommunicationThread ct;
-		ct.start(NULL);
-    #endif
-		//Hal_Test_Thread htt;
-		//htt.start(NULL);
-		//htt.join();
-//		CalibrateThread cal;
-//		cal.start(NULL);
-//		cal.join();
-		Timer_Test_Thread ttt;
-		ttt.start(NULL);
-		ttt.join();
-		//htt.start(NULL);
-		
-	
-	#ifndef SIMULATION
-		ct.join();;
-    #endif
-
-
-
-    #ifdef SIMULATION
-       IOaccess_close();
-    #endif
+	if(x) {
+		cout << "has hole!" << endl;
+	} else {
+		cout << "no hole" << endl;
+	}
+	*/
+	int i = 1000000;
+	while (true) {
+		if(i<0)
+		{
+			cout << "val:" << hal->get_height_measure() << endl;
+			i = 1000000;
+		}
+		i--;
+	}
 
     return EXIT_SUCCESS;
 }
