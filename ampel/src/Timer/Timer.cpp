@@ -96,7 +96,7 @@ void Timer::continueTimer(){
 }
 
 void Timer::getTime(struct timespec *offset){
-
+	if(timerid!=-1){
 		if(!stop){
 			timer_gettime(timerid,&result);
 			offset->tv_nsec = result.it_value.tv_nsec;
@@ -105,6 +105,20 @@ void Timer::getTime(struct timespec *offset){
 			offset->tv_nsec = stopval.tv_nsec;
 			offset->tv_sec = stopval.tv_sec;
 		}
+	}else{
+		offset->tv_nsec = -1;
+		offset->tv_sec = -1;
+	}
+
+}
+void Timer::waitForTimeOut(int s, int ns){
+
+	struct _pulse pulse;
+	int channel = createTimerPulse();
+	setTimer(s,ns);
+	//Timer timer;
+	MsgReceivePulse(channel, &pulse, sizeof(pulse), NULL);
+
 
 }
 

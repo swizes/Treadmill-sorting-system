@@ -22,6 +22,7 @@ TimerManagement* TimerManagement::getInstance(){
 			return instance_;
 	}else{
 		instance_ = new TimerManagement();
+		return instance_;
 	}
 
 }
