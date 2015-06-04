@@ -26,8 +26,9 @@ using namespace thread;
 
 class CalibrateThread: public HAWThread {
 public:
-	CalibrateThread(void);
 	virtual ~CalibrateThread();
+
+	static CalibrateThread* getInstance();
 
 	int getGatetoL1Fast() const {
 		return GatetoL1Fast;
@@ -61,13 +62,19 @@ public:
 		return L0toL1Slow;
 	}
 
+	bool isBand() const {
+		return band;
+	}
+
 private:
+	CalibrateThread();
 	CalibrateThread(const CalibrateThread& b);      ///< Copy-Konstruktor. Privat, deshalb kann dieses Objekt nicht als "Call-by-value" uebergeben werden.
 	CalibrateThread& operator=(CalibrateThread& b);
 	virtual void execute(void*); ///< Geerbt aus HAWThread. Muss implementiert werden.
 	virtual void shutdown();
 	int timespecToMs(struct timespec *);
 
+	static CalibrateThread* instance_;
 	int L0toHeightFast;
 	int HeighttoGateFast;
 	int L0toL1Fast;
@@ -76,6 +83,7 @@ private:
 	int HeighttoGateSlow;
 	int L0toL1Slow;
 	int GatetoL1Slow;
+	bool band; // 0 ->Band1 1->Band2
 };
 
 #endif /* COMMUNNICATIONTHREAD_H_ */
