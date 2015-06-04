@@ -350,5 +350,4 @@ int HAL:: get_height_measure(void) {
 	out8(PORT_ADC_LOW,  BM_START_MEASURE);
 	delay(5);
 	return in16(PORT_ADC_LOW);
-	return -1;
 }
