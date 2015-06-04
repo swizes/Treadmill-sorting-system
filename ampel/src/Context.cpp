@@ -10,12 +10,12 @@
 #define CONTEXT_CPP_
 #include "Transition.h"
 #include "Dispatcher.h"
-#include "Puk.h"
+#include "Puck.h"
 
 class Context: public Transitions {
 private:
 	Transitions* state_;
-	Puk puk;
+	Puck puck;
 public:
 	Context() :
 			state_(NULL) {

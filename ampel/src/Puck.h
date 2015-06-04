@@ -5,12 +5,12 @@
  *      Author: abn908
  */
 
-#ifndef PUK_H_
-#define PUK_H_
+#ifndef PUCK_H_
+#define PUCK_H_
 
 enum SIZE{OK,NOT_OK,UNKNOWN};
 
-class Puk {
+class Puck {
 
 private:
 	bool metal;
@@ -21,8 +21,8 @@ private:
 	static int idCount;
 
 public:
-	Puk();
-	virtual ~Puk();
+	Puck();
+	virtual ~Puck();
 
 	bool isHoleOnTop() const {
 		return holeOnTop;
