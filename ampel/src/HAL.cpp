@@ -13,10 +13,7 @@
 #include "lib/Lock.h"
 #include <pthread.h>
 #include <iostream>
-<<<<<<< HEAD
-=======
 #include <time.h>
->>>>>>> CalibrateAnalogMessurement
 #include <unistd.h>
 
 using namespace std;
