@@ -12,18 +12,12 @@
 #include <cstdlib>
 #include <iostream>
 #include "Blink_Thread.h"
-<<<<<<< HEAD
 #include "./Tests/Hal_Test_Thread.h"
-=======
 //#include "Hal_Test_Thread.h"
->>>>>>> height-hole-detector
 #include "lib/HWaccess.h"
 #include "Serial.h"
 #include "CommunicationThread.h"
-<<<<<<< HEAD
 #include "states/PuckStates.h"
-=======
->>>>>>> CalibrateAnalogMessurement
 #include "CalibrateThread.h"
 #include "Dispatcher.h"
 #include "State.cpp"
@@ -34,7 +28,6 @@ using namespace std;
 
 int main(int argc, char *argv[]) {
 
-<<<<<<< HEAD
     // Baut Verbindung zu Simulation auf
 	#ifdef SIMULATION
         IOaccess_open();
@@ -53,8 +46,6 @@ int main(int argc, char *argv[]) {
 	CommunicationThread ct;
 	ct.start(NULL);
     #endif
-<<<<<<< HEAD
-
 
 	HAL* hal = HAL::getInstance();
 	hal->reset();
@@ -65,19 +56,11 @@ int main(int argc, char *argv[]) {
 	disp->listenForEvents();
 
 
-=======
 		//Hal_Test_Thread htt;
 		//htt.start(NULL);
 		//htt.join();
-		CalibrateThread cal;
-		cal.start(NULL);
-		cal.join();
 
 
-
->>>>>>> CalibrateAnalogMessurement
-	
-	
 	#ifndef SIMULATION
 		ct.join();;
     #endif
@@ -87,9 +70,6 @@ int main(int argc, char *argv[]) {
     #ifdef SIMULATION
        IOaccess_close();
     #endif
-=======
-
->>>>>>> height-hole-detector
 
     return EXIT_SUCCESS;
 }
