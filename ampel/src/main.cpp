@@ -20,7 +20,10 @@
 #include "lib/HWaccess.h"
 #include "Serial.h"
 #include "CommunicationThread.h"
+<<<<<<< HEAD
 #include "states/PuckStates.h"
+=======
+>>>>>>> CalibrateAnalogMessurement
 #include "CalibrateThread.h"
 #include "Dispatcher.h"
 #include "State.cpp"
@@ -50,6 +53,7 @@ int main(int argc, char *argv[]) {
 	CommunicationThread ct;
 	ct.start(NULL);
     #endif
+<<<<<<< HEAD
 
 
 	HAL* hal = HAL::getInstance();
@@ -61,10 +65,17 @@ int main(int argc, char *argv[]) {
 	disp->listenForEvents();
 
 
-		
-		//printf("RunIn: %d  RunOut: %d  nEvents: %d \n\n", RUNNING_IN_TRUE, RUNNING_OUT_TRUE, NEVENTS);
+=======
+		//Hal_Test_Thread htt;
+		//htt.start(NULL);
+		//htt.join();
+		CalibrateThread cal;
+		cal.start(NULL);
+		cal.join();
 
-		//disp.listenForEvents();
+
+
+>>>>>>> CalibrateAnalogMessurement
 	
 	
 	#ifndef SIMULATION
