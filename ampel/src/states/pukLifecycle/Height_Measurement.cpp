@@ -20,12 +20,12 @@ Height_Measurement::Height_Measurement(Context* con): State::State(con){
 	con->getPuck().setSize(height);
 
 	//Variant value of Pucks  = > TODO: set right VariantValue!
-	int variantValue = (ct->getIncorrectPuckHeight() - ct->getCorrectPuckHeight()) / 4;
+	int variantValue = (ct->getSmallPuck() - ct->getBigPuck()) / 4;
 
 	//Height is bigger if there is no object in Measurement
 	//
-	int minHeight = ct->getIncorrectPuckHeight()-variantValue;
-	int maxHeight = ct->getCorrectPuckHeight()-variantValue;
+	int minHeight = ct->getSmallPuck()-variantValue;
+	int maxHeight = ct->getBigPuck()-variantValue;
 	//Height is equal or bigger than an incorrect Type
 	//and equal or less than a CorrectType
 	if(height <=  minHeight && height >= maxHeight){
