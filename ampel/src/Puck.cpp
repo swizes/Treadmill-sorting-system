@@ -13,7 +13,8 @@ Puck::Puck() {
 	metal = false;
 	holeOnTop = false;
 	size = 0;
-	sizeTyp = UNKNOWN;
+	//sizeTyp = UNKNOWN;
+	sizeTyp = NOT_OK;	//Default sortingPuck out
 	id = idCount++;
 
 
