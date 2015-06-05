@@ -62,25 +62,24 @@ public:
 		return L0toL1Slow;
 	}
 
-<<<<<<< HEAD
 	int getNoPuckHeight() const{
 		return noPuckHeight;
 	}
 
 	bool isBand() const {
 		return band;
-=======
-	int getBigPuk() const {
-		return bigPuk;
+	}
+
+	int getBigPuck() const {
+		return bigPuck;
 	}
 
 	int getHoleHeight() const {
 		return holeHeight;
 	}
 
-	int getSmallPuk() const {
-		return smallPuk;
->>>>>>> CalibrateAnalogMessurement
+	int getSmallPuck() const {
+		return smallPuck;
 	}
 
 private:
@@ -100,14 +99,12 @@ private:
 	int HeighttoGateSlow;
 	int L0toL1Slow;
 	int GatetoL1Slow;
-<<<<<<< HEAD
 	int noPuckHeight;
 	bool band; // 0 ->Band1 1->Band2
-=======
-	int bigPuk;
-	int smallPuk;
+
+	int bigPuck;
+	int smallPuck;
 	int holeHeight;
->>>>>>> CalibrateAnalogMessurement
 };
 
 #endif /* COMMUNNICATIONTHREAD_H_ */
