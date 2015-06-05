@@ -87,6 +87,10 @@ public:
 		state_->Running_out_false();
 	}
 
+	Puck getPuck(){
+		return psuck;
+	}
+
 private:
 	Context(const Context& other);
 	Context& operator=(const Context& other);
