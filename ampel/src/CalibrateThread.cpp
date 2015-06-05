@@ -179,8 +179,7 @@ void CalibrateThread::execute(void*) {
 
 >>>>>>> CalibrateAnalogMessurement
 
-	//get Height from correct Puck
-	correctPuckHeight = hal->get_height_measure();
+
 
 	printf("L0ToHeighSlow : %d\n", L0toHeightSlow);
 	hal->open_gate();
