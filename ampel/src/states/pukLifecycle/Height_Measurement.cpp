@@ -35,6 +35,7 @@ Height_Measurement::Height_Measurement(Context* con): State::State(con){
 	//TODO: PreCond is_Height_ok
 	//Maybe go in ErrorHandling if is_Height_ok @ false
 
+	//Lambda transition
 	new (this) Search_for_Hole(this->con_);
 }
 
