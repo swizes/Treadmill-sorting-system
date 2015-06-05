@@ -2,7 +2,7 @@
  * CommunnicationThread.h
  *
  *  Created on: 17.04.2015
- *      Author: lukasTest
+ *      Author: lukasTest, Tobi
  */
 
 
@@ -62,6 +62,18 @@ public:
 		return L0toL1Slow;
 	}
 
+	int getNoPuckHeight() const{
+		return noPuckHeight;
+	}
+
+	int getCorrectPuckHeight() const{
+		return correctPuckHeight;
+	}
+
+	int getIncorrectPuckHeight() const{
+		return incorrectPuckHeight;
+	}
+
 	bool isBand() const {
 		return band;
 	}
@@ -83,6 +95,9 @@ private:
 	int HeighttoGateSlow;
 	int L0toL1Slow;
 	int GatetoL1Slow;
+	int noPuckHeight;
+	int correctPuckHeight;
+	int incorrectPuckHeight;
 	bool band; // 0 ->Band1 1->Band2
 };
 

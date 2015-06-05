@@ -14,8 +14,6 @@
 
  */
 
-
-
 #include "CalibrateThread.h"
 #include "HAL.h"
 #include "./Timer/Timer.h"
@@ -23,23 +21,22 @@
 CalibrateThread* CalibrateThread::instance_ = NULL;
 
 /**
-* c'tor for the Thread-safe singleton Calibration implementation
-* @param none
-* @return A Pointer to the Singleton Calibration Object
-*/
-CalibrateThread* CalibrateThread::getInstance(){
+ * c'tor for the Thread-safe singleton Calibration implementation
+ * @param none
+ * @return A Pointer to the Singleton Calibration Object
+ */
+CalibrateThread* CalibrateThread::getInstance() {
 	static pthread_mutex_t mtx_ = PTHREAD_MUTEX_INITIALIZER;
 
-	if( instance_ == NULL){
+	if (instance_ == NULL) {
 		pthread_mutex_lock(&mtx_);
-		if( instance_ == NULL){
-		    instance_ = new CalibrateThread();
+		if (instance_ == NULL) {
+			instance_ = new CalibrateThread();
 		}
 		pthread_mutex_unlock(&mtx_);
 	}
 	return instance_;
 }
-
 
 CalibrateThread::CalibrateThread() {
 
@@ -54,7 +51,7 @@ CalibrateThread::~CalibrateThread() {
 	cout << "dtor Calibrate" << endl;
 }
 
-void CalibrateThread::execute(void*){
+void CalibrateThread::execute(void*) {
 
 	cout << "Calibration started" << endl;
 	HAL *hal = HAL::getInstance();
@@ -62,91 +59,102 @@ void CalibrateThread::execute(void*){
 	Timer time;
 	time.createTimer();
 
-
-
+	//Get Height with no Puck in Measurement
+	noPuckHeight = hal->get_height_measure();
 
 	struct timespec offset;
-	cout << "Put a puck in L0" << endl;
-	while(hal->is_puck_running_in()==0){}
+	cout << "Put a incorrect Puck (flat) in L0" << endl;
+	while (hal->is_puck_running_in() == 0) {
+	}
 
 	//LO to Height
-	time.setTimer(10,0);
+	time.setTimer(10, 0);
 	hal->band_right_normal();
-	while(hal->is_puck_in_height_determination()==0){}
+	while (hal->is_puck_in_height_determination() == 0) {
+	}
 	time.getTime(&offset);
-	L0toHeightFast = 10000-timespecToMs(&offset);
-	printf("L0ToHeightFast : %d\n",L0toHeightFast);
+	L0toHeightFast = 10000 - timespecToMs(&offset);
+
+	//Get Height from flat Puck
+	incorrectPuckHeight = hal->get_height_measure();
+	printf("L0ToHeightFast : %d\n", L0toHeightFast);
 	hal->open_gate();
 
 	//Height to Gate
-	time.setTimer(10,0);
-	while(hal->is_puck_in_gate()==0){}
+	time.setTimer(10, 0);
+	while (hal->is_puck_in_gate() == 0) {
+	}
 	time.getTime(&offset);
-	HeighttoGateFast = 10000-timespecToMs(&offset);
-	printf("HeighttoGateFast : %d\n",HeighttoGateFast);
+	HeighttoGateFast = 10000 - timespecToMs(&offset);
+	printf("HeighttoGateFast : %d\n", HeighttoGateFast);
 	hal->close_gate();
-	while(hal->is_slide_full()==0){}
+	while (hal->is_slide_full() == 0) {
+	}
 	hal->band_stop();
-
-
 
 	//L0 to L1
 
-
 	cout << "Put a puck in L0" << endl;
-	while(hal->is_puck_running_in()==0){}
-	time.setTimer(10,0);
+	while (hal->is_puck_running_in() == 0) {
+	}
+	time.setTimer(10, 0);
 	hal->band_right_normal();
 	hal->open_gate();
 
-	while(hal->is_puck_running_out()==0){}
+	while (hal->is_puck_running_out() == 0) {
+	}
 	time.getTime(&offset);
-	L0toL1Fast = 10000-timespecToMs(&offset);
-	printf("L0toL1Fast : %d\n",L0toL1Fast);
+	L0toL1Fast = 10000 - timespecToMs(&offset);
+	printf("L0toL1Fast : %d\n", L0toL1Fast);
 	hal->band_stop();
 	hal->close_gate();
 
+	cout << "Put a correct puck with hole down in L0" << endl;
+	while (hal->is_puck_running_in() == 0) {
+	}
 
-		cout << "Put a puck in L0" << endl;
-		while(hal->is_puck_running_in()==0){}
+	//LO to Height
+	time.setTimer(10, 0);
+	hal->band_right_slowly();
+	while (hal->is_puck_in_height_determination() == 0) {
+	}
+	time.getTime(&offset);
+	L0toHeightSlow = 10000 - timespecToMs(&offset);
 
-		//LO to Height
-		time.setTimer(10,0);
-		hal->band_right_slowly();
-		while(hal->is_puck_in_height_determination()==0){}
-		time.getTime(&offset);
-		L0toHeightSlow = 10000-timespecToMs(&offset);
-		printf("L0ToHeighSlow : %d\n",L0toHeightSlow);
-		hal->open_gate();
+	//get Height from correct Puck
+	correctPuckHeight = hal->get_height_measure();
 
-		//Height to Gate
-		time.setTimer(10,0);
-		while(hal->is_puck_in_gate()==0){}
-		time.getTime(&offset);
-		HeighttoGateSlow = 10000-timespecToMs(&offset);
-		printf("HeighttoGateSlow : %d\n",HeighttoGateSlow);
-		hal->close_gate();
-		while(hal->is_slide_full()==0){}
-		hal->band_stop();
+	printf("L0ToHeighSlow : %d\n", L0toHeightSlow);
+	hal->open_gate();
 
+	//Height to Gate
+	time.setTimer(10, 0);
+	while (hal->is_puck_in_gate() == 0) {
+	}
+	time.getTime(&offset);
+	HeighttoGateSlow = 10000 - timespecToMs(&offset);
+	printf("HeighttoGateSlow : %d\n", HeighttoGateSlow);
+	hal->close_gate();
+	while (hal->is_slide_full() == 0) {
+	}
+	hal->band_stop();
 
+	//L0 to L1
 
-		//L0 to L1
+	cout << "Put a puck in L0" << endl;
+	while (hal->is_puck_running_in() == 0) {
+	}
+	time.setTimer(10, 0);
+	hal->band_right_slowly();
+	hal->open_gate();
 
-
-		cout << "Put a puck in L0" << endl;
-		while(hal->is_puck_running_in()==0){}
-		time.setTimer(10,0);
-		hal->band_right_slowly();
-		hal->open_gate();
-
-		while(hal->is_puck_running_out()==0){}
-		time.getTime(&offset);
-		L0toL1Slow = 10000-timespecToMs(&offset);
-		printf("L0toL1Slow : %d\n",L0toL1Slow);
-		hal->band_stop();
-		hal->close_gate();
-
+	while (hal->is_puck_running_out() == 0) {
+	}
+	time.getTime(&offset);
+	L0toL1Slow = 10000 - timespecToMs(&offset);
+	printf("L0toL1Slow : %d\n", L0toL1Slow);
+	hal->band_stop();
+	hal->close_gate();
 
 	time.deleteTimer();
 	//while(hal->is_puck_in_height_determination()==0){}
@@ -158,20 +166,14 @@ void CalibrateThread::execute(void*){
 
 }
 
-
-
-
-
-void CalibrateThread::shutdown(){
-    cout << "Communication Test shutdown" << endl;
+void CalibrateThread::shutdown() {
+	cout << "Communication Test shutdown" << endl;
 
 }
 
-int CalibrateThread::timespecToMs(struct timespec *time){
+int CalibrateThread::timespecToMs(struct timespec *time) {
 	int nsec = time->tv_nsec;
 	int sec = time->tv_sec;
-	return sec * 1000 + nsec/1000/1000;
+	return sec * 1000 + nsec / 1000 / 1000;
 }
-
-
 
