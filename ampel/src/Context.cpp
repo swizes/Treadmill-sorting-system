@@ -88,7 +88,7 @@ public:
 	}
 
 	Puck getPuck(){
-		return psuck;
+		return puck;
 	}
 
 private:
