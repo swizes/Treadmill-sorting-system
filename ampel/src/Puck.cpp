@@ -16,7 +16,7 @@ Puck::Puck() {
 	//sizeTyp = UNKNOWN;
 	sizeTyp = NOT_OK;	//Default sortingPuck out
 	id = idCount++;
-
+	needUserInteraction = false;
 
 
 }
