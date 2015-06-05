@@ -15,6 +15,7 @@ class Puck {
 private:
 	bool metal;
 	bool holeOnTop;
+	bool needUserInteraction;
 	int size;
 	SIZE sizeTyp;
 	int id;
@@ -23,6 +24,14 @@ private:
 public:
 	Puck();
 	virtual ~Puck();
+
+	bool isUserInteractionNeeded() const{
+		return needUserInteraction;
+	}
+
+	void setUserInteractionNeeded(bool userInter){
+		this->needUserInteraction = userInter;
+	}
 
 	bool isHoleOnTop() const {
 		return holeOnTop;
