@@ -23,13 +23,27 @@ using namespace std;
 
 int main(int argc, char *argv[]) {
 
-   ConfigManager cf = new ConfigManager();
-   cf.setConfigValue("test1", "value1");
-   cf.setConfigValue("test2", "value2");
+	ConfigManager *cf = new ConfigManager();
+	cf->setConfigValue("test1", "value1");
+	cf->setConfigValue("test2", "value2");
 
-   cout << "val1:" << cf.getConfigValue("test1") << endl;
-   cout << "val2:" << cf.getConfigValue("test2") << endl;
+	char* val1;
+	char* val2;
+	cf->getConfigValue("test1", &val1);
+	cf->getConfigValue("test2", &val2);
 
+	cout << "val1:" << val1 << endl;
+	cout << "val2:" << val2 << endl;
+
+	cf->writeDefaultConfig();
+
+	cf->readDefaultConfig();
+
+	cf->getConfigValue("test1", &val1);
+	cf->getConfigValue("test2", &val2);
+
+	cout << "val1:" << val1 << endl;
+	cout << "val2:" << val2 << endl;
 
 	//cout << "check file system";
 	//FileHelper fhelper;// = new FileHelper();

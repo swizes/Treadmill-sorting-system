@@ -36,9 +36,9 @@ void FileHelper::test1() {
 //bool FileHelper::
 
 char* FileHelper::getConfigDir() {
-
+	return DEFAULT_CONFIG_PATH;
 }
 
 char* FileHelper::getLogDir() {
-
+	return DEFAULT_LOG_PATH;
 }

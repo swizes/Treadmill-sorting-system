@@ -8,6 +8,8 @@
 #ifndef CONFIGMANAGER_H_
 #define CONFIGMANAGER_H_
 
+#define DEFAULT_CONFIG_FILENAME "default.cf"
+#define CONFIG_SEPARATOR ":"
 
 class ConfigManager {
 public:
@@ -20,9 +22,11 @@ public:
 	bool writeConfig(char* configFileName);
 
 	bool hasKey(char* key);
-	bool getConfigValue(char* key, char &outVal);
-	bool setConfigValue(char* key, char* inVal);
+	bool getConfigValue(char* key, char** outVal);
+	bool setConfigValue(const char* key, const char* inVal);
 
+private:
+	void processConfigLine(char* line);
 	// get key list?
 
 private:

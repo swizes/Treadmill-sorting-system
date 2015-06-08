@@ -8,6 +8,8 @@
 #ifndef FILEHELPER_H_
 #define FILEHELPER_H_
 
+#define DEFAULT_CONFIG_PATH "/etc/config/"
+#define DEFAULT_LOG_PATH "/var/log/"
 
 class FileHelper {
 public:
@@ -15,8 +17,8 @@ public:
 	virtual ~FileHelper();
 
 	void test1();
-	char* getConfigDir();
-	char* getLogDir();
+	static char* getConfigDir();
+	static char* getLogDir();
 
 private:
 
