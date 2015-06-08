@@ -24,11 +24,14 @@ using namespace std;
 int main(int argc, char *argv[]) {
 
 	ConfigManager *cf = new ConfigManager();
+	string val1 = "ha";
+	string val2;
+
+	/*
 	cf->setConfigValue("test1", "value1");
 	cf->setConfigValue("test2", "value2");
 
-	char* val1;
-	char* val2;
+
 	cf->getConfigValue("test1", &val1);
 	cf->getConfigValue("test2", &val2);
 
@@ -36,7 +39,7 @@ int main(int argc, char *argv[]) {
 	cout << "val2:" << val2 << endl;
 
 	cf->writeDefaultConfig();
-
+*/
 	cf->readDefaultConfig();
 
 	cf->getConfigValue("test1", &val1);

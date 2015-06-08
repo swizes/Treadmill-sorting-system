@@ -11,6 +11,8 @@
 #define DEFAULT_CONFIG_FILENAME "default.cf"
 #define CONFIG_SEPARATOR ":"
 
+#include <string>
+
 class ConfigManager {
 public:
 	ConfigManager();
@@ -18,15 +20,15 @@ public:
 
 	bool readDefaultConfig();
 	bool writeDefaultConfig();
-	bool readConfig(char* configFileName);
-	bool writeConfig(char* configFileName);
+	bool readConfig(std::string configFileName);
+	bool writeConfig(std::string configFileName);
 
-	bool hasKey(char* key);
-	bool getConfigValue(char* key, char** outVal);
-	bool setConfigValue(const char* key, const char* inVal);
+	bool hasKey(std::string key);
+	bool getConfigValue(std::string key, std::string* outVal);
+	bool setConfigValue(std::string key, std::string inVal);
 
 private:
-	void processConfigLine(char* line);
+	void processConfigLine(std::string line);
 	// get key list?
 
 private:

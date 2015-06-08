@@ -11,12 +11,12 @@
 #include <map>
 #include <iostream>
 #include <fstream>
-#include <string>
+
 #include <cstring>
 
 using namespace std;
 
-std::map<char*, char*> configMap;
+std::map<string, string> configMap;
 
 ConfigManager::ConfigManager(){
 
@@ -34,21 +34,22 @@ bool ConfigManager::writeDefaultConfig() {
 	return writeConfig(DEFAULT_CONFIG_FILENAME);
 }
 
-bool ConfigManager::readConfig(char* configFileName) {
-	string fName = string(configFileName);
+bool ConfigManager::readConfig(string configFileName) {
+	string fName = configFileName;
 	string fPath = FileHelper::getConfigDir() + fName;
 	cout << "read config from " << configFileName << endl;
 
 	configMap.clear();
 
 	string line;
-	ifstream st_file (configFileName);
+	ifstream st_file (configFileName.c_str());
 
 	if (st_file.is_open())
 	{
 		while ( getline (st_file,line) )
 		{
-		  cout << line << '\n';
+		  //cout << line << '\n';
+		  processConfigLine(line);
 		}
 		st_file.close();
 	} else {
@@ -56,17 +57,17 @@ bool ConfigManager::readConfig(char* configFileName) {
 	}
 }
 
-bool ConfigManager::writeConfig(char* configFileName) {
-	string fName = string(configFileName);
+bool ConfigManager::writeConfig(string configFileName) {
+	string fName = configFileName;
 	string fPath = FileHelper::getConfigDir() + fName;
 	cout << "write config (" << configMap.size() << " values) to " << configFileName << endl;
 
 	string line;
-	ofstream st_file (configFileName);
+	ofstream st_file (configFileName.c_str());
 
 	if (st_file.is_open())
 	{
-		for (std::map<char*,char*>::iterator it=configMap.begin(); it!=configMap.end(); ++it)
+		for (std::map<string,string>::iterator it=configMap.begin(); it!=configMap.end(); ++it)
 		{
 			st_file << it->first << ":" << it->second << endl;
 		}
@@ -75,10 +76,10 @@ bool ConfigManager::writeConfig(char* configFileName) {
 	}
 }
 
-bool ConfigManager::hasKey(char* key) {
-	for (std::map<char*,char*>::iterator it=configMap.begin(); it!=configMap.end(); ++it)
+bool ConfigManager::hasKey(string key) {
+	for (std::map<string,string>::iterator it=configMap.begin(); it!=configMap.end(); ++it)
 	{
-		if(strcmp(it->first, key) == 0)
+		if(it->first.compare(key) == 0)
 		{
 			return true;
 		}
@@ -87,12 +88,12 @@ bool ConfigManager::hasKey(char* key) {
 	return false;
 }
 
-bool ConfigManager::getConfigValue(char* key, char **outVal) {
-	for (std::map<char*,char*>::iterator it=configMap.begin(); it!=configMap.end(); ++it)
+bool ConfigManager::getConfigValue(string key, string *outVal) {
+	for (std::map<string,string>::iterator it=configMap.begin(); it!=configMap.end(); ++it)
 	{
-		if(strcmp(it->first, key) == 0)
+		if(it->first.compare(key) == 0)
 		{
-			*outVal = it->second;
+			outVal->assign(it->second);
 			return true;
 		}
 	}
@@ -100,21 +101,15 @@ bool ConfigManager::getConfigValue(char* key, char **outVal) {
 	return false;
 }
 
-bool ConfigManager::setConfigValue(const char* key, const char* inVal) {
-	char* pk = (char*)key;
-	char* pv = (char*) inVal;
-	configMap[pk] = pv;
+bool ConfigManager::setConfigValue(string key, string inVal) {
+	configMap[key] = inVal;
 	return true;
 }
 
-void ConfigManager::processConfigLine(char* line) {
-	string sline = string(line);
-
+void ConfigManager::processConfigLine(string line) {
 	//if(sline == null) return;
-	std::size_t pos = sline.find(CONFIG_SEPARATOR);
-	if(pos != string::npos && sline.length() > pos) {
-		string key = sline.substr(0, pos);
-		string val = sline.substr(pos+1);
-		setConfigValue(key.c_str(), val.c_str());
+	std::size_t pos = line.find(CONFIG_SEPARATOR);
+	if(pos != string::npos && line.length() > pos) {
+		setConfigValue(line.substr(0, pos).c_str(), line.substr(pos+1).c_str());
 	}
 }
