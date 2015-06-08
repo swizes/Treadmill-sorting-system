@@ -5,20 +5,22 @@
  *      Author: abn908
  */
 
-#include "Puk.h"
+#include "Puck.h"
 
 
-
-Puk::Puk() {
+int Puck::idCount = 0;
+Puck::Puck() {
 	metal = false;
 	holeOnTop = false;
 	size = 0;
 	sizeTyp = UNKNOWN;
+	id = idCount++;
+
 
 
 }
 
-Puk::~Puk() {
+Puck::~Puck() {
 
 	// TODO Auto-generated destructor stub
 }

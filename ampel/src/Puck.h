@@ -5,22 +5,24 @@
  *      Author: abn908
  */
 
-#ifndef PUK_H_
-#define PUK_H_
+#ifndef PUCK_H_
+#define PUCK_H_
 
 enum SIZE{OK,NOT_OK,UNKNOWN};
 
-class Puk {
+class Puck {
 
 private:
 	bool metal;
 	bool holeOnTop;
 	int size;
 	SIZE sizeTyp;
+	int id;
+	static int idCount;
 
 public:
-	Puk();
-	virtual ~Puk();
+	Puck();
+	virtual ~Puck();
 
 	bool isHoleOnTop() const {
 		return holeOnTop;
@@ -44,6 +46,19 @@ public:
 
 	void setSize(int size) {
 		this->size = size;
+	}
+
+	int getId() const {
+		return id;
+	}
+
+
+	SIZE getSizeTyp() const {
+		return sizeTyp;
+	}
+
+	void setSizeTyp(SIZE sizeTyp) {
+		this->sizeTyp = sizeTyp;
 	}
 };
 

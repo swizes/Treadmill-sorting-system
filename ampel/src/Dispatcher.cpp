@@ -13,7 +13,6 @@ int isrChannel = 0;
 int isrConnection = 0;
 struct sigevent isrEvent;
 
-
 Dispatcher:: Dispatcher(){
 	// Clear Listener Pointer 2Dim Array
 	for(int i=0; i<NEVENTS; i++){
@@ -23,14 +22,24 @@ Dispatcher:: Dispatcher(){
 	}
 
 	// Add Method pointer to Call Method Array
-	methods[0] = &Transitions::Running_In;
-	methods[1] = &Transitions::In_Height;
-	methods[2] = &Transitions::Height_Status;
-	methods[3] = &Transitions::Puck_in_Gate;
-	methods[4] = &Transitions::Metal_detection;
-	methods[5] = &Transitions::Gate_open;
-	methods[6] = &Transitions::Slide_full;
-	methods[7] = &Transitions::Running_out;
+	methods[0] = &Transitions::Running_In_true;
+	methods[1] = &Transitions::In_Height_true;
+	methods[2] = &Transitions::Height_Status_OK;
+	methods[3] = &Transitions::Puck_in_Gate_true;
+	methods[4] = &Transitions::Metal_detection_true;
+	methods[5] = &Transitions::Gate_open_true;
+	methods[6] = &Transitions::Slide_full_true;
+	methods[7] = &Transitions::Running_out_true;
+	methods[8] = &Transitions::Running_In_false;
+	methods[9] = &Transitions::In_Height_false;
+	methods[10] = &Transitions::Height_Status_NOTOK;
+	methods[11] = &Transitions::Puck_in_Gate_false;
+	methods[12] = &Transitions::Metal_detection_false;
+	methods[13] = &Transitions::Gate_open_false;
+	methods[14] = &Transitions::Slide_full_false;
+	methods[15] = &Transitions::Running_out_false;
+
+
 	
 
 
@@ -38,6 +47,11 @@ Dispatcher:: Dispatcher(){
 
 Dispatcher::  ~Dispatcher(){
 
+}
+
+Dispatcher* Dispatcher::getInstance(void){
+	static Dispatcher instance_;
+	return &instance_;
 }
 
 void Dispatcher:: addListeners(Transitions* listener, EVENTS event){
@@ -98,7 +112,7 @@ void Dispatcher:: listenForEvents(){
 	// React on Pulsemessage
 	struct _pulse pulse;
 	do{
-		cout << "Wait for Interrupt" << endl;
+		//cout << "Wait for Interrupt" << endl;
 		MsgReceivePulse(isrChannel,&pulse,sizeof(pulse),NULL);
 
 		uint8_t sival = pulse.value.sival_int;
@@ -119,8 +133,14 @@ void Dispatcher:: listenForEvents(){
 		//Shift -> 0 or 1
 		val = !(val << stateChanged);
 
-		printf("Got an Interrupt, Bit: %d value: %d\n", stateChanged, val);
-		callListeners((EVENTS)stateChanged);
+		if (val == 1){
+			callListeners((EVENTS)stateChanged);
+			printf("Got an Interrupt, Bit: %d value: %d\n", stateChanged, val);
+		} else {
+			callListeners((EVENTS)(stateChanged+EVENT_OFFSET));
+			printf("Got an Interrupt, Bit: %d value: %d\n", stateChanged+EVENT_OFFSET, val);
+		}
+		//printf("Got an Interrupt, Bit: %d value: %d\n", stateChanged, val);
 
 		cout << endl;
 	}while(1);
