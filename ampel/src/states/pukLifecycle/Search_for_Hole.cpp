@@ -16,8 +16,10 @@ Search_for_Hole::Search_for_Hole(Context* con): State::State(con){
 
 	HAL* hal = HAL::getInstance();
 	hal->band_right_slowly();
+	hal->open_gate();
+
 	HoleDetector* hd = new HoleDetector();
-	con->getPuck().setHoleOnTop(hd->detectHole(hal, true));
+	//con->getPuck().setHoleOnTop(hd->detectHole(hal, true));
 }
 
 Search_for_Hole::~Search_for_Hole(){
@@ -32,11 +34,12 @@ void Search_for_Hole::In_Height_false(void){
 	Dispatcher* dsp = Dispatcher::getInstance();
 	dsp->remListeners( this->con_, IN_HEIGHT_FALSE);
 
-	Puck puck = this->con_->getPuck();
+	Puck *puck = this->con_->getPuck();
 
-	if(puck.getSizeTyp() == OK){
-		if(puck.isHoleOnTop()){
-			puck.setUserInteractionNeeded(true);
+	cout << "PuckType: " << puck->getSizeTyp() << endl;
+	if(puck->getSizeTyp() == OK){
+		if(puck->isHoleOnTop()){
+			puck->setUserInteractionNeeded(true);
 		}
 
 		new (this) Road_to_Metal(this->con_);

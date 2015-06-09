@@ -34,24 +34,28 @@ int main(int argc, char *argv[]) {
 		cout << "WARNING: SYSTEM IN SIMULATION!!!" << endl;
     #endif
 	//RUN Calibration
-	CalibrateThread *cal = CalibrateThread::getInstance();
-	cal->start(NULL);
-	cal->join();
+//	CalibrateThread *cal = CalibrateThread::getInstance();
+//	cal->start(NULL);
+//	cal->join();
+
 
     //Hal_Test_Thread htt;
 	
     /*Serielle Verbindung funkitoniert nur wenn sich System nicht in der Simulation befindet
     /dev/ser1 steht nicht zur Verfuegung. 		*/
 	#ifndef SIMULATION
-	CommunicationThread ct;
-	ct.start(NULL);
+	//CommunicationThread ct;
+	//ct.start(NULL);
     #endif
 
 	HAL* hal = HAL::getInstance();
 	hal->reset();
 	Dispatcher* disp = Dispatcher::getInstance();
 
+	cout << "Vor Start der FSM" << endl;
+
 	Context* con= new Context();
+	cout << "NACH CONTEXT!!! fuck" << endl;
 	con->setState(new NotExist(con));
 	disp->listenForEvents();
 
@@ -62,7 +66,7 @@ int main(int argc, char *argv[]) {
 
 
 	#ifndef SIMULATION
-		ct.join();;
+		//ct.join();;
     #endif
 
 

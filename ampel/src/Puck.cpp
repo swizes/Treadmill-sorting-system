@@ -7,6 +7,7 @@
 
 #include "Puck.h"
 
+#include <iostream>
 
 int Puck::idCount = 0;
 Puck::Puck() {
@@ -18,7 +19,7 @@ Puck::Puck() {
 	id = idCount++;
 	needUserInteraction = false;
 
-
+	std::cout << "Puck is created" << std::endl;
 }
 
 Puck::~Puck() {

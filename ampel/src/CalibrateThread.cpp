@@ -44,6 +44,8 @@ CalibrateThread* CalibrateThread::getInstance() {
 CalibrateThread::CalibrateThread() {
 
 	cout << "ctor Calibrate" << endl;
+	bigPuck = 1550;
+	smallPuck = 1299;
 
 }
 
@@ -65,7 +67,7 @@ void CalibrateThread::execute(void*) {
 	//Get Height with no Puck in Measurement
 	noPuckHeight = hal->get_height_measure();
 
-	struct timespec offset;
+	struct timespec offset;/*
 	cout << "Put a Puck in L0" << endl;
 	while (hal->is_puck_running_in() == 0) {
 	}
@@ -212,7 +214,7 @@ void CalibrateThread::execute(void*) {
 		L0toL1Slow = TIMERSTART*1000-timespecToMs(&offset);
 		printf("L0toL1Slow : %d\n",L0toL1Slow);
 		hal->band_stop();
-		hal->close_gate();
+		hal->close_gate();*/
 
 		cout << "Put a Small puck in L0" << endl;
 		while(hal->is_puck_running_in()==0){}
@@ -246,12 +248,12 @@ void CalibrateThread::execute(void*) {
 		while(hal->is_puck_in_height_determination()==0){}
 		hal->band_right_slowly();
 		int first = hal->get_height_measure();
-		time.setTimer(TIMERSTART,0);
+		//time.setTimer(TIMERSTART,0);
 		while(abs(hal->get_height_measure()-first)<5){
 
 		}
 		holeHeight = hal->get_height_measure();
-		time.getTime(&offset);
+		//time.getTime(&offset);
 		int diff = offset.tv_nsec;
 		cout << diff << endl;
 		printf("bigPuk : %d\n",bigPuck);
@@ -262,7 +264,7 @@ void CalibrateThread::execute(void*) {
 		hal->band_stop();
 
 
-		time.deleteTimer();
+		//time.deleteTimer();
 	//while(hal->is_puck_in_height_determination()==0){}
 	//TIME
 
@@ -273,7 +275,7 @@ void CalibrateThread::execute(void*) {
 }
 
 void CalibrateThread::shutdown() {
-	cout << "Communication Test shutdown" << endl;
+	cout << "Calibrate Thread shutdown" << endl;
 
 }
 

@@ -8,6 +8,8 @@
 #ifndef PUCK_H_
 #define PUCK_H_
 
+#include <iostream>
+
 enum SIZE{OK,NOT_OK,UNKNOWN};
 
 class Puck {
@@ -67,6 +69,7 @@ public:
 	}
 
 	void setSizeTyp(SIZE sizeTyp) {
+		std::cout << "set sizetype: " << sizeTyp << std::endl;
 		this->sizeTyp = sizeTyp;
 	}
 };

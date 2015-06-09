@@ -29,7 +29,7 @@ void Flipping_Puck::Slide_full_true(void){
 	dsp->remListeners( this->con_, SLIDE_FULL_TRUE);
 
 	// Move to Is in Slide
-	new (this) Is_in_Slide(this->con_);
+	new (this) Is_In_Slide(this->con_);
 }
 
 

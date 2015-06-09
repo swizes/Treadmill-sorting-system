@@ -7,7 +7,7 @@
 #include "PuckStates.h"
 
 Road_To_Exit::Road_To_Exit(Context* con): State::State(con){
-	printf("Road_to_Metal()\n");
+	printf("Road_to_Exit()\n");
 	Dispatcher* dsp = Dispatcher::getInstance();
 	dsp->addListeners( this->con_, RUNNING_OUT_TRUE);
 	/*
@@ -21,7 +21,7 @@ Road_To_Exit::Road_To_Exit(Context* con): State::State(con){
 }
 
 Road_To_Exit::~Road_To_Exit(){
-	printf("~Road_to_Metal()\n");
+	printf("~Road_to_Exit()\n");
 
 }
 
@@ -31,6 +31,8 @@ void Road_To_Exit::Running_out_true(void){
 	// Stop listen to Event Transmission1
 	Dispatcher* dsp = Dispatcher::getInstance();
 	dsp->remListeners( this->con_, RUNNING_OUT_TRUE);
+	HAL *hal = HAL::getInstance();
+	hal->band_stop();
 
 	// Move to State Band2
 	//new (this) Is_Band2_Free?(this->con_);

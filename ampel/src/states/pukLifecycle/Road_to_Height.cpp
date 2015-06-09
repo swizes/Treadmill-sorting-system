@@ -18,13 +18,13 @@ Road_to_Height::Road_to_Height(Context* con): State::State(con){
 
 	Timer *pulse = new Timer();
 	//Timer timer;
-	pulse->waitForTimeOut(3,0);
+	pulse->waitForTimeOut(1,500000000);
 
 
 
 	cout << "Timer expire" << endl;
 
-	hal->band_stop();
+	hal->band_right_slowly();
 	cout << "Timer expire" << endl;
 }
 
