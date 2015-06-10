@@ -8,13 +8,26 @@
 #ifndef PUCK_H_
 #define PUCK_H_
 
+#include <iostream>
+
 enum SIZE{OK,NOT_OK,UNKNOWN};
+
+typedef struct{
+
+	bool metal;
+	bool holeOnTop;
+	int size;
+	SIZE sizetyp;
+	int id;
+
+}puckStruct;
 
 class Puck {
 
 private:
 	bool metal;
 	bool holeOnTop;
+	bool needUserInteraction;
 	int size;
 	SIZE sizeTyp;
 	int id;
@@ -22,7 +35,17 @@ private:
 
 public:
 	Puck();
+	Puck(puckStruct);
 	virtual ~Puck();
+	void setPuckFromStruct(puckStruct);
+	puckStruct getPuckStruct(void);
+	bool isUserInteractionNeeded() const{
+		return needUserInteraction;
+	}
+
+	void setUserInteractionNeeded(bool userInter){
+		this->needUserInteraction = userInter;
+	}
 
 	bool isHoleOnTop() const {
 		return holeOnTop;
@@ -58,6 +81,7 @@ public:
 	}
 
 	void setSizeTyp(SIZE sizeTyp) {
+		std::cout << "set sizetype: " << sizeTyp << std::endl;
 		this->sizeTyp = sizeTyp;
 	}
 };

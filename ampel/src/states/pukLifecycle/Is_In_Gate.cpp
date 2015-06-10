@@ -8,13 +8,13 @@
 #include "PuckStates.h"
 
 Is_In_Gate::Is_In_Gate(Context* con): State::State(con){
-	printf("Road_to_Metal()\n");
+	printf("Is in Gate()\n");
 	Dispatcher* dsp = Dispatcher::getInstance();
 	dsp->addListeners( this->con_, PUCK_IN_GATE_FALSE);
 }
 
 Is_In_Gate::~Is_In_Gate(){
-	printf("~Road_to_Metal()\n");
+	printf("~Is in Gate()\n");
 
 }
 
@@ -25,7 +25,7 @@ void Is_In_Gate::Puck_in_Gate_false(void){
 	Dispatcher* dsp = Dispatcher::getInstance();
 	dsp->remListeners( this->con_, PUCK_IN_GATE_FALSE);
 
-	// Move to State Metal_Detected
+	// Move to State Road to Exit
 	new (this) Road_To_Exit(this->con_);
 }
 

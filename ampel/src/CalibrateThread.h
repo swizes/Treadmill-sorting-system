@@ -2,7 +2,7 @@
  * CommunnicationThread.h
  *
  *  Created on: 17.04.2015
- *      Author: lukasTest
+ *      Author: lukasTest, Tobi
  */
 
 
@@ -26,8 +26,9 @@ using namespace thread;
 
 class CalibrateThread: public HAWThread {
 public:
-	CalibrateThread(void);
 	virtual ~CalibrateThread();
+
+	static CalibrateThread* getInstance();
 
 	int getGatetoL1Fast() const {
 		return GatetoL1Fast;
@@ -61,13 +62,35 @@ public:
 		return L0toL1Slow;
 	}
 
+	int getNoPuckHeight() const{
+		return noPuckHeight;
+	}
+
+	bool isBand() const {
+		return band;
+	}
+
+	int getBigPuck() const {
+		return bigPuck;
+	}
+
+	int getHoleHeight() const {
+		return holeHeight;
+	}
+
+	int getSmallPuck() const {
+		return smallPuck;
+	}
+
 private:
+	CalibrateThread();
 	CalibrateThread(const CalibrateThread& b);      ///< Copy-Konstruktor. Privat, deshalb kann dieses Objekt nicht als "Call-by-value" uebergeben werden.
 	CalibrateThread& operator=(CalibrateThread& b);
 	virtual void execute(void*); ///< Geerbt aus HAWThread. Muss implementiert werden.
 	virtual void shutdown();
 	int timespecToMs(struct timespec *);
 
+	static CalibrateThread* instance_;
 	int L0toHeightFast;
 	int HeighttoGateFast;
 	int L0toL1Fast;
@@ -76,6 +99,12 @@ private:
 	int HeighttoGateSlow;
 	int L0toL1Slow;
 	int GatetoL1Slow;
+	int noPuckHeight;
+	bool band; // 0 ->Band1 1->Band2
+
+	int bigPuck;
+	int smallPuck;
+	int holeHeight;
 };
 
 #endif /* COMMUNNICATIONTHREAD_H_ */

@@ -15,11 +15,12 @@
 class Context: public Transitions {
 private:
 	Transitions* state_;
-	Puck puck;
+	Puck* puck;
 public:
 	Context() :
 			state_(NULL) {
 		printf("Context()\n");
+		puck = new Puck();
 	}
 	virtual ~Context() {
 		printf("~Context()\n");
@@ -33,6 +34,7 @@ public:
 			delete state_;
 			state_ = NULL;
 		}
+		delete puck;
 	}
 	virtual void setState(Transitions* state) {
 		state_ = state;
@@ -85,6 +87,10 @@ public:
 	}
 	virtual void Running_out_false(void) {
 		state_->Running_out_false();
+	}
+
+	Puck* getPuck(){
+		return puck;
 	}
 
 private:

@@ -28,7 +28,7 @@ void Birth::Running_In_false(void){
 	Dispatcher* dsp = Dispatcher::getInstance();
 	dsp->remListeners( this->con_, RUNNING_IN_FALSE);
 
-	// Move to State Road_to_Height.
+	// Move to State Road to Height.
 	new (this) Road_to_Height(this->con_);
 }
 

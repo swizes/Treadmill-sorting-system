@@ -9,7 +9,7 @@
 #include "PuckStates.h"
 
 Flipping_Puck::Flipping_Puck(Context* con): State::State(con){
-	printf("Road_to_Metal()\n");
+	printf("Flipping Puck()\n");
 	HAL *hal = HAL::getInstance();
 	hal->close_gate();
 	Dispatcher* dsp = Dispatcher::getInstance();
@@ -17,7 +17,7 @@ Flipping_Puck::Flipping_Puck(Context* con): State::State(con){
 }
 
 Flipping_Puck::~Flipping_Puck(){
-	printf("~Road_to_Metal()\n");
+	printf("~Flipping Puck()\n");
 
 }
 
@@ -28,7 +28,7 @@ void Flipping_Puck::Slide_full_true(void){
 	Dispatcher* dsp = Dispatcher::getInstance();
 	dsp->remListeners( this->con_, SLIDE_FULL_TRUE);
 
-	// Move to State Metal_Detected
+	// Move to Is in Slide
 	new (this) Is_In_Slide(this->con_);
 }
 

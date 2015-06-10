@@ -12,45 +12,63 @@
 #include <cstdlib>
 #include <iostream>
 #include "Blink_Thread.h"
-#include "Hal_Test_Thread.h"
+#include "./Tests/Hal_Test_Thread.h"
+//#include "Hal_Test_Thread.h"
 #include "lib/HWaccess.h"
 #include "Serial.h"
-#include "CommunnicationThread.h"
-#include "FileHelper.h"
-#include "ConfigManager.h"
+#include "CommunicationThread.h"
+#include "states/PuckStates.h"
+#include "CalibrateThread.h"
+#include "Dispatcher.h"
+#include "State.cpp"
+#include "HAL.h"
+#include "HoleDetector.h"
 
 using namespace std;
 
 int main(int argc, char *argv[]) {
 
-	ConfigManager *cf = new ConfigManager();
-	string val1 = "ha";
-	string val2;
+    // Baut Verbindung zu Simulation auf
+	#ifdef SIMULATION
+        IOaccess_open();
+		cout << "WARNING: SYSTEM IN SIMULATION!!!" << endl;
+    #endif
+	//RUN Calibration
+//	CalibrateThread *cal = CalibrateThread::getInstance();
+//	cal->start(NULL);
+//	cal->join();
 
-	/*
-	cf->setConfigValue("test1", "value1");
-	cf->setConfigValue("test2", "value2");
+
+    //Hal_Test_Thread htt;
+	
+    /*Serielle Verbindung funkitoniert nur wenn sich System nicht in der Simulation befindet
+    /dev/ser1 steht nicht zur Verfuegung. 		*/
+	#ifndef SIMULATION
+	//CommunicationThread ct;
+	//ct.start(NULL);
+    #endif
+
+	HAL* hal = HAL::getInstance();
+	hal->reset();
+	Dispatcher* disp = Dispatcher::getInstance();
+
+	cout << "Vor Start der FSM" << endl;
+
+	Context* con= new Context();
+	cout << "NACH CONTEXT!!! fuck" << endl;
+	con->setState(new NotExist(con));
+	disp->listenForEvents();
 
 
-	cf->getConfigValue("test1", &val1);
-	cf->getConfigValue("test2", &val2);
+		//Hal_Test_Thread htt;
+		//htt.start(NULL);
+		//htt.join();
 
-	cout << "val1:" << val1 << endl;
-	cout << "val2:" << val2 << endl;
 
-	cf->writeDefaultConfig();
-*/
-	cf->readDefaultConfig();
+	#ifndef SIMULATION
+		//ct.join();;
+    #endif
 
-	cf->getConfigValue("test1", &val1);
-	cf->getConfigValue("test2", &val2);
-
-	cout << "val1:" << val1 << endl;
-	cout << "val2:" << val2 << endl;
-
-	//cout << "check file system";
-	//FileHelper fhelper;// = new FileHelper();
-	//fhelper.test1();
 
 
     #ifdef SIMULATION
