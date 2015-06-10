@@ -92,6 +92,7 @@ private:
 	void saveConfig();
 
 	static CalibrateThread* instance_;
+	ConfigManager* configManager;
 	int L0toHeightFast;
 	int HeighttoGateFast;
 	int L0toL1Fast;

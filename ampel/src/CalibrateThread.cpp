@@ -16,13 +16,15 @@
 
 #include "CalibrateThread.h"
 #include "HAL.h"
-
 #include "./Timer/Timer.h"
+#include "ConfigManager.h"
 
-CalibrateThread* CalibrateThread::instance_ = NULL;
-#include "Timer.h"
 #define TIMERSTART 20
 #define TIMERSTART_MS TIMERSTART * 1000
+
+CalibrateThread* CalibrateThread::instance_ = NULL;
+ConfigManager* configManager = NULL;
+
 
 /**
  * c'tor for the Thread-safe singleton Calibration implementation
@@ -45,8 +47,47 @@ CalibrateThread* CalibrateThread::getInstance() {
 CalibrateThread::CalibrateThread() {
 
 	cout << "ctor Calibrate" << endl;
-	bigPuck = 1600;
-	smallPuck = 1299;
+	//bigPuck = 1600;
+	//smallPuck = 1299;
+
+	// load defaults
+
+	configManager = new ConfigManager();
+	if(!configManager->readDefaultConfig()) {
+		cout << "Error reading config" << endl;
+		return;
+	}
+
+	if(!configManager->hasKey("configset"))
+	{
+		cout << "Config not set!" << endl;
+		return;
+	}
+
+
+	std::string outVal = new std::string;
+	bool keyNotFound = false;
+
+	configManager->getConfigValue("L0toHeightFast", &outVal) ? L0toHeightFast = atoi(outVal) : keyNotFound = true;
+	configManager->getConfigValue("HeighttoGateFast", &outVal) ? HeighttoGateFast = atoi(outVal) : keyNotFound = true;
+	configManager->getConfigValue("L0toL1Fast", &outVal) ? L0toL1Fast = atoi(outVal) : keyNotFound = true;
+	configManager->getConfigValue("GatetoL1Fast", &outVal) ? GatetoL1Fast = atoi(outVal) : keyNotFound = true;
+	configManager->getConfigValue("L0toHeightSlow", &outVal) ? L0toHeightSlow = atoi(outVal) : keyNotFound = true;
+	configManager->getConfigValue("HeighttoGateSlow", &outVal) ? HeighttoGateSlow = atoi(outVal) : keyNotFound = true;
+	configManager->getConfigValue("L0toL1Slow", &outVal) ? L0toL1Slow = atoi(outVal) : keyNotFound = true;
+	configManager->getConfigValue("GatetoL1Slow", &outVal) ? GatetoL1Slow = atoi(outVal) : keyNotFound = true;
+	configManager->getConfigValue("noPuckHeight", &outVal) ? noPuckHeight = atoi(outVal) : keyNotFound = true;
+
+	configManager->getConfigValue("band", &outVal) ? band = atoi(outVal) : keyNotFound = true;
+
+	configManager->getConfigValue("bigPuck", &outVal) ? bigPuck = atoi(outVal) : keyNotFound = true;
+	configManager->getConfigValue("smallPuck", &outVal) ? smallPuck = atoi(outVal) : keyNotFound = true;
+	configManager->getConfigValue("holeHeight", &outVal) ? holeHeight = atoi(outVal) : keyNotFound = true;
+	
+
+	if(keyNotFound) {
+		cout << "Error! Key not found!" << endl;
+	}
 
 }
 
