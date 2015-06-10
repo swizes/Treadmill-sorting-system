@@ -24,7 +24,7 @@
 
 CalibrateThread* CalibrateThread::instance_ = NULL;
 ConfigManager* configManager = NULL;
-
+bool configLoaded = false;
 
 /**
  * c'tor for the Thread-safe singleton Calibration implementation
@@ -65,28 +65,30 @@ CalibrateThread::CalibrateThread() {
 	}
 
 
-	std::string outVal = new std::string;
+	std::string outVal;
 	bool keyNotFound = false;
 
-	configManager->getConfigValue("L0toHeightFast", &outVal) ? L0toHeightFast = atoi(outVal) : keyNotFound = true;
-	configManager->getConfigValue("HeighttoGateFast", &outVal) ? HeighttoGateFast = atoi(outVal) : keyNotFound = true;
-	configManager->getConfigValue("L0toL1Fast", &outVal) ? L0toL1Fast = atoi(outVal) : keyNotFound = true;
-	configManager->getConfigValue("GatetoL1Fast", &outVal) ? GatetoL1Fast = atoi(outVal) : keyNotFound = true;
-	configManager->getConfigValue("L0toHeightSlow", &outVal) ? L0toHeightSlow = atoi(outVal) : keyNotFound = true;
-	configManager->getConfigValue("HeighttoGateSlow", &outVal) ? HeighttoGateSlow = atoi(outVal) : keyNotFound = true;
-	configManager->getConfigValue("L0toL1Slow", &outVal) ? L0toL1Slow = atoi(outVal) : keyNotFound = true;
-	configManager->getConfigValue("GatetoL1Slow", &outVal) ? GatetoL1Slow = atoi(outVal) : keyNotFound = true;
-	configManager->getConfigValue("noPuckHeight", &outVal) ? noPuckHeight = atoi(outVal) : keyNotFound = true;
+	configManager->getConfigValue("L0toHeightFast", &outVal) ? L0toHeightFast = atoi(outVal.c_str()) : keyNotFound = true;
+	configManager->getConfigValue("HeighttoGateFast", &outVal) ? HeighttoGateFast = atoi(outVal.c_str()) : keyNotFound = true;
+	configManager->getConfigValue("L0toL1Fast", &outVal) ? L0toL1Fast = atoi(outVal.c_str()) : keyNotFound = true;
+	configManager->getConfigValue("GatetoL1Fast", &outVal) ? GatetoL1Fast = atoi(outVal.c_str()) : keyNotFound = true;
+	configManager->getConfigValue("L0toHeightSlow", &outVal) ? L0toHeightSlow = atoi(outVal.c_str()) : keyNotFound = true;
+	configManager->getConfigValue("HeighttoGateSlow", &outVal) ? HeighttoGateSlow = atoi(outVal.c_str()) : keyNotFound = true;
+	configManager->getConfigValue("L0toL1Slow", &outVal) ? L0toL1Slow = atoi(outVal.c_str()) : keyNotFound = true;
+	configManager->getConfigValue("GatetoL1Slow", &outVal) ? GatetoL1Slow = atoi(outVal.c_str()) : keyNotFound = true;
+	configManager->getConfigValue("noPuckHeight", &outVal) ? noPuckHeight = atoi(outVal.c_str()) : keyNotFound = true;
 
-	configManager->getConfigValue("band", &outVal) ? band = atoi(outVal) : keyNotFound = true;
+	configManager->getConfigValue("band", &outVal) ? band = atoi(outVal.c_str()) : keyNotFound = true;
 
-	configManager->getConfigValue("bigPuck", &outVal) ? bigPuck = atoi(outVal) : keyNotFound = true;
-	configManager->getConfigValue("smallPuck", &outVal) ? smallPuck = atoi(outVal) : keyNotFound = true;
-	configManager->getConfigValue("holeHeight", &outVal) ? holeHeight = atoi(outVal) : keyNotFound = true;
+	configManager->getConfigValue("bigPuck", &outVal) ? bigPuck = atoi(outVal.c_str()) : keyNotFound = true;
+	configManager->getConfigValue("smallPuck", &outVal) ? smallPuck = atoi(outVal.c_str()) : keyNotFound = true;
+	configManager->getConfigValue("holeHeight", &outVal) ? holeHeight = atoi(outVal.c_str()) : keyNotFound = true;
 	
 
 	if(keyNotFound) {
 		cout << "Error! Key not found!" << endl;
+	} else {
+		configLoaded = true;
 	}
 
 }
@@ -99,6 +101,13 @@ CalibrateThread::~CalibrateThread() {
 }
 
 void CalibrateThread::execute(void*) {
+
+	if(configLoaded) {
+		cout << "config loaded, skipping calibration" << endl;
+		return;
+	}
+
+	saveConfig();
 
 	cout << "Calibration started" << endl;
 	HAL *hal = HAL::getInstance();
@@ -281,19 +290,23 @@ int CalibrateThread::timespecToMs(struct timespec *time) {
 }
 
 void CalibrateThread::saveConfig() {
-	configManager->setConfigValue("L0toHeightFast", std::string(itoa(L0toHeightFast)));
-	configManager->setConfigValue("HeighttoGateFast", std::string(itoa(HeighttoGateFast)));
-	configManager->setConfigValue("L0toL1Fast", std::string(itoa(L0toL1Fast)));
-	configManager->setConfigValue("GatetoL1Fast", std::string(itoa(GatetoL1Fast)));
-	configManager->setConfigValue("L0toHeightSlow", std::string(itoa(L0toHeightSlow)));
-	configManager->setConfigValue("HeighttoGateSlow", std::string(itoa(HeighttoGateSlow)));
-	configManager->setConfigValue("L0toL1Slow", std::string(itoa(L0toL1Slow)));
-	configManager->setConfigValue("GatetoL1Slow", std::string(itoa(GatetoL1Slow)));
-	configManager->setConfigValue("noPuckHeight", std::string(itoa(noPuckHeight)));
-	configManager->setConfigValue("band", std::string(itoa(band)));
-	configManager->setConfigValue("bigPuck", std::string(itoa(bigPuck)));
-	configManager->setConfigValue("smallPuck", std::string(itoa(smallPuck)));
-	configManager->setConfigValue("holeHeight", std::string(itoa(holeHeight)));
+	char buf [33];
+
+	configManager->setConfigValue("L0toHeightFast", std::string(itoa(L0toHeightFast, buf,10)));
+	configManager->setConfigValue("HeighttoGateFast", std::string(itoa(HeighttoGateFast, buf,10)));
+	configManager->setConfigValue("L0toL1Fast", std::string(itoa(L0toL1Fast, buf,10)));
+	configManager->setConfigValue("GatetoL1Fast", std::string(itoa(GatetoL1Fast, buf,10)));
+	configManager->setConfigValue("L0toHeightSlow", std::string(itoa(L0toHeightSlow, buf,10)));
+	configManager->setConfigValue("HeighttoGateSlow", std::string(itoa(HeighttoGateSlow, buf,10)));
+	configManager->setConfigValue("L0toL1Slow", std::string(itoa(L0toL1Slow, buf,10)));
+	configManager->setConfigValue("GatetoL1Slow", std::string(itoa(GatetoL1Slow, buf,10)));
+	configManager->setConfigValue("noPuckHeight", std::string(itoa(noPuckHeight, buf,10)));
+	configManager->setConfigValue("band", std::string(itoa(band, buf,10)));
+	configManager->setConfigValue("bigPuck", std::string(itoa(bigPuck, buf,10)));
+	configManager->setConfigValue("smallPuck", std::string(itoa(smallPuck, buf,10)));
+	configManager->setConfigValue("holeHeight", std::string(itoa(holeHeight, buf,10)));
+	configManager->setConfigValue("configset", "1");
+
 
 	if(!configManager->writeDefaultConfig())
 	{

@@ -9,6 +9,8 @@
 #ifndef CALIBRATETHREAD_H_
 #define CALIBRATETHREAD_H_
 
+#define CHECKSUM 10
+
 #include <stdint.h>
 #include <pthread.h>
 #include "lib/HAWThread.h"
@@ -20,7 +22,7 @@
 #include <stdlib.h>
 #include <string.h>
 
-#define CHECKSUM 10
+class ConfigManager;
 
 using namespace thread;
 
@@ -29,6 +31,7 @@ public:
 	virtual ~CalibrateThread();
 
 	static CalibrateThread* getInstance();
+	bool configLoaded;
 
 	int getGatetoL1Fast() const {
 		return GatetoL1Fast;
