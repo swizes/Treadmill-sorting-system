@@ -262,6 +262,8 @@ void CalibrateThread::execute(void*) {
 	//TIME
 
 	//TIME
+	
+	saveConfig();
 
 	cout << "Close execute" << endl;
 
@@ -279,5 +281,23 @@ int CalibrateThread::timespecToMs(struct timespec *time) {
 }
 
 void CalibrateThread::saveConfig() {
+	configManager->setConfigValue("L0toHeightFast", std::string(itoa(L0toHeightFast)));
+	configManager->setConfigValue("HeighttoGateFast", std::string(itoa(HeighttoGateFast)));
+	configManager->setConfigValue("L0toL1Fast", std::string(itoa(L0toL1Fast)));
+	configManager->setConfigValue("GatetoL1Fast", std::string(itoa(GatetoL1Fast)));
+	configManager->setConfigValue("L0toHeightSlow", std::string(itoa(L0toHeightSlow)));
+	configManager->setConfigValue("HeighttoGateSlow", std::string(itoa(HeighttoGateSlow)));
+	configManager->setConfigValue("L0toL1Slow", std::string(itoa(L0toL1Slow)));
+	configManager->setConfigValue("GatetoL1Slow", std::string(itoa(GatetoL1Slow)));
+	configManager->setConfigValue("noPuckHeight", std::string(itoa(noPuckHeight)));
+	configManager->setConfigValue("band", std::string(itoa(band)));
+	configManager->setConfigValue("bigPuck", std::string(itoa(bigPuck)));
+	configManager->setConfigValue("smallPuck", std::string(itoa(smallPuck)));
+	configManager->setConfigValue("holeHeight", std::string(itoa(holeHeight)));
+
+	if(!configManager->writeDefaultConfig())
+	{
+		cout << "error writing config file!" << endl;
+	}
 
 }
