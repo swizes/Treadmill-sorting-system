@@ -11,6 +11,7 @@
 
 using namespace std;
 
+
 BandController* BandController::instance = NULL;
 
 BandController* BandController::getInstance(){
@@ -30,6 +31,7 @@ BandController::BandController() {
 	std::cout << "ctor BandController" << std::endl;
 	stopped = false;
 	runSlowly = false;
+	reservedPuck = NULL;
 	hal = HAL::getInstance();
 	puckCounter = 0;
 }
@@ -45,6 +47,20 @@ void BandController::addPuck(Puck* puck){
 		pucklist[puckCounter] = puck;
 		puckCounter++;
 	}
+}
+
+void BandController::setReservedPuck(Puck* puck){
+	memcpy(reservedPuck , puck, sizeof(Puck));
+}
+Puck* BandController::getReservedPuck(void){
+	return reservedPuck;
+}
+
+void BandController::switchWithReservedPuck(Puck* puck){
+	Puck* temp;
+	memcpy(temp , reservedPuck, sizeof(Puck));
+	memcpy(reservedPuck , puck, sizeof(Puck));
+	memcpy(puck , temp, sizeof(Puck));
 }
 
 void BandController::delPuck(Puck* puck){
@@ -89,4 +105,12 @@ void BandController::refreshBand(){
 	}else if(fast){
 		hal->band_right_normal();
 	}
+}
+
+Puck*  BandController::getRecentPuck(void){
+	return pucklist[puckCounter];
+}
+
+Puck*  BandController::getLastPuck(void){
+	return pucklist[puckCounter-1];
 }

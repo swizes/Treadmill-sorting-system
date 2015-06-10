@@ -21,8 +21,13 @@ public:
 
 	static BandController* getInstance();
 
-	void addPuck(Puck* puck);
-	void delPuck(Puck* puck);
+	void  addPuck(Puck* puck);
+	void  delPuck(Puck* puck);
+	void  setReservedPuck(Puck* puck);
+	Puck* getReservedPuck(void);
+	void  switchWithReservedPuck(Puck* puck);
+	Puck* getRecentPuck(void);
+	Puck* getLastPuck(void);
 
 	void refreshBand();
 
@@ -38,6 +43,7 @@ private:
 	HAL* hal;
 	bool stopped;
 	bool runSlowly;
+	Puck* reservedPuck;
 };
 
 #endif /* BANDCONTROLLER_H_ */
