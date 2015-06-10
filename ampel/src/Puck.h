@@ -26,7 +26,8 @@ private:
 public:
 	Puck();
 	virtual ~Puck();
-
+	void setPuckFromStruct(struct puckStruct);
+	struct puckStruct getPuckStruct(void);
 	bool isUserInteractionNeeded() const{
 		return needUserInteraction;
 	}
