@@ -265,6 +265,21 @@ void CalibrateThread::execute(void*) {
 	while(hal->is_slide_full()==0){}
 	hal->band_stop();
 
+	cout << "Push Start Button for Band1 or Stop Button for Band2" << endl;
+	int run = 1;
+	while(run){
+		if(hal->is_startButton_pushed()==0){
+			band=0;
+			run=0;
+		}
+		if(hal->is_stopButton_pushed()==1){
+			band=1;
+			run=0;
+		}
+	}
+
+
+
 
 		//time.deleteTimer();
 	//while(hal->is_puck_in_height_determination()==0){}
