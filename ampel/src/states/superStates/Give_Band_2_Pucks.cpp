@@ -15,24 +15,31 @@ Give_Band_2_Pucks::Give_Band_2_Pucks(Context* con): State::State(con){
     HAL *hal = HAL::getInstance();
     //while(!(hal->is_startButton_pushed()));
 
+    BandController* bc = BandController::getInstance();
+    con->getPuck()->runBandFast();
+
+    bc->delPuck(con->getPuck());
+
+    /*
     Serial* ser = new Serial();
-    	int res = 1;
-    	Packet p;
+	int res = 1;
+	Packet p;
 
-    	//Wenn Band2 sagt ist frei, sendet es eine 1
-    	while(res){
-    		ser->recvPacket(&p);
-    		printf("Received Packet. %d\n", p.num);
-    		if(p.num == 1){
-    			res = 0;
-    		}
-    	}
+	//Wenn Band2 sagt ist frei, sendet es eine 1
+	while(res){
+		ser->recvPacket(&p);
+		printf("Received Packet. %d\n", p.num);
+		if(p.num == 1){
+			res = 0;
+		}
+	}
 
 
-    	puckStruct puck = con->getPuck()->getPuckStruct();
-    	ser->sendPacket(&puck);
+	puckStruct puck = con->getPuck()->getPuckStruct();
+	ser->sendPacket(&puck);
+	*/
 
-    	hal->band_right_normal();
+	bc->refreshBand();
 
 	
     // Move to State: Working_Band1
