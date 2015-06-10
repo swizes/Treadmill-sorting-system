@@ -23,6 +23,7 @@ SerialCommunicationBand1::SerialCommunicationBand1(Context* con): State::State(c
 	//Wenn Band2 sagt ist frei, sendet es eine 1
 	while(res){
 		ser->recvPacket(&p);
+		printf("Received Packet. %d\n", p.num);
 		if(p.num == 1){
 			res = 0;
 		}

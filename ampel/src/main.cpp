@@ -54,10 +54,11 @@ int main(int argc, char *argv[]) {
 
 	cout << "Vor Start der FSM" << endl;
 
-	Context* con= new Context();
-	cout << "NACH CONTEXT!!! fuck" << endl;
-	con->setState(new NotExist(con));
+	//Context* con= new Context();
+	State* s = new Ready(NULL);
+	//con->setState(new Ready(NULL));
 	disp->listenForEvents();
+
 
 
 		//Hal_Test_Thread htt;

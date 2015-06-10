@@ -44,8 +44,8 @@ CalibrateThread* CalibrateThread::getInstance() {
 CalibrateThread::CalibrateThread() {
 
 	cout << "ctor Calibrate" << endl;
-	bigPuck = 1600;
-	smallPuck = 1299;
+	bigPuck = 1500;
+	smallPuck = 1250;
 
 }
 

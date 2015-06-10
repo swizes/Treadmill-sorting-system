@@ -12,6 +12,7 @@ Sequence::Sequence(Context* con): State::State(con){
 	HAL *hal = HAL::getInstance();
 	hal->band_stop();
 
+	/*
 	if(last_puck->metal == true){
 		if(this.puck->metal == true){
 			if(reserved_puck->metal == true){
@@ -35,6 +36,7 @@ Sequence::Sequence(Context* con): State::State(con){
 			}
 		}
 	}
+	*/
 
 
 	//Dispatcher* dsp = Dispatcher::getInstance();

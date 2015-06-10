@@ -8,15 +8,13 @@
 
 Road_To_Exit::Road_To_Exit(Context* con): State::State(con){
 	printf("Road_to_Exit()\n");
+	HAL *hal = HAL::getInstance();
+	hal->band_right_normal();
 	Dispatcher* dsp = Dispatcher::getInstance();
 	dsp->addListeners( this->con_, RUNNING_OUT_TRUE);
-	/*
-	TODO: AFTER X SECONDS
-	HAL *hal = HAL::getInstance();
-	hal->close_gate();
-	TODO: TIMEOUT AFTER X SECONDS
-	*/
-	HAL *hal = HAL::getInstance();
+
+	Timer* timer = new Timer();
+	timer->waitForTimeOut(1,0);
 	hal->close_gate();
 }
 

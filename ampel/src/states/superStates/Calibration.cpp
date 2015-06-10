@@ -18,5 +18,5 @@ Calibration::Calibration(Context* con): State::State(con){
 
 Calibration::~Calibration(){
 	printf("~Calibration()\n");
-
+}
 

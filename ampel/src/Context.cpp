@@ -18,7 +18,7 @@ private:
 	Puck* puck;
 public:
 	Context() :
-			state_(NULL) {
+		state_(NULL) {
 		printf("Context()\n");
 		puck = new Puck();
 	}
