@@ -33,6 +33,7 @@ void Puck::setPuckFromStruct(puckStruct puckS) {
 	this->size = puckS.size;
 	this->sizeTyp = puckS.sizetyp;
 	this->id = puckS.id;
+	this->needUserInteraction = puckS.needUserInteraction;
 }
 
 puckStruct Puck::getPuckStruct(void){
@@ -42,6 +43,7 @@ puckStruct Puck::getPuckStruct(void){
 	puckS.size = this->size;
 	puckS.sizetyp = this->sizeTyp;
 	puckS.id = this->id;
+	puckS.needUserInteraction = this->needUserInteraction;
 	return puckS;
 
 }

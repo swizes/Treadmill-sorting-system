@@ -16,6 +16,7 @@ typedef struct{
 
 	bool metal;
 	bool holeOnTop;
+	bool needUserInteraction;
 	int size;
 	SIZE sizetyp;
 	int id;
