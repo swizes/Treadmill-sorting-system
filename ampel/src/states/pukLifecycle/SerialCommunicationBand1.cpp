@@ -15,6 +15,8 @@ SerialCommunicationBand1::SerialCommunicationBand1(Context* con): State::State(c
 	printf("SerialCommunicationBand1\n");
 
 	Dispatcher* dsp = Dispatcher::getInstance();
+	HAL* hal = HAL::getInstance();
+
 
 	Serial* ser = new Serial();
 	int res = 1;
@@ -33,6 +35,7 @@ SerialCommunicationBand1::SerialCommunicationBand1(Context* con): State::State(c
 	puckStruct puck = con->getPuck()->getPuckStruct();
 	ser->sendPacket(&puck);
 
+	hal->band_right_normal();
 
 
 

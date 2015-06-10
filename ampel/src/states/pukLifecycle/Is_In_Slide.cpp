@@ -33,8 +33,9 @@ void Is_In_Slide::Slide_full_false(void){
 	Dispatcher* dsp = Dispatcher::getInstance();
 	dsp->remListeners( this->con_, SLIDE_FULL_FALSE);
 	HAL *hal = HAL::getInstance();
-	hal->band_stop();
 
+	//TODO: ERROR HANDLING
+	//hal->band_stop();
 
 	//TODO: Move to State Sorted Out
 	//new (this) Sorted Out(this->con_);

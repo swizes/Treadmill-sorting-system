@@ -6,9 +6,11 @@
  */
 #include "PuckStates.h"
 
+
 Road_To_Exit::Road_To_Exit(Context* con): State::State(con){
 	printf("Road_to_Exit()\n");
 	HAL *hal = HAL::getInstance();
+
 	hal->band_right_normal();
 	Dispatcher* dsp = Dispatcher::getInstance();
 	dsp->addListeners( this->con_, RUNNING_OUT_TRUE);
@@ -31,8 +33,8 @@ void Road_To_Exit::Running_out_true(void){
 	dsp->remListeners( this->con_, RUNNING_OUT_TRUE);
 	HAL *hal = HAL::getInstance();
 	hal->band_stop();
-	new (this) SerialCommunicationBand1(this->con_);
+	//new (this) SerialCommunicationBand1(this->con_);
 	// Move to State Band2
-	//new (this) Is_Band2_Free?(this->con_);
+	new (this) User_Interaction_needed(this->con_);
 }
 

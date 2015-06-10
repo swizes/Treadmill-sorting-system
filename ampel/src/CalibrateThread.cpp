@@ -46,6 +46,7 @@ CalibrateThread::CalibrateThread() {
 	cout << "ctor Calibrate" << endl;
 	bigPuck = 1500;
 	smallPuck = 1250;
+	holeHeight = 460;
 
 }
 
