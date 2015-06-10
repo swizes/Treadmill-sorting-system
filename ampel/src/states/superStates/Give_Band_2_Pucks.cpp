@@ -13,10 +13,30 @@ Give_Band_2_Pucks::Give_Band_2_Pucks(Context* con): State::State(con){
 	printf("Give_Band_2_Pucks()\n");
 	//TODO: Send ready PUCK ID to Band2
     HAL *hal = HAL::getInstance();
-    while(!(hal->is_startButton_pushed()));
+    //while(!(hal->is_startButton_pushed()));
+
+    Serial* ser = new Serial();
+    	int res = 1;
+    	Packet p;
+
+    	//Wenn Band2 sagt ist frei, sendet es eine 1
+    	while(res){
+    		ser->recvPacket(&p);
+    		printf("Received Packet. %d\n", p.num);
+    		if(p.num == 1){
+    			res = 0;
+    		}
+    	}
+
+
+    	puckStruct puck = con->getPuck()->getPuckStruct();
+    	ser->sendPacket(&puck);
+
+    	hal->band_right_normal();
+
 	
     // Move to State: Working_Band1
-	new (this) Working_Band1(this->con_);
+	//new (this) Working_Band1(this->con_);
 }
 
 Give_Band_2_Pucks::~Give_Band_2_Pucks(){

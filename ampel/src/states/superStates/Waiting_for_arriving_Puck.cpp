@@ -10,10 +10,10 @@
 Waiting_for_arriving_Puck::Waiting_for_arriving_Puck(Context* con): State::State(con){
 //entry:	
 //do:
-	printf("Waiting_for_arriving_Puck()\n");
-    printf("Push START\n");
-    HAL *hal = HAL::getInstance();
-    while(!(hal->is_startButton_pushed()));
+//	printf("Waiting_for_arriving_Puck()\n");
+//    printf("Push START\n");
+//    HAL *hal = HAL::getInstance();
+    //while(!(hal->is_startButton_pushed()));
 	
     // Move to State: Give_Band_2_Pucks
 	new (this) Give_Band_2_Pucks(this->con_);

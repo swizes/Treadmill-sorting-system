@@ -9,16 +9,20 @@
 
 User_Interaction_needed::User_Interaction_needed(Context* con): State::State(con){
 //entry:	
+	int isUserneeded = 0;
     printf("User_Interaction_needed()\n");
 //do:
-    int isUserneeded = 0;
+    if(con->getPuck()->isHoleOnTop() == false){
+    	isUserneeded = 1;
+    }
+
     //TODO: Check  User_Interaction_needed ? 1 : 0
 	
     if(isUserneeded){
         HAL *hal = HAL::getInstance();
         
-        printf("Waiting for User Interaction (Press START after)\n");
-        while(!(hal->is_startButton_pushed()));
+        //printf("Waiting for User Interaction (Press START after)\n");
+        //while(!(hal->is_startButton_pushed()));
         
         // Move to State: Waiting_for_arriving_Puck
         new (this) Waiting_for_arriving_Puck(this->con_);
@@ -27,7 +31,7 @@ User_Interaction_needed::User_Interaction_needed(Context* con): State::State(con
         new (this) Reihenfolge(this->con_);
     }
 	
-	new (this) Ready(this->con_);
+	//new (this) Ready(this->con_);
 }
 
 User_Interaction_needed::~User_Interaction_needed(){
