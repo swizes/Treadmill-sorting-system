@@ -37,7 +37,7 @@ bool ConfigManager::writeDefaultConfig() {
 bool ConfigManager::readConfig(string configFileName) {
 	string fName = configFileName;
 	string fPath = FileHelper::getConfigDir() + fName;
-	cout << "read config from " << configFileName << endl;
+	cout << "read config from " << fPath << endl;
 
 	configMap.clear();
 
@@ -54,13 +54,15 @@ bool ConfigManager::readConfig(string configFileName) {
 		st_file.close();
 	} else {
 		cout << "unable to read config!" << endl;
+		return false;
 	}
+	return true;
 }
 
 bool ConfigManager::writeConfig(string configFileName) {
 	string fName = configFileName;
 	string fPath = FileHelper::getConfigDir() + fName;
-	cout << "write config (" << configMap.size() << " values) to " << configFileName << endl;
+	cout << "write config (" << configMap.size() << " values) to " << fPath << endl;
 
 	string line;
 	ofstream st_file (configFileName.c_str());
@@ -73,7 +75,9 @@ bool ConfigManager::writeConfig(string configFileName) {
 		}
 	} else {
 		cout << "unable to write config!" << endl;
+		return false;
 	}
+	return true;
 }
 
 bool ConfigManager::hasKey(string key) {
