@@ -89,6 +89,7 @@ private:
 	virtual void execute(void*); ///< Geerbt aus HAWThread. Muss implementiert werden.
 	virtual void shutdown();
 	int timespecToMs(struct timespec *);
+	void saveConfig();
 
 	static CalibrateThread* instance_;
 	int L0toHeightFast;
