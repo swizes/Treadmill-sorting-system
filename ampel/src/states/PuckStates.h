@@ -152,4 +152,13 @@ private:
 	Error_Handling(const Error_Handling& other);
 	Error_Handling& operator=(const Error_Handling& other);
 };
+
+class SerialCommunicationBand1: public State {
+public:
+	SerialCommunicationBand1(Context* con);
+	virtual ~ SerialCommunicationBand1();
+private:
+	SerialCommunicationBand1(const SerialCommunicationBand1& other);
+	SerialCommunicationBand1& operator=(const SerialCommunicationBand1& other);
+};
 #endif
