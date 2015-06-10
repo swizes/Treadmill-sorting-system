@@ -103,9 +103,6 @@ void CalibrateThread::execute(void*) {
 	time.stopTimer();
 	time.setTimer(TIMERSTART, 0);
 
-	while(hal->is_puck_running_in()==0){}
-	//time.setTimer(TIMERSTART,0);
-
 	hal->band_right_normal();
 	hal->open_gate();
 
@@ -143,7 +140,7 @@ void CalibrateThread::execute(void*) {
 	while(hal->is_puck_in_height_determination()==0){}
 	time.getTime(&offset);
 	L0toHeightSlow = TIMERSTART_MS-timespecToMs(&offset);
-	printf("L0ToHeighSlow : %d\n",L0toHeightSlow);
+	printf("L0ToHeightSlow : %d\n",L0toHeightSlow);
 	hal->open_gate();
 
 	//Height to Gate
@@ -157,24 +154,6 @@ void CalibrateThread::execute(void*) {
 	while(hal->is_slide_full()==0){}
 	hal->band_stop();
 
-
-
-
-	printf("L0ToHeighSlow : %d\n", L0toHeightSlow);
-	hal->open_gate();
-
-	//Height to Gate
-	time.stopTimer();
-	time.setTimer(TIMERSTART, 0);
-	while (hal->is_puck_in_gate() == 0) {
-	}
-	time.getTime(&offset);
-	HeighttoGateSlow = TIMERSTART_MS - timespecToMs(&offset);
-	printf("HeighttoGateSlow : %d\n", HeighttoGateSlow);
-	hal->close_gate();
-	while (hal->is_slide_full() == 0) {
-	}
-	hal->band_stop();
 
 	//L0 to L1
 
@@ -194,19 +173,7 @@ void CalibrateThread::execute(void*) {
 	hal->band_stop();
 	hal->close_gate();
 
-	cout << "Put a puck in L0" << endl;
-	while(hal->is_puck_running_in()==0){}
-	time.stopTimer();
-	time.setTimer(TIMERSTART,0);
-	hal->band_right_slowly();
-	hal->open_gate();
-
-	while(hal->is_puck_running_out()==0){}
-	time.getTime(&offset);
-	L0toL1Slow = TIMERSTART_MS-timespecToMs(&offset);
-	printf("L0toL1Slow : %d\n",L0toL1Slow);
-	hal->band_stop();
-	hal->close_gate();
+	/* Height measurements */
 
 	cout << "Put a Small puck in L0" << endl;
 	while(hal->is_puck_running_in()==0){}
@@ -238,17 +205,10 @@ void CalibrateThread::execute(void*) {
 	while(hal->is_puck_running_in()==0){}
 	hal->band_right_normal();
 	while(hal->is_puck_in_height_determination()==0){}
-	hal->band_right_slowly();
-	int first = hal->get_height_measure();
-	//time.setTimer(TIMERSTART,0);
-	while(abs(hal->get_height_measure()-first)<5){
+	hal->band_stop();
 
-	}
 	holeHeight = hal->get_height_measure();
-	//time.getTime(&offset);
-	int diff = offset.tv_nsec;
-	cout << diff << endl;
-	printf("bigPuk : %d\n",bigPuck);
+	hal->band_right_normal();
 	hal->open_gate();
 	while(hal->is_puck_in_gate()==0){}
 	hal->close_gate();
