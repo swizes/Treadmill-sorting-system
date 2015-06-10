@@ -20,12 +20,13 @@ Road_to_Height::Road_to_Height(Context* con): State::State(con){
 	//Timer timer;
 	pulse->waitForTimeOut(1,500000000);
 
-
+	BandController* bc = BandController::getInstance();
 
 	cout << "Timer expire" << endl;
 
-	hal->band_right_slowly();
-	cout << "Timer expire" << endl;
+	con->getPuck()->runBandSlowly();
+	bc->refreshBand();
+	//hal->band_right_slowly();
 }
 
 Road_to_Height::~Road_to_Height(){

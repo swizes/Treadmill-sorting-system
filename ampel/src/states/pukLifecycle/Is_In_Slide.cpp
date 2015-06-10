@@ -11,6 +11,9 @@
 Is_In_Slide::Is_In_Slide(Context* con): State::State(con){
 	printf("Is in Slide()\n");
 
+	BandController* bc = BandController::getInstance();
+	bc->delPuck(con->getPuck());
+
 	//TODO: Timeout
 	/*After x Secs
 	Dispatcher* dsp = Dispatcher::getInstance();

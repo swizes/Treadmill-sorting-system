@@ -9,8 +9,13 @@
 
 Birth::Birth(Context* con): State::State(con){
 	printf("Birth()\n");
-	HAL *hal = HAL::getInstance();
-	hal->band_right_normal();
+	//HAL *hal = HAL::getInstance();
+	BandController* bc = BandController::getInstance();
+	bc->addPuck(con->getPuck());
+	con->getPuck()->runBandFast();
+
+	bc->refreshBand();
+	//hal->band_right_normal();
 	Dispatcher* dsp = Dispatcher::getInstance();
 	dsp->addListeners( this->con_, RUNNING_IN_FALSE);
 

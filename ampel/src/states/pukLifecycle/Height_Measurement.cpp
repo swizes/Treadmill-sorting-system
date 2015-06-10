@@ -11,9 +11,13 @@
 Height_Measurement::Height_Measurement(Context* con): State::State(con){
 	printf("Height_Measurement()\n");
 
+	BandController* bc = BandController::getInstance();
+
 	//TODO: Kill TIMER! von Road_to_Height
 	HAL *hal = HAL::getInstance();
-	hal->band_right_slowly();
+	con->getPuck()->runBandSlowly();
+	bc->refreshBand();
+	//hal->band_right_slowly();
 
 	//TODO: HÖHENMESSUNG + SAVE DATA
 	CalibrateThread* ct = CalibrateThread::getInstance();
