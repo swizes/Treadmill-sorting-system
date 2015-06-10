@@ -361,5 +361,5 @@ int HAL:: get_height_measure(void) {
 	int retVal = v_high << 8;
 	retVal |= v_low;
 	*/
-	return in16(PORT_ADC_LOW);
+	return 4096-in16(PORT_ADC_LOW);
 }
