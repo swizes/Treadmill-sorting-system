@@ -27,3 +27,21 @@ Puck::~Puck() {
 	// TODO Auto-generated destructor stub
 }
 
+void Puck::setPuckFromStruct(struct puckStruct puckS) {
+	this->metal = puckS.metal;
+	this->holeOnTop = puckS.holeOnTop;
+	this->size = puckS.size;
+	this->sizeTyp = puckS.sizetyp;
+	this->id = puckS.id;
+}
+
+struct puckStruct Puck::getPuckStruct(void){
+	struct puckStruct puckS;
+	puckS.metal = this->metal;
+	puckS.holeOnTop = this->holeOnTop;
+	puckS.size = this->size;
+	puckS.sizetyp = this->sizeTyp;
+	puckS.id = this->id;
+	return puckS;
+
+}
