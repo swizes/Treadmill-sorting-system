@@ -22,6 +22,12 @@ public:
 		printf("Context()\n");
 		puck = new Puck();
 	}
+	Context(puckStruct puckS):
+	state_(NULL){
+		puck->setPuckFromStruct(puckS);
+
+
+	}
 	virtual ~Context() {
 		printf("~Context()\n");
 		// On cleanup: Remove yourself from all Events
