@@ -28,8 +28,9 @@ using namespace std;
 int main(int argc, char *argv[]) {
 
 	HAL* hal = HAL::getInstance();
-	/*
+
 	cout << "start hole detection" << endl;
+	hal->band_right_normal();
 	bool x = HoleDetector::detectHole(hal, false);
 
 	if(x) {
@@ -37,7 +38,8 @@ int main(int argc, char *argv[]) {
 	} else {
 		cout << "no hole" << endl;
 	}
-	*/
+	hal->band_stop();
+	/*
 	int i = 1000000;
 	while (true) {
 		if(i<0)
@@ -47,6 +49,7 @@ int main(int argc, char *argv[]) {
 		}
 		i--;
 	}
+	*/
 
     return EXIT_SUCCESS;
 }
