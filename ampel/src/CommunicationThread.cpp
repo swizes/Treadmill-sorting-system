@@ -16,7 +16,7 @@
 
 
 
-#include "CommunnicationThread.h"
+#include "CommunicationThread.h"
 
 
 
@@ -28,7 +28,7 @@
 
 
 
-CommunnicationThread::CommunnicationThread(void) {
+CommunicationThread::CommunicationThread(void) {
 
 	cout << "ctor Communication Test" << endl;
 
@@ -36,7 +36,7 @@ CommunnicationThread::CommunnicationThread(void) {
 
 
 
-CommunnicationThread::~CommunnicationThread() {
+CommunicationThread::~CommunicationThread() {
 
 	// TODO Auto-generated destructor stub
 
@@ -45,7 +45,7 @@ CommunnicationThread::~CommunnicationThread() {
 
 
 
-void CommunnicationThread::execute(void*){
+void CommunicationThread::execute(void*){
 
 
 
@@ -63,7 +63,7 @@ void CommunnicationThread::execute(void*){
 
 	#ifdef SENDER
 
-		ser->sendPacket(&p);
+		ser.sendPacket(&p);
 
 	#endif
 
@@ -73,7 +73,7 @@ void CommunnicationThread::execute(void*){
 
 		ser.recvPacket(&p);
 
-		//printf("Pong: %d\n",p.data);
+		printf("Rechner 2 received: %d\n",p.num);
 
 
 
@@ -83,14 +83,14 @@ void CommunnicationThread::execute(void*){
 
 		ser.sendPacket(&p);
 
-		//printf("Ping: %d\n",p.data);
+		printf("Rechner 2 send: %d\n",p.num);
 
-		//usleep(1000000);				//no need, recvPacket blocked?
+		usleep(1000000);				//no need, recvPacket blocked?
 
 	}
 
 	
-	if(p.num == CHECKSUM){
+	if(p.num == CHECKSUM + 1){
 
 		cout << "Serial Communication finished correct" << endl;
 
@@ -108,7 +108,7 @@ void CommunnicationThread::execute(void*){
 
 
 
-void CommunnicationThread::shutdown(){
+void CommunicationThread::shutdown(){
     cout << "Communication Test shutdown" << endl;
 
 }

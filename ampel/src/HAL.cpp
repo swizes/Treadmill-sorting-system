@@ -13,6 +13,7 @@
 #include "lib/Lock.h"
 #include <pthread.h>
 #include <iostream>
+#include <unistd.h>
 
 using namespace std;
 
@@ -212,11 +213,39 @@ void HAL:: turn_resetLED_off(void){
 	out8(PORT_C, in8(PORT_C) & ~BM_RESET_LED);
 }
 
+/**
+* turns the Q1 LED on
+*/
+void HAL:: turn_Q1_LED_on(void){
+	out8(PORT_C, in8(PORT_C) | BM_Q1_LED);
+}
+
+/**
+* turns the Q2 LED on
+*/
+void HAL:: turn_Q2_LED_on(void){
+	out8(PORT_C, in8(PORT_C) | BM_Q2_LED);
+}
+
+/**
+* turns the Q1 LED off
+*/
+void HAL:: turn_Q1_LED_off(void){
+	out8(PORT_C, in8(PORT_C) & ~BM_Q1_LED);
+}
+
+/**
+* turns the Q2 LED off
+*/
+void HAL:: turn_Q2_LED_off(void){
+	out8(PORT_C, in8(PORT_C) & ~BM_Q2_LED);
+}
+
 //Port B Functions Sensorik
 
 /**
 * Shows if a Puck is running in
-* @return 0 = true, 1 = false
+* @return 0 = false, 1 = true
 */
 int HAL:: is_puck_running_in(void){
 	return !(in8(PORT_B) & BM_RUNNING_IN);
@@ -224,7 +253,7 @@ int HAL:: is_puck_running_in(void){
 
 /**
 * Shows if a puck is in height determination
-* @return 0 = true, 1 = false
+* @return 0 = false, 1 = true
 */
 int HAL:: is_puck_in_height_determination(void){
 	return !(in8(PORT_B) & BM_HEIGHT_DETERM);
@@ -240,7 +269,7 @@ int HAL:: is_height_ok(void){
 
 /** 
 * Shows if the puck is in gate
-* @return 0 = true, 1 = false
+* @return 0 = false, 1 = true
 */
 int HAL:: is_puck_in_gate(void){
 	return !(in8(PORT_B) & BM_PUCK_IN_GATE);
@@ -264,7 +293,7 @@ int HAL:: is_gate_open(void){
 
 /**
 * Shows if the slide is full
-* @return 0 = true, 1 = false
+* @return 0 = false, 1 = true
 */
 int HAL:: is_slide_full(void){
 	return !(in8(PORT_B) & BM_SLIDE_STATUS);
@@ -310,4 +339,27 @@ int HAL:: is_resetButton_pushed(void){
 */
 int HAL:: is_eStopButton_pushed(void){
 	return (in8(PORT_C) & BM_ESTOP_BUTTON_STATUS);
+}
+
+/**
+ * Get the height from the height measure sensor.
+ * This functions blocks for 5ms
+ * @return converted value between 4090 and 0 (~4050 = empty, 0 = ~800 = max allowed height)
+ */
+int HAL:: get_height_measure(void) {
+	//char v_low = in8(PORT_ADC_LOW);
+	//char v_high;
+
+	out8(PORT_ADC_LOW, BM_START_MEASURE);
+	delay(1);
+
+	/*
+	v_high = in8(PORT_ADC_HIGH);
+
+	printf("h: %x l: %x", v_high, v_low);
+
+	int retVal = v_high << 8;
+	retVal |= v_low;
+	*/
+	return in16(PORT_ADC_LOW);
 }

@@ -8,6 +8,8 @@
 #define PORT_A 0x300
 #define PORT_B 0x301
 #define PORT_C 0x302
+#define PORT_ADC_LOW 0x322
+#define PORT_ADC_HIGH 0x323
 
 #define BM_IO_CONTROL 0b10001010
 
@@ -34,10 +36,15 @@
 //Port C
 #define BM_START_LED 0x01
 #define BM_RESET_LED 0x02
+#define BM_Q1_LED 0x04
+#define BM_Q2_LED 0x08
 #define BM_START_BUTTON_STATUS 0x10
 #define BM_STOP_BUTTON_STATUS 0x20
 #define BM_RESET_BUTTON_STATUS 0x40
 #define BM_ESTOP_BUTTON_STATUS 0x80
+
+// ADC
+#define BM_START_MEASURE 0x10
 
 //Reset
 #define RESET_PORT_A 0x0
@@ -82,7 +89,10 @@ public:
 	void turn_resetLED_on(void);
 	void turn_startLED_off(void);
 	void turn_resetLED_off(void);
-	
+	void turn_Q1_LED_on(void);
+	void turn_Q2_LED_on(void);
+	void turn_Q1_LED_off(void);
+	void turn_Q2_LED_off(void);
 
 	int is_puck_running_in(void);
 	int is_puck_in_height_determination(void);
@@ -97,6 +107,8 @@ public:
 	int is_stopButton_pushed(void);
 	int is_resetButton_pushed(void);
 	int is_eStopButton_pushed(void);
+
+	int get_height_measure(void);
 };
 
 
