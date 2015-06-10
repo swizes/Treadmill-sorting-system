@@ -8,21 +8,34 @@
 #ifndef BANDCONTROLLER_H_
 #define BANDCONTROLLER_H_
 
+#include "Puck.h"
+#include "HAL.h"
+#include <pthread.h>
+
+
+
+#define MAX_PUCKS 5
+
 class BandController {
 public:
-	virtual ~BandController();
-	static CalibrateThread* getInstance();
-	void setBandIsStopped(bool stop);
-	void setBandRunSlowly(bool slow);
 
-	bool isBandStopped();
-	bool isBandRunningSlowly();
+	static BandController* getInstance();
+
+	void addPuck(Puck* puck);
+	void delPuck(Puck* puck);
+
+	void refreshBand();
 
 private:
+	BandController(const BandController& other);
+    BandController& operator=(const BandController& other);
 	BandController();
+	virtual ~BandController();
 
-	static BandController*  _instance;
-	Hal* hal;
+	Puck* pucklist[MAX_PUCKS];
+	int puckCounter;
+	static BandController*  instance;
+	HAL* hal;
 	bool stopped;
 	bool runSlowly;
 };
