@@ -33,7 +33,7 @@ void Road_To_Exit::Running_out_true(void){
 	dsp->remListeners( this->con_, RUNNING_OUT_TRUE);
 	HAL *hal = HAL::getInstance();
 	hal->band_stop();
-
+	new (this) SerialCommunicationBand1(this->con_);
 	// Move to State Band2
 	//new (this) Is_Band2_Free?(this->con_);
 }

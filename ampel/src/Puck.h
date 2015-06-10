@@ -12,6 +12,16 @@
 
 enum SIZE{OK,NOT_OK,UNKNOWN};
 
+typedef struct{
+
+	bool metal;
+	bool holeOnTop;
+	int size;
+	SIZE sizetyp;
+	int id;
+
+}puckStruct;
+
 class Puck {
 
 private:
@@ -25,8 +35,10 @@ private:
 
 public:
 	Puck();
+	Puck(puckStruct);
 	virtual ~Puck();
-
+	void setPuckFromStruct(puckStruct);
+	puckStruct getPuckStruct(void);
 	bool isUserInteractionNeeded() const{
 		return needUserInteraction;
 	}

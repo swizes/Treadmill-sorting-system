@@ -57,6 +57,18 @@ int Serial::recvPacket(Packet* p){
 	return -1;
 }
 
+int Serial::sendPacket(puckStruct* puck){
+	write(this->fdesc_, puck, sizeof(puckStruct));
+		return 0;
+}
+
+int Serial::recvPacket(puckStruct* puck){
+	if( readcond(this->fdesc_, puck, sizeof(puckStruct), sizeof(puckStruct), 0, 0) > 0) {
+		return 0;
+	}
+	return -1;
+}
+
 int Serial::startreq(){
 	Packet p;
 	memset(&p, 0 , sizeof(p));

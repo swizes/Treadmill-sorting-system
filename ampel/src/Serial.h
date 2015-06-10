@@ -7,6 +7,7 @@
 
 #ifndef SERIAL_H_
 #define SERIAL_H_
+#include "Puck.h"
 
 typedef struct {
 		uint8_t num;
@@ -20,6 +21,8 @@ public:
 	void config(void);
 	int sendPacket(Packet* p);
 	int recvPacket(Packet* p);
+	int sendPacket(puckStruct* puck);
+	int recvPacket(puckStruct* puck);
 	int startreq();
 	int startresp();
 

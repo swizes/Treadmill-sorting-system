@@ -59,6 +59,8 @@ void Timer::setTimer(int s, int ns){
 	if(timerid != -1 && stop){
 		val.it_value.tv_sec = s;
 		val.it_value.tv_nsec= ns;
+		val.it_interval.tv_sec = 0;
+		val.it_interval.tv_nsec = 0;
 		if(timerid != -1){
 			timer_settime(timerid, 0, &val,NULL);
 			stop = 0;
