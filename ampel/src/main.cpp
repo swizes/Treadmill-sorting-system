@@ -12,44 +12,50 @@
 #include <cstdlib>
 #include <iostream>
 #include "Blink_Thread.h"
-//#include "Hal_Test_Thread.h"
+#include "Hal_Test_Thread.h"
 #include "lib/HWaccess.h"
 #include "Serial.h"
-#include "CommunicationThread.h"
-#include "states/PuckStates.h"
-//#include "CalibrateThread.h"
-#include "Dispatcher.h"
-#include "State.cpp"
-#include "HAL.h"
-#include "HoleDetector.h"
+#include "CommunnicationThread.h"
+#include "FileHelper.h"
+#include "ConfigManager.h"
 
 using namespace std;
 
 int main(int argc, char *argv[]) {
 
-	HAL* hal = HAL::getInstance();
+	ConfigManager *cf = new ConfigManager();
+	string val1 = "ha";
+	string val2;
 
-	cout << "start hole detection" << endl;
-	hal->band_right_normal();
-	bool x = HoleDetector::detectHole(hal, false);
-
-	if(x) {
-		cout << "has hole!" << endl;
-	} else {
-		cout << "no hole" << endl;
-	}
-	hal->band_stop();
 	/*
-	int i = 1000000;
-	while (true) {
-		if(i<0)
-		{
-			cout << "val:" << hal->get_height_measure() << endl;
-			i = 1000000;
-		}
-		i--;
-	}
-	*/
+	cf->setConfigValue("test1", "value1");
+	cf->setConfigValue("test2", "value2");
+
+
+	cf->getConfigValue("test1", &val1);
+	cf->getConfigValue("test2", &val2);
+
+	cout << "val1:" << val1 << endl;
+	cout << "val2:" << val2 << endl;
+
+	cf->writeDefaultConfig();
+*/
+	cf->readDefaultConfig();
+
+	cf->getConfigValue("test1", &val1);
+	cf->getConfigValue("test2", &val2);
+
+	cout << "val1:" << val1 << endl;
+	cout << "val2:" << val2 << endl;
+
+	//cout << "check file system";
+	//FileHelper fhelper;// = new FileHelper();
+	//fhelper.test1();
+
+
+    #ifdef SIMULATION
+       IOaccess_close();
+    #endif
 
     return EXIT_SUCCESS;
 }
