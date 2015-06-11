@@ -26,11 +26,11 @@ public:
 	ReadySend();
 	virtual ~ReadySend();
 
-	bool isBusy() const {
+	int getBusy() const {
 		return busy;
 	}
 
-	void setBusy(bool busy = 1) {
+	void setBusy(int busy) {
 		this->busy = busy;
 	}
 
@@ -39,7 +39,7 @@ private:
 	ReadySend& operator=(ReadySend& b);
 	virtual void execute(void* con); ///< Geerbt aus HAWThread. Muss implementiert werden.
 	virtual void shutdown();
-	bool busy = 1;
+	int busy = 1;
 };
 
 #endif /* PUCKLIFCYCLEFSM_H_ */
