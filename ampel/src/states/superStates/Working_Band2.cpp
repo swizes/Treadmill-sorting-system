@@ -14,6 +14,7 @@ Working_Band2::Working_Band2(Context* con): State::State(con){
 	printf("Working_Band2()\n");
     Dispatcher* dsp = Dispatcher::getInstance();
     dsp->addListeners( this->con_, RUNNING_IN_TRUE);
+    cout << "Add Disp" << endl;
 	
    
 }
@@ -23,6 +24,7 @@ Working_Band2::~Working_Band2(){
 }
 
 void Working_Band2::Running_In_true(void){
+	std::cout << "Running IN" << std::endl;
     Dispatcher* dsp = Dispatcher::getInstance();
 	dsp->remListeners( this->con_, RUNNING_IN_TRUE);
 	HAL *hal = HAL::getInstance();

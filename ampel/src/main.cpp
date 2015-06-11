@@ -36,8 +36,8 @@ int main(int argc, char *argv[]) {
     #endif
 	//RUN Calibration
 	CalibrateThread *cal = CalibrateThread::getInstance();
-	//cal->start(NULL);
-	//cal->join();
+	cal->start(NULL);
+	cal->join();
 
 
     //Hal_Test_Thread htt;
@@ -54,11 +54,11 @@ int main(int argc, char *argv[]) {
 	Dispatcher* disp = Dispatcher::getInstance();
 
 	cout << "Vor Start der FSM" << endl;
-	if(0/*cal->isBand()==0*/){
-	//Context* con= new Context();
-	State* s = new Ready(NULL);
-	//con->setState(new Ready(NULL));
-	disp->listenForEvents();
+	if(cal->isBand()==0){
+		//Context* con= new Context();
+		State* s = new Ready(NULL);
+		//con->setState(new Ready(NULL));
+		disp->listenForEvents();
 
 	}else{
 		ReadySend rdy;
@@ -66,6 +66,10 @@ int main(int argc, char *argv[]) {
 		rdy.start(NULL);
 		Context* con = new Context();
 		con->setState(new Give_New_Puck(con));
+		Serial ser;
+		puckStruct puck;
+		disp->listenForEvents();
+		ser.recvPacket(&puck);
 	}
 
 		//Hal_Test_Thread htt;
