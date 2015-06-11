@@ -277,4 +277,13 @@ private:
 	SerialCommunicationBand1(const SerialCommunicationBand1& other);
 	SerialCommunicationBand1& operator=(const SerialCommunicationBand1& other);
 };
+
+class Sequence: public State {
+public:
+	Sequence(Context* con);
+	virtual ~ Sequence();
+private:
+	Sequence(const Sequence& other);
+	Sequence& operator=(const Sequence& other);
+};
 #endif

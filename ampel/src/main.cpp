@@ -34,9 +34,9 @@ int main(int argc, char *argv[]) {
 		cout << "WARNING: SYSTEM IN SIMULATION!!!" << endl;
     #endif
 	//RUN Calibration
-//	CalibrateThread *cal = CalibrateThread::getInstance();
-//	cal->start(NULL);
-//	cal->join();
+	CalibrateThread *cal = CalibrateThread::getInstance();
+	cal->start(NULL);
+	cal->join();
 
 
     //Hal_Test_Thread htt;
