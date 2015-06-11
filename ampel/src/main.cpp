@@ -51,22 +51,16 @@ int main(int argc, char *argv[]) {
 	//CommunicationThread ct;
 	//ct.start(NULL);
     #endif
-	cout << "instance" << endl;
 //	HAL* hal = HAL::getInstance();
 //	hal->reset();
-	cout << "reset" << endl;
 	Dispatcher* disp = Dispatcher::getInstance();
-	cout << "disp" << endl;
 
 	cout << "Vor Start der FSM" << endl;
 
-	Context* con= new Context();
-	cout << "context" << endl;
+	//Context* con= new Context();
 	State* s = new Ready(NULL);
-	con->setState(new Ready(NULL));
-	cout << "setState" << endl;
+	//con->setState(new Ready(NULL));
 	disp->listenForEvents();
-	cout << "listenForEvents" << endl;
 
 
 		//Hal_Test_Thread htt;
