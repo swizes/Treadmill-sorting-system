@@ -67,12 +67,25 @@ void Dispatcher:: addListeners(Transitions* listener, EVENTS event){
 
 void Dispatcher:: remListeners(Transitions* listener, EVENTS event){
 	// Remove Listener from a specific Event
+	int res = 0;
+	int j = -1;
+
 	for(int i=0; i<MAXLISTENERS; i++){
+
+		//Liste von hinten nach vorne kopieren
+		if(j >= 0 && listeners_[event][i] != NULL){
+			listeners_[event][j] = listeners_[event][i];
+		}
+
 		if( listeners_[event][i] == listener){
 			listeners_[event][i] = NULL;
-			return;
+			res = 1;
+			j = i;
 		}
 	}
+
+	if(res){return;}
+
 	printf("Sorry, couldn't find Listener at requested Event\n");
 }
 
@@ -82,6 +95,7 @@ void Dispatcher:: callListeners(EVENTS event){
 	for(int i=0; i<MAXLISTENERS; i++){
 		if( listeners_[event][i] != NULL){
 			(listeners_[event][i]->*methods[event])();
+			break; //call only the first
 		}
 	}
 }
