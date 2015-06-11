@@ -5,6 +5,7 @@
 #include "../Dispatcher.h"
 #include "../Timer/Timer.h"
 #include "../CalibrateThread.h"
+#include "../BandController.h"
 
 /*
  * PUK LIFE CYCLE:
@@ -153,6 +154,121 @@ private:
 	Error_Handling& operator=(const Error_Handling& other);
 };
 
+
+class Ready: public State {
+public:
+	Ready(Context* con);
+	virtual ~ Ready();
+	virtual void Running_In_true(void);
+private:
+	Ready(const Ready& other);
+	Ready& operator=(const Ready& other);
+};
+
+class Calibration: public State {
+public:
+	Calibration(Context* con);
+	virtual ~ Calibration();
+private:
+	Calibration(const Calibration& other);
+	Calibration& operator=(const Calibration& other);
+};
+
+
+class Give_Band_2_Pucks: public State {
+public:
+	Give_Band_2_Pucks(Context* con);
+	virtual ~ Give_Band_2_Pucks();
+private:
+	Give_Band_2_Pucks(const Give_Band_2_Pucks& other);
+	Give_Band_2_Pucks& operator=(const Give_Band_2_Pucks& other);
+};
+
+class Give_New_Puck: public State {
+public:
+	Give_New_Puck(Context* con);
+	virtual ~ Give_New_Puck();
+private:
+	Give_New_Puck(const Give_New_Puck& other);
+	Give_New_Puck& operator=(const Give_New_Puck& other);
+};
+
+class Initialisierung: public State {
+public:
+	Initialisierung(Context* con);
+	virtual ~ Initialisierung();
+private:
+	Initialisierung(const Initialisierung& other);
+	Initialisierung& operator=(const Initialisierung& other);
+};
+
+class Reihenfolge: public State {
+public:
+	Reihenfolge(Context* con);
+	virtual ~ Reihenfolge();
+private:
+	Reihenfolge(const Reihenfolge& other);
+	Reihenfolge& operator=(const Reihenfolge& other);
+};
+
+class Sequence: public State {
+public:
+	Sequence(Context* con);
+	virtual ~ Sequence();
+private:
+	Sequence(const Sequence& other);
+	Sequence& operator=(const Sequence& other);
+};
+
+class User_Interaction_needed: public State {
+public:
+	User_Interaction_needed(Context* con);
+	virtual ~ User_Interaction_needed();
+private:
+	User_Interaction_needed(const User_Interaction_needed& other);
+	User_Interaction_needed& operator=(const User_Interaction_needed& other);
+};
+
+class Waiting_for_arriving_Puck: public State {
+public:
+	Waiting_for_arriving_Puck(Context* con);
+	virtual ~ Waiting_for_arriving_Puck();
+private:
+	Waiting_for_arriving_Puck(const Waiting_for_arriving_Puck& other);
+	Waiting_for_arriving_Puck& operator=(const Waiting_for_arriving_Puck& other);
+};
+
+class Put_Aside: public State {
+public:
+	Put_Aside(Context* con);
+	virtual ~ Put_Aside();
+private:
+	Put_Aside(const Put_Aside& other);
+	Put_Aside& operator=(const Put_Aside& other);
+};
+
+class Working_Band1: public State {
+public:
+	Working_Band1(Context* con);
+	virtual ~ Working_Band1();
+	virtual void Running_In_true(void);
+	virtual void Running_out_true(void);
+private:
+	Working_Band1(const Working_Band1& other);
+	Working_Band1& operator=(const Working_Band1& other);
+};
+
+class Working_Band2: public State {
+public:
+	Working_Band2(Context* con);
+	virtual ~ Working_Band2();
+	virtual void Running_out_true(void);
+private:
+	Working_Band2(const Working_Band2& other);
+	Working_Band2& operator=(const Working_Band2& other);
+};
+
+//PseudoTestZustand
 class SerialCommunicationBand1: public State {
 public:
 	SerialCommunicationBand1(Context* con);

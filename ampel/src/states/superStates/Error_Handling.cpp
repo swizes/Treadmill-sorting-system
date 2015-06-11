@@ -15,7 +15,6 @@ Error_Handling::Error_Handling(Context* con): State::State(con){
 	hal->band_stop();
 	//TODO: Print the error out
 	printf("Error\n");
-
 	if(hal->is_resetButton_pushed() == 1) {
 		new (this) Birth(this->con_);
 	}

@@ -16,6 +16,7 @@ typedef struct{
 
 	bool metal;
 	bool holeOnTop;
+	bool needUserInteraction;
 	int size;
 	SIZE sizetyp;
 	int id;
@@ -32,6 +33,9 @@ private:
 	SIZE sizeTyp;
 	int id;
 	static int idCount;
+	int stopBand_;
+	int runBandSlowly_;
+	int runBandFast_;
 
 public:
 	Puck();
@@ -39,6 +43,37 @@ public:
 	virtual ~Puck();
 	void setPuckFromStruct(puckStruct);
 	puckStruct getPuckStruct(void);
+
+	void stopBand(){
+		this->stopBand_ = 1;
+		this->runBandFast_ = 0;
+		this->runBandSlowly_ = 0;
+	}
+
+	void runBandSlowly(){
+		this->stopBand_ = 0;
+		this->runBandSlowly_ = 1;
+		this->runBandFast_ = 0;
+	}
+
+	void runBandFast(){
+		this->stopBand_ = 0;
+		this->runBandSlowly_ = 0;
+		this->runBandFast_ = 1;
+	}
+
+	int isBandStopped() const{
+		return stopBand_;
+	}
+
+	int isBandRunningSlowly() const{
+		return runBandSlowly_;
+	}
+
+	int isBandRunningFast() const{
+		return runBandFast_;
+	}
+
 	bool isUserInteractionNeeded() const{
 		return needUserInteraction;
 	}

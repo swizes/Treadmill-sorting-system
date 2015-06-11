@@ -18,9 +18,15 @@ private:
 	Puck* puck;
 public:
 	Context() :
-			state_(NULL) {
+		state_(NULL) {
 		printf("Context()\n");
 		puck = new Puck();
+	}
+	Context(puckStruct puckS):
+	state_(NULL){
+		puck->setPuckFromStruct(puckS);
+
+
 	}
 	virtual ~Context() {
 		printf("~Context()\n");

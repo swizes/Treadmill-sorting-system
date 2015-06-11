@@ -15,6 +15,8 @@ SerialCommunicationBand1::SerialCommunicationBand1(Context* con): State::State(c
 	printf("SerialCommunicationBand1\n");
 
 	Dispatcher* dsp = Dispatcher::getInstance();
+	HAL* hal = HAL::getInstance();
+
 
 	Serial* ser = new Serial();
 	int res = 1;
@@ -23,6 +25,7 @@ SerialCommunicationBand1::SerialCommunicationBand1(Context* con): State::State(c
 	//Wenn Band2 sagt ist frei, sendet es eine 1
 	while(res){
 		ser->recvPacket(&p);
+		printf("Received Packet. %d\n", p.num);
 		if(p.num == 1){
 			res = 0;
 		}
@@ -32,6 +35,7 @@ SerialCommunicationBand1::SerialCommunicationBand1(Context* con): State::State(c
 	puckStruct puck = con->getPuck()->getPuckStruct();
 	ser->sendPacket(&puck);
 
+	hal->band_right_normal();
 
 
 

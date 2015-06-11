@@ -18,6 +18,9 @@ Puck::Puck() {
 	sizeTyp = NOT_OK;	//Default sortingPuck out
 	id = idCount++;
 	needUserInteraction = false;
+	stopBand_ = false;
+	runBandSlowly_ = false;
+	runBandFast_ = false;
 
 	std::cout << "Puck is created" << std::endl;
 }
@@ -33,6 +36,7 @@ void Puck::setPuckFromStruct(puckStruct puckS) {
 	this->size = puckS.size;
 	this->sizeTyp = puckS.sizetyp;
 	this->id = puckS.id;
+	this->needUserInteraction = puckS.needUserInteraction;
 }
 
 puckStruct Puck::getPuckStruct(void){
@@ -42,6 +46,7 @@ puckStruct Puck::getPuckStruct(void){
 	puckS.size = this->size;
 	puckS.sizetyp = this->sizeTyp;
 	puckS.id = this->id;
+	puckS.needUserInteraction = this->needUserInteraction;
 	return puckS;
 
 }

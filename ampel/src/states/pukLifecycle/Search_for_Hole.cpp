@@ -15,11 +15,11 @@ Search_for_Hole::Search_for_Hole(Context* con): State::State(con){
 	dsp->addListeners( this->con_, IN_HEIGHT_FALSE);
 
 	HAL* hal = HAL::getInstance();
-	hal->band_right_slowly();
+	//hal->band_right_slowly();
 	hal->open_gate();
 
 	HoleDetector* hd = new HoleDetector();
-	//con->getPuck().setHoleOnTop(hd->detectHole(hal, true));
+	con->getPuck()->setHoleOnTop(hd->detectHole(hal, true));
 }
 
 Search_for_Hole::~Search_for_Hole(){
