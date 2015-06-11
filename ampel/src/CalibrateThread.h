@@ -110,6 +110,7 @@ private:
 	int bigPuck;
 	int smallPuck;
 	int holeHeight;
+	int holeHeightMetal;
 };
 
 #endif /* COMMUNNICATIONTHREAD_H_ */

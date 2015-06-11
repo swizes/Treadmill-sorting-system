@@ -83,6 +83,7 @@ CalibrateThread::CalibrateThread() {
 	configManager->getConfigValue("bigPuck", &outVal) ? bigPuck = atoi(outVal.c_str()) : keyNotFound = true;
 	configManager->getConfigValue("smallPuck", &outVal) ? smallPuck = atoi(outVal.c_str()) : keyNotFound = true;
 	configManager->getConfigValue("holeHeight", &outVal) ? holeHeight = atoi(outVal.c_str()) : keyNotFound = true;
+	configManager->getConfigValue("holeHeight", &outVal) ? holeHeight = atoi(outVal.c_str()) : keyNotFound = true;
 	
 
 	if(keyNotFound) {
@@ -265,6 +266,23 @@ void CalibrateThread::execute(void*) {
 	while(hal->is_slide_full()==0){}
 	hal->band_stop();
 
+	cout << "Put a Metal Puck with Hole on Top" << endl;
+	while(hal->is_puck_running_in()==0){}
+	hal->band_right_normal();
+	while(hal->is_puck_in_height_determination()==0){}
+	hal->band_stop();
+
+	holeHeightMetal = hal->get_height_measure();
+	hal->band_right_normal();
+	hal->open_gate();
+	while(hal->is_puck_in_gate()==0){}
+	hal->close_gate();
+	while(hal->is_slide_full()==0){}
+	hal->band_stop();
+
+
+
+
 	cout << "Push Start Button for Band1 or Stop Button for Band2" << endl;
 	int run = 1;
 	while(run){
@@ -320,6 +338,7 @@ void CalibrateThread::saveConfig() {
 	configManager->setConfigValue("bigPuck", std::string(itoa(bigPuck, buf,10)));
 	configManager->setConfigValue("smallPuck", std::string(itoa(smallPuck, buf,10)));
 	configManager->setConfigValue("holeHeight", std::string(itoa(holeHeight, buf,10)));
+	configManager->setConfigValue("holeHeightMetal", std::string(itoa(holeHeightMetal, buf,10)));
 	configManager->setConfigValue("configset", "1");
 
 
