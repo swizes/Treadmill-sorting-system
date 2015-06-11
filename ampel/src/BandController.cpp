@@ -96,6 +96,7 @@ void BandController::refreshBand(){
 		fast |= pucklist[i]->isBandRunningFast();
 	}
 
+
 	printf("BandControl: stop: %d Slow: %d Fast: %d\n", stop, slow, fast);
 
 	if(stop){
@@ -105,6 +106,11 @@ void BandController::refreshBand(){
 	}else if(fast){
 		hal->band_right_normal();
 	}
+
+	if(puckCounter == 0){
+		hal->band_stop();
+	}
+
 }
 
 Puck*  BandController::getRecentPuck(void){

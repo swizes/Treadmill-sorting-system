@@ -12,9 +12,9 @@ Road_To_Sorting_Out::Road_To_Sorting_Out(Context* con): State::State(con){
 	Dispatcher* dsp = Dispatcher::getInstance();
 	dsp->addListeners( this->con_, PUCK_IN_GATE_TRUE);
 
-	BandController* bc = BandController::getInstance();
-	con->getPuck()->runBandFast();
-	bc->refreshBand();
+//	BandController* bc = BandController::getInstance();
+//	con->getPuck()->runBandFast();
+//	bc->refreshBand();
 }
 
 Road_To_Sorting_Out::~Road_To_Sorting_Out(){

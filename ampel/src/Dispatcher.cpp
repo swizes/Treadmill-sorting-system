@@ -134,10 +134,10 @@ void Dispatcher:: listenForEvents(){
 		val = !(val << stateChanged);
 
 		if (val == 1){
-			printf("Got an Interrupt, Bit: %d value: %d\n", stateChanged, val);
+			//printf("Got an Interrupt, Bit: %d value: %d\n", stateChanged, val);
 			callListeners((EVENTS)stateChanged);
 		} else {
-			printf("Got an Interrupt, Bit: %d value: %d\n", stateChanged+EVENT_OFFSET, val);
+			//printf("Got an Interrupt, Bit: %d value: %d\n", stateChanged+EVENT_OFFSET, val);
 			callListeners((EVENTS)(stateChanged+EVENT_OFFSET));
 		}
 		//printf("Got an Interrupt, Bit: %d value: %d\n", stateChanged, val);

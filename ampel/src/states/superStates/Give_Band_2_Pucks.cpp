@@ -16,6 +16,9 @@ Give_Band_2_Pucks::Give_Band_2_Pucks(Context* con): State::State(con){
     //while(!(hal->is_startButton_pushed()));
 
     BandController* bc = BandController::getInstance();
+
+    while(hal->is_puck_running_out() == 1);
+
     con->getPuck()->runBandFast();
 
     bc->delPuck(con->getPuck());

@@ -20,7 +20,8 @@ Road_To_Exit::Road_To_Exit(Context* con): State::State(con){
 
 	Timer* timer = new Timer();
 	timer->waitForTimeOut(1,0);
-	hal->close_gate();
+	cout << "Timeout" << endl;
+	//hal->close_gate();
 }
 
 Road_To_Exit::~Road_To_Exit(){
@@ -39,9 +40,9 @@ void Road_To_Exit::Running_out_true(void){
 	this->con_->getPuck()->stopBand();
 	bc->refreshBand();
 
-	//HAL *hal = HAL::getInstance();
+	HAL *hal = HAL::getInstance();
 	//hal->band_stop();
-
+	//hal->close_gate();
 
 	//new (this) SerialCommunicationBand1(this->con_);
 	// Move to State Band2

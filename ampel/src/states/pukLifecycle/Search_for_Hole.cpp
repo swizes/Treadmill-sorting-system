@@ -16,7 +16,7 @@ Search_for_Hole::Search_for_Hole(Context* con): State::State(con){
 
 	HAL* hal = HAL::getInstance();
 	//hal->band_right_slowly();
-	hal->open_gate();
+	//hal->open_gate();
 
 	HoleDetector* hd = new HoleDetector();
 	con->getPuck()->setHoleOnTop(hd->detectHole(hal, true));
@@ -33,6 +33,11 @@ void Search_for_Hole::In_Height_false(void){
 	// Stop listen to Event Transmission1
 	Dispatcher* dsp = Dispatcher::getInstance();
 	dsp->remListeners( this->con_, IN_HEIGHT_FALSE);
+
+	//band_right_normal()
+	BandController* bc = BandController::getInstance();
+	con_->getPuck()->runBandFast();
+	bc->refreshBand();
 
 	Puck *puck = this->con_->getPuck();
 

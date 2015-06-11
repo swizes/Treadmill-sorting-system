@@ -27,7 +27,7 @@
 using namespace std;
 
 int main(int argc, char *argv[]) {
-
+	printf("Version 0.9\n");
     // Baut Verbindung zu Simulation auf
 	#ifdef SIMULATION
         IOaccess_open();
@@ -35,8 +35,8 @@ int main(int argc, char *argv[]) {
     #endif
 	//RUN Calibration
 	CalibrateThread *cal = CalibrateThread::getInstance();
-	cal->start(NULL);
-	cal->join();
+	//cal->start(NULL);
+	//cal->join();
 
 
     //Hal_Test_Thread htt;

@@ -6,7 +6,7 @@
  */
 #include "PuckStates.h"
 
-#define VARIANZ 50
+#define VARIANZ 75
 
 Height_Measurement::Height_Measurement(Context* con): State::State(con){
 	printf("Height_Measurement()\n");
@@ -32,17 +32,26 @@ Height_Measurement::Height_Measurement(Context* con): State::State(con){
 	int maxHeight = ct->getBigPuck()+VARIANZ;
 	int hole = ct->getHoleHeight();
 
-	if(height >= hole-VARIANZ && height <= hole+VARIANZ){
-		cout << "Hat Loch" << endl;
-		con->getPuck()->setHoleOnTop(true);
-		con->getPuck()->setSizeTyp(OK);
-	}
+//	if(height >= hole-VARIANZ && height <= hole+VARIANZ){
+//		cout << "Hat Loch" << endl;
+//		con->getPuck()->setHoleOnTop(true);
+//		con->getPuck()->setUserInteractionNeeded(false);
+//		con->getPuck()->setSizeTyp(OK);
+//	}
 	//Height is equal or bigger than an incorrect Type
 	//and equal or less than a CorrectType
 	cout << "HeigtMeasurement: " << height << "  HeightBigPuck: " << maxHeight << endl;
 	if(height >=  minHeight && height <= maxHeight){
 		con->getPuck()->setSizeTyp(OK);
+		con->getPuck()->setUserInteractionNeeded(true);
 		cout << "sizeType after set: " << con->getPuck()->getSizeTyp() << "   Id:" << con->getPuck()->getId()  << endl;
+	}
+
+	if(height >= hole-VARIANZ && height <= hole+VARIANZ){
+		cout << "Hat Loch" << endl;
+		con->getPuck()->setHoleOnTop(true);
+		con->getPuck()->setUserInteractionNeeded(false);
+		con->getPuck()->setSizeTyp(OK);
 	}
 
 	//TODO: PreCond is_Height_ok
