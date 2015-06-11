@@ -75,10 +75,12 @@ void Dispatcher:: remListeners(Transitions* listener, EVENTS event){
 		//Liste von hinten nach vorne kopieren
 		if(j >= 0 && listeners_[event][i] != NULL){
 			listeners_[event][j] = listeners_[event][i];
+			listeners_[event][i] = NULL;
+			j++;
 		}
 
 		if( listeners_[event][i] == listener){
-			listeners_[event][i] = NULL;
+			//listeners_[event][i] = NULL;
 			res = 1;
 			j = i;
 		}
