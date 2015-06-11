@@ -28,6 +28,9 @@ using namespace std;
 
 int main(int argc, char *argv[]) {
 
+
+
+
     // Baut Verbindung zu Simulation auf
 	#ifdef SIMULATION
         IOaccess_open();
@@ -37,6 +40,7 @@ int main(int argc, char *argv[]) {
 	CalibrateThread *cal = CalibrateThread::getInstance();
 	cal->start(NULL);
 	cal->join();
+	cout << "cal done" << endl;
 
 
     //Hal_Test_Thread htt;
@@ -47,18 +51,22 @@ int main(int argc, char *argv[]) {
 	//CommunicationThread ct;
 	//ct.start(NULL);
     #endif
-
-	HAL* hal = HAL::getInstance();
-	hal->reset();
+	cout << "instance" << endl;
+//	HAL* hal = HAL::getInstance();
+//	hal->reset();
+	cout << "reset" << endl;
 	Dispatcher* disp = Dispatcher::getInstance();
+	cout << "disp" << endl;
 
 	cout << "Vor Start der FSM" << endl;
 
-	//Context* con= new Context();
+	Context* con= new Context();
+	cout << "context" << endl;
 	State* s = new Ready(NULL);
-	//con->setState(new Ready(NULL));
+	con->setState(new Ready(NULL));
+	cout << "setState" << endl;
 	disp->listenForEvents();
-
+	cout << "listenForEvents" << endl;
 
 
 		//Hal_Test_Thread htt;

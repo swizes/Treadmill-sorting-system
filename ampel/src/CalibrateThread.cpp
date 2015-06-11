@@ -107,7 +107,6 @@ void CalibrateThread::execute(void*) {
 		return;
 	}
 
-	saveConfig();
 
 	cout << "Calibration started" << endl;
 	HAL *hal = HAL::getInstance();
@@ -271,10 +270,12 @@ void CalibrateThread::execute(void*) {
 		if(hal->is_startButton_pushed()==0){
 			band=0;
 			run=0;
+			cout << "set as band 0" << endl;
 		}
 		if(hal->is_stopButton_pushed()==1){
 			band=1;
 			run=0;
+			cout << "set as band 1" << endl;
 		}
 	}
 
@@ -307,6 +308,8 @@ int CalibrateThread::timespecToMs(struct timespec *time) {
 void CalibrateThread::saveConfig() {
 	char buf [33];
 
+	cout << "I am saving Config" << endl;
+
 	configManager->setConfigValue("L0toHeightFast", std::string(itoa(L0toHeightFast, buf,10)));
 	configManager->setConfigValue("HeighttoGateFast", std::string(itoa(HeighttoGateFast, buf,10)));
 	configManager->setConfigValue("L0toL1Fast", std::string(itoa(L0toL1Fast, buf,10)));
@@ -323,9 +326,9 @@ void CalibrateThread::saveConfig() {
 	configManager->setConfigValue("configset", "1");
 
 
-	/*if(!configManager->writeDefaultConfig())                                                                                                                                                                                                                      3riteDefaultConfig())
+	if(!(configManager->writeDefaultConfig()))
 	{
 		cout << "error writing config file!" << endl;
-	}*/
+	}
 
 }

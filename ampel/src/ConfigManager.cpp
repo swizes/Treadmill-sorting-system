@@ -44,6 +44,7 @@ bool ConfigManager::readConfig(string configFileName) {
 	string line;
 	ifstream st_file (configFileName.c_str());
 
+
 	if (st_file.is_open())
 	{
 		while ( getline (st_file,line) )
