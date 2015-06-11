@@ -64,12 +64,14 @@ int main(int argc, char *argv[]) {
 		ReadySend rdy;
 		rdy.setBusy(1);
 		rdy.start(NULL);
-		Context* con = new Context();
-		con->setState(new Give_New_Puck(con));
-		Serial ser;
-		puckStruct puck;
-		disp->listenForEvents();
-		ser.recvPacket(&puck);
+		while(1){
+			Context* con = new Context();
+			con->setState(new Give_New_Puck(con));
+			Serial ser;
+			puckStruct puck;
+			disp->listenForEvents();
+			ser.recvPacket(&puck);
+		}
 	}
 
 		//Hal_Test_Thread htt;
