@@ -8,9 +8,10 @@
 
 #include "PuckStates.h"
 
+
 Is_In_Slide::Is_In_Slide(Context* con): State::State(con){
 	printf("Is in Slide()\n");
-
+	this->con = con;
 	BandController* bc = BandController::getInstance();
 	bc->delPuck(con->getPuck());
 
@@ -38,7 +39,8 @@ void Is_In_Slide::Slide_full_false(void){
 	HAL *hal = HAL::getInstance();
 
 	//TODO: ERROR HANDLING
-	//hal->band_stop();
+	//con->getPuck()->isBandStopped();
+
 
 	//TODO: Move to State Sorted Out
 	//new (this) Sorted Out(this->con_);

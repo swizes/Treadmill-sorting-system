@@ -23,6 +23,7 @@
 #include "State.cpp"
 #include "HAL.h"
 #include "HoleDetector.h"
+#include "states/ReadySend.h"
 
 using namespace std;
 
@@ -48,12 +49,12 @@ int main(int argc, char *argv[]) {
 	//ct.start(NULL);
     #endif
 
-	HAL* hal = HAL::getInstance();
-	hal->reset();
+	//HAL* hal = HAL::getInstance();
+	//hal->reset();
 	Dispatcher* disp = Dispatcher::getInstance();
 
 	cout << "Vor Start der FSM" << endl;
-	if(cal->isBand()==0){
+	if(0/*cal->isBand()==0*/){
 	//Context* con= new Context();
 	State* s = new Ready(NULL);
 	//con->setState(new Ready(NULL));
@@ -61,9 +62,10 @@ int main(int argc, char *argv[]) {
 
 	}else{
 		ReadySend rdy;
-		rdy.isBusy(1);
+		rdy.setBusy(1);
 		rdy.start(NULL);
-
+		Context* con = new Context();
+		con->setState(new Give_New_Puck(con));
 	}
 
 		//Hal_Test_Thread htt;

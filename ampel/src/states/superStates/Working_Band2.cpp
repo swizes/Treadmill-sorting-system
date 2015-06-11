@@ -13,7 +13,7 @@ Working_Band2::Working_Band2(Context* con): State::State(con){
 //do:
 	printf("Working_Band2()\n");
     Dispatcher* dsp = Dispatcher::getInstance();
-    dsp->addListeners( this->con_, RUNNING_OUT_TRUE);
+    dsp->addListeners( this->con_, RUNNING_IN_TRUE);
 	
    
 }
@@ -22,13 +22,14 @@ Working_Band2::~Working_Band2(){
 	printf("~Working_Band2()\n");
 }
 
-void Working_Band2::Running_out_true(void){
+void Working_Band2::Running_In_true(void){
     Dispatcher* dsp = Dispatcher::getInstance();
-	dsp->remListeners( this->con_, RUNNING_OUT_TRUE);
+	dsp->remListeners( this->con_, RUNNING_IN_TRUE);
 	HAL *hal = HAL::getInstance();
-	hal->band_stop();
+	hal->band_right_normal();
     
     // Move to State: Give_New_Puck
-	new (this) Give_New_Puck(this->con_);
+	//new (this) Give_New_Puck(this->con_);
+	new (this) Birth(this->con_);
 }
 

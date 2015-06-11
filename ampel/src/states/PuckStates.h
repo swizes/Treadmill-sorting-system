@@ -119,6 +119,7 @@ public:
 	virtual ~ Is_In_Slide();
 	virtual void Slide_full_false(void);
 private:
+	Context* con;
 	Is_In_Slide(const Is_In_Slide& other);
 	Is_In_Slide& operator=(const Is_In_Slide& other);
 };
@@ -262,7 +263,7 @@ class Working_Band2: public State {
 public:
 	Working_Band2(Context* con);
 	virtual ~ Working_Band2();
-	virtual void Running_out_true(void);
+	virtual void Running_In_true(void);
 private:
 	Working_Band2(const Working_Band2& other);
 	Working_Band2& operator=(const Working_Band2& other);
