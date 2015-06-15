@@ -11,6 +11,9 @@
 Flipping_Puck::Flipping_Puck(Context* con): State::State(con){
 	printf("Flipping Puck()\n");
 	HAL *hal = HAL::getInstance();
+	hal->open_gate();
+	Timer *timer = new Timer();
+	timer->waitForTimeOut(0,100000000);
 	hal->close_gate();
 	Dispatcher* dsp = Dispatcher::getInstance();
 	dsp->addListeners( this->con_, SLIDE_FULL_TRUE);

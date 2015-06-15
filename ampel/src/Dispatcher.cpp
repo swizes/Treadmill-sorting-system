@@ -13,7 +13,7 @@ int isrChannel = 0;
 int isrConnection = 0;
 struct sigevent isrEvent;
 
-Dispatcher:: Dispatcher(){
+Dispatcher::Dispatcher(){
 	// Clear Listener Pointer 2Dim Array
 	for(int i=0; i<NEVENTS; i++){
 		for(int j=0; j<MAXLISTENERS; j++){
@@ -45,7 +45,7 @@ Dispatcher:: Dispatcher(){
 
 }
 
-Dispatcher::  ~Dispatcher(){
+Dispatcher::~Dispatcher(){
 
 }
 

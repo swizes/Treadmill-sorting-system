@@ -9,17 +9,17 @@
 #include "PuckLifcycleFSM.h"
 
 Ready::Ready(Context* con): State::State(con){
-	int isBand2 = 0;
+	CalibrateThread *cal = CalibrateThread::getInstance();
 	//entry:
 		//SET isBand2 ? 1 : 0;
 	//do:
-    printf("Ready() as Band:%d\n",isBand2+1);
+    printf("Ready() as Band:%d\n",cal->isBand()+1);
 
     //Context* context = new Context();
     this->con_ = new Context();
     this->con_->setState(this);
 
-    if(!isBand2){
+    if(!cal->isBand()){ //Band 1
         Dispatcher* dsp = Dispatcher::getInstance();
         dsp->addListeners( this->con_, RUNNING_IN_TRUE);
     }
@@ -43,6 +43,7 @@ Ready::Ready(Context* con): State::State(con){
         }
     }
     */
+
 	
 }
 
@@ -60,7 +61,7 @@ void Ready::Running_In_true(void){
 //	new (this) Working_Band1(this->con_);
 	PuckLifcycleFSM* pfsm = new PuckLifcycleFSM();
 	pfsm->start(this->con_);
-
+	cout << "Switch To Ready" << endl;
 	new (this) Ready(NULL);
 
 }

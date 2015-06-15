@@ -324,9 +324,8 @@ void CalibrateThread::saveConfig() {
 	configManager->setConfigValue("configset", "1");
 
 
-	/*if(!configManager->writeDefaultConfig())                                                                                                                                                                                                                      3riteDefaultConfig())
-	{
+	if(!configManager->writeDefaultConfig()){
 		cout << "error writing config file!" << endl;
-	}*/
+	}
 
 }

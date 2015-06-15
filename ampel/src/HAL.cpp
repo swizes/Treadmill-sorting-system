@@ -33,6 +33,7 @@ HAL* HAL::getInstance(){
 		pthread_mutex_lock(&mtx_);
 		if( instance_ == NULL){
 		    instance_ = new HAL();
+		    instance_->reset();
 		}
 		pthread_mutex_unlock(&mtx_);
 	}

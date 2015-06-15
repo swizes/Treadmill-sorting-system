@@ -35,8 +35,8 @@ int main(int argc, char *argv[]) {
     #endif
 	//RUN Calibration
 	CalibrateThread *cal = CalibrateThread::getInstance();
-	//cal->start(NULL);
-	//cal->join();
+	cal->start(NULL);
+	cal->join();
 
 
     //Hal_Test_Thread htt;
@@ -48,8 +48,7 @@ int main(int argc, char *argv[]) {
 	//ct.start(NULL);
     #endif
 
-	HAL* hal = HAL::getInstance();
-	hal->reset();
+
 	Dispatcher* disp = Dispatcher::getInstance();
 
 	cout << "Vor Start der FSM" << endl;
