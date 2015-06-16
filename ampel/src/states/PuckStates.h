@@ -23,6 +23,15 @@ private:
 	NotExist& operator=(const NotExist& other);
 };
 
+class Sorted_Out: public State {
+public:
+	Sorted_Out(Context* con);
+	virtual ~Sorted_Out();
+private:
+	Sorted_Out(const Sorted_Out& other);
+	Sorted_Out& operator=(const Sorted_Out& other);
+};
+
 
 class Birth: public State {
 public:

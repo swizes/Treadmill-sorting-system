@@ -49,8 +49,7 @@ int main(int argc, char *argv[]) {
 	//ct.start(NULL);
     #endif
 
-	//HAL* hal = HAL::getInstance();
-	//hal->reset();
+
 	Dispatcher* disp = Dispatcher::getInstance();
 
 	cout << "Vor Start der FSM" << endl;

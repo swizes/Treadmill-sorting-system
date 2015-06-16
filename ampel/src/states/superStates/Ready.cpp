@@ -24,7 +24,7 @@ Ready::Ready(Context* con): State::State(con){
         dsp->addListeners( this->con_, RUNNING_IN_TRUE);
     }
     
-    //HAL *hal = HAL::getInstance();
+
 
 
 

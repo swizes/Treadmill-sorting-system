@@ -22,6 +22,12 @@ Is_In_Slide::Is_In_Slide(Context* con): State::State(con){
 	*/
 	Dispatcher* dsp = Dispatcher::getInstance();
 	dsp->addListeners( this->con_, SLIDE_FULL_FALSE);
+	Timer *timer = new Timer();
+	timer->waitForTimeOut(2,0);
+	cout << "Slide full";
+	HAL *hal = HAL::getInstance();
+	//hal->turn_redLight_on();
+	//hal->band_stop();
 
 }
 
@@ -43,7 +49,7 @@ void Is_In_Slide::Slide_full_false(void){
 
 
 	//TODO: Move to State Sorted Out
-	//new (this) Sorted Out(this->con_);
+	//new (this) Sorted_Out(this->con_);
 }
 
 //TODO: void Is_in_Slide::Error_Handling(void)
