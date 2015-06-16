@@ -6,6 +6,8 @@
 #include "../Timer/Timer.h"
 #include "../CalibrateThread.h"
 #include "../BandController.h"
+#include <cstdlib>
+#include <iostream>
 
 /*
  * PUK LIFE CYCLE:
@@ -19,6 +21,15 @@ public:
 private:
 	NotExist(const NotExist& other);
 	NotExist& operator=(const NotExist& other);
+};
+
+class Sorted_Out: public State {
+public:
+	Sorted_Out(Context* con);
+	virtual ~Sorted_Out();
+private:
+	Sorted_Out(const Sorted_Out& other);
+	Sorted_Out& operator=(const Sorted_Out& other);
 };
 
 
@@ -119,6 +130,7 @@ public:
 	virtual ~ Is_In_Slide();
 	virtual void Slide_full_false(void);
 private:
+	Context* con;
 	Is_In_Slide(const Is_In_Slide& other);
 	Is_In_Slide& operator=(const Is_In_Slide& other);
 };
@@ -262,7 +274,7 @@ class Working_Band2: public State {
 public:
 	Working_Band2(Context* con);
 	virtual ~ Working_Band2();
-	virtual void Running_out_true(void);
+	virtual void Running_In_true(void);
 private:
 	Working_Band2(const Working_Band2& other);
 	Working_Band2& operator=(const Working_Band2& other);

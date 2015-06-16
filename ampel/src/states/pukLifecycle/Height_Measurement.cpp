@@ -12,7 +12,6 @@ Height_Measurement::Height_Measurement(Context* con): State::State(con){
 	printf("Height_Measurement()\n");
 
 	BandController* bc = BandController::getInstance();
-
 	//TODO: Kill TIMER! von Road_to_Height
 	HAL *hal = HAL::getInstance();
 	con->getPuck()->runBandSlowly();
@@ -46,6 +45,14 @@ Height_Measurement::Height_Measurement(Context* con): State::State(con){
 		con->getPuck()->setUserInteractionNeeded(true);
 		cout << "sizeType after set: " << con->getPuck()->getSizeTyp() << "   Id:" << con->getPuck()->getId()  << endl;
 	}
+	time_t time_of_day;
+	time_of_day = time( NULL );
+	printf( "It is now: %s\n", ctime( &time_of_day ) );
+	while(hal->is_startButton_pushed()==1){
+		hal->band_stop();
+	}
+
+	hal->band_right_slowly();
 
 	if(height >= hole-VARIANZ && height <= hole+VARIANZ){
 		cout << "Hat Loch" << endl;
@@ -62,6 +69,6 @@ Height_Measurement::Height_Measurement(Context* con): State::State(con){
 }
 
 Height_Measurement::~Height_Measurement(){
-	printf("~Road_to_Height()\n");
+	printf("~Height_Measurement()\n");
 
 }

@@ -27,6 +27,7 @@ void ReadySend::execute(void* con){
 		ser.sendPacket(&p);
 		Timer time;
 		time.waitForTimeOut(0,100000000);
+		//cout << "Ready" << endl;
 	}
 
 }

@@ -27,6 +27,7 @@ Road_to_Height::Road_to_Height(Context* con): State::State(con){
 	con->getPuck()->runBandSlowly();
 	bc->refreshBand();
 	//hal->band_right_slowly();
+
 }
 
 Road_to_Height::~Road_to_Height(){
@@ -39,7 +40,10 @@ void Road_to_Height::In_Height_true (void){
 
 	// Stop listen to Event Transmission1
 	Dispatcher* dsp = Dispatcher::getInstance();
+	HAL *hal = HAL::getInstance();
 	//TODO: or?	dsp->remListeners( this->con_, HEIGHT_STATUS_OK);
+	cout << "IS_IN_HEIGHT ::" << hal->is_puck_in_height_determination() << endl;
+	cout << "GOTO HeightMeasurement" << endl;
 	dsp->remListeners( this->con_, IN_HEIGHT_TRUE);
 
 	// Move to State Height Measurement.
