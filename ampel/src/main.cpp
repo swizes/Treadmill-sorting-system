@@ -24,6 +24,7 @@
 #include "HAL.h"
 #include "HoleDetector.h"
 #include "states/ReadySend.h"
+#include "Logger.h"
 
 using namespace std;
 
@@ -34,6 +35,11 @@ int main(int argc, char *argv[]) {
         IOaccess_open();
 		cout << "WARNING: SYSTEM IN SIMULATION!!!" << endl;
     #endif
+
+	Logger log();
+
+	log << "test";
+
 	//RUN Calibration
 	CalibrateThread *cal = CalibrateThread::getInstance();
 	cal->start(NULL);
