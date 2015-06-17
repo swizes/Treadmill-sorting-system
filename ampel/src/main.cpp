@@ -38,6 +38,7 @@ int main(int argc, char *argv[]) {
 	CalibrateThread *cal = CalibrateThread::getInstance();
 	cal->start(NULL);
 	cal->join();
+	cout << "cal done" << endl;
 
 
     //Hal_Test_Thread htt;
@@ -72,6 +73,7 @@ int main(int argc, char *argv[]) {
 			ser.recvPacket(&puck);
 		}
 	}
+
 
 		//Hal_Test_Thread htt;
 		//htt.start(NULL);

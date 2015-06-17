@@ -8,7 +8,7 @@
 #ifndef CONFIGMANAGER_H_
 #define CONFIGMANAGER_H_
 
-#define DEFAULT_CONFIG_FILENAME "default.cf"
+#define DEFAULT_CONFIG_FILENAME "default.cfg"
 #define CONFIG_SEPARATOR ":"
 
 #include <string>
