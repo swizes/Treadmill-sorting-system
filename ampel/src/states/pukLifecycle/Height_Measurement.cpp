@@ -6,10 +6,10 @@
  */
 #include "PuckStates.h"
 
-#define VARIANZ 100
+#define VARIANZ 150
 
 Height_Measurement::Height_Measurement(Context* con): State::State(con){
-	//printf("Height_Measurement()\n");
+	printf("Height_Measurement()\n");
 
 	BandController* bc = BandController::getInstance();
 	//TODO: Kill TIMER! von Road_to_Height

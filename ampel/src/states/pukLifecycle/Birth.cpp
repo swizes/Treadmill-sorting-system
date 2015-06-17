@@ -8,7 +8,7 @@
 
 
 Birth::Birth(Context* con): State::State(con){
-	//printf("Birth()\n");
+	printf("Birth()\n");
 	HAL *hal = HAL::getInstance();
 	hal->turn_greenLight_off();
 	BandController* bc = BandController::getInstance();

@@ -9,7 +9,7 @@
 #include "PuckStates.h"
 
 Metal_Detected::Metal_Detected(Context* con): State::State(con){
-	//printf("Metal Detected()\n");
+	printf("Metal Detected()\n");
 	Dispatcher* dsp = Dispatcher::getInstance();
 	dsp->addListeners( this->con_, PUCK_IN_GATE_TRUE);
 }

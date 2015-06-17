@@ -352,6 +352,7 @@ int HAL:: get_height_measure(void) {
 	//char v_low = in8(PORT_ADC_LOW);
 	//char v_high;
 
+	cout << "in get_height_measure" << endl;
 	out8(PORT_ADC_LOW, BM_START_MEASURE);
 	delay(1);
 
@@ -363,5 +364,6 @@ int HAL:: get_height_measure(void) {
 	int retVal = v_high << 8;
 	retVal |= v_low;
 	*/
-	return 4096-in16(PORT_ADC_LOW);
+	return 476;
+	//return 4096-in16(PORT_ADC_LOW);
 }

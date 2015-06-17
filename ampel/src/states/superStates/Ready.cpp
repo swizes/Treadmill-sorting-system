@@ -13,7 +13,7 @@ Ready::Ready(Context* con): State::State(con){
 	//entry:
 		//SET isBand2 ? 1 : 0;
 	//do:
-//    printf("Ready() as Band:%d\n",cal->isBand()+1);
+   printf("Ready() as Band:%d\n",cal->isBand()+1);
 
     //Context* context = new Context();
     this->con_ = new Context();

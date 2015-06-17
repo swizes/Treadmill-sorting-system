@@ -85,7 +85,6 @@ CalibrateThread::CalibrateThread() {
 	configManager->getConfigValue("smallPuck", &outVal) ? smallPuck = atoi(outVal.c_str()) : keyNotFound = true;
 	configManager->getConfigValue("holeHeight", &outVal) ? holeHeight = atoi(outVal.c_str()) : keyNotFound = true;
 	
-
 	if(keyNotFound) {
 		cout << "Error! Key not found!" << endl;
 	} else {

@@ -9,7 +9,7 @@
 #include "../HoleDetector.h"
 
 Search_for_Hole::Search_for_Hole(Context* con): State::State(con){
-//	printf("SearchSearch_for_Hole for Hole\n");
+	printf("SearchSearch_for_Hole for Hole\n");
 	//TODO: Set the type of Puck and save it
 	Dispatcher* dsp = Dispatcher::getInstance();
 	dsp->addListeners( this->con_, IN_HEIGHT_FALSE);

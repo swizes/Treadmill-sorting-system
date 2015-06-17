@@ -8,7 +8,7 @@
 #include "PuckStates.h"
 //TODO: Class name should be changed to Metal Detection
 Road_to_Metal::Road_to_Metal(Context* con): State::State(con){
-//	printf("Road_to_Metal()\n");
+	printf("Road_to_Metal()\n");
 	Dispatcher* dsp = Dispatcher::getInstance();
 
 

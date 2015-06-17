@@ -10,7 +10,7 @@
 
 
 NotExist::NotExist(Context* con): State::State(con){
-	//printf("Not Exist()\n");
+	printf("Not Exist()\n");
 	// Start listen on Event Transition1
 	Dispatcher* dsp = Dispatcher::getInstance();
 	dsp->addListeners( this->con_, RUNNING_IN_TRUE);

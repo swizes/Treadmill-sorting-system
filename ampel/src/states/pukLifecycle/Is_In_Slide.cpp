@@ -10,7 +10,7 @@
 
 
 Is_In_Slide::Is_In_Slide(Context* con): State::State(con){
-	//printf("Is in Slide()\n");
+	printf("Is in Slide()\n");
 	BandController* bc = BandController::getInstance();
 	bc->delPuck(this->con_->getPuck());
 	bc->refreshBand();

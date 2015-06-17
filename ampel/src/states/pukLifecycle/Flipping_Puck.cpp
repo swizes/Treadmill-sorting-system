@@ -9,7 +9,7 @@
 #include "PuckStates.h"
 
 Flipping_Puck::Flipping_Puck(Context* con): State::State(con){
-	//printf("Flipping Puck()\n");
+	printf("Flipping Puck()\n");
 //	HAL *hal = HAL::getInstance();
 //	hal->open_gate();
 //	Timer *timer = new Timer();
