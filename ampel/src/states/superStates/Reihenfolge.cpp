@@ -17,8 +17,8 @@ Reihenfolge::Reihenfolge(Context* con): State::State(con){
     	wasThereReservPuck = 0,
     	wasThereLastPuck   = 0;
 
-	printf("Reihenfolge()\n");
-	printf("-------------\n");
+//	printf("Reihenfolge()\n");
+//	printf("-------------\n");
 
     //TODO: Set isLastPuckMetal,isThisPuckMetal,isRsrvPuckMetal
     BandController* bc = BandController::getInstance();
@@ -44,10 +44,10 @@ Reihenfolge::Reihenfolge(Context* con): State::State(con){
     //If there was no LastPuck Then isLastPuckMetal has to be the opposite of isThisPuckMetal
     if( !wasThereLastPuck ) isThisPuckMetal == 1 ? isLastPuckMetal=0 : isLastPuckMetal=1;
 
-	printf("-------------\n");
-	printf("LastPuck Metal:%d\n",isLastPuckMetal);
-	printf("ThisPuck Metal:%d\n",isThisPuckMetal);
-	printf("RsrvPuck Metal:%d\n",isRsrvPuckMetal);
+//	printf("-------------\n");
+//	printf("LastPuck Metal:%d\n",isLastPuckMetal);
+//	printf("ThisPuck Metal:%d\n",isThisPuckMetal);
+//	printf("RsrvPuck Metal:%d\n",isRsrvPuckMetal);
 
 //do:
 

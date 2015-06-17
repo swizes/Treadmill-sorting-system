@@ -68,6 +68,7 @@ void BandController::delPuck(Puck* puck){
 	for(int i=0; i < puckCounter; i++){
 		if(j >= 0){
 			memcpy(pucklist[j] , pucklist[i], sizeof(Puck));
+			memset( pucklist[i], 0, sizeof(Puck) );
 		}
 		if( memcmp(puck, pucklist[i], sizeof(Puck)) == 0 ){
 			memset( pucklist[i], 0, sizeof(Puck) );
@@ -97,7 +98,7 @@ void BandController::refreshBand(){
 	}
 
 
-	printf("BandControl: stop: %d Slow: %d Fast: %d\n", stop, slow, fast);
+//	printf("BandControl: stop: %d Slow: %d Fast: %d\n", stop, slow, fast);
 
 	if(stop){
 		hal->band_stop();

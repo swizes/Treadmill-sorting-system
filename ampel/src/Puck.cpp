@@ -22,7 +22,9 @@ Puck::Puck() {
 	runBandSlowly_ = false;
 	runBandFast_ = false;
 
-	std::cout << "Puck is created" << std::endl;
+//	std::cout << "ID: " << id << "  idCount: " << idCount << std::endl;
+
+//	std::cout << "Puck is created" << std::endl;
 }
 
 Puck::~Puck() {

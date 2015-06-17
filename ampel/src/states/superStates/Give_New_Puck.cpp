@@ -10,7 +10,7 @@
 Give_New_Puck::Give_New_Puck(Context* con): State::State(con){
 //entry:	
 //do:
-	printf("Give_New_Puck()\n");
+//	printf("Give_New_Puck()\n");
     HAL *hal = HAL::getInstance();
     //TODO: Receive FiFo Entry (Puck ID) from Band1
     int loop = 1;

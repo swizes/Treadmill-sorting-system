@@ -10,10 +10,10 @@
 
 
 Is_In_Slide::Is_In_Slide(Context* con): State::State(con){
-	printf("Is in Slide()\n");
-	this->con = con;
+	//printf("Is in Slide()\n");
 	BandController* bc = BandController::getInstance();
-	bc->delPuck(con->getPuck());
+	bc->delPuck(this->con_->getPuck());
+	bc->refreshBand();
 
 	//TODO: Timeout
 	/*After x Secs
@@ -24,8 +24,8 @@ Is_In_Slide::Is_In_Slide(Context* con): State::State(con){
 	dsp->addListeners( this->con_, SLIDE_FULL_FALSE);
 	Timer *timer = new Timer();
 	timer->waitForTimeOut(2,0);
-	cout << "Slide full";
-	HAL *hal = HAL::getInstance();
+//	cout << "Slide full";
+	//HAL *hal = HAL::getInstance();
 	//hal->turn_redLight_on();
 	//hal->band_stop();
 
@@ -42,7 +42,7 @@ void Is_In_Slide::Slide_full_false(void){
 	// Stop listen to Event Transmission1
 	Dispatcher* dsp = Dispatcher::getInstance();
 	dsp->remListeners( this->con_, SLIDE_FULL_FALSE);
-	HAL *hal = HAL::getInstance();
+	//HAL *hal = HAL::getInstance();
 
 	//TODO: ERROR HANDLING
 	//con->getPuck()->isBandStopped();

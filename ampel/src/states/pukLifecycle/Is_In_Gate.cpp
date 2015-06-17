@@ -8,12 +8,12 @@
 #include "PuckStates.h"
 
 Is_In_Gate::Is_In_Gate(Context* con): State::State(con){
-	printf("Is in Gate()\n");
+	//printf("Is in Gate()\n");
 	Dispatcher* dsp = Dispatcher::getInstance();
 	dsp->addListeners( this->con_, PUCK_IN_GATE_FALSE);
 	//Check PuckHightIsOk ? open_gate : close_gate
 	HAL* hal= HAL::getInstance();
-	if(con_->getPuck()->getSizeTyp() == OK){
+	if(this->con_->getPuck()->getSizeTyp() == OK){
 		hal->open_gate();
 	}
 }

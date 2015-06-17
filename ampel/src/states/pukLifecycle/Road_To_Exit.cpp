@@ -8,11 +8,11 @@
 
 
 Road_To_Exit::Road_To_Exit(Context* con): State::State(con){
-	printf("Road_to_Exit()\n");
+	//printf("Road_to_Exit()\n");
 	HAL *hal = HAL::getInstance();
 
 	BandController* bc = BandController::getInstance();
-	con->getPuck()->runBandFast();
+	this->con_->getPuck()->runBandFast();
 	bc->refreshBand();
 	//hal->band_right_normal();
 	Dispatcher* dsp = Dispatcher::getInstance();
@@ -20,7 +20,7 @@ Road_To_Exit::Road_To_Exit(Context* con): State::State(con){
 
 	Timer* timer = new Timer();
 	timer->waitForTimeOut(1,0);
-	cout << "Timeout" << endl;
+	//cout << "Timeout" << endl;
 	//hal->close_gate();
 }
 

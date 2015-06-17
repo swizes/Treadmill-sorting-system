@@ -6,23 +6,21 @@
  */
 #include "PuckStates.h"
 
-#define VARIANZ 75
+#define VARIANZ 100
 
 Height_Measurement::Height_Measurement(Context* con): State::State(con){
-	printf("Height_Measurement()\n");
+	//printf("Height_Measurement()\n");
 
 	BandController* bc = BandController::getInstance();
 	//TODO: Kill TIMER! von Road_to_Height
 	HAL *hal = HAL::getInstance();
-	con->getPuck()->runBandSlowly();
-	bc->refreshBand();
+
 	//hal->band_right_slowly();
 
 	//TODO: HÖHENMESSUNG + SAVE DATA
 	CalibrateThread* ct = CalibrateThread::getInstance();
 	int height = hal->get_height_measure();
-	con->getPuck()->setSize(height);
-	cout << 2 << endl;
+	this->con_->getPuck()->setSize(height);
 	//Variant value of Pucks  = > TODO: set right VariantValue!
 
 	//Height is bigger if there is no object in Measurement
@@ -40,25 +38,28 @@ Height_Measurement::Height_Measurement(Context* con): State::State(con){
 	//Height is equal or bigger than an incorrect Type
 	//and equal or less than a CorrectType
 	cout << "HeigtMeasurement: " << height << "  HeightBigPuck: " << maxHeight << endl;
+	cout << "HeigtMeasurement PuckId: " << this->con_->getPuck()->getId() << endl;
+	this->con_->getPuck()->setSizeTyp(NOT_OK);
 	if(height >=  minHeight && height <= maxHeight){
-		con->getPuck()->setSizeTyp(OK);
-		con->getPuck()->setUserInteractionNeeded(true);
-		cout << "sizeType after set: " << con->getPuck()->getSizeTyp() << "   Id:" << con->getPuck()->getId()  << endl;
-	}
-	time_t time_of_day;
-	time_of_day = time( NULL );
-	printf( "It is now: %s\n", ctime( &time_of_day ) );
-	while(hal->is_startButton_pushed()==1){
-		hal->band_stop();
+		this->con_->getPuck()->setSizeTyp(OK);
+		this->con_->getPuck()->setUserInteractionNeeded(true);
+//		cout << "sizeType after set: " << con->getPuck()->getSizeTyp() << "   Id:" << con->getPuck()->getId()  << endl;
 	}
 
-	hal->band_right_slowly();
+	Dispatcher* dsp = Dispatcher::getInstance();
+	dsp->printListeners();
+
+	/*while(hal->is_startButton_pushed()==1){
+		hal->band_stop();
+		delay(100);
+	}*/
+	//hal->band_right_slowly();
 
 	if(height >= hole-VARIANZ && height <= hole+VARIANZ){
-		cout << "Hat Loch" << endl;
-		con->getPuck()->setHoleOnTop(true);
-		con->getPuck()->setUserInteractionNeeded(false);
-		con->getPuck()->setSizeTyp(OK);
+//		cout << "Hat Loch" << endl;
+		this->con_->getPuck()->setHoleOnTop(true);
+		this->con_->getPuck()->setUserInteractionNeeded(false);
+		this->con_->getPuck()->setSizeTyp(OK);
 	}
 
 	//TODO: PreCond is_Height_ok

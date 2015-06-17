@@ -33,6 +33,7 @@ public:
 	virtual void callListeners(EVENTS event);
 	virtual void listenForEvents();
 	static Dispatcher* getInstance(void);
+	void printListeners();
 
 private:
 	Dispatcher();

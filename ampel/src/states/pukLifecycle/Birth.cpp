@@ -8,16 +8,19 @@
 
 
 Birth::Birth(Context* con): State::State(con){
-	printf("Birth()\n");
-	//HAL *hal = HAL::getInstance();
+	//printf("Birth()\n");
+	HAL *hal = HAL::getInstance();
+	hal->turn_greenLight_off();
 	BandController* bc = BandController::getInstance();
-	bc->addPuck(con->getPuck());
-	con->getPuck()->runBandFast();
+	bc->addPuck(this->con_->getPuck());
+	this->con_->getPuck()->runBandFast();
 
 	bc->refreshBand();
 	//hal->band_right_normal();
 	Dispatcher* dsp = Dispatcher::getInstance();
 	dsp->addListeners( this->con_, RUNNING_IN_FALSE);
+
+	cout << "Birth PuckId: " << this->con_->getPuck()->getId() << endl;
 
 }
 

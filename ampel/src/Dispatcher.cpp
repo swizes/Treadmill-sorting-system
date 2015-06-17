@@ -70,20 +70,31 @@ void Dispatcher:: remListeners(Transitions* listener, EVENTS event){
 	int res = 0;
 	int j = -1;
 
-	for(int i=0; i<MAXLISTENERS; i++){
+	for(int i=0; i<MAXLISTENERS-1; i++){
 
 		//Liste von hinten nach vorne kopieren
-		if(j >= 0 && listeners_[event][i] != NULL){
-			listeners_[event][j] = listeners_[event][i];
-			listeners_[event][i] = NULL;
-			j++;
+//		if(j >= 0 && listeners_[event][i] != NULL){
+//			listeners_[event][j] = listeners_[event][i];
+//			listeners_[event][i] = NULL;
+//			j++;
+//		}
+//
+//		if( listeners_[event][i] == listener){
+//			listeners_[event][i] = NULL;
+//			res = 1;
+//			j = i;
+//		}
+
+		if(listeners_[event][i] == listener){
+			res = 1;
+//			listeners_[event][i] = listeners_[event][i+1];
+//			listeners_[event][i+1] = NULL;
+		}
+		if(res){
+			listeners_[event][i] = listeners_[event][i+1];
+			listeners_[event][i+1] = NULL;
 		}
 
-		if( listeners_[event][i] == listener){
-			//listeners_[event][i] = NULL;
-			res = 1;
-			j = i;
-		}
 	}
 
 	if(res){return;}
@@ -103,7 +114,17 @@ void Dispatcher:: callListeners(EVENTS event){
 }
 
 
+void Dispatcher:: printListeners(){
 
+	for(int i=0; i<NEVENTS; i++){
+		for(int j=0; j<MAXLISTENERS; j++){
+			if(listeners_[i][j] != NULL){
+				printf("Event: %d Listener: %d\n", i, j);
+			}
+		}
+	}
+
+}
 
 void Dispatcher:: listenForEvents(){
 
@@ -158,7 +179,6 @@ void Dispatcher:: listenForEvents(){
 		}
 		//printf("Got an Interrupt, Bit: %d value: %d\n", stateChanged, val);
 
-		cout << endl;
 	}while(1);
 
 	// Cleanup
