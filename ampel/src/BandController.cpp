@@ -86,23 +86,19 @@ void BandController::delPuck(Puck* puck){
 }
 
 void BandController::refreshBand(){
-	int i = 0;
 
 	int stop = 0;
 	int slow = 0;
 	int fast = 0;
 
-	for(i = 0; i < puckCounter; i++){
+
+	for(int i = 0; i < puckCounter; i++){
 		stop |= pucklist[i]->isBandStopped();
-	}
-
-	for(i = 0; i < puckCounter; i++){
 		slow |= pucklist[i]->isBandRunningSlowly();
+		fast |= pucklist[i]->isBandRunningFast();
+
 	}
 
-	for(i = 0; i < puckCounter; i++){
-		fast |= pucklist[i]->isBandRunningFast();
-	}
 
 
 //	printf("BandControl: stop: %d Slow: %d Fast: %d\n", stop, slow, fast);
@@ -117,6 +113,30 @@ void BandController::refreshBand(){
 
 	if(puckCounter == 0){
 		hal->band_stop();
+	}
+
+}
+
+void BandController:: refreshGate(){
+
+	int gate_open = 0;
+	int gate_close = 0;
+
+	for(int i = 0; i < puckCounter; i++){
+
+		gate_open |= pucklist[i]->isGateOpen();
+		gate_close |= pucklist[i]->isGateClosed();
+	}
+
+
+	if(gate_open){
+		hal->open_gate();
+	}else if(gate_close){
+		hal->close_gate();
+	}
+
+	if(puckCounter == 0){
+		hal->close_gate();
 	}
 
 }

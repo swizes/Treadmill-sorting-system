@@ -31,6 +31,7 @@ public:
 	void  setLastPuck(Puck* puck);
 
 	void refreshBand();
+	void refreshGate();
 
 private:
 	BandController(const BandController& other);

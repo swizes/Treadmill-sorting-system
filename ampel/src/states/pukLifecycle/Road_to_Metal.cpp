@@ -8,7 +8,7 @@
 #include "PuckStates.h"
 //TODO: Class name should be changed to Metal Detection
 Road_to_Metal::Road_to_Metal(Context* con): State::State(con){
-	printf("Road_to_Metal()\n");
+	printf("Road_to_Metal PuckId: %d\n",  this->con_->getPuck()->getId());
 	Dispatcher* dsp = Dispatcher::getInstance();
 
 
@@ -76,9 +76,8 @@ void Road_to_Metal::Puck_in_Gate_true(void){
 	dsp->remListeners( this->con_, PUCK_IN_GATE_TRUE);
 	//dsp->remListeners( this->con_, METAL_DETECTION_TRUE);
 
-	// Move to  Is In Gate
+	// Move to State Is In Gate
 	new (this) Is_In_Gate(this->con_);
-
 }
 
 

@@ -24,6 +24,8 @@
 #include "HAL.h"
 #include "HoleDetector.h"
 #include "states/ReadySend.h"
+#include "DispatcherThread.h"
+#include "BandController.h"
 
 using namespace std;
 
@@ -35,6 +37,26 @@ int main(int argc, char *argv[]) {
 		cout << "WARNING: SYSTEM IN SIMULATION!!!" << endl;
     #endif
 	//RUN Calibration
+
+
+	/*HAL *hal = HAL::getInstance();
+	hal->open_gate();
+	hal->band_left_normal();
+	delay(100);
+	hal->band_left_slowly();
+	delay(100);
+	hal->band_right_normal();
+	delay(100);
+	hal->band_right_slowly();
+	delay(100);
+	hal->band_stop();
+	delay(100);
+	hal->get_height_measure();
+	delay(100);
+	hal->is_puck_running_in();
+	delay(100);
+	cout << "End Test" << endl;*/
+
 	CalibrateThread *cal = CalibrateThread::getInstance();
 	//cal->start(NULL);
 	//cal->join();
@@ -45,13 +67,20 @@ int main(int argc, char *argv[]) {
 	
     /*Serielle Verbindung funkitoniert nur wenn sich System nicht in der Simulation befindet
     /dev/ser1 steht nicht zur Verfuegung. 		*/
+
+
 	#ifndef SIMULATION
 	//CommunicationThread ct;
 	//ct.start(NULL);
     #endif
 
 
-	Dispatcher* disp = Dispatcher::getInstance();
+	DispatcherThread dspt;
+	dspt.start(NULL);
+	//BandController* bd = BandController::getInstance();
+	//bd->refreshBand();
+	//bd->refreshGate();
+	//Dispatcher* disp = Dispatcher::getInstance();
 
 	cout << "Vor Start der FSM" << endl;
 	cout << "-----------------------------------" << endl;
@@ -59,7 +88,8 @@ int main(int argc, char *argv[]) {
 		//Context* con= new Context();
 		State* s = new Ready(NULL);
 		//con->setState(new Ready(NULL));
-		disp->listenForEvents();
+		//disp->listenForEvents();
+//		dspt.start(NULL);
 
 	}else{
 		ReadySend rdy;
@@ -70,11 +100,13 @@ int main(int argc, char *argv[]) {
 			con->setState(new Give_New_Puck(con));
 			Serial ser;
 			puckStruct puck;
-			disp->listenForEvents();
+//			dspt.start(NULL);
+			//disp->listenForEvents();
 			ser.recvPacket(&puck);
 		}
 	}
 
+	dspt.join();
 
 		//Hal_Test_Thread htt;
 		//htt.start(NULL);

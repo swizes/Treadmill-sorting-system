@@ -36,6 +36,8 @@ private:
 	int stopBand_;
 	int runBandSlowly_;
 	int runBandFast_;
+	int open_gate;
+	int close_gate;
 
 public:
 	Puck();
@@ -43,6 +45,16 @@ public:
 	virtual ~Puck();
 	void setPuckFromStruct(puckStruct);
 	puckStruct getPuckStruct(void);
+
+	void openGate(){
+		this->open_gate = 1;
+		this->close_gate = 0;
+	}
+
+	void closeGate(){
+		this->close_gate = 1;
+		this->open_gate = 0;
+	}
 
 	void stopBand(){
 		this->stopBand_ = 1;
@@ -60,6 +72,14 @@ public:
 		this->stopBand_ = 0;
 		this->runBandSlowly_ = 0;
 		this->runBandFast_ = 1;
+	}
+
+	int isGateOpen() const{
+		return open_gate;
+	}
+
+	int isGateClosed() const{
+		return close_gate;
 	}
 
 	int isBandStopped() const{

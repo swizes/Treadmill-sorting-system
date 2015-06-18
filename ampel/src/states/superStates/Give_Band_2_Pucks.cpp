@@ -25,7 +25,7 @@ Give_Band_2_Pucks::Give_Band_2_Pucks(Context* con): State::State(con){
     bc->delPuck(this->con_->getPuck());
 
 
-
+    /*
     Serial* ser = new Serial();
 	int res = 1;
 	Packet p;
@@ -42,9 +42,10 @@ Give_Band_2_Pucks::Give_Band_2_Pucks(Context* con): State::State(con){
 
 	puckStruct puck = con->getPuck()->getPuckStruct();
 	ser->sendPacket(&puck);
-
+*/
 
 	bc->refreshBand();
+	//bc->refreshGate();
 //	Dispatcher* dsp = Dispatcher::getInstance();
 //	dsp->printListeners();
 //	printf("END puk-lifecycle\n");

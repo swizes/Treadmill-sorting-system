@@ -9,7 +9,7 @@
 #include "../HoleDetector.h"
 
 Search_for_Hole::Search_for_Hole(Context* con): State::State(con){
-	printf("Search_for_Hole for Hole()\n");
+	printf("SearchSearch_for_Hole for Hole Puck Id: %d\n", this->con_->getPuck()->getId());
 	//TODO: Set the type of Puck and save it
 	Dispatcher* dsp = Dispatcher::getInstance();
 	dsp->addListeners( this->con_, IN_HEIGHT_FALSE);
@@ -42,6 +42,7 @@ void Search_for_Hole::In_Height_false(void){
 
 	Puck *puck = this->con_->getPuck();
 
+	cout << "PuckType: " << puck->getSizeTyp()  << "  ID: " << con_->getPuck()->getId() << endl;
 	if(puck->getSizeTyp() == OK){
 		if(puck->isHoleOnTop()){
 			puck->setUserInteractionNeeded(true);
