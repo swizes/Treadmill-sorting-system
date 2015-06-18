@@ -25,9 +25,10 @@ public:
 	void  delPuck(Puck* puck);
 	void  setReservedPuck(Puck* puck);
 	Puck* getReservedPuck(void);
-	void  switchWithReservedPuck(Puck* puck);
 	Puck* getRecentPuck(void);
 	Puck* getLastPuck(void);
+	void  setRecenctPuck(Puck* puck);
+	void  setLastPuck(Puck* puck);
 
 	void refreshBand();
 	void refreshGate();
@@ -44,7 +45,8 @@ private:
 	HAL* hal;
 	bool stopped;
 	bool runSlowly;
-	Puck* reservedPuck;
+	Puck reservedPuck;
+	Puck lastPuck;
 };
 
 #endif /* BANDCONTROLLER_H_ */

@@ -13,6 +13,9 @@
 #ifndef HAL_H
 #define HAL_H
 
+
+#include <stdint.h>
+
 #define IO_CONTROL_ADDRESS 0x303
 #define PORT_A 0x300
 #define PORT_B 0x301
@@ -118,7 +121,7 @@ public:
 	int is_resetButton_pushed(void);
 	int is_eStopButton_pushed(void);
 
-	int get_height_measure(void);
+	uint16_t get_height_measure(void);
 };
 
 

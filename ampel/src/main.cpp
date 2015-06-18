@@ -58,8 +58,8 @@ int main(int argc, char *argv[]) {
 	cout << "End Test" << endl;*/
 
 	CalibrateThread *cal = CalibrateThread::getInstance();
-	cal->start(NULL);
-	cal->join();
+	//cal->start(NULL);
+	//cal->join();
 	cout << "cal done" << endl;
 
 
@@ -83,7 +83,8 @@ int main(int argc, char *argv[]) {
 	//Dispatcher* disp = Dispatcher::getInstance();
 
 	cout << "Vor Start der FSM" << endl;
-	if(cal->isBand()==0){
+	cout << "-----------------------------------" << endl;
+	if(1){//is band1!<
 		//Context* con= new Context();
 		State* s = new Ready(NULL);
 		//con->setState(new Ready(NULL));

@@ -10,10 +10,10 @@
 Road_To_Exit::Road_To_Exit(Context* con): State::State(con){
 	printf("Road_to_Exit PuckId: %d\n",  this->con_->getPuck()->getId());
 
-
 	BandController* bc = BandController::getInstance();
 
 	this->con_->getPuck()->runBandFast();
+	bc->refreshBand();
 	//hal->band_right_normal();
 	Dispatcher* dsp = Dispatcher::getInstance();
 	dsp->addListeners( this->con_, RUNNING_OUT_TRUE);
@@ -46,7 +46,7 @@ void Road_To_Exit::Running_out_true(void){
 	//hal->close_gate();
 
 	//new (this) SerialCommunicationBand1(this->con_);
-	// Move to State Band2
+	// Move to State User_Interaction_needed
 	new (this) User_Interaction_needed(this->con_);
 }
 
