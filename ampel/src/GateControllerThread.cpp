@@ -73,6 +73,8 @@ void GateControllerThread::execute(void*){
 
 void GateControllerThread::setTimer(void){
 	timer->setTimer(2,0);
+	HAL *hal = HAL::getInstance();
+	hal->open_gate();
 	if(!run){
 		this->start(NULL);
 	}

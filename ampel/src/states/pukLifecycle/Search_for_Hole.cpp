@@ -48,6 +48,7 @@ void Search_for_Hole::In_Height_false(void){
 		//hal->open_gate();
 		GateControllerThread *gc = GateControllerThread::getInstance();
 		gc->setTimer();
+		cout << "Open Gate Timer set" << endl;
 		if(puck->isHoleOnTop()){
 			puck->setUserInteractionNeeded(true);
 		}
