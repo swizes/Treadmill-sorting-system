@@ -18,11 +18,13 @@ Puck::Puck() {
 	sizeTyp = NOT_OK;	//Default sortingPuck out
 	id = idCount++;
 	needUserInteraction = false;
-	stopBand_ = false;
-	runBandSlowly_ = false;
-	runBandFast_ = false;
+	stopBand_ = 0;
+	runBandSlowly_ = 0;
+	runBandFast_ = 0;
+	close_gate = 0;
+	open_gate = 0;
 
-	std::cout << "ID: " << id << "  idCount: " << idCount << std::endl;
+//	std::cout << "ID: " << id << "  idCount: " << idCount << std::endl;
 
 //	std::cout << "Puck is created" << std::endl;
 }

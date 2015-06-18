@@ -1,6 +1,15 @@
 /* Begin DCLP-Singleton */
 // Declaration
 
+#include "lib/HWaccess.h"
+#include "lib/Lock.h"
+#include "Timer/Timer.h"
+#include <pthread.h>
+#include <iostream>
+#include <time.h>
+#include <unistd.h>
+
+
 #ifndef HAL_H
 #define HAL_H
 
@@ -61,6 +70,7 @@ private:
     HAL(const HAL& other);
     HAL& operator=(const HAL& other);
     virtual ~HAL();
+    Timer *timer;
 
 public:
     static HAL* getInstance();

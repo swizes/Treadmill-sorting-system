@@ -24,6 +24,7 @@
 #include "HAL.h"
 #include "HoleDetector.h"
 #include "states/ReadySend.h"
+#include "DispatcherThread.h"
 
 using namespace std;
 
@@ -51,14 +52,17 @@ int main(int argc, char *argv[]) {
     #endif
 
 
-	Dispatcher* disp = Dispatcher::getInstance();
+	DispatcherThread dspt;
+	dspt.start(NULL);
+	//Dispatcher* disp = Dispatcher::getInstance();
 
 	cout << "Vor Start der FSM" << endl;
 	if(cal->isBand()==0){
 		//Context* con= new Context();
 		State* s = new Ready(NULL);
 		//con->setState(new Ready(NULL));
-		disp->listenForEvents();
+		//disp->listenForEvents();
+//		dspt.start(NULL);
 
 	}else{
 		ReadySend rdy;
@@ -69,11 +73,13 @@ int main(int argc, char *argv[]) {
 			con->setState(new Give_New_Puck(con));
 			Serial ser;
 			puckStruct puck;
-			disp->listenForEvents();
+//			dspt.start(NULL);
+			//disp->listenForEvents();
 			ser.recvPacket(&puck);
 		}
 	}
 
+	dspt.join();
 
 		//Hal_Test_Thread htt;
 		//htt.start(NULL);

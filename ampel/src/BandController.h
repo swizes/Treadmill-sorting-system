@@ -30,6 +30,7 @@ public:
 	Puck* getLastPuck(void);
 
 	void refreshBand();
+	void refreshGate();
 
 private:
 	BandController(const BandController& other);

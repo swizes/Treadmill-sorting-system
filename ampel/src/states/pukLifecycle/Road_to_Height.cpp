@@ -8,7 +8,7 @@
 
 
 Road_to_Height::Road_to_Height(Context* con): State::State(con){
-	printf("Road to Height()\n");
+//	printf("Road to Height()\n");
 	//TODO:STARTE TIMER!
 	//TODO: TimeOut?!
 	Dispatcher* dsp = Dispatcher::getInstance();

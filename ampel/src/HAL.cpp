@@ -9,12 +9,6 @@
 
 
 #include "HAL.h"
-#include "lib/HWaccess.h"
-#include "lib/Lock.h"
-#include <pthread.h>
-#include <iostream>
-#include <time.h>
-#include <unistd.h>
 
 using namespace std;
 
@@ -28,7 +22,6 @@ HAL* HAL::instance_ = NULL;
 */
 HAL* HAL::getInstance(){
 	static pthread_mutex_t mtx_ = PTHREAD_MUTEX_INITIALIZER;
-
 	if( instance_ == NULL){
 		pthread_mutex_lock(&mtx_);
 		if( instance_ == NULL){
@@ -44,6 +37,8 @@ HAL* HAL::getInstance(){
 * Standard c'tor of HAL Class 
 */
 HAL::HAL(){
+	timer = new Timer();
+	timer->setTimer(60,0);
 	printf("ctor DCLP Singleton\n");
     if( ThreadCtl(_NTO_TCTL_IO_PRIV,0) == -1 ){
         cout << "Can't get Hardware access, therefore can't do anything." << endl;
@@ -132,14 +127,22 @@ void HAL:: band_stop(void){
 * Opens the gate
 */
 void HAL:: open_gate(void){
+	struct timespec time;
+	timer->getTime(&time);
+	printf("Open gate! Thread ID: %d, Timer s: %lu ,ns : %lu\n",  pthread_self(),time.tv_sec,time.tv_nsec);
 	out8(PORT_A, in8(PORT_A) | BM_OPEN_GATE);
+
 }
 
 /**
 * Closes the gate
 */
 void HAL:: close_gate(void){
+	struct timespec time;
+	timer->getTime(&time);
+	printf("Close gate! Thread ID: %d, Timer s: %lu ,ns : %lu\n", pthread_self(),time.tv_sec,time.tv_nsec);
 	out8(PORT_A, in8(PORT_A) & ~BM_OPEN_GATE);
+
 }
 
 /**
