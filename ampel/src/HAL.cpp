@@ -348,22 +348,22 @@ int HAL:: is_eStopButton_pushed(void){
  * This functions blocks for 5ms
  * @return converted value between 4090 and 0 (~4050 = empty, 0 = ~800 = max allowed height)
  */
-int HAL:: get_height_measure(void) {
-	//char v_low = in8(PORT_ADC_LOW);
-	//char v_high;
+uint16_t HAL:: get_height_measure(void) {
+	uint8_t v_low = in8(PORT_ADC_LOW);
+	uint8_t v_high;
 
-	cout << "in get_height_measure" << endl;
+	//cout << "in get_height_measure" << endl;
 	out8(PORT_ADC_LOW, BM_START_MEASURE);
 	delay(1);
 
-	/*
 	v_high = in8(PORT_ADC_HIGH);
 
-	printf("h: %x l: %x", v_high, v_low);
+	//printf("h: %x l: %x ", v_high, v_low);
 
-	int retVal = v_high << 8;
+	uint16_t retVal = v_high << 8;
 	retVal |= v_low;
-	*/
+
+	return retVal;
 	//return 476;
-	return 4096-in16(PORT_ADC_LOW);
+	//return 4096-in16(PORT_ADC_LOW);
 }
