@@ -47,8 +47,9 @@ CalibrateThread* CalibrateThread::getInstance() {
 CalibrateThread::CalibrateThread() {
 
 	cout << "ctor Calibrate" << endl;
-	//bigPuck = 1600;
-	//smallPuck = 1299;
+	bigPuck = 1600;
+	smallPuck = 1299;
+	holeHeight = 490;
 
 	// load defaults
 

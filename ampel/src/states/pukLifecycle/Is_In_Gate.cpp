@@ -10,7 +10,10 @@
 Is_In_Gate::Is_In_Gate(Context* con): State::State(con){
 	printf("Is in Gate()\n");
 	Dispatcher* dsp = Dispatcher::getInstance();
+
 	dsp->addListeners( this->con_, PUCK_IN_GATE_FALSE);
+	dsp->addListeners( this->con_, METAL_DETECTION_TRUE);
+
 	//Check PuckHightIsOk ? open_gate : close_gate
 	HAL* hal= HAL::getInstance();
 	if(this->con_->getPuck()->getSizeTyp() == OK){
@@ -28,10 +31,29 @@ void Is_In_Gate::Puck_in_Gate_false(void){
 	HAL* hal= HAL::getInstance();
 	hal->close_gate();
 
+	con_->getPuck()->setMetal(false);
+
 
 	// Stop listen to Event Transmission1
 	Dispatcher* dsp = Dispatcher::getInstance();
 	dsp->remListeners( this->con_, PUCK_IN_GATE_FALSE);
+	dsp->remListeners( this->con_, METAL_DETECTION_TRUE);
+
+	// Move to State Road to Exit
+	new (this) Road_To_Exit(this->con_);
+}
+
+void Is_In_Gate::Metal_detection_true(void){
+
+	HAL* hal= HAL::getInstance();
+	hal->close_gate();
+
+	con_->getPuck()->setMetal(true);
+
+	// Stop listen to Event Transmission1
+	Dispatcher* dsp = Dispatcher::getInstance();
+	dsp->remListeners( this->con_, PUCK_IN_GATE_FALSE);
+	dsp->remListeners( this->con_, METAL_DETECTION_TRUE);
 
 	// Move to State Road to Exit
 	new (this) Road_To_Exit(this->con_);

@@ -29,6 +29,7 @@ Road_To_Exit::~Road_To_Exit(){
 
 }
 
+
 void Road_To_Exit::Running_out_true(void){
 
 
@@ -38,14 +39,13 @@ void Road_To_Exit::Running_out_true(void){
 
 	BandController* bc = BandController::getInstance();
 	this->con_->getPuck()->stopBand();
-	bc->refreshBand();
 
 	HAL *hal = HAL::getInstance();
 	//hal->band_stop();
 	//hal->close_gate();
 
 	//new (this) SerialCommunicationBand1(this->con_);
-	// Move to State Band2
+	// Move to State User_Interaction_needed
 	new (this) User_Interaction_needed(this->con_);
 }
 

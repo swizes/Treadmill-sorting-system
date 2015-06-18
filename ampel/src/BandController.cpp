@@ -12,6 +12,7 @@
 using namespace std;
 
 
+
 BandController* BandController::instance = NULL;
 
 BandController* BandController::getInstance(){
@@ -28,12 +29,23 @@ BandController* BandController::getInstance(){
 }
 
 BandController::BandController() {
-	std::cout << "ctor BandController" << std::endl;
+	//std::cout << "ctor BandController" << std::endl;
 	stopped = false;
 	runSlowly = false;
-	reservedPuck = NULL;
 	hal = HAL::getInstance();
 	puckCounter = 0;
+
+	lastPuck.setHoleOnTop(false);
+	lastPuck.setMetal(false);
+	lastPuck.setUserInteractionNeeded(false);
+	lastPuck.setSize(0);
+	lastPuck.setSizeTyp(NOT_OK);
+
+	reservedPuck.setHoleOnTop(false);
+	reservedPuck.setMetal(false);
+	reservedPuck.setUserInteractionNeeded(false);
+	reservedPuck.setSize(0);
+	reservedPuck.setSizeTyp(NOT_OK);
 }
 
 BandController::~BandController() {
@@ -49,18 +61,13 @@ void BandController::addPuck(Puck* puck){
 	}
 }
 
-void BandController::setReservedPuck(Puck* puck){
-	memcpy(reservedPuck , puck, sizeof(Puck));
-}
+
 Puck* BandController::getReservedPuck(void){
-	return reservedPuck;
+	return &reservedPuck;
 }
 
-void BandController::switchWithReservedPuck(Puck* puck){
-	Puck* temp;
-	memcpy(temp , reservedPuck, sizeof(Puck));
-	memcpy(reservedPuck , puck, sizeof(Puck));
-	memcpy(puck , temp, sizeof(Puck));
+void BandController::setReservedPuck(Puck* puck){
+	memcpy( getReservedPuck() , puck, sizeof(Puck));
 }
 
 void BandController::delPuck(Puck* puck){
@@ -115,9 +122,17 @@ void BandController::refreshBand(){
 }
 
 Puck*  BandController::getRecentPuck(void){
-	return pucklist[puckCounter];
+	return pucklist[puckCounter-1];
 }
 
 Puck*  BandController::getLastPuck(void){
-	return pucklist[puckCounter-1];
+	return &lastPuck;
+}
+
+void  BandController::setLastPuck(Puck* puck){
+	memcpy( getLastPuck() , puck, sizeof(Puck));
+}
+
+void  BandController::setRecenctPuck(Puck* puck){
+	memcpy( getRecentPuck() , puck, sizeof(Puck));
 }
