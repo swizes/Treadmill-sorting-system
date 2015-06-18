@@ -108,14 +108,11 @@ Reihenfolge::Reihenfolge(Context* con): State::State(con){
 	cout << "[RSRV:" << puck->getSizeTyp()  << "  ID:" << puck->getId() << "  Hole:" << puck->isHoleOnTop()
 		 << " Metal:" << puck->isMetal() << "]"  << endl;
 
-//    if(wasThereReservPuck == 2){
-//    	//This Puck is New Reserve
-//    	bc->setReservedPuck(bc->getRecentPuck());
-//    	//printf("Dieser Puck ist nun ReservePuck\n");
-//    }
+
     if(switchWithReserved){
     	bc->setLastPuck(bc->getReservedPuck());
     	bc->setReservedPuck(bc->getRecentPuck());
+    	bc->setRecenctPuck(bc->getLastPuck());
     	printf("Bitte den Puck mit dem ReservePuck austauschen\n");
     	//Set This ReservedPuck as LastPuck for nextPuck!
     }else{
@@ -124,6 +121,17 @@ Reihenfolge::Reihenfolge(Context* con): State::State(con){
     }
     printf("-------------\n");
     
+    puck = bc->getRecentPuck();
+    cout << "[RCND:" << puck->getSizeTyp()  << "  ID:" << puck->getId() << "  Hole:" << puck->isHoleOnTop()
+		 << " Metal:" << puck->isMetal() << "]"  << endl;
+    puck = bc->getLastPuck();
+	cout << "[LAST:" << puck->getSizeTyp()  << "  ID:" << puck->getId() << "  Hole:" << puck->isHoleOnTop()
+		 << " Metal:" << puck->isMetal() << "]"  << endl;
+	puck = bc->getReservedPuck();
+	cout << "[RSRV:" << puck->getSizeTyp()  << "  ID:" << puck->getId() << "  Hole:" << puck->isHoleOnTop()
+		 << " Metal:" << puck->isMetal() << "]"  << endl;
+
+
 	bc->refreshBand();
 
     // Move to State: Waiting_for_arriving_Puck
