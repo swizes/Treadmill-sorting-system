@@ -10,11 +10,8 @@
 Road_to_Height::Road_to_Height(Context* con): State::State(con){
 
 	cout << "RoadToHeight PuckId: " << this->con_->getPuck()->getId() << endl;
-	//TODO:STARTE TIMER!
-	//TODO: TimeOut?!
 	Dispatcher* dsp = Dispatcher::getInstance();
 	HAL *hal = HAL::getInstance();
-	//TODO: oder 	dsp->addListeners( this->con_, HEIGHT_STATUS_OK);
 	dsp->addListeners( this->con_, IN_HEIGHT_TRUE);
 
 	Timer *pulse = new Timer();
@@ -23,7 +20,7 @@ Road_to_Height::Road_to_Height(Context* con): State::State(con){
 
 //	BandController* bc = BandController::getInstance();
 
-	cout << "Timer expire" << endl;
+	cout << "Timer Expire" << endl;
 
 //	this->con_->getPuck()->runBandSlowly();
 //	bc->refreshBand();
@@ -45,9 +42,6 @@ void Road_to_Height::In_Height_true (void){
 	// Stop listen to Event Transmission1
 	Dispatcher* dsp = Dispatcher::getInstance();
 	HAL *hal = HAL::getInstance();
-	//TODO: or?	dsp->remListeners( this->con_, HEIGHT_STATUS_OK);
-	//cout << "IS_IN_HEIGHT ::" << hal->is_puck_in_height_determination() << endl;
-	//cout << "GOTO HeightMeasurement" << endl;
 	dsp->remListeners( this->con_, IN_HEIGHT_TRUE);
 
 	// Move to State Height Measurement.

@@ -12,15 +12,14 @@ Height_Measurement::Height_Measurement(Context* con): State::State(con){
 //	printf("Height_Measurement()\n");
 
 	BandController* bc = BandController::getInstance();
-	//TODO: Kill TIMER! von Road_to_Height
-	HAL *hal = HAL::getInstance();
 
+	HAL *hal = HAL::getInstance();
 	//hal->band_right_slowly();
 
-	//TODO: HÖHENMESSUNG + SAVE DATA
 	CalibrateThread* ct = CalibrateThread::getInstance();
 	int height = hal->get_height_measure();
 	this->con_->getPuck()->setSize(height);
+
 	//Variant value of Pucks  = > TODO: set right VariantValue!
 
 	//Height is bigger if there is no object in Measurement

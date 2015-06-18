@@ -16,9 +16,6 @@ Road_to_Metal::Road_to_Metal(Context* con): State::State(con){
 //	con->getPuck()->runBandFast();
 //	bc->refreshBand();
 
-
-	//TODO: Start timer
-	//TODO: Is this necessary? The gate was already opened. Check the state in diagram (do / open_gate())
 	HAL *hal = HAL::getInstance();
 	//hal->open_gate();
 

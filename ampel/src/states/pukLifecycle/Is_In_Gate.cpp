@@ -34,14 +34,14 @@ Is_In_Gate::~Is_In_Gate(){
 void Is_In_Gate::Puck_in_Gate_false(void){
 
 
-	//BandController* bc = BandController::getInstance();
-	//this->con_->getPuck()->closeGate();
-	//bc->refreshGate();
+//	BandController* bc = BandController::getInstance();
+//	this->con_->getPuck()->closeGate();
+//	bc->refreshGate();
 
-	/*Timer *timer = new Timer();
-	timer->waitForTimeOut(0,700000000);
+	Timer *timer = new Timer();
+	timer->waitForTimeOut(0,500000000);
 	HAL *hal = HAL::getInstance();
-	hal->close_gate();*/
+	hal->close_gate();
 
 
 	// Stop listen to Event Transmission1
