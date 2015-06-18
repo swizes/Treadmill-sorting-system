@@ -10,7 +10,7 @@
 Give_Band_2_Pucks::Give_Band_2_Pucks(Context* con): State::State(con){
 //entry:	
 //do:
-//	printf("Give_Band_2_Pucks()\n");
+	printf("Give_Band_2_Pucks()\n");
 	//TODO: Send ready PUCK ID to Band2
     HAL *hal = HAL::getInstance();
     //while(!(hal->is_startButton_pushed()));
@@ -25,7 +25,7 @@ Give_Band_2_Pucks::Give_Band_2_Pucks(Context* con): State::State(con){
     bc->delPuck(this->con_->getPuck());
 
 
-    /*
+
     Serial* ser = new Serial();
 	int res = 1;
 	Packet p;
@@ -42,7 +42,7 @@ Give_Band_2_Pucks::Give_Band_2_Pucks(Context* con): State::State(con){
 
 	puckStruct puck = con->getPuck()->getPuckStruct();
 	ser->sendPacket(&puck);
-	*/
+
 
 	bc->refreshBand();
 //	Dispatcher* dsp = Dispatcher::getInstance();
