@@ -9,19 +9,23 @@
 
 Reihenfolge::Reihenfolge(Context* con): State::State(con){
 //entry:	
+	Puck *puck;
+
     int isLastPuckMetal = 0,
         isThisPuckMetal = 0,
         isRsrvPuckMetal = 0;
         
-    int isPuckToBeReserved = 0,
-    	wasThereReservPuck = 0,
+    int wasThereReservPuck = 0,
     	wasThereLastPuck   = 0;
 
-//	printf("Reihenfolge()\n");
+    int switchWithReserved = 0;
+
+	printf("Reihenfolge()\n");
 //	printf("-------------\n");
 
     //TODO: Set isLastPuckMetal,isThisPuckMetal,isRsrvPuckMetal
     BandController* bc = BandController::getInstance();
+    bc->setRecenctPuck(con_->getPuck());
     Puck* tempPuck;
 
     //This
@@ -54,45 +58,82 @@ Reihenfolge::Reihenfolge(Context* con): State::State(con){
 	//Sub-Automaton = Overkill -> If/Else
     // LastPuckMetal ? 
     if(isLastPuckMetal){
+    	cout << "[LastPuck: Metal]";
         if(isThisPuckMetal){
-        	//if reserved=NULL -> new reserved
-        	wasThereReservPuck++;
-            if(isRsrvPuckMetal){
-                //...
-            }else{//isRsrvPuckMetal:NO
-                if(wasThereReservPuck != 1)isPuckToBeReserved = 1;
-            }
-        }else{//isThisPuckMetal:NO
-            //...
-        }
-    }else{//isLastPuckMetal:NO
-        if(isThisPuckMetal){
-            //...
-        }else{//isThisPuckMetal:NO
+        	cout << " + [ThisPuck: Metal]";
         	//if reserved=NULL -> new reserved
         	wasThereReservPuck++;
             if(isRsrvPuckMetal && (wasThereReservPuck!=1)){
-                isPuckToBeReserved = 1;
-            }else{//isRsrvPuckMetal:NO
+            	cout << " + [ReservedPuck: Metal]";
                 //...
+            	cout << " -> [ThisPuck == ReservedPuck]";
+            }else{//isRsrvPuckMetal:NO
+            	cout << " + [ReservedPuck: NOT Metal]";
+            	switchWithReserved = 1;
+            }
+        }else{//isThisPuckMetal:NO
+        	cout << " + [ThisPuck: NOT Metal]";
+            //...
+        	cout << " -> [Reinhenfolge:OK]";
+        }
+    }else{//isLastPuckMetal:NO
+    	cout << "[LastPuck: NOT Metal]";
+        if(isThisPuckMetal){
+        	cout << " + [ThisPuck: Metal]";
+            //...
+        	cout << " -> [Reinhenfolge:OK]";
+        }else{//isThisPuckMetal:NO
+        	cout << " + [ThisPuck: NOT Metal]";
+        	//if reserved=NULL -> new reserved
+        	wasThereReservPuck++;
+            if(isRsrvPuckMetal && (wasThereReservPuck!=1)){
+            	cout << " + [ReservedPuck: Metal]";
+            	switchWithReserved = 1;
+            }else{//isRsrvPuckMetal:NO
+            	cout << " + [ReservedPuck: NOT Metal]";
+                //...
+            	cout << " -> [ThisPuck == ReservedPuck]";
             }
         }
     }
-    if(wasThereReservPuck == 2){
-    	//This Puck is New Reserve
+    cout<<endl;
+
+    puck = bc->getRecentPuck();
+    cout << "[RCND:" << puck->getSizeTyp()  << "  ID:" << puck->getId() << "  Hole:" << puck->isHoleOnTop()
+		 << " Metal:" << puck->isMetal() << "]"  << endl;
+    puck = bc->getLastPuck();
+	cout << "[LAST:" << puck->getSizeTyp()  << "  ID:" << puck->getId() << "  Hole:" << puck->isHoleOnTop()
+		 << " Metal:" << puck->isMetal() << "]"  << endl;
+	puck = bc->getReservedPuck();
+	cout << "[RSRV:" << puck->getSizeTyp()  << "  ID:" << puck->getId() << "  Hole:" << puck->isHoleOnTop()
+		 << " Metal:" << puck->isMetal() << "]"  << endl;
+
+
+    if(switchWithReserved){
+    	bc->setLastPuck(bc->getReservedPuck());
     	bc->setReservedPuck(bc->getRecentPuck());
-    	printf("Dieser Puck ist nun ReservePuck\n");
-    }
-    if(isPuckToBeReserved && (wasThereReservPuck != 2)){
-    	bc->switchWithReservedPuck(bc->getRecentPuck());
+    	bc->setRecenctPuck(bc->getLastPuck());
     	printf("Bitte den Puck mit dem ReservePuck austauschen\n");
+    	//Set This ReservedPuck as LastPuck for nextPuck!
+    }else{
+    	//Set This Puck as LastPuck for nextPuck!
+    	bc->setLastPuck(bc->getRecentPuck());
     }
     printf("-------------\n");
     
-    //TODO: mark Puck with isPuckToBeReserved
-    
-    //AN WELCHER STELLE WIRD DER RESERVIERTE PUCK GENOMMEN?
-	
+    puck = bc->getRecentPuck();
+    cout << "[RCND:" << puck->getSizeTyp()  << "  ID:" << puck->getId() << "  Hole:" << puck->isHoleOnTop()
+		 << " Metal:" << puck->isMetal() << "]"  << endl;
+    puck = bc->getLastPuck();
+	cout << "[LAST:" << puck->getSizeTyp()  << "  ID:" << puck->getId() << "  Hole:" << puck->isHoleOnTop()
+		 << " Metal:" << puck->isMetal() << "]"  << endl;
+	puck = bc->getReservedPuck();
+	cout << "[RSRV:" << puck->getSizeTyp()  << "  ID:" << puck->getId() << "  Hole:" << puck->isHoleOnTop()
+		 << " Metal:" << puck->isMetal() << "]"  << endl;
+
+
+	bc->refreshBand();
+
     // Move to State: Waiting_for_arriving_Puck
 	new (this) Waiting_for_arriving_Puck(this->con_);
 }

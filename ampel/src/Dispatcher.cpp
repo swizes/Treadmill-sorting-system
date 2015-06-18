@@ -119,7 +119,7 @@ void Dispatcher:: printListeners(){
 	for(int i=0; i<NEVENTS; i++){
 		for(int j=0; j<MAXLISTENERS; j++){
 			if(listeners_[i][j] != NULL){
-				printf("Event: %d Listener: %d\n", i, j);
+				//printf("Event: %d Listener: %d\n", i, j);
 			}
 		}
 	}
