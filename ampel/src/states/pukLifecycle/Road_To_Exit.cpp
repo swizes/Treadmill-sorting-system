@@ -37,9 +37,9 @@ void Road_To_Exit::Running_out_true(void){
 	Dispatcher* dsp = Dispatcher::getInstance();
 	dsp->remListeners( this->con_, RUNNING_OUT_TRUE);
 
-	BandController* bc = BandController::getInstance();
+	/*BandController* bc = BandController::getInstance();
 	this->con_->getPuck()->stopBand();
-	bc->refreshBand();
+	bc->refreshBand();*/
 
 //	HAL *hal = HAL::getInstance();
 	//hal->band_stop();

@@ -124,5 +124,13 @@ void Timer::waitForTimeOut(int s, int ns){
 
 }
 
+void Timer::waitForTimeOut(){
+	struct _pulse pulse;
+	int channel = createTimerPulse();
+	//Timer timer;
+	MsgReceivePulse(channel, &pulse, sizeof(pulse), NULL);
+
+}
+
 
 

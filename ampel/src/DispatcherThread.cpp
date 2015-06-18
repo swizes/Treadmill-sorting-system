@@ -59,7 +59,7 @@ void DispatcherThread::execute(void*){
 
 
 void DispatcherThread::shutdown(){
-    cout << "Communication Test shutdown" << endl;
+    cout << "Dispatcher shutdown" << endl;
 
 }
 

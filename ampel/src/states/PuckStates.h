@@ -6,6 +6,7 @@
 #include "../Timer/Timer.h"
 #include "../CalibrateThread.h"
 #include "../BandController.h"
+#include "../GateControllerThread.h"
 #include <cstdlib>
 #include <iostream>
 

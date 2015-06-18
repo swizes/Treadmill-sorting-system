@@ -44,9 +44,14 @@ void Search_for_Hole::In_Height_false(void){
 
 	cout << "PuckType: " << puck->getSizeTyp()  << "  ID: " << con_->getPuck()->getId() << endl;
 	if(puck->getSizeTyp() == OK){
+		//HAL *hal = HAL::getInstance();
+		//hal->open_gate();
+		GateControllerThread *gc = GateControllerThread::getInstance();
+		gc->setTimer();
 		if(puck->isHoleOnTop()){
 			puck->setUserInteractionNeeded(true);
 		}
+
 
 		new (this) Road_to_Metal(this->con_);
 	}else{

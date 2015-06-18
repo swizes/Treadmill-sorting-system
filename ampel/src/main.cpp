@@ -37,6 +37,10 @@ int main(int argc, char *argv[]) {
 		cout << "WARNING: SYSTEM IN SIMULATION!!!" << endl;
     #endif
 	//RUN Calibration
+
+
+
+
 	CalibrateThread *cal = CalibrateThread::getInstance();
 	cal->start(NULL);
 	cal->join();
@@ -57,9 +61,9 @@ int main(int argc, char *argv[]) {
 
 	DispatcherThread dspt;
 	dspt.start(NULL);
-	BandController* bd = BandController::getInstance();
-	bd->refreshBand();
-	bd->refreshGate();
+	//BandController* bd = BandController::getInstance();
+	//bd->refreshBand();
+	//bd->refreshGate();
 	//Dispatcher* disp = Dispatcher::getInstance();
 
 	cout << "Vor Start der FSM" << endl;

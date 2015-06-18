@@ -34,6 +34,7 @@ public:
 	void createTimer();
 	int createTimerPulse();
 	void waitForTimeOut(int, int);
+	void waitForTimeOut();
 	void deleteTimer();
 	void setTimer(int,int);
 	void getTime(struct timespec *);

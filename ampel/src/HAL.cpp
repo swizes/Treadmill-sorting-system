@@ -26,7 +26,7 @@ HAL* HAL::getInstance(){
 		pthread_mutex_lock(&mtx_);
 		if( instance_ == NULL){
 		    instance_ = new HAL();
-		    instance_->reset();
+		    //instance_->reset();
 		}
 		pthread_mutex_unlock(&mtx_);
 	}
@@ -69,6 +69,7 @@ void HAL::reset_port_c(void){
 * Reset Port A and Port C
 */
 void HAL::reset(void){
+	cout << "Hal-Reset" << endl;
 	reset_port_a();
 	reset_port_c();
 }
@@ -367,6 +368,6 @@ int HAL:: get_height_measure(void) {
 	int retVal = v_high << 8;
 	retVal |= v_low;
 	*/
-	return 476;
-	//return 4096-in16(PORT_ADC_LOW);
+	//return 476;
+	return 4096-in16(PORT_ADC_LOW);
 }

@@ -122,10 +122,10 @@ void BandController:: refreshGate(){
 	}
 
 
-	if(gate_close){
-		hal->close_gate();
-	}else if(gate_open){
+	if(gate_open){
 		hal->open_gate();
+	}else if(gate_close){
+		hal->close_gate();
 	}
 
 	if(puckCounter == 0){
