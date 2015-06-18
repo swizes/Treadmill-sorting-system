@@ -250,7 +250,7 @@ void CalibrateThread::execute(void*) {
 
 
 	//Locherkennung todo delay not ok
-	cout << "Put a Puck with Hole on Top" << endl;
+	cout << "Put a non Metal Puck with Hole on Top" << endl;
 	while(hal->is_puck_running_in()==0){}
 	hal->band_right_normal();
 	while(hal->is_puck_in_height_determination()==0){}
