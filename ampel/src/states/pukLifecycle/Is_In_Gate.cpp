@@ -13,11 +13,11 @@ Is_In_Gate::Is_In_Gate(Context* con): State::State(con){
 	BandController* bc = BandController::getInstance();
 	dsp->addListeners( this->con_, PUCK_IN_GATE_FALSE);
 	//Check PuckHightIsOk ? open_gate : close_gate
-//	HAL* hal= HAL::getInstance();
+
 	if(this->con_->getPuck()->getSizeTyp() == OK){
 		this->con_->getPuck()->openGate();
 		bc->refreshGate();
-//		hal->open_gate();
+		printf("Puck OK PuckId:%d\n",this->con_->getPuck()->getId());
 	}
 
 }
@@ -29,9 +29,10 @@ Is_In_Gate::~Is_In_Gate(){
 
 void Is_In_Gate::Puck_in_Gate_false(void){
 
-//	HAL* hal= HAL::getInstance();
-//	hal->close_gate();
+
 	BandController* bc = BandController::getInstance();
+	this->con_->getPuck()->closeGate();
+	bc->refreshGate();
 
 
 

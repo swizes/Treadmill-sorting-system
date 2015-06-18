@@ -8,7 +8,8 @@
 
 
 Road_to_Height::Road_to_Height(Context* con): State::State(con){
-//	printf("Road to Height()\n");
+
+	cout << "RoadToHeight PuckId: " << this->con_->getPuck()->getId() << endl;
 	//TODO:STARTE TIMER!
 	//TODO: TimeOut?!
 	Dispatcher* dsp = Dispatcher::getInstance();
@@ -17,18 +18,18 @@ Road_to_Height::Road_to_Height(Context* con): State::State(con){
 	dsp->addListeners( this->con_, IN_HEIGHT_TRUE);
 
 	Timer *pulse = new Timer();
-	//Timer timer;
+	Timer timer;
 	pulse->waitForTimeOut(1,500000000);
 
 //	BandController* bc = BandController::getInstance();
 
-	//cout << "Timer expire" << endl;
+	cout << "Timer expire" << endl;
 
 //	this->con_->getPuck()->runBandSlowly();
 //	bc->refreshBand();
 	hal->turn_greenLight_on();
 
-	cout << "RoadToHeight PuckId: " << this->con_->getPuck()->getId() << endl;
+
 	//hal->band_right_slowly();
 
 }

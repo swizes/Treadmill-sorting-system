@@ -10,18 +10,19 @@
 Road_To_Exit::Road_To_Exit(Context* con): State::State(con){
 	printf("Road_to_Exit PuckId: %d\n",  this->con_->getPuck()->getId());
 
+
 	BandController* bc = BandController::getInstance();
+
 	this->con_->getPuck()->runBandFast();
-	bc->refreshBand();
 	//hal->band_right_normal();
 	Dispatcher* dsp = Dispatcher::getInstance();
 	dsp->addListeners( this->con_, RUNNING_OUT_TRUE);
 
-	Timer* timer = new Timer();
-	timer->waitForTimeOut(1,000000000);
-	//cout << "Timeout" << endl;
+	/*Timer* timer = new Timer();
+	timer->waitForTimeOut(0,500000000);
+	cout << "Timeout" << endl;
 	this->con_->getPuck()->closeGate();
-	bc->refreshGate();
+	bc->refreshGate();*/
 }
 
 Road_To_Exit::~Road_To_Exit(){

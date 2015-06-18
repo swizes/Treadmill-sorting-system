@@ -25,6 +25,7 @@
 #include "HoleDetector.h"
 #include "states/ReadySend.h"
 #include "DispatcherThread.h"
+#include "BandController.h"
 
 using namespace std;
 
@@ -46,6 +47,8 @@ int main(int argc, char *argv[]) {
 	
     /*Serielle Verbindung funkitoniert nur wenn sich System nicht in der Simulation befindet
     /dev/ser1 steht nicht zur Verfuegung. 		*/
+
+
 	#ifndef SIMULATION
 	//CommunicationThread ct;
 	//ct.start(NULL);
@@ -54,6 +57,9 @@ int main(int argc, char *argv[]) {
 
 	DispatcherThread dspt;
 	dspt.start(NULL);
+	BandController* bd = BandController::getInstance();
+	bd->refreshBand();
+	bd->refreshGate();
 	//Dispatcher* disp = Dispatcher::getInstance();
 
 	cout << "Vor Start der FSM" << endl;
