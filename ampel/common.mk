@@ -26,8 +26,9 @@ EXTRA_SRCVPATH+= \
 	$(PROJECT_ROOT)/src/states  \
 	$(PROJECT_ROOT)/src/Tests  \
 	$(PROJECT_ROOT)/src/Timer  \
-	$(PROJECT_ROOT)/src/states/pukLifecycle \
-	$(PROJECT_ROOT)/src/states/superStates
+	$(PROJECT_ROOT)/src/states/pukLifecycle  \
+	$(PROJECT_ROOT)/src/states/superStates  \
+	$(PROJECT_ROOT)/src/Threads
 
 #===== LIBS - a space-separated list of library items to be included in the link.
 LIBS+=IOaccess cpt_terminal

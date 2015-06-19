@@ -371,7 +371,7 @@ uint16_t HAL:: get_height_measure(void) {
 	uint16_t retVal = v_high << 8;
 	retVal |= v_low;
 
-	return retVal;
+	return 4096-retVal;
 	//return 476;
 	//return 4096-in16(PORT_ADC_LOW);
 }

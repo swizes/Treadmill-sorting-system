@@ -11,21 +11,23 @@
 
 #include <cstdlib>
 #include <iostream>
-#include "Blink_Thread.h"
+#include "Threads/Blink_Thread.h"
 #include "./Tests/Hal_Test_Thread.h"
 //#include "Hal_Test_Thread.h"
 #include "lib/HWaccess.h"
 #include "Serial.h"
-#include "CommunicationThread.h"
+#include "Threads/CommunicationThread.h"
 #include "states/PuckStates.h"
-#include "CalibrateThread.h"
+#include "Threads/CalibrateThread.h"
 #include "Dispatcher.h"
 #include "State.cpp"
 #include "HAL.h"
 #include "HoleDetector.h"
 #include "states/ReadySend.h"
-#include "DispatcherThread.h"
+#include "Threads/DispatcherThread.h"
+#include "Threads/Blink_ThreadRed.h"
 #include "BandController.h"
+#include "Tests/BlinkTest.h"
 
 using namespace std;
 
@@ -58,10 +60,11 @@ int main(int argc, char *argv[]) {
 	cout << "End Test" << endl;*/
 
 	CalibrateThread *cal = CalibrateThread::getInstance();
-	//cal->start(NULL);
-	//cal->join();
+	cal->start(NULL);
+	cal->join();
 	cout << "cal done" << endl;
-
+	BlinkTest test;
+	//delay(1000);
 
     //Hal_Test_Thread htt;
 	
@@ -77,8 +80,10 @@ int main(int argc, char *argv[]) {
 
 	DispatcherThread dspt;
 	dspt.start(NULL);
-	//BandController* bd = BandController::getInstance();
-	//bd->refreshBand();
+	BandController* bd = BandController::getInstance();
+	bd->refreshBand();
+
+
 	//bd->refreshGate();
 	//Dispatcher* disp = Dispatcher::getInstance();
 
