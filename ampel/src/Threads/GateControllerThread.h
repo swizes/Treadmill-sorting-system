@@ -35,6 +35,7 @@ public:
 
 private:
 	bool run = 0;
+	int count = 0;
 	Timer *timer;
 	static GateControllerThread*  instance_;
 	GateControllerThread(void);

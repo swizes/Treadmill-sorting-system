@@ -42,7 +42,7 @@ void Is_In_Gate::Puck_in_Gate_false(void){
 	Timer *timer = new Timer();
 	timer->waitForTimeOut(0,500000000);
 	HAL *hal = HAL::getInstance();
-	hal->close_gate();
+	//hal->close_gate();
 
 	con_->getPuck()->setMetal(false);
 
@@ -58,7 +58,7 @@ void Is_In_Gate::Puck_in_Gate_false(void){
 void Is_In_Gate::Metal_detection_true(void){
 
 	HAL* hal= HAL::getInstance();
-	hal->close_gate();
+	//hal->close_gate();
 
 	con_->getPuck()->setMetal(true);
 

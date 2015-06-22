@@ -64,7 +64,12 @@ void GateControllerThread::execute(void*){
 	run = 1;
 	HAL *hal = HAL::getInstance();
 	hal->open_gate();
-	timer->waitForTimeOut();
+	for(int i = 0; i < count; i++) {
+		timer = new Timer();
+		timer->waitForTimeOut(1,500000000);
+	}
+
+
 	hal->close_gate();
 	run = 0;
 
@@ -72,12 +77,14 @@ void GateControllerThread::execute(void*){
 }
 
 void GateControllerThread::setTimer(void){
-	timer->setTimer(2,0);
-	HAL *hal = HAL::getInstance();
-	hal->open_gate();
+
 	if(!run){
 		this->start(NULL);
+		count = 1;
+	}else{
+		count++;
 	}
+
 
 
 }
