@@ -31,11 +31,15 @@ class Blink_ThreadRed: public HAWThread {
 
     /* Methoden deklarationen */
     public:
-        Blink_ThreadRed(void); ///< Standard Konstruktor. Offentlich Aufrufbar.
+
         void setLED(int, int);
         virtual ~Blink_ThreadRed();      ///< Standard Dekonstruktor.
+        static Blink_ThreadRed* getInstance();
 
     private:
+
+        static Blink_ThreadRed* instance_;
+        Blink_ThreadRed(void); ///< Standard Konstruktor. Offentlich Aufrufbar.
         Blink_ThreadRed(const Blink_ThreadRed& b);      ///< Copy-Konstruktor. Privat, deshalb kann dieses Objekt nicht als "Call-by-value" uebergeben werden.
         Blink_ThreadRed& operator=(Blink_ThreadRed& b); ///< Zuweisungskonstruktor. Objekt kann nicht an eine gleichartige Referenz zugewiesen werden da private.
 

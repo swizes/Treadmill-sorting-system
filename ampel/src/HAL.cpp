@@ -161,7 +161,6 @@ void HAL:: turn_greenLight_on(void){
 * turns the yellow light on
 */
 void HAL:: turn_yellowLight_on(void){
-	cout << "Yellow" << endl;
 	out8(PORT_A, in8(PORT_A) | BM_YELLOW);
 }
 

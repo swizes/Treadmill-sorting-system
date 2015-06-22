@@ -8,10 +8,33 @@
 
 #include <unistd.h>
 #include <time.h>
-#include "Blink_ThreadRed.h"
+#include "Blink_ThreadGreen.h"
 #include "lib/Lock.h"
 #include "lib/HWaccess.h"
 
+
+
+
+
+Blink_ThreadGreen* Blink_ThreadGreen::instance_ = NULL;
+
+/**
+ * c'tor for the Thread-safe singleton Calibration implementation
+ * @param none
+ * @return A Pointer to the Singleton Calibration Object
+ */
+Blink_ThreadGreen* Blink_ThreadGreen::getInstance() {
+	static pthread_mutex_t mtx_ = PTHREAD_MUTEX_INITIALIZER;
+
+	if (instance_ == NULL) {
+		pthread_mutex_lock(&mtx_);
+		if (instance_ == NULL) {
+			instance_ = new Blink_ThreadGreen();
+		}
+		pthread_mutex_unlock(&mtx_);
+	}
+	return instance_;
+}
 
 
 /**
@@ -19,7 +42,7 @@
  *  Genauer beschreibender Text für Doxygen...
  *  @param times bestimmt wie oft das gruene Licht blinken soll. 
  */
-Blink_ThreadRed::Blink_ThreadRed(void ) {
+Blink_ThreadGreen::Blink_ThreadGreen(void ) {
 	hal = HAL::getInstance();
 
 }
@@ -32,7 +55,7 @@ Blink_ThreadRed::Blink_ThreadRed(void ) {
  * beim Bereinigen des Stacks, bei Methodenende automatisch deallokiert.
  * --> Automatischer Dekonstruktoraufruf.  
  */
-Blink_ThreadRed::~Blink_ThreadRed() {
+Blink_ThreadGreen::~Blink_ThreadGreen() {
     cout << "dtor: Blink_Thread" << endl;
 }
 
@@ -42,21 +65,21 @@ Blink_ThreadRed::~Blink_ThreadRed() {
  * Die oberklasse HAW-Thread erzwingt die Implementierung der execute Methode.  
  * Der Thread endet nach Ende dieser Methode. 
  */
-void Blink_ThreadRed::execute(void*){
+void Blink_ThreadGreen::execute(void*){
 	while(1){
 		if(countBlink < 0){
-			hal->turn_redLight_on();
+			hal->turn_greenLight_on();
 			this->stop();
 		}
 		while(countBlink > 0){
-			hal->turn_redLight_on();
+			hal->turn_greenLight_on();
 			usleep(time);
-			hal->turn_redLight_off();
+			hal->turn_greenLight_off();
 			usleep(time);
 			countBlink--;
 		}
 		if(countBlink == 0){
-			hal->turn_redLight_off();
+			hal->turn_greenLight_off();
 			this->stop();
 		}
 	}
@@ -69,11 +92,11 @@ void Blink_ThreadRed::execute(void*){
  * Sie wird nach Ende der execute-Methode aufgerufen und dient dem 
  * evtl. aufraumen das Threadablauf.
  */
-void Blink_ThreadRed::shutdown(){
+void Blink_ThreadGreen::shutdown(){
     cout << "Blink_Thread shutdown" << endl;
 }
 
-void Blink_ThreadRed::setLED(int countBlink, int time){
+void Blink_ThreadGreen::setLED(int countBlink, int time){
 	//Negative countBlink werte bewirken Dauerleuchten 0 bedeutet aus und Positive Werte die anzahl
 	//time ist Zeit in Microsekunden zwischen dem ein und ausschalten
 	this->stop();
