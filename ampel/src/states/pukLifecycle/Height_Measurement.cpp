@@ -36,7 +36,7 @@ Height_Measurement::Height_Measurement(Context* con): State::State(con){
 //	}
 	//Height is equal or bigger than an incorrect Type
 	//and equal or less than a CorrectType
-	//cout << "HeigtMeasurement: " << height << "  HeightBigPuck: " << (maxHeight - VARIANZ) << endl;
+	cout << "HeigtMeasurement: " << height << "  HeightBigPuck: " << maxHeight << endl;
 	//cout << "HeigtMeasurement PuckId: " << this->con_->getPuck()->getId() << endl;
 	this->con_->getPuck()->setSizeTyp(NOT_OK);
 	if(height >=  minHeight && height <= maxHeight){

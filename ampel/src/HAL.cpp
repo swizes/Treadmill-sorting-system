@@ -161,7 +161,6 @@ void HAL:: turn_greenLight_on(void){
 * turns the yellow light on
 */
 void HAL:: turn_yellowLight_on(void){
-	cout << "Yellow" << endl;
 	out8(PORT_A, in8(PORT_A) | BM_YELLOW);
 }
 
@@ -371,7 +370,7 @@ uint16_t HAL:: get_height_measure(void) {
 	uint16_t retVal = v_high << 8;
 	retVal |= v_low;
 
-	return retVal;
+	return 4096-retVal;
 	//return 476;
 	//return 4096-in16(PORT_ADC_LOW);
 }

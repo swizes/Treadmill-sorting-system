@@ -4,9 +4,9 @@
 #include "Context.cpp"
 #include "../Dispatcher.h"
 #include "../Timer/Timer.h"
-#include "../CalibrateThread.h"
+#include "../Threads/CalibrateThread.h"
 #include "../BandController.h"
-#include "../GateControllerThread.h"
+#include "../Threads/GateControllerThread.h"
 #include <cstdlib>
 #include <iostream>
 
