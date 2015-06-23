@@ -34,7 +34,8 @@ public:
 	void setTimer(void);
 
 private:
-	bool run = 0;
+	volatile bool run = 0;
+	volatile bool wait = 0;
 	Timer *timer;
 	static GateControllerThread*  instance_;
 	GateControllerThread(void);

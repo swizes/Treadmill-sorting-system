@@ -93,6 +93,8 @@ private:
 	virtual void shutdown();
 	int timespecToMs(struct timespec *);
 	void saveConfig();
+	int getMeanValueHeight();
+
 
 	static CalibrateThread* instance_;
 	ConfigManager* configManager;

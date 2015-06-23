@@ -229,7 +229,7 @@ void CalibrateThread::execute(void*) {
 	while(hal->is_puck_running_in()==0){}
 	hal->band_right_normal();
 	while(hal->is_puck_in_height_determination()==0){}
-	smallPuck = hal->get_height_measure();
+	smallPuck = getMeanValueHeight();
 	printf("smallPuk : %d\n",smallPuck);
 	hal->open_gate();
 	while(hal->is_puck_in_gate()==0){}
@@ -241,7 +241,7 @@ void CalibrateThread::execute(void*) {
 	while(hal->is_puck_running_in()==0){}
 	hal->band_right_normal();
 	while(hal->is_puck_in_height_determination()==0){}
-	bigPuck = hal->get_height_measure();
+	bigPuck = getMeanValueHeight();
 	printf("bigPuk : %d\n",bigPuck);
 	hal->open_gate();
 	while(hal->is_puck_in_gate()==0){}
@@ -257,7 +257,7 @@ void CalibrateThread::execute(void*) {
 	while(hal->is_puck_in_height_determination()==0){}
 	hal->band_stop();
 
-	holeHeight = hal->get_height_measure();
+	holeHeight = getMeanValueHeight();
 	hal->band_right_normal();
 	hal->open_gate();
 	while(hal->is_puck_in_gate()==0){}
@@ -271,7 +271,7 @@ void CalibrateThread::execute(void*) {
 	while(hal->is_puck_in_height_determination()==0){}
 	hal->band_stop();
 
-	holeHeightMetal = hal->get_height_measure();
+	holeHeightMetal = getMeanValueHeight();
 	hal->band_right_normal();
 	hal->open_gate();
 	while(hal->is_puck_in_gate()==0){}
@@ -348,4 +348,15 @@ void CalibrateThread::saveConfig() {
 		cout << "error writing config file!" << endl;
 	}
 
+}
+
+int CalibrateThread::getMeanValueHeight(){
+
+	HAL *hal = HAL::getInstance();
+	int height = 0;
+	for(int i = 0; i  < 5;i++){
+		height += hal->get_height_measure();
+	}
+	height = height/5;
+	return height;
 }

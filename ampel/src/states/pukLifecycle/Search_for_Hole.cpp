@@ -47,7 +47,8 @@ void Search_for_Hole::In_Height_false(void){
 		if(puck->isHoleOnTop()){
 			puck->setUserInteractionNeeded(true);
 		}
-
+		GateControllerThread* gc = GateControllerThread::getInstance();
+		gc->setTimer();
 		new (this) Road_to_Metal(this->con_);
 	}else{
 		new (this) Road_To_Sorting_Out(this->con_);

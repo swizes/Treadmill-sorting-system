@@ -11,7 +11,6 @@
 
 #include <cstdlib>
 #include <iostream>
-#include "Threads/Blink_Thread.h"
 #include "./Tests/Hal_Test_Thread.h"
 //#include "Hal_Test_Thread.h"
 #include "lib/HWaccess.h"
@@ -41,29 +40,11 @@ int main(int argc, char *argv[]) {
 	//RUN Calibration
 
 
-	/*HAL *hal = HAL::getInstance();
-	hal->open_gate();
-	hal->band_left_normal();
-	delay(100);
-	hal->band_left_slowly();
-	delay(100);
-	hal->band_right_normal();
-	delay(100);
-	hal->band_right_slowly();
-	delay(100);
-	hal->band_stop();
-	delay(100);
-	hal->get_height_measure();
-	delay(100);
-	hal->is_puck_running_in();
-	delay(100);
-	cout << "End Test" << endl;*/
-
 	CalibrateThread *cal = CalibrateThread::getInstance();
 	cal->start(NULL);
 	cal->join();
 	cout << "cal done" << endl;
-	BlinkTest test;
+	//BlinkTest test;
 	//delay(1000);
 
     //Hal_Test_Thread htt;

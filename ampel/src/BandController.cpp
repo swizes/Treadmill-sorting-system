@@ -117,29 +117,6 @@ void BandController::refreshBand(){
 
 }
 
-void BandController:: refreshGate(){
-
-	int gate_open = 0;
-	int gate_close = 0;
-
-	for(int i = 0; i < puckCounter; i++){
-
-		gate_open |= pucklist[i]->isGateOpen();
-		gate_close |= pucklist[i]->isGateClosed();
-	}
-
-
-	if(gate_open){
-		hal->open_gate();
-	}else if(gate_close){
-		hal->close_gate();
-	}
-
-	if(puckCounter == 0){
-		hal->close_gate();
-	}
-
-}
 
 Puck*  BandController::getRecentPuck(void){
 	return pucklist[puckCounter-1];

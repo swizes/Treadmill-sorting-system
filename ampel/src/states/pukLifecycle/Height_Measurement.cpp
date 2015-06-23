@@ -17,7 +17,11 @@ Height_Measurement::Height_Measurement(Context* con): State::State(con){
 	//hal->band_right_slowly();
 
 	CalibrateThread* ct = CalibrateThread::getInstance();
-	int height = hal->get_height_measure();
+	int height = 0;
+	for(int i = 0; i  < 5;i++){
+		height += hal->get_height_measure();
+	}
+	height = height/5;
 	this->con_->getPuck()->setSize(height);
 
 	//Variant value of Pucks  = > TODO: set right VariantValue!
