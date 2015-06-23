@@ -19,6 +19,7 @@
 #include "./Timer/Timer.h"
 #include "ConfigManager.h"
 
+
 #define TIMERSTART 20
 #define TIMERSTART_MS TIMERSTART * 1000
 
@@ -85,8 +86,8 @@ CalibrateThread::CalibrateThread() {
 	configManager->getConfigValue("smallPuck", &outVal) ? smallPuck = atoi(outVal.c_str()) : keyNotFound = true;
 	configManager->getConfigValue("holeHeight", &outVal) ? holeHeight = atoi(outVal.c_str()) : keyNotFound = true;
 	configManager->getConfigValue("holeHeightMetal", &outVal) ? holeHeight = atoi(outVal.c_str()) : keyNotFound = true;
-	configManager->getConfigValue("scaleSlowToFast", &outVal) ? holeHeight = atoi(outVal.c_str()) : keyNotFound = true;
-	configManager->getConfigValue("scaleFastToSlow", &outVal) ? holeHeight = atoi(outVal.c_str()) : keyNotFound = true;
+	configManager->getConfigValue("scaleSlowToFast", &outVal) ? scaleSlowToFast = atof(outVal.c_str()) : keyNotFound = true;
+	configManager->getConfigValue("scaleFastToSlow", &outVal) ?	scaleFastToSlow = atof(outVal.c_str()) : keyNotFound = true;
 	
 	if(keyNotFound) {
 		cout << "Error! Key not found!" << endl;
@@ -282,8 +283,8 @@ void CalibrateThread::execute(void*) {
 	hal->band_stop();
 
 
-	scaleFastToSlow = ((double)L0toL1Slow)/L0toL1Fast;
-	scaleSlowToFast = ((double)L0toL1Fast)/L0toL1Slow;
+	scaleFastToSlow = ((double)L0toL1Slow)/((double)L0toL1Fast);
+	scaleSlowToFast = ((double)L0toL1Fast)/((double)L0toL1Slow);
 
 	cout << "Push Start Button for Band1 or Stop Button for Band2" << endl;
 	int run = 1;
@@ -343,8 +344,10 @@ void CalibrateThread::saveConfig() {
 	configManager->setConfigValue("smallPuck", std::string(itoa(smallPuck, buf,10)));
 	configManager->setConfigValue("holeHeight", std::string(itoa(holeHeight, buf,10)));
 	configManager->setConfigValue("holeHeightMetal", std::string(itoa(holeHeightMetal, buf,10)));
-	configManager->setConfigValue("scaleSlowToFast", std::string(itoa(scaleSlowToFast, buf,10)));
-	configManager->setConfigValue("scaleFastToSlow", std::string(itoa(scaleFastToSlow, buf,10)));
+	sprintf(buf,"%.12f",scaleSlowToFast);
+	configManager->setConfigValue("scaleSlowToFast", std::string(buf));
+	sprintf(buf,"%.12f",scaleFastToSlow);
+	configManager->setConfigValue("scaleFastToSlow", std::string(buf));
 	configManager->setConfigValue("configset", "1");
 
 
