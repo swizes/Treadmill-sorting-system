@@ -64,13 +64,7 @@ void GateControllerThread::execute(void*){
 	run = 1;
 	HAL *hal = HAL::getInstance();
 	hal->open_gate();
-
-	while(wait){
-		wait = 0;
-		timer->waitForTimeOut(2,0);
-		cout << "Wait For Gate" << endl;
-	}
-
+	timer->waitForTimeOut();
 	hal->close_gate();
 	run = 0;
 
@@ -78,17 +72,15 @@ void GateControllerThread::execute(void*){
 }
 
 void GateControllerThread::setTimer(void){
-
+	timer->setTimer(2,0);
+	HAL *hal = HAL::getInstance();
+	hal->open_gate();
 	if(!run){
-		this->join();
-		wait = 1;
 		this->start(NULL);
-	}else{
-		wait = 1;
 	}
 
 
-}
+
 
 
 
