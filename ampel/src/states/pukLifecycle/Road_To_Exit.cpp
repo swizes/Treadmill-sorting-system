@@ -39,8 +39,15 @@ void Road_To_Exit::Running_out_true(void){
 	Dispatcher* dsp = Dispatcher::getInstance();
 	dsp->remListeners( this->con_, RUNNING_OUT_TRUE);
 
+	CalibrateThread* ct = CalibrateThread::getInstance();
+
+	//Band2
+	if(ct->isBand() == 1){
+		new (this) Give_New_Puck(NULL);
+	}
 
 	// Move to State User_Interaction_needed
 	new (this) User_Interaction_needed(this->con_);
+
 }
 
