@@ -12,7 +12,9 @@
 #include "HAL.h"
 #include <pthread.h>
 
-
+#define STOPPED 0
+#define SLOW 1
+#define FAST 2
 
 #define MAX_PUCKS 5
 
@@ -31,8 +33,7 @@ public:
 	void  setLastPuck(Puck* puck);
 
 	void refreshBand();
-	bool isBandStopped();
-	bool isBandSlow();
+	int getBandStatus();
 
 private:
 	BandController(const BandController& other);
