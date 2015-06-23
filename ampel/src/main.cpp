@@ -44,10 +44,6 @@ int main(int argc, char *argv[]) {
 	cal->start(NULL);
 	cal->join();
 	cout << "cal done" << endl;
-	//BlinkTest test;
-	//delay(1000);
-
-    //Hal_Test_Thread htt;
 	
     /*Serielle Verbindung funkitoniert nur wenn sich System nicht in der Simulation befindet
     /dev/ser1 steht nicht zur Verfuegung. 		*/
@@ -66,17 +62,10 @@ int main(int argc, char *argv[]) {
 	bd->refreshBand();
 
 
-	//bd->refreshGate();
-	//Dispatcher* disp = Dispatcher::getInstance();
-
 	cout << "Vor Start der FSM" << endl;
 	cout << "-----------------------------------" << endl;
 	if(1){//is band1!<
-		//Context* con= new Context();
 		State* s = new Ready(NULL);
-		//con->setState(new Ready(NULL));
-		//disp->listenForEvents();
-//		dspt.start(NULL);
 
 	}else{
 		ReadySend rdy;
@@ -87,8 +76,6 @@ int main(int argc, char *argv[]) {
 			con->setState(new Give_New_Puck(con));
 			Serial ser;
 			puckStruct puck;
-//			dspt.start(NULL);
-			//disp->listenForEvents();
 			ser.recvPacket(&puck);
 		}
 	}

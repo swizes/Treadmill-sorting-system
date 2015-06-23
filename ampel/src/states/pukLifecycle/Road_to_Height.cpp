@@ -9,7 +9,7 @@
 
 Road_to_Height::Road_to_Height(Context* con): State::State(con){
 
-	cout << "RoadToHeight PuckId: " << this->con_->getPuck()->getId() << endl;
+
 	Dispatcher* dsp = Dispatcher::getInstance();
 	HAL *hal = HAL::getInstance();
 	dsp->addListeners( this->con_, IN_HEIGHT_TRUE);
@@ -22,7 +22,7 @@ Road_to_Height::Road_to_Height(Context* con): State::State(con){
 
 
 	//hal->band_right_slowly();
-
+	cout << "Road To Height ----- PuckId: " << this->con_->getPuck()->getId() << endl;
 }
 
 Road_to_Height::~Road_to_Height(){

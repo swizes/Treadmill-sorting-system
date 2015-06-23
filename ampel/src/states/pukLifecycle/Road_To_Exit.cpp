@@ -8,7 +8,7 @@
 
 
 Road_To_Exit::Road_To_Exit(Context* con): State::State(con){
-	printf("Road_to_Exit PuckId: %d\n",  this->con_->getPuck()->getId());
+
 
 	BandController* bc = BandController::getInstance();
 
@@ -24,7 +24,7 @@ Road_To_Exit::Road_To_Exit(Context* con): State::State(con){
 	HAL *hal= HAL::getInstance();
 	hal->close_gate();
 
-
+	cout << "Road To Exit ----- PuckId: " << this->con_->getPuck()->getId() << endl;
 }
 
 Road_To_Exit::~Road_To_Exit(){

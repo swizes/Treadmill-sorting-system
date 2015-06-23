@@ -8,9 +8,10 @@
 #include "PuckStates.h"
 
 Road_To_Sorting_Out::Road_To_Sorting_Out(Context* con): State::State(con){
-	printf("Road to Sorting Out()\n");
+
 	Dispatcher* dsp = Dispatcher::getInstance();
 	dsp->addListeners( this->con_, PUCK_IN_GATE_TRUE);
+	cout << "Road To Sorting Out ----- PuckId: " << this->con_->getPuck()->getId() << endl;
 }
 
 Road_To_Sorting_Out::~Road_To_Sorting_Out(){
