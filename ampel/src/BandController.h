@@ -31,6 +31,8 @@ public:
 	void  setLastPuck(Puck* puck);
 
 	void refreshBand();
+	bool isBandStopped();
+	bool isBandSlow();
 
 private:
 	BandController(const BandController& other);

@@ -98,25 +98,43 @@ void BandController::refreshBand(){
 		fast |= pucklist[i]->isBandRunningFast();
 
 	}
-
-
-
+	
 //	printf("BandControl: stop: %d Slow: %d Fast: %d\n", stop, slow, fast);
 
 	if(stop){
 		hal->band_stop();
+		stopped = true;
+		if(slow){
+			run_slowly = true;
+		}else{
+			run_slowly = false;
+		}
 	}else if(slow){
 		hal->band_right_slowly();
+		stopped = false;
+		run_slowly = true;
 	}else if(fast){
 		hal->band_right_normal();
+		stopped = false;
+		run_slowly = false;
 	}
 
 	if(puckCounter == 0){
 		hal->band_stop();
+		stopped = true;
+		run_slowly = false;
 	}
 
 }
 
+
+bool isBandStopped(){
+	return stopped;
+}
+
+bool isBandSlow(){
+	return slow;
+}
 
 Puck*  BandController::getRecentPuck(void){
 	return pucklist[puckCounter-1];
