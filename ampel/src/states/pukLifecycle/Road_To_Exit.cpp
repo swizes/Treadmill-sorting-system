@@ -14,15 +14,17 @@ Road_To_Exit::Road_To_Exit(Context* con): State::State(con){
 
 	this->con_->getPuck()->runBandFast();
 	bc->refreshBand();
-	//hal->band_right_normal();
+
+
 	Dispatcher* dsp = Dispatcher::getInstance();
 	dsp->addListeners( this->con_, RUNNING_OUT_TRUE);
 
-	/*Timer* timer = new Timer();
-	timer->waitForTimeOut(0,500000000);
-	cout << "Timeout" << endl;
-	this->con_->getPuck()->closeGate();
-	bc->refreshGate();*/
+	Timer* timer = new Timer();
+	timer->waitForTimeOut(0,300000000);
+	HAL *hal= HAL::getInstance();
+	hal->close_gate();
+
+
 }
 
 Road_To_Exit::~Road_To_Exit(){
@@ -37,15 +39,7 @@ void Road_To_Exit::Running_out_true(void){
 	Dispatcher* dsp = Dispatcher::getInstance();
 	dsp->remListeners( this->con_, RUNNING_OUT_TRUE);
 
-	/*BandController* bc = BandController::getInstance();
-	this->con_->getPuck()->stopBand();
-	bc->refreshBand();*/
 
-//	HAL *hal = HAL::getInstance();
-	//hal->band_stop();
-	//hal->close_gate();
-
-	//new (this) SerialCommunicationBand1(this->con_);
 	// Move to State User_Interaction_needed
 	new (this) User_Interaction_needed(this->con_);
 }

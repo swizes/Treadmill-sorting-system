@@ -9,7 +9,7 @@
 
 #include <iostream>
 
-int Puck::idCount = 0;
+int Puck::idCount = -2;
 Puck::Puck() {
 	metal = false;
 	holeOnTop = false;

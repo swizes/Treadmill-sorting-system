@@ -11,20 +11,15 @@
 Is_In_Gate::Is_In_Gate(Context* con): State::State(con){
 	printf("Is in Gate PuckId. %d\n",  this->con_->getPuck()->getId());
 	Dispatcher* dsp = Dispatcher::getInstance();
-	//BandController* bc = BandController::getInstance();
 	dsp->addListeners( this->con_, PUCK_IN_GATE_FALSE);
 	dsp->addListeners( this->con_, METAL_DETECTION_TRUE);
-
-	//Check PuckHightIsOk ? open_gate : close_gate
-
+	HAL *hal= HAL::getInstance();
+	hal->open_gate();
 
 	if(this->con_->getPuck()->getSizeTyp() == OK){
-		//this->con_->getPuck()->openGate();
-		//bc->refreshGate();
-		printf("Puck OK PuckId:%d\n",this->con_->getPuck()->getId());
-		//HAL *hal = HAL::getInstance();
-		//hal->open_gate();
-	}
+			printf("Puck OK PuckId:%d\n",this->con_->getPuck()->getId());
+		}
+
 }
 
 Is_In_Gate::~Is_In_Gate(){
@@ -35,14 +30,7 @@ Is_In_Gate::~Is_In_Gate(){
 void Is_In_Gate::Puck_in_Gate_false(void){
 
 
-//	BandController* bc = BandController::getInstance();
-//	this->con_->getPuck()->closeGate();
-//	bc->refreshGate();
 
-	Timer *timer = new Timer();
-	timer->waitForTimeOut(0,500000000);
-	HAL *hal = HAL::getInstance();
-	//hal->close_gate();
 
 	con_->getPuck()->setMetal(false);
 
@@ -57,8 +45,7 @@ void Is_In_Gate::Puck_in_Gate_false(void){
 
 void Is_In_Gate::Metal_detection_true(void){
 
-	HAL* hal= HAL::getInstance();
-	//hal->close_gate();
+
 
 	con_->getPuck()->setMetal(true);
 

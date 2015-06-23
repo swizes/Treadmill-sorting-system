@@ -61,6 +61,7 @@ int main(int argc, char *argv[]) {
 
 	DispatcherThread dspt;
 	dspt.start(NULL);
+
 	BandController* bd = BandController::getInstance();
 	bd->refreshBand();
 
