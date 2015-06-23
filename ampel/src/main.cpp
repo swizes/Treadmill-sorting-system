@@ -79,18 +79,7 @@ int main(int argc, char *argv[]) {
 //		dspt.start(NULL);
 
 	}else{
-		ReadySend rdy;
-		rdy.setBusy(1);
-		rdy.start(NULL);
-		while(1){
-			Context* con = new Context();
-			con->setState(new Give_New_Puck(con));
-			Serial ser;
-			puckStruct puck;
-//			dspt.start(NULL);
-			//disp->listenForEvents();
-			ser.recvPacket(&puck);
-		}
+		State* state = new Give_New_Puck(NULL);
 	}
 
 	dspt.join();
