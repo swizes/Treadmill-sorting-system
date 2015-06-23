@@ -37,7 +37,7 @@ void Road_to_Height::In_Height_true (void){
 	Dispatcher* dsp = Dispatcher::getInstance();
 
 	HAL *hal = HAL::getInstance();
-	hal->turn_greenLight_on();
+	//hal->turn_greenLight_on();
 	hal->band_right_slowly();
 
 	dsp->remListeners( this->con_, IN_HEIGHT_TRUE);

@@ -6,6 +6,7 @@
  */
 
 #include "PuckLifcycleFSM.h"
+#include "DoorKeeper.h"
 
 
 PuckLifcycleFSM::PuckLifcycleFSM() {
@@ -19,8 +20,10 @@ PuckLifcycleFSM::~PuckLifcycleFSM() {
 
 
 void PuckLifcycleFSM::execute(void* con){
-	Context* c = (Context*) con;
-	c->setState(new Birth(c));
+	DoorKeeper* dk = DoorKeeper::getInstance();
+	dk->startTimer((Context*) con);
+//	Context* c = (Context*) con;
+//	c->setState(new Birth(c));
 }
 
 void PuckLifcycleFSM::shutdown(){

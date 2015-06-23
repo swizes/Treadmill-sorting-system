@@ -10,11 +10,14 @@
 Birth::Birth(Context* con): State::State(con){
 
 	HAL *hal = HAL::getInstance();
-	hal->turn_greenLight_off();
+	//hal->turn_greenLight_off();
+
+
 	BandController* bc = BandController::getInstance();
 	bc->addPuck(this->con_->getPuck());
 	this->con_->getPuck()->runBandFast();
 	bc->refreshBand();
+
 	Dispatcher* dsp = Dispatcher::getInstance();
 	dsp->addListeners( this->con_, RUNNING_IN_FALSE);
 

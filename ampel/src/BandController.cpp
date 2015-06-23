@@ -58,9 +58,12 @@ void BandController::addPuck(Puck* puck){
 	}else{
 		pucklist[puckCounter] = puck;
 		puckCounter++;
+
 	}
 }
-
+int BandController::getPuckCounter(void) {
+	return puckCounter;
+}
 
 Puck* BandController::getReservedPuck(void){
 	return &reservedPuck;

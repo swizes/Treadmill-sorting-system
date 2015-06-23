@@ -14,7 +14,9 @@ Ready::Ready(Context* con): State::State(con){
 		//SET isBand2 ? 1 : 0;
 	//do:
 //   printf("Ready() as Band:%d\n",cal->isBand()+1);
+	cout << "Ready" << endl;
 
+	cout << "-----------------------------------" << endl;
     //Context* context = new Context();
     this->con_ = new Context();
     this->con_->setState(this);
@@ -24,10 +26,6 @@ Ready::Ready(Context* con): State::State(con){
         dsp->addListeners( this->con_, RUNNING_IN_TRUE);
     }
     
-
-
-
-
     /*
     while(1){
     //start gedrückt (nur band2)
@@ -53,18 +51,24 @@ Ready::~Ready(){
 
 void Ready::Running_In_true(void){
 
-//	printf("Ready: Running In Event!\n");
+	BandController* bc = BandController::getInstance();
+	HAL *hal = HAL::getInstance();
+	if(bc->getPuckCounter() == MAX_PUCKS){
+			new (this) Error_Handling(this->con_);
+	} else {
+				Dispatcher* dsp = Dispatcher::getInstance();
+				dsp->remListeners( this->con_, RUNNING_IN_TRUE);
+			    // Move to State: Working_Band1
+			//	new (this) Working_Band1(this->con_);
+				PuckLifcycleFSM* pfsm = new PuckLifcycleFSM();
+				pfsm->start(this->con_);
+				//Switch To Ready
+				new (this) Ready(NULL);
 
-	Dispatcher* dsp = Dispatcher::getInstance();
-	dsp->remListeners( this->con_, RUNNING_IN_TRUE);
-    // Move to State: Working_Band1
-//	new (this) Working_Band1(this->con_);
-	PuckLifcycleFSM* pfsm = new PuckLifcycleFSM();
-	pfsm->start(this->con_);
-//	cout << "Switch To Ready" << endl;
-	new (this) Ready(NULL);
+			}
 
-}
+		}
+
 
 
 
