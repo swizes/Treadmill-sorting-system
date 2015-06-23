@@ -6,6 +6,7 @@
  */
 
 #include "PuckStates.h"
+#include "ReadySend.h"
 
 Give_New_Puck::Give_New_Puck(Context* con): State::State(con){
 //entry:	
@@ -13,6 +14,11 @@ Give_New_Puck::Give_New_Puck(Context* con): State::State(con){
 	printf("Give_New_Puck()\n");
     HAL *hal = HAL::getInstance();
     //TODO: Receive FiFo Entry (Puck ID) from Band1
+	
+	
+	ReadySend* rdySend = new ReadySend();
+	rdySend.execute();
+	
     int loop = 1;
 	while(loop){
         if( hal->is_startButton_pushed()==0) {
