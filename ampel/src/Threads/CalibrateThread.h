@@ -85,6 +85,14 @@ public:
 		return smallPuck;
 	}
 
+	double getScaleFastToSlow() const {
+		return scaleFastToSlow;
+	}
+
+	double getScaleSlowToFast() const {
+		return scaleSlowToFast;
+	}
+
 private:
 	CalibrateThread();
 	CalibrateThread(const CalibrateThread& b);      ///< Copy-Konstruktor. Privat, deshalb kann dieses Objekt nicht als "Call-by-value" uebergeben werden.
@@ -113,6 +121,9 @@ private:
 	int smallPuck;
 	int holeHeight;
 	int holeHeightMetal;
+
+	double scaleSlowToFast;
+	double scaleFastToSlow;
 };
 
 #endif /* COMMUNNICATIONTHREAD_H_ */
