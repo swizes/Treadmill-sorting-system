@@ -13,8 +13,7 @@ Error_Handling::Error_Handling(Context* con): State::State(con){
 	printf("Error Handling()\n");
 	HAL *hal = HAL::getInstance();
 	BandController *bc = BandController::getInstance();
-	bc->addPuck(this->con_->getPuck());
-	this->con_->getPuck()->stopBand();
+	//this->con_->getPuck()->stopBand();
 	bc->refreshBand();
 	hal->turn_redLight_on();
 	//TODO: Print the error out
@@ -31,7 +30,8 @@ Error_Handling::Error_Handling(Context* con): State::State(con){
 	hal->turn_redLight_off();
 	cout << "Reset out" << endl;
 	bc->delPuck(this->con_->getPuck());
-	new (this) Birth(this->con_);
+	bc->refreshBand();
+	new (this) NotExist(this->con_);
 }
 
 Error_Handling::~Error_Handling(){
