@@ -8,17 +8,31 @@
 #include "PuckStates.h"
 #include "ReadySend.h"
 
+ReadySend* rdySend;
+
 Give_New_Puck::Give_New_Puck(Context* con): State::State(con){
-//entry:	
-//do:
+
+	static int rdyS = 0;
+
+	if(rdyS == 0){
+		rdySend->start(NULL);
+	}
+
 	printf("Give_New_Puck()\n");
     HAL *hal = HAL::getInstance();
-    //TODO: Receive FiFo Entry (Puck ID) from Band1
-	
-	
-	ReadySend* rdySend = new ReadySend();
-	rdySend.execute();
-	
+
+    rdySend->setBusy(1);
+
+    //Receive FiFo Entry (Puck ID) from Band1
+    puckStruct puck;
+    ser.recvPacket(&puck);
+
+    Puck* p = new Puck();
+    p->setPuckFromStruct(puck);
+    this->con_ = new Context(p);
+
+    rdySend->setBusy(0);
+
     int loop = 1;
 	while(loop){
         if( hal->is_startButton_pushed()==0) {
@@ -34,8 +48,6 @@ Give_New_Puck::Give_New_Puck(Context* con): State::State(con){
             loop=0;
         }
     }
-    // Move to State: Ready
-	//new (this) Ready(this->con_);
 }
 
 Give_New_Puck::~Give_New_Puck(){
