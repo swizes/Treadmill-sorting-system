@@ -14,7 +14,11 @@ Is_In_Slide::Is_In_Slide(Context* con): State::State(con){
 	BandController* bc = BandController::getInstance();
 	bc->delPuck(this->con_->getPuck());
 	bc->refreshBand();
-
+	CalibrateThread *cal = CalibrateThread::getInstance();
+	if(cal->isBand()){
+		cout << "Slide" << endl;
+		new (this) Give_New_Puck(NULL);
+	}
 	Dispatcher* dsp = Dispatcher::getInstance();
 	dsp->addListeners( this->con_, SLIDE_FULL_FALSE);
 

@@ -71,13 +71,8 @@ int main(int argc, char *argv[]) {
 
 	cout << "Vor Start der FSM" << endl;
 	cout << "-----------------------------------" << endl;
-	if(1){//is band1!<
-		//Context* con= new Context();
+	if(!cal->isBand()){//is band1!<
 		State* s = new Ready(NULL);
-		//con->setState(new Ready(NULL));
-		//disp->listenForEvents();
-//		dspt.start(NULL);
-
 	}else{
 		State* state = new Give_New_Puck(NULL);
 	}

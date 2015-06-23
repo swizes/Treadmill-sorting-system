@@ -9,6 +9,7 @@
 
 Road_To_Exit::Road_To_Exit(Context* con): State::State(con){
 	printf("Road_to_Exit PuckId: %d\n",  this->con_->getPuck()->getId());
+	HAL *hal= HAL::getInstance();
 
 	BandController* bc = BandController::getInstance();
 
@@ -21,7 +22,7 @@ Road_To_Exit::Road_To_Exit(Context* con): State::State(con){
 
 	Timer* timer = new Timer();
 	timer->waitForTimeOut(0,300000000);
-	HAL *hal= HAL::getInstance();
+
 	hal->close_gate();
 
 
@@ -34,7 +35,7 @@ Road_To_Exit::~Road_To_Exit(){
 
 void Road_To_Exit::Running_out_true(void){
 
-
+	HAL *hal= HAL::getInstance();
 	// Stop listen to Event Transmission1
 	Dispatcher* dsp = Dispatcher::getInstance();
 	dsp->remListeners( this->con_, RUNNING_OUT_TRUE);
@@ -43,11 +44,11 @@ void Road_To_Exit::Running_out_true(void){
 
 	//Band2
 	if(ct->isBand() == 1){
+		hal->band_stop();
 		new (this) Give_New_Puck(NULL);
+	}else{
+		new (this) User_Interaction_needed(this->con_);
 	}
-
-	// Move to State User_Interaction_needed
-	new (this) User_Interaction_needed(this->con_);
 
 }
 
