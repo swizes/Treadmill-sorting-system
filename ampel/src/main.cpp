@@ -64,21 +64,13 @@ int main(int argc, char *argv[]) {
 
 	cout << "Vor Start der FSM" << endl;
 	cout << "-----------------------------------" << endl;
-	if(1){//is band1!<
+	
+	if(!cal->isBand()){//is band1!<
 		State* s = new Ready(NULL);
-
 	}else{
-		ReadySend rdy;
-		rdy.setBusy(1);
-		rdy.start(NULL);
-		while(1){
-			Context* con = new Context();
-			con->setState(new Give_New_Puck(con));
-			Serial ser;
-			puckStruct puck;
-			ser.recvPacket(&puck);
-		}
+		State* state = new Give_New_Puck(NULL);
 	}
+
 
 	dspt.join();
 
