@@ -51,6 +51,7 @@ CalibrateThread::CalibrateThread() {
 	bigPuck = 1600;
 	smallPuck = 1299;
 	holeHeight = 490;
+	holeHeightMetal = 450;
 
 	// load defaults
 
@@ -234,9 +235,9 @@ void CalibrateThread::execute(void*) {
 	while(hal->is_puck_in_height_determination()==0){}
 	smallPuck = getMeanValueHeight();
 	printf("smallPuk : %d\n",smallPuck);
-	hal->open_gate();
-	while(hal->is_puck_in_gate()==0){}
-	hal->close_gate();
+//	hal->open_gate();
+//	while(hal->is_puck_in_gate()==0){}
+//	hal->close_gate();
 	while(hal->is_slide_full()==0){}
 	hal->band_stop();
 
@@ -246,9 +247,9 @@ void CalibrateThread::execute(void*) {
 	while(hal->is_puck_in_height_determination()==0){}
 	bigPuck = getMeanValueHeight();
 	printf("bigPuk : %d\n",bigPuck);
-	hal->open_gate();
-	while(hal->is_puck_in_gate()==0){}
-	hal->close_gate();
+//	hal->open_gate();
+//	while(hal->is_puck_in_gate()==0){}
+//	hal->close_gate();
 	while(hal->is_slide_full()==0){}
 	hal->band_stop();
 
@@ -262,9 +263,9 @@ void CalibrateThread::execute(void*) {
 
 	holeHeight = getMeanValueHeight();
 	hal->band_right_normal();
-	hal->open_gate();
-	while(hal->is_puck_in_gate()==0){}
-	hal->close_gate();
+//	hal->open_gate();
+//	while(hal->is_puck_in_gate()==0){}
+//	hal->close_gate();
 	while(hal->is_slide_full()==0){}
 	hal->band_stop();
 
@@ -276,9 +277,9 @@ void CalibrateThread::execute(void*) {
 
 	holeHeightMetal = getMeanValueHeight();
 	hal->band_right_normal();
-	hal->open_gate();
-	while(hal->is_puck_in_gate()==0){}
-	hal->close_gate();
+//	hal->open_gate();
+//	while(hal->is_puck_in_gate()==0){}
+//	hal->close_gate();
 	while(hal->is_slide_full()==0){}
 	hal->band_stop();
 
