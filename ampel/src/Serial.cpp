@@ -14,7 +14,13 @@
 #include "Serial.h"
 
 Serial::Serial() {
-	this->dev_ = "/dev/ser1";
+	#ifndef SIMULATION
+		this->dev_ = "/dev/ser1";
+    #endif
+	#ifdef SIMULATION
+		this->dev_ = "/dev/serusb1";
+    #endif
+
 	this->fdesc_ = open(this->dev_, O_RDWR);
 	if(this->fdesc_ == -1){
 			exit(-1);

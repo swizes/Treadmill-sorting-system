@@ -22,6 +22,7 @@ Timer::Timer() {
 }
 
 Timer::~Timer() {
+	this->deleteTimer();
 	//std::cout << "dtor Timer" << std::endl;
 	// TODO Auto-generated destructor stub
 }

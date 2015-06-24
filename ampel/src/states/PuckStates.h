@@ -176,6 +176,7 @@ public:
 	virtual ~ Ready();
 	virtual void Running_In_true(void);
 private:
+	void calibration();
 	Ready(const Ready& other);
 	Ready& operator=(const Ready& other);
 };

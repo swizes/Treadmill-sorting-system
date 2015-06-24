@@ -25,22 +25,31 @@ Ready::Ready(Context* con): State::State(con){
         Dispatcher* dsp = Dispatcher::getInstance();
         dsp->addListeners( this->con_, RUNNING_IN_TRUE);
     }
-    
-    /*
-    while(1){
-    //start gedrückt (nur band2)
-        if( ( hal->is_startButton_pushed() && isBand2) {
-            // Move to State: Give_New_Puck
-            new (this) Give_New_Puck(this->con_);
-        }
-    //reset gedrückt -> kalibrierung band1&2
-        if( hal->is_resetButton_pushed() ) {
-            if(!isBand2) dsp->remListeners( this->con_, RUNNING_IN_TRUE);
-            // Move to State: Calibration
-            new (this) Calibration(this->con_);
-        }
+	HAL *hal = HAL::getInstance();
+    bool run = 1;
+    while(run){
+		cout << "Double Click" << endl;
+		while( hal->is_resetButton_pushed() == 0){}
+		cout << "pressed 1" << endl;
+		delay(100);
+		while( hal->is_resetButton_pushed() == 1){}
+		Timer *timer = new Timer();
+		timer->setTimer(0,500000000);
+		cout << "pressed 0" << endl;
+		while( hal->is_resetButton_pushed() == 0 ){}
+		struct timespec time;
+		timer->getTime(&time);
+		if(time.tv_nsec != 0){
+			run = 0;
+		}
     }
-    */
+    cout << "pressed 1" << endl;
+    delay(100);
+    while( hal->is_resetButton_pushed() == 1){}
+    cout << "pressed 0" << endl;
+
+
+
 
 	
 }
@@ -68,6 +77,12 @@ void Ready::Running_In_true(void){
 			}
 
 		}
+
+void Ready::calibration(){
+	CalibrateThread *cal = CalibrateThread::getInstance();
+	cal->start(NULL);
+	cal->join();
+}
 
 
 

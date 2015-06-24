@@ -46,7 +46,7 @@ int main(int argc, char *argv[]) {
 	cout << "cal done" << endl;
 	
     /*Serielle Verbindung funkitoniert nur wenn sich System nicht in der Simulation befindet
-    /dev/ser1 steht nicht zur Verfuegung. 		*/
+     /dev/ser1 steht nicht zur Verfuegung. 		*/
 
 
 	#ifndef SIMULATION
@@ -68,9 +68,10 @@ int main(int argc, char *argv[]) {
 	if(!cal->isBand()){//is band1!<
 		State* s = new Ready(NULL);
 	}else{
-		State* state = new Give_New_Puck(NULL);
+		cout << "band2" << endl;
+		State* s = new Give_New_Puck(NULL);
 	}
-
+	cout << "Out" << endl;
 
 	dspt.join();
 
