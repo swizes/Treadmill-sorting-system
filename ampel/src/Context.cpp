@@ -16,11 +16,13 @@ class Context: public Transitions {
 private:
 	Transitions* state_;
 	Puck* puck;
+	int errCode;
 public:
 	Context() :
 		state_(NULL) {
 //		printf("Context()\n");
 		puck = new Puck();
+		errCode = -1;
 	}
 
 	virtual ~Context() {
@@ -41,6 +43,7 @@ public:
 	Context(Puck* p) :
 		state_(NULL) {
 		this->puck = p;
+		errCode = this->errCode;//???
 	}
 
 	virtual void setState(Transitions* state) {
@@ -96,8 +99,16 @@ public:
 		state_->Running_out_false();
 	}
 
-	Puck* getPuck(){
+	Puck* getPuck(void){
 		return puck;
+	}
+
+	int getErrcode(void){
+		return errCode;
+	}
+
+	void setErrcode(int errCode){
+		this->errCode=errCode;
 	}
 
 private:
