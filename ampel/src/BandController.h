@@ -10,7 +10,7 @@
 
 #include "Puck.h"
 #include "HAL.h"
-#include <pthread.h>
+#include <string.h>
 
 
 
@@ -41,7 +41,6 @@ private:
 	Puck* pucklist[MAX_PUCKS];
 	int puckCounter;
 	static BandController*  instance;
-	HAL* hal;
 	bool stopped;
 	bool runSlowly;
 	Puck reservedPuck;

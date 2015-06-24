@@ -6,14 +6,12 @@
  */
 
 #include "BandController.h"
-#include <stdio.h>
-#include <string.h>
 
 using namespace std;
 
 
-
 BandController* BandController::instance = NULL;
+HAL *hal = HAL::getInstance();
 
 BandController* BandController::getInstance(){
 	static pthread_mutex_t mtx_ = PTHREAD_MUTEX_INITIALIZER;
@@ -29,10 +27,9 @@ BandController* BandController::getInstance(){
 }
 
 BandController::BandController() {
-	//std::cout << "ctor BandController" << std::endl;
+	//std::cout << "ctor BandController" << stud::endl;
 	stopped = false;
 	runSlowly = false;
-	hal = HAL::getInstance();
 	puckCounter = 0;
 
 	lastPuck.setHoleOnTop(false);
@@ -90,6 +87,12 @@ void BandController::delPuck(Puck* puck){
 
 void BandController::refreshBand(){
 
+	if(puckCounter == 0){
+		cout << "hier noch alles i.o." << endl;
+		hal->band_stop();
+		return;
+	}
+
 	int stop = 0;
 	int slow = 0;
 	int fast = 0;
@@ -102,20 +105,12 @@ void BandController::refreshBand(){
 
 	}
 
-
-
-//	printf("BandControl: stop: %d Slow: %d Fast: %d\n", stop, slow, fast);
-
 	if(stop||hal->is_puck_running_out()){
 		hal->band_stop();
 	}else if(slow){
 		hal->band_right_slowly();
 	}else if(fast){
 		hal->band_right_normal();
-	}
-
-	if(puckCounter == 0){
-		hal->band_stop();
 	}
 
 }
