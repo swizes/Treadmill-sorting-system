@@ -72,6 +72,12 @@ void Timer::setTimer(int s, int ns){
 
 }
 
+void Timer::setTimer(struct timespec *time){
+	int s = time->tv_sec;
+	int ns = time->tv_nsec;
+	setTimer(s,ns);
+}
+
 void Timer::deleteTimer(){
 	timer_delete(timerid);
 	timeM->deleteTimer(*this);

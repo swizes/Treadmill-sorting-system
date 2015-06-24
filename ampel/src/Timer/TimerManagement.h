@@ -11,6 +11,7 @@
 #include <iostream>
 #include <vector>
 #include "./Timer.h"
+#include "../Threads/CalibrateThread.h"
 
 using namespace std;
 
@@ -20,6 +21,7 @@ class TimerManagement {
 
 private:
 	static TimerManagement* instance_;
+	void scaleTimer(double);
 	TimerManagement();
 public:
 	static TimerManagement* getInstance();
@@ -28,6 +30,8 @@ public:
 	void stopTimer();
 	void deleteTimer();
 	void continueTimer();
+	void scaleToSlowTimer();
+	void scaleToFastTimer();
 	virtual ~TimerManagement();
 };
 

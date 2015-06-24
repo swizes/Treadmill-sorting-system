@@ -36,6 +36,7 @@ private:
 	int stopBand_;
 	int runBandSlowly_;
 	int runBandFast_;
+	Timer timer;
 
 
 public:

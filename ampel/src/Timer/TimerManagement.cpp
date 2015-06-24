@@ -8,6 +8,7 @@
 #include "TimerManagement.h"
 
 
+
 TimerManagement* TimerManagement::instance_ = NULL;
 
 vector<class Timer> data;
@@ -60,6 +61,28 @@ void TimerManagement::continueTimer(){
 	int length = data.size();
 	for(int i = 0; i < length;i++){
 		data.at(i).continueTimer();
+	}
+}
+
+void TimerManagement::scaleToSlowTimer(){
+	CalibrateThread *cal = CalibrateThread::getInstance();
+	scaleTimer(2.65);
+	//cal->scaleFastToSlow
+}
+void TimerManagement::scaleToFastTimer(){
+	CalibrateThread *cal = CalibrateThread::getInstance();
+	scaleTimer(0.65);
+}
+
+void TimerManagement::scaleTimer(double scale){
+	int length = data.size();
+	for(int i = 0; i < length;i++){
+		struct timespec time;
+		data.at(i).getTime(&time);
+		data.at(i).stopTimer();
+		time.tv_nsec *= scale;
+		time.tv_sec *= scale;
+		data.at(i).setTimer(&time);
 	}
 }
 
