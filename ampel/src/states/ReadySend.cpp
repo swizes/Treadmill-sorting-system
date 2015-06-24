@@ -9,8 +9,8 @@
 
 
 ReadySend::ReadySend() {
-	// TODO Auto-generated constructor stub
-
+	cout << "ReadySend" << endl;
+	busy = 1;
 }
 
 ReadySend::~ReadySend() {

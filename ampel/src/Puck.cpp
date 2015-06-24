@@ -27,6 +27,12 @@ Puck::Puck() {
 //	std::cout << "Puck is created" << std::endl;
 }
 
+
+//Copy Constructor
+//Puck::Puck(const Puck &obj){
+//	metal = obj.metal;
+//}
+
 Puck::~Puck() {
 
 	// TODO Auto-generated destructor stub
