@@ -88,7 +88,6 @@ void BandController::delPuck(Puck* puck){
 void BandController::refreshBand(){
 
 	if(puckCounter == 0){
-		cout << "hier noch alles i.o." << endl;
 		hal->band_stop();
 		return;
 	}
