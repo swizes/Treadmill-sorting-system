@@ -71,6 +71,7 @@ int main(int argc, char *argv[]) {
 
 	cout << "Vor Start der FSM" << endl;
 	cout << "-----------------------------------" << endl;
+	
 	if(!cal->isBand()){//is band1!<
 		State* s = new Ready(NULL);
 	}else{
