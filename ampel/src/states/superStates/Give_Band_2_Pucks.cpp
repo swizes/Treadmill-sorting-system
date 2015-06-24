@@ -24,9 +24,6 @@ Give_Band_2_Pucks::Give_Band_2_Pucks(Context* con): State::State(con){
     bc->refreshBand();
 
 
-
-
-
     Serial* ser = new Serial();
 	int res = 1;
 	Packet p;

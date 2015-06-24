@@ -27,6 +27,7 @@ Give_New_Puck::Give_New_Puck(Context* con): State::State(con){
     //Receive FiFo Entry (Puck ID) from Band1
     puckStruct puck;
     ser.recvPacket(&puck);
+    hal->turn_greenLight_on();
 
     Puck* p = new Puck();
     p->setPuckFromStruct(puck);
@@ -41,6 +42,7 @@ Give_New_Puck::Give_New_Puck(Context* con): State::State(con){
             hal->band_left_normal();
             // Move to State: Working_Band2
             new (this) Working_Band2(this->con_);
+            hal->turn_greenLight_off();
             loop = 0;
         }
         if( hal->is_resetButton_pushed()==1){
