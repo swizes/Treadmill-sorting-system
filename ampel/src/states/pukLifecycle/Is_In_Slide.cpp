@@ -37,6 +37,17 @@ void Is_In_Slide::Slide_full_false(void){
 	Dispatcher* dsp = Dispatcher::getInstance();
 	dsp->remListeners( this->con_, SLIDE_FULL_FALSE);
 
+
+	if(CalibrateThread::getInstance()->isBand() == 1){
+		//hal->band_stop();
+		BandController* bc = BandController::getInstance();
+
+		bc->delPuck(this->con_->getPuck());
+		bc->refreshBand();
+
+		new (this) Give_New_Puck(NULL);
+	}
+
 }
 
 //TODO: void Is_in_Slide::Error_Handling(void)

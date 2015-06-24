@@ -23,6 +23,7 @@ Timer::Timer() {
 
 Timer::~Timer() {
 	//std::cout << "dtor Timer" << std::endl;
+	this->deleteTimer();
 	// TODO Auto-generated destructor stub
 }
 
@@ -32,17 +33,21 @@ void Timer::createTimer(){
 		std::cout << "Timer not created" << std::endl;
 		exit(1);
 	}else{
-		 timeM->addTimer(*this);
+		 timeM->addTimer(this);
 		 stop = 1;
 	}
 }
 
 int Timer::createTimerPulse(){
     if( (channel  = ChannelCreate(0)) == -1){
-        exit(EXIT_FAILURE);
+    	cout << "exit in timer 1" << endl;
+        //exit(EXIT_FAILURE);
+    	return 0;
     }
     if( (connection = ConnectAttach(0, 0, channel, 0, 0)) == -1){
-        exit(EXIT_FAILURE);
+    	cout << "exit in timer 2" << endl;
+        //exit(EXIT_FAILURE);
+    	return 0;
     }
 
     SIGEV_PULSE_INIT (&timerEvent, connection, SIGEV_PULSE_PRIO_INHERIT, 0, 0);
@@ -74,7 +79,7 @@ void Timer::setTimer(int s, int ns){
 
 void Timer::deleteTimer(){
 	timer_delete(timerid);
-	timeM->deleteTimer(*this);
+	timeM->deleteTimer(this);
 	stop = 1;
 	timerid = -1;
 
@@ -120,8 +125,7 @@ void Timer::waitForTimeOut(int s, int ns){
 	setTimer(s,ns);
 	//Timer timer;
 	MsgReceivePulse(channel, &pulse, sizeof(pulse), NULL);
-
-
+	ConnectDetach(connection);
 }
 
 void Timer::waitForTimeOut(){
@@ -129,6 +133,7 @@ void Timer::waitForTimeOut(){
 	int channel = createTimerPulse();
 	//Timer timer;
 	MsgReceivePulse(channel, &pulse, sizeof(pulse), NULL);
+	ConnectDetach(connection);
 
 }
 

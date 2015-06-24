@@ -30,7 +30,7 @@
 
 DispatcherThread::DispatcherThread(void) {
 
-	cout << "ctor Communication Test" << endl;
+	cout << "ctor Dispatcher" << endl;
 
 }
 
@@ -40,7 +40,7 @@ DispatcherThread::~DispatcherThread() {
 
 	// TODO Auto-generated destructor stub
 
-	cout << "dtor Communication Test" << endl;
+	cout << "dtor Dispatcher" << endl;
 }
 
 
@@ -50,7 +50,7 @@ void DispatcherThread::execute(void*){
 	Dispatcher *dsp = Dispatcher::getInstance();
 	dsp->listenForEvents();
 
-
+	cout << "EndListenForEvents" << endl;
 
 }
 

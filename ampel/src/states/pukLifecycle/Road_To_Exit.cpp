@@ -43,7 +43,12 @@ void Road_To_Exit::Running_out_true(void){
 
 	//Band2
 	if(ct->isBand() == 1){
-		hal->band_stop();
+		//hal->band_stop();
+		BandController* bc = BandController::getInstance();
+
+		bc->delPuck(this->con_->getPuck());
+		bc->refreshBand();
+
 		new (this) Give_New_Puck(NULL);
 	}else{
 		new (this) User_Interaction_needed(this->con_);

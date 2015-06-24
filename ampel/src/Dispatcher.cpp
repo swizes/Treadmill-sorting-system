@@ -7,6 +7,8 @@
 
 
 #include "Dispatcher.h"
+#include <exception>
+
 using namespace std;
 
 int isrChannel = 0;
@@ -46,7 +48,7 @@ Dispatcher::Dispatcher(){
 }
 
 Dispatcher::~Dispatcher(){
-
+	cout << "~Dispatcher" << endl;
 }
 
 Dispatcher* Dispatcher::getInstance(void){
@@ -149,37 +151,43 @@ void Dispatcher:: listenForEvents(){
 	// React on Pulsemessage
 	struct _pulse pulse;
 	do{
-		//cout << "Wait for Interrupt" << endl;
-		MsgReceivePulse(isrChannel,&pulse,sizeof(pulse),NULL);
+		try
+		{
+			//cout << "Wait for Interrupt" << endl;
+			MsgReceivePulse(isrChannel,&pulse,sizeof(pulse),NULL);
 
-		uint8_t sival = pulse.value.sival_int;
+			uint8_t sival = pulse.value.sival_int;
 
-		// old XOR new = stateChanged
-		uint8_t stateChanged = oldPort ^ sival;
-		//printf("oldPort: %x     %d\n", pulse.value.sival_int, stateChanged);
+			// old XOR new = stateChanged
+			uint8_t stateChanged = oldPort ^ sival;
+			//printf("oldPort: %x     %d\n", pulse.value.sival_int, stateChanged);
 
-		//old = new
-		oldPort = sival;
+			//old = new
+			oldPort = sival;
 
-		//Register Value
-		uint8_t val = oldPort & stateChanged;
+			//Register Value
+			uint8_t val = oldPort & stateChanged;
 
-		//log2 for changed registerbit
-		stateChanged = (float) log(stateChanged) / (float) log(2);
+			//log2 for changed registerbit
+			stateChanged = (float) log(stateChanged) / (float) log(2);
 
-		//Shift -> 0 or 1
-		val = !(val << stateChanged);
+			//Shift -> 0 or 1
+			val = !(val << stateChanged);
 
-		if (val == 1){
+			if (val == 1){
+				//printf("Got an Interrupt, Bit: %d value: %d\n", stateChanged, val);
+				callListeners((EVENTS)stateChanged);
+			} else {
+				//printf("Got an Interrupt, Bit: %d value: %d\n", stateChanged+EVENT_OFFSET, val);
+				callListeners((EVENTS)(stateChanged+EVENT_OFFSET));
+			}
 			//printf("Got an Interrupt, Bit: %d value: %d\n", stateChanged, val);
-			callListeners((EVENTS)stateChanged);
-		} else {
-			//printf("Got an Interrupt, Bit: %d value: %d\n", stateChanged+EVENT_OFFSET, val);
-			callListeners((EVENTS)(stateChanged+EVENT_OFFSET));
+		} catch (exception& e) {
+			cout << "exception caught: " << e.what() << endl;
 		}
-		//printf("Got an Interrupt, Bit: %d value: %d\n", stateChanged, val);
 
 	}while(1);
+
 
 	// Cleanup
 	unregisterISR();

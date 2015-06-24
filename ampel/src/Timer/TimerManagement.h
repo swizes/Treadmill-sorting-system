@@ -13,7 +13,7 @@
 #include "./Timer.h"
 
 using namespace std;
-
+class Timer; // forward declaration
 
 
 class TimerManagement {
@@ -23,8 +23,8 @@ private:
 	TimerManagement();
 public:
 	static TimerManagement* getInstance();
-	void addTimer(class Timer);
-	void deleteTimer(class Timer);
+	void addTimer(Timer*);
+	void deleteTimer(Timer*);
 	void stopTimer();
 	void deleteTimer();
 	void continueTimer();

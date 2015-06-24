@@ -10,7 +10,7 @@
 
 TimerManagement* TimerManagement::instance_ = NULL;
 
-vector<class Timer> data;
+vector<Timer*> data;
 
 /**
 * c'tor for the Thread-safe singleton HAL implementation
@@ -35,13 +35,13 @@ TimerManagement::~TimerManagement() {
 	std::cout << "dtor TimerManagement"<< std::endl;
 }
 
-void TimerManagement::addTimer(Timer timer){
+void TimerManagement::addTimer(Timer *timer){
 	data.push_back(timer);
 }
 
-void TimerManagement::deleteTimer(Timer timer){
+void TimerManagement::deleteTimer(Timer *timer){
 	for(uint8_t i = 0;i < data.size();i++){
-		if(&data.at(i) == &timer){
+		if(data.at(i) == timer){
 			data.erase(data.begin()+i,data.begin()+i);
 		}
 	}
@@ -53,13 +53,13 @@ void TimerManagement::deleteTimer(){
 void TimerManagement::stopTimer(){
 	int length = data.size();
 	for(int i = 0; i < length;i++){
-		data.at(i).stopTimer();
+		data.at(i)->stopTimer();
 	}
 }
 void TimerManagement::continueTimer(){
 	int length = data.size();
 	for(int i = 0; i < length;i++){
-		data.at(i).continueTimer();
+		data.at(i)->continueTimer();
 	}
 }
 
