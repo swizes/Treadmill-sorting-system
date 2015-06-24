@@ -13,6 +13,8 @@ static int rdyS = 0;
 
 Give_New_Puck::Give_New_Puck(Context* con): State::State(con){
 
+	BandController* bc = BandController::getInstance();
+
 //	rdySend = new ReadySend();
 	if(rdyS == 0){
 		rdySend.start(NULL);
@@ -35,9 +37,11 @@ Give_New_Puck::Give_New_Puck(Context* con): State::State(con){
     this->con_ = new Context(p);
     this->con_->setState(this);
 
+    bc->addPuck(p);
+
     rdySend.setBusy(0);
     rdySend.stop();
-     rdySend.start(NULL);
+    rdySend.start(NULL);
 
     int loop = 1;
 	while(loop){

@@ -48,18 +48,11 @@ int main(int argc, char *argv[]) {
     /*Serielle Verbindung funkitoniert nur wenn sich System nicht in der Simulation befindet
     /dev/ser1 steht nicht zur Verfuegung. 		*/
 
-
-	#ifndef SIMULATION
-	//CommunicationThread ct;
-	//ct.start(NULL);
-    #endif
-
-
 	DispatcherThread dspt;
 	dspt.start(NULL);
 
-	BandController* bd = BandController::getInstance();
-	bd->refreshBand();
+	BandController* bc = BandController::getInstance();
+	bc->refreshBand();
 
 
 	cout << "Vor Start der FSM" << endl;
@@ -77,11 +70,6 @@ int main(int argc, char *argv[]) {
 		//Hal_Test_Thread htt;
 		//htt.start(NULL);
 		//htt.join();
-
-
-	#ifndef SIMULATION
-		//ct.join();;
-    #endif
 
 
 
