@@ -46,6 +46,9 @@ public:
 	puckStruct getPuckStruct(void);
 
 
+	int getNextPuckID() const{
+		return idCount;
+	}
 
 	void stopBand(){
 		this->stopBand_ = 1;

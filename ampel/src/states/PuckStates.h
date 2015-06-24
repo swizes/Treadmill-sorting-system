@@ -206,6 +206,7 @@ public:
 private:
 	Give_New_Puck(const Give_New_Puck& other);
 	Give_New_Puck& operator=(const Give_New_Puck& other);
+	Serial ser;
 };
 
 class Initialisierung: public State {

@@ -23,13 +23,6 @@ public:
 		puck = new Puck();
 	}
 
-//	Context(puckStruct puckS):
-//	state_(NULL){
-//		puck->setPuckFromStruct(puckS);
-//
-//
-//	}
-
 	virtual ~Context() {
 		printf("~Context()\n");
 		// On cleanup: Remove yourself from all Events
@@ -44,6 +37,12 @@ public:
 		}
 		delete puck;
 	}
+
+	Context(Puck* p) :
+		state_(NULL) {
+		this->puck = p;
+	}
+
 	virtual void setState(Transitions* state) {
 		state_ = state;
 	}

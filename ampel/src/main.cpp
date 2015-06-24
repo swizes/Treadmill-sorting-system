@@ -44,64 +44,32 @@ int main(int argc, char *argv[]) {
 	cal->start(NULL);
 	cal->join();
 	cout << "cal done" << endl;
-	//BlinkTest test;
-	//delay(1000);
-
-    //Hal_Test_Thread htt;
 	
     /*Serielle Verbindung funkitoniert nur wenn sich System nicht in der Simulation befindet
     /dev/ser1 steht nicht zur Verfuegung. 		*/
 
-
-	#ifndef SIMULATION
-	//CommunicationThread ct;
-	//ct.start(NULL);
-    #endif
-
-
 	DispatcherThread dspt;
 	dspt.start(NULL);
-	BandController* bd = BandController::getInstance();
-	bd->refreshBand();
 
+	BandController* bc = BandController::getInstance();
+	bc->refreshBand();
 
-	//bd->refreshGate();
-	//Dispatcher* disp = Dispatcher::getInstance();
 
 	cout << "Vor Start der FSM" << endl;
 	cout << "-----------------------------------" << endl;
-	if(1){//is band1!<
-		//Context* con= new Context();
+	
+	if(!cal->isBand()){//is band1!<
 		State* s = new Ready(NULL);
-		//con->setState(new Ready(NULL));
-		//disp->listenForEvents();
-//		dspt.start(NULL);
-
 	}else{
-		ReadySend rdy;
-		rdy.setBusy(1);
-		rdy.start(NULL);
-		while(1){
-			Context* con = new Context();
-			con->setState(new Give_New_Puck(con));
-			Serial ser;
-			puckStruct puck;
-//			dspt.start(NULL);
-			//disp->listenForEvents();
-			ser.recvPacket(&puck);
-		}
+		State* state = new Give_New_Puck(NULL);
 	}
+
 
 	dspt.join();
 
 		//Hal_Test_Thread htt;
 		//htt.start(NULL);
 		//htt.join();
-
-
-	#ifndef SIMULATION
-		//ct.join();;
-    #endif
 
 
 

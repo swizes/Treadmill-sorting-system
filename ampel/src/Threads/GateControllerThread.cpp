@@ -64,8 +64,11 @@ void GateControllerThread::execute(void*){
 	run = 1;
 	HAL *hal = HAL::getInstance();
 	hal->open_gate();
+	printf("Before wait for Timeout\n");
 	timer->waitForTimeOut();
+	printf("After wait for Timeout\n");
 	hal->close_gate();
+	printf("Close Gate\n");
 	run = 0;
 
 
@@ -79,7 +82,7 @@ void GateControllerThread::setTimer(void){
 		this->start(NULL);
 	}
 
-
+}
 
 
 

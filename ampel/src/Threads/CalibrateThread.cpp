@@ -19,6 +19,7 @@
 #include "./Timer/Timer.h"
 #include "ConfigManager.h"
 
+
 #define TIMERSTART 20
 #define TIMERSTART_MS TIMERSTART * 1000
 
@@ -50,6 +51,7 @@ CalibrateThread::CalibrateThread() {
 	bigPuck = 1600;
 	smallPuck = 1299;
 	holeHeight = 490;
+	holeHeightMetal = 450;
 
 	// load defaults
 
@@ -85,6 +87,8 @@ CalibrateThread::CalibrateThread() {
 	configManager->getConfigValue("smallPuck", &outVal) ? smallPuck = atoi(outVal.c_str()) : keyNotFound = true;
 	configManager->getConfigValue("holeHeight", &outVal) ? holeHeight = atoi(outVal.c_str()) : keyNotFound = true;
 	configManager->getConfigValue("holeHeightMetal", &outVal) ? holeHeight = atoi(outVal.c_str()) : keyNotFound = true;
+	configManager->getConfigValue("scaleSlowToFast", &outVal) ? scaleSlowToFast = atof(outVal.c_str()) : keyNotFound = true;
+	configManager->getConfigValue("scaleFastToSlow", &outVal) ?	scaleFastToSlow = atof(outVal.c_str()) : keyNotFound = true;
 	
 	if(keyNotFound) {
 		cout << "Error! Key not found!" << endl;
@@ -231,9 +235,9 @@ void CalibrateThread::execute(void*) {
 	while(hal->is_puck_in_height_determination()==0){}
 	smallPuck = getMeanValueHeight();
 	printf("smallPuk : %d\n",smallPuck);
-	hal->open_gate();
-	while(hal->is_puck_in_gate()==0){}
-	hal->close_gate();
+//	hal->open_gate();
+//	while(hal->is_puck_in_gate()==0){}
+//	hal->close_gate();
 	while(hal->is_slide_full()==0){}
 	hal->band_stop();
 
@@ -243,9 +247,9 @@ void CalibrateThread::execute(void*) {
 	while(hal->is_puck_in_height_determination()==0){}
 	bigPuck = getMeanValueHeight();
 	printf("bigPuk : %d\n",bigPuck);
-	hal->open_gate();
-	while(hal->is_puck_in_gate()==0){}
-	hal->close_gate();
+//	hal->open_gate();
+//	while(hal->is_puck_in_gate()==0){}
+//	hal->close_gate();
 	while(hal->is_slide_full()==0){}
 	hal->band_stop();
 
@@ -259,9 +263,9 @@ void CalibrateThread::execute(void*) {
 
 	holeHeight = getMeanValueHeight();
 	hal->band_right_normal();
-	hal->open_gate();
-	while(hal->is_puck_in_gate()==0){}
-	hal->close_gate();
+//	hal->open_gate();
+//	while(hal->is_puck_in_gate()==0){}
+//	hal->close_gate();
 	while(hal->is_slide_full()==0){}
 	hal->band_stop();
 
@@ -273,14 +277,15 @@ void CalibrateThread::execute(void*) {
 
 	holeHeightMetal = getMeanValueHeight();
 	hal->band_right_normal();
-	hal->open_gate();
-	while(hal->is_puck_in_gate()==0){}
-	hal->close_gate();
+//	hal->open_gate();
+//	while(hal->is_puck_in_gate()==0){}
+//	hal->close_gate();
 	while(hal->is_slide_full()==0){}
 	hal->band_stop();
 
 
-
+	scaleFastToSlow = ((double)L0toL1Slow)/((double)L0toL1Fast);
+	scaleSlowToFast = ((double)L0toL1Fast)/((double)L0toL1Slow);
 
 	cout << "Push Start Button for Band1 or Stop Button for Band2" << endl;
 	int run = 1;
@@ -340,6 +345,10 @@ void CalibrateThread::saveConfig() {
 	configManager->setConfigValue("smallPuck", std::string(itoa(smallPuck, buf,10)));
 	configManager->setConfigValue("holeHeight", std::string(itoa(holeHeight, buf,10)));
 	configManager->setConfigValue("holeHeightMetal", std::string(itoa(holeHeightMetal, buf,10)));
+	sprintf(buf,"%.12f",scaleSlowToFast);
+	configManager->setConfigValue("scaleSlowToFast", std::string(buf));
+	sprintf(buf,"%.12f",scaleFastToSlow);
+	configManager->setConfigValue("scaleFastToSlow", std::string(buf));
 	configManager->setConfigValue("configset", "1");
 
 

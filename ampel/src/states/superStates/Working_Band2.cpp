@@ -25,10 +25,14 @@ Working_Band2::~Working_Band2(){
 
 void Working_Band2::Running_In_true(void){
 	std::cout << "Running IN" << std::endl;
+	BandController* bc = BandController::getInstance();
     Dispatcher* dsp = Dispatcher::getInstance();
 	dsp->remListeners( this->con_, RUNNING_IN_TRUE);
-	HAL *hal = HAL::getInstance();
-	hal->band_right_normal();
+
+	this->con_->getPuck()->runBandFast();
+	bc->refreshBand();
+	//HAL *hal = HAL::getInstance();
+	//hal->band_right_normal();
     
     // Move to State: Give_New_Puck
 	//new (this) Give_New_Puck(this->con_);

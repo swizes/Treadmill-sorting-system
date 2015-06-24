@@ -8,21 +8,23 @@
 
 
 Road_To_Exit::Road_To_Exit(Context* con): State::State(con){
-	printf("Road_to_Exit PuckId: %d\n",  this->con_->getPuck()->getId());
+	HAL *hal= HAL::getInstance();
 
 	BandController* bc = BandController::getInstance();
 
 	this->con_->getPuck()->runBandFast();
 	bc->refreshBand();
-	//hal->band_right_normal();
+
+
 	Dispatcher* dsp = Dispatcher::getInstance();
 	dsp->addListeners( this->con_, RUNNING_OUT_TRUE);
 
-	/*Timer* timer = new Timer();
-	timer->waitForTimeOut(0,500000000);
-	cout << "Timeout" << endl;
-	this->con_->getPuck()->closeGate();
-	bc->refreshGate();*/
+	Timer* timer = new Timer();
+	timer->waitForTimeOut(0,300000000);
+
+	hal->close_gate();
+
+	cout << "Road To Exit ----- PuckId: " << this->con_->getPuck()->getId() << endl;
 }
 
 Road_To_Exit::~Road_To_Exit(){
@@ -32,21 +34,20 @@ Road_To_Exit::~Road_To_Exit(){
 
 void Road_To_Exit::Running_out_true(void){
 
-
+	HAL *hal= HAL::getInstance();
 	// Stop listen to Event Transmission1
 	Dispatcher* dsp = Dispatcher::getInstance();
 	dsp->remListeners( this->con_, RUNNING_OUT_TRUE);
 
-	/*BandController* bc = BandController::getInstance();
-	this->con_->getPuck()->stopBand();
-	bc->refreshBand();*/
+	CalibrateThread* ct = CalibrateThread::getInstance();
 
-//	HAL *hal = HAL::getInstance();
-	//hal->band_stop();
-	//hal->close_gate();
+	//Band2
+	if(ct->isBand() == 1){
+		hal->band_stop();
+		new (this) Give_New_Puck(NULL);
+	}else{
+		new (this) User_Interaction_needed(this->con_);
+	}
 
-	//new (this) SerialCommunicationBand1(this->con_);
-	// Move to State User_Interaction_needed
-	new (this) User_Interaction_needed(this->con_);
 }
 

@@ -10,11 +10,11 @@
 
 #include "Puck.h"
 #include "HAL.h"
-#include <pthread.h>
+#include <string.h>
 
 
 
-#define MAX_PUCKS 5
+#define MAX_PUCKS 10
 
 class BandController {
 public:
@@ -29,7 +29,7 @@ public:
 	Puck* getLastPuck(void);
 	void  setRecenctPuck(Puck* puck);
 	void  setLastPuck(Puck* puck);
-
+	int getPuckCounter(void);
 	void refreshBand();
 
 private:
@@ -41,11 +41,11 @@ private:
 	Puck* pucklist[MAX_PUCKS];
 	int puckCounter;
 	static BandController*  instance;
-	HAL* hal;
 	bool stopped;
 	bool runSlowly;
 	Puck reservedPuck;
 	Puck lastPuck;
+
 };
 
 #endif /* BANDCONTROLLER_H_ */

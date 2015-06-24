@@ -9,7 +9,7 @@
 
 #include <iostream>
 
-int Puck::idCount = 0;
+int Puck::idCount = -2;
 Puck::Puck() {
 	metal = false;
 	holeOnTop = false;
@@ -26,6 +26,12 @@ Puck::Puck() {
 
 //	std::cout << "Puck is created" << std::endl;
 }
+
+
+//Copy Constructor
+//Puck::Puck(const Puck &obj){
+//	metal = obj.metal;
+//}
 
 Puck::~Puck() {
 
