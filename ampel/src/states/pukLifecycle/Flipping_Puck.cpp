@@ -9,9 +9,9 @@
 #include "PuckStates.h"
 
 Flipping_Puck::Flipping_Puck(Context* con): State::State(con){
-	printf("Flipping Puck()\n");
 	Dispatcher* dsp = Dispatcher::getInstance();
 	dsp->addListeners( this->con_, SLIDE_FULL_TRUE);
+	cout << "Flipping Puck ----- PuckId: " << this->con_->getPuck()->getId() << endl;
 }
 
 Flipping_Puck::~Flipping_Puck(){

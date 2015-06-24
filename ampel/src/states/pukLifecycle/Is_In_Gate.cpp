@@ -9,7 +9,7 @@
 #include "../../HAL.h"
 
 Is_In_Gate::Is_In_Gate(Context* con): State::State(con){
-	printf("Is in Gate PuckId. %d\n",  this->con_->getPuck()->getId());
+
 	Dispatcher* dsp = Dispatcher::getInstance();
 	dsp->addListeners( this->con_, PUCK_IN_GATE_FALSE);
 	dsp->addListeners( this->con_, METAL_DETECTION_TRUE);
@@ -17,8 +17,11 @@ Is_In_Gate::Is_In_Gate(Context* con): State::State(con){
 	hal->open_gate();
 
 	if(this->con_->getPuck()->getSizeTyp() == OK){
-			printf("Puck OK PuckId:%d\n",this->con_->getPuck()->getId());
+			cout << "Is In Gate --- Puck Type is OK --- PuckId: " << this->con_->getPuck()->getId() << endl;
+		} else {
+			cout << "Is In Gate --- Puck Type is NOT OK --- PuckId: " << this->con_->getPuck()->getId() << endl;
 		}
+
 
 }
 

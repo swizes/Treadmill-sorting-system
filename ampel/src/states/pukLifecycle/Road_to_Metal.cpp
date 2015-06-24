@@ -8,11 +8,11 @@
 #include "PuckStates.h"
 //TODO: Class name should be changed to Metal Detection
 Road_to_Metal::Road_to_Metal(Context* con): State::State(con){
-	printf("Road_to_Metal PuckId: %d\n",  this->con_->getPuck()->getId());
 	Dispatcher* dsp = Dispatcher::getInstance();
 
 	dsp->addListeners( this->con_, PUCK_IN_GATE_TRUE);
 
+	cout << "Road To Metal ----- PuckId: " << this->con_->getPuck()->getId() << endl;
 
 }
 

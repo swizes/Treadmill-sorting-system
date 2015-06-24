@@ -136,7 +136,7 @@ void HAL:: band_stop(void){
 void HAL:: open_gate(void){
 	struct timespec time;
 	timer->getTime(&time);
-	printf("Open gate! Thread ID: %d, Timer s: %lu ,ns : %lu\n",  pthread_self(),time.tv_sec,time.tv_nsec);
+//	printf("Open gate! Thread ID: %d, Timer s: %lu ,ns : %lu\n",  pthread_self(),time.tv_sec,time.tv_nsec);
 	out8(PORT_A, in8(PORT_A) | BM_OPEN_GATE);
 }
 
@@ -146,7 +146,7 @@ void HAL:: open_gate(void){
 void HAL:: close_gate(void){
 	struct timespec time;
 	timer->getTime(&time);
-	printf("Close gate! Thread ID: %d, Timer s: %lu ,ns : %lu\n", pthread_self(),time.tv_sec,time.tv_nsec);
+//	printf("Close gate! Thread ID: %d, Timer s: %lu ,ns : %lu\n", pthread_self(),time.tv_sec,time.tv_nsec);
 	out8(PORT_A, in8(PORT_A) & ~BM_OPEN_GATE);
 }
 

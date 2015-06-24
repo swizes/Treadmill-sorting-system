@@ -9,8 +9,8 @@
 #define VARIANZ 150
 
 Height_Measurement::Height_Measurement(Context* con): State::State(con){
-	printf("Height_Measurement()\n");
 
+	cout << "Height Measurement ----- PuckId: " << this->con_->getPuck()->getId() << endl;
 	BandController* bc = BandController::getInstance();
 
 	HAL *hal = HAL::getInstance();

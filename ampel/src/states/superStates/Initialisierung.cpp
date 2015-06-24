@@ -12,7 +12,8 @@ Initialisierung::Initialisierung(Context* con): State::State(con){
 //do:
 	printf("Initialisierung()\n");
 	//TODO: Initialize Stuff..
-	
+	HAL* hal = HAL::getInstance();
+	hal->turn_greenLight_on();
     // Move to State: Ready
 	new (this) Ready(this->con_);
 }

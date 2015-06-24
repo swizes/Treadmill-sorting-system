@@ -10,7 +10,7 @@
 
 
 Is_In_Slide::Is_In_Slide(Context* con): State::State(con){
-	printf("Is in Slide()\n");
+
 	BandController* bc = BandController::getInstance();
 	bc->delPuck(this->con_->getPuck());
 	bc->refreshBand();
@@ -18,7 +18,7 @@ Is_In_Slide::Is_In_Slide(Context* con): State::State(con){
 	Dispatcher* dsp = Dispatcher::getInstance();
 	dsp->addListeners( this->con_, SLIDE_FULL_FALSE);
 
-
+	cout << "Is In Slide ----- PuckId: " << this->con_->getPuck()->getId() << endl;
 }
 
 Is_In_Slide::~Is_In_Slide(){

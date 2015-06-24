@@ -14,7 +14,7 @@
 
 
 
-#define MAX_PUCKS 5
+#define MAX_PUCKS 10
 
 class BandController {
 public:
@@ -29,7 +29,7 @@ public:
 	Puck* getLastPuck(void);
 	void  setRecenctPuck(Puck* puck);
 	void  setLastPuck(Puck* puck);
-
+	int getPuckCounter(void);
 	void refreshBand();
 
 private:
@@ -46,6 +46,7 @@ private:
 	bool runSlowly;
 	Puck reservedPuck;
 	Puck lastPuck;
+
 };
 
 #endif /* BANDCONTROLLER_H_ */
