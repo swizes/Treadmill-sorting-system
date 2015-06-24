@@ -23,6 +23,7 @@ Birth::Birth(Context* con): State::State(con){
 
 	cout << "Birth ----- PuckId: " << this->con_->getPuck()->getId() << endl;
 
+
 }
 
 Birth::~Birth(){
