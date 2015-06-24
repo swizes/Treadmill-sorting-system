@@ -9,6 +9,7 @@
 #define PUCK_H_
 
 #include <iostream>
+#include "./Timer/TimerManagement.h"
 
 enum SIZE{OK,NOT_OK,UNKNOWN};
 
@@ -36,7 +37,7 @@ private:
 	int stopBand_;
 	int runBandSlowly_;
 	int runBandFast_;
-	Timer timer;
+	Timer *timer;
 
 
 public:
