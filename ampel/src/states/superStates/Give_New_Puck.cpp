@@ -23,11 +23,12 @@ Give_New_Puck::Give_New_Puck(Context* con): State::State(con){
     HAL *hal = HAL::getInstance();
 
     rdySend.setBusy(1);
+    rdySend.stop();
+    rdySend.start(NULL);
 
     //Receive FiFo Entry (Puck ID) from Band1
     puckStruct puck;
     ser.recvPacket(&puck);
-    hal->turn_greenLight_on();
 
     Puck* p = new Puck();
     p->setPuckFromStruct(puck);
@@ -35,6 +36,8 @@ Give_New_Puck::Give_New_Puck(Context* con): State::State(con){
     this->con_->setState(this);
 
     rdySend.setBusy(0);
+    rdySend.stop();
+     rdySend.start(NULL);
 
     int loop = 1;
 	while(loop){
