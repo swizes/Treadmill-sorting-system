@@ -106,7 +106,7 @@ void BandController::refreshBand(){
 
 //	printf("BandControl: stop: %d Slow: %d Fast: %d\n", stop, slow, fast);
 
-	if(stop){
+	if(stop||hal->is_puck_running_out()){
 		hal->band_stop();
 	}else if(slow){
 		hal->band_right_slowly();

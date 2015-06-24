@@ -20,12 +20,13 @@ Give_Band_2_Pucks::Give_Band_2_Pucks(Context* con): State::State(con){
     //warte, bis puck aus lichtschranke genommen wurde.
     //while(hal->is_puck_running_out() == 1);
 
-    this->con_->getPuck()->runBandFast();
+    this->con_->getPuck()->stopBand();
+    bc->refreshBand();
 
-    bc->delPuck(this->con_->getPuck());
 
 
-    /*
+
+
     Serial* ser = new Serial();
 	int res = 1;
 	Packet p;
@@ -39,18 +40,25 @@ Give_Band_2_Pucks::Give_Band_2_Pucks(Context* con): State::State(con){
 		}
 	}
 
+	//bc->refreshBand();
+	bc->delPuck(this->con_->getPuck());
+	hal->turn_yellowLight_on();
+	while(hal->is_puck_running_out()==1){
 
+	}
+	hal->turn_yellowLight_off();
+	bc->refreshBand();
 	puckStruct puck = con->getPuck()->getPuckStruct();
 	ser->sendPacket(&puck);
-*/
 
-	bc->refreshBand();
+
+
 	//bc->refreshGate();
 //	Dispatcher* dsp = Dispatcher::getInstance();
 //	dsp->printListeners();
 //	printf("END puk-lifecycle\n");
 
-	
+
     // Move to State: Working_Band1
 	//new (this) Working_Band1(this->con_);
 }

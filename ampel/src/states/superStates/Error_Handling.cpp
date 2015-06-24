@@ -13,7 +13,7 @@ Error_Handling::Error_Handling(Context* con): State::State(con){
 	printf("Error Handling()\n");
 	HAL *hal = HAL::getInstance();
 	BandController *bc = BandController::getInstance();
-	//this->con_->getPuck()->stopBand();
+	this->con_->getPuck()->stopBand();
 	bc->refreshBand();
 	hal->turn_redLight_on();
 	//TODO: Print the error out
