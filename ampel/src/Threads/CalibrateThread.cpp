@@ -145,23 +145,15 @@ void CalibrateThread::execute(void*) {
 	printf("HeighttoGateFast : %d\n",HeighttoGateFast);
 
 
-	while(hal->is_puck_in_gate()==1){}
-	hal->close_gate();
-	//Braucht man eigentlich nicht?!
-//	hal->close_gate();
-//	while (hal->is_slide_full() == 0) {
-//	}
-//	hal->band_stop();
-
-
 	//Gate to L1 fast
 	time.stopTimer();
 	time.setTimer(TIMERSTART,0);
 	while(hal->is_puck_running_out()==0){}
-	hal->band_stop();
 	time.getTime(&offset);
 	GatetoL1Fast = TIMERSTART_MS - timespecToMs(&offset);
 	printf("GatetoL1Fast : %d\n",GatetoL1Fast);
+	hal->close_gate();
+	hal->band_stop();
 
 
 	//L0 to L1 fast
@@ -178,13 +170,13 @@ void CalibrateThread::execute(void*) {
 	}
 	while(hal->is_puck_in_gate()==0){}
 	hal->open_gate();
-	while(hal->is_puck_in_gate()==1){}
-	hal->close_gate();
+
 	while (hal->is_puck_running_out() == 0) {
 	}
 	time.getTime(&offset);
 	L0toL1Fast = TIMERSTART_MS-timespecToMs(&offset);
 	printf("L0toL1Fast : %d\n",L0toL1Fast);
+	hal->close_gate();
 	hal->band_stop();
 
 
