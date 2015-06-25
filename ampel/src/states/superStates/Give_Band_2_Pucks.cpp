@@ -24,9 +24,17 @@ Give_Band_2_Pucks::Give_Band_2_Pucks(Context* con): State::State(con){
     bc->refreshBand();
 
 
+
     Serial* ser = new Serial();
 	int res = 1;
 	Packet p;
+
+
+	puckStruct puck = this->con_->getPuck()->getPuckStruct();
+//	puck.id = this->con_->getPuck()->getId();
+//	puck.metal = this->con_->getPuck()->isMetal();
+//	puck.holeOnTop = this->con_->getPuck()->isHoleOnTop();
+	cout << "PUCK INFO    " << puck.metal << "   HOLE   "  << puck.holeOnTop << endl;
 
 	//Wenn Band2 sagt ist frei, sendet es eine 1
 	while(res){
@@ -38,18 +46,20 @@ Give_Band_2_Pucks::Give_Band_2_Pucks(Context* con): State::State(con){
 	}
 
 	//bc->refreshBand();
-	bc->delPuck(this->con_->getPuck());
+
 	hal->turn_yellowLight_on();
 	while(hal->is_puck_running_out()==1){
 
 	}
 	hal->turn_yellowLight_off();
-	bc->refreshBand();
-	puckStruct puck = con->getPuck()->getPuckStruct();
+
+
+//	puckStruct puck = con->getPuck()->getPuckStruct();
+
 	ser->sendPacket(&puck);
 
-
-
+	bc->delPuck(this->con_->getPuck());
+	bc->refreshBand();
 	//bc->refreshGate();
 //	Dispatcher* dsp = Dispatcher::getInstance();
 //	dsp->printListeners();
