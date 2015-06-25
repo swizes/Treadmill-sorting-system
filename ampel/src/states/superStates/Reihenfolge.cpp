@@ -58,42 +58,44 @@ Reihenfolge::Reihenfolge(Context* con): State::State(con){
 	//Sub-Automaton = Overkill -> If/Else
     // LastPuckMetal ? 
     if(isLastPuckMetal){
-    	cout << "[LastPuck: Metal]";
+//    	cout << "[LastPuck: Metal]";
         if(isThisPuckMetal){
-        	cout << " + [ThisPuck: Metal]";
+//        	cout << " + [ThisPuck: Metal]";
         	//if reserved=NULL -> new reserved
         	wasThereReservPuck++;
             if(isRsrvPuckMetal && (wasThereReservPuck!=1)){
-            	cout << " + [ReservedPuck: Metal]";
+//            	cout << " + [ReservedPuck: Metal]";
                 //...
-            	cout << " -> [ThisPuck == ReservedPuck]";
+//            	cout << " -> [ThisPuck == ReservedPuck]";
             }else{//isRsrvPuckMetal:NO
-            	cout << " + [ReservedPuck: NOT Metal]";
+//            	cout << " + [ReservedPuck: NOT Metal]";
             	switchWithReserved = 1;
             }
+            cout << " -> [Reihenfolge: NOT OK]" << endl;
         }else{//isThisPuckMetal:NO
-        	cout << " + [ThisPuck: NOT Metal]";
+//        	cout << " + [ThisPuck: NOT Metal]";
             //...
         	cout << " -> [Reinhenfolge:OK]";
         }
     }else{//isLastPuckMetal:NO
-    	cout << "[LastPuck: NOT Metal]";
+//    	cout << "[LastPuck: NOT Metal]";
         if(isThisPuckMetal){
-        	cout << " + [ThisPuck: Metal]";
+//        	cout << " + [ThisPuck: Metal]";
             //...
         	cout << " -> [Reinhenfolge:OK]";
         }else{//isThisPuckMetal:NO
-        	cout << " + [ThisPuck: NOT Metal]";
+//        	cout << " + [ThisPuck: NOT Metal]";
         	//if reserved=NULL -> new reserved
         	wasThereReservPuck++;
             if(isRsrvPuckMetal && (wasThereReservPuck!=1)){
-            	cout << " + [ReservedPuck: Metal]";
+//            	cout << " + [ReservedPuck: Metal]";
             	switchWithReserved = 1;
             }else{//isRsrvPuckMetal:NO
-            	cout << " + [ReservedPuck: NOT Metal]";
+//            	cout << " + [ReservedPuck: NOT Metal]";
                 //...
-            	cout << " -> [ThisPuck == ReservedPuck]";
+//            	cout << " -> [ThisPuck == ReservedPuck]";
             }
+            cout << " -> [Reihenfolge: NOT OK]" << endl;
         }
     }
     cout<<endl;
