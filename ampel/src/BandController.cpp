@@ -31,6 +31,7 @@ BandController::BandController() {
 	stopped = false;
 	runSlowly = false;
 	puckCounter = 0;
+	errCode = 0;
 
 	lastPuck.setHoleOnTop(false);
 	lastPuck.setMetal(false);
@@ -130,3 +131,11 @@ void  BandController::setLastPuck(Puck* puck){
 void  BandController::setRecenctPuck(Puck* puck){
 	memcpy( getRecentPuck() , puck, sizeof(Puck));
 }
+
+	int BandController::getErrcode(void){
+		return errCode;
+	}
+
+	void BandController::setErrcode(int errCode){
+		this->errCode=errCode;
+	}
