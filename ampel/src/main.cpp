@@ -21,7 +21,6 @@
 #include "Dispatcher.h"
 #include "State.cpp"
 #include "HAL.h"
-#include "HoleDetector.h"
 #include "states/ReadySend.h"
 #include "Threads/DispatcherThread.h"
 #include "Threads/Blink_ThreadRed.h"

@@ -6,7 +6,6 @@
  */
 
 #include "PuckStates.h"
-#include "../HoleDetector.h"
 
 Search_for_Hole::Search_for_Hole(Context* con): State::State(con){
 	Dispatcher* dsp = Dispatcher::getInstance();
