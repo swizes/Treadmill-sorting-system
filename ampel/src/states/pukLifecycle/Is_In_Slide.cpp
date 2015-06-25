@@ -11,18 +11,19 @@
 
 Is_In_Slide::Is_In_Slide(Context* con): State::State(con){
 
-	BandController* bc = BandController::getInstance();
-	bc->delPuck(this->con_->getPuck());
-	bc->refreshBand();
-	CalibrateThread *cal = CalibrateThread::getInstance();
-	if(cal->isBand()){
-		cout << "Slide" << endl;
-		new (this) Give_New_Puck(NULL);
-	}
+	cout << "Is In Slide ----- PuckId: " << this->con_->getPuck()->getId() << endl;
+
+//	BandController* bc = BandController::getInstance();
+//	CalibrateThread *cal = CalibrateThread::getInstance();
+	//Wird bei Event slide_full_false gemacht!
+//	bc->delPuck(this->con_->getPuck());
+//	bc->refreshBand();
+
+
 	Dispatcher* dsp = Dispatcher::getInstance();
 	dsp->addListeners( this->con_, SLIDE_FULL_FALSE);
 
-	cout << "Is In Slide ----- PuckId: " << this->con_->getPuck()->getId() << endl;
+
 }
 
 Is_In_Slide::~Is_In_Slide(){
@@ -38,13 +39,13 @@ void Is_In_Slide::Slide_full_false(void){
 	dsp->remListeners( this->con_, SLIDE_FULL_FALSE);
 
 
+	BandController* bc = BandController::getInstance();
+
+	bc->delPuck(this->con_->getPuck());
+	bc->refreshBand();
+
+
 	if(CalibrateThread::getInstance()->isBand() == 1){
-		//hal->band_stop();
-		BandController* bc = BandController::getInstance();
-
-		bc->delPuck(this->con_->getPuck());
-		bc->refreshBand();
-
 		new (this) Give_New_Puck(NULL);
 	}
 

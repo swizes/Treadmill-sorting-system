@@ -24,9 +24,9 @@ public:
 
 private:
     static DoorKeeper* instance_;
-    bool greenLight;
+    bool greenLightOn;
     static bool right_;
-    bool right;
+    bool allowPuck;
 
 private:
 	DoorKeeper(const DoorKeeper& other);

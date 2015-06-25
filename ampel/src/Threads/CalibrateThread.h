@@ -110,12 +110,13 @@ private:
 	ConfigManager* configManager;
 	int L0toHeightFast;
 	int HeighttoGateFast;
-	int L0toL1Fast;
 	int GatetoL1Fast;
+	int L0toL1Fast;
+
 	int L0toHeightSlow;
 	int HeighttoGateSlow;
-	int L0toL1Slow;
 	int GatetoL1Slow;
+	int L0toL1Slow;
 	int noPuckHeight;
 	bool band; // 0 ->Band1 1->Band2
 

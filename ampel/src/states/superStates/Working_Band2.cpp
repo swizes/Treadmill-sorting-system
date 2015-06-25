@@ -11,10 +11,10 @@ Working_Band2::Working_Band2(Context* con): State::State(con){
 //entry:	
     //TODO: Starte SubAutomatBand2
 //do:
-	printf("Working_Band2()\n");
+	//printf("Working_Band2()\n");
+	cout << "Working Band 2" << endl;
     Dispatcher* dsp = Dispatcher::getInstance();
     dsp->addListeners( this->con_, RUNNING_IN_TRUE);
-    cout << "Add Disp" << endl;
 	
    
 }
@@ -24,13 +24,12 @@ Working_Band2::~Working_Band2(){
 }
 
 void Working_Band2::Running_In_true(void){
-	std::cout << "Running IN" << std::endl;
-	BandController* bc = BandController::getInstance();
+//	BandController* bc = BandController::getInstance();
     Dispatcher* dsp = Dispatcher::getInstance();
 	dsp->remListeners( this->con_, RUNNING_IN_TRUE);
 
-	this->con_->getPuck()->runBandFast();
-	bc->refreshBand();
+//	this->con_->getPuck()->runBandFast();
+//	bc->refreshBand();
 	//HAL *hal = HAL::getInstance();
 	//hal->band_right_normal();
     
