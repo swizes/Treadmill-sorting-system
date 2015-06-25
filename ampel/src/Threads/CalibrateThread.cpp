@@ -86,8 +86,8 @@ CalibrateThread::CalibrateThread() {
 	configManager->getConfigValue("smallPuck", &outVal) ? smallPuck = atoi(outVal.c_str()) : keyNotFound = true;
 	configManager->getConfigValue("holeHeight", &outVal) ? holeHeight = atoi(outVal.c_str()) : keyNotFound = true;
 	configManager->getConfigValue("holeHeightMetal", &outVal) ? holeHeight = atoi(outVal.c_str()) : keyNotFound = true;
-	configManager->getConfigValue("scaleSlowToFast", &outVal) ? scaleSlowToFast = atof(outVal.c_str()) : keyNotFound = true;
-	configManager->getConfigValue("scaleFastToSlow", &outVal) ?	scaleFastToSlow = atof(outVal.c_str()) : keyNotFound = true;
+	configManager->getConfigValue("scaleSlowToFast", &outVal) ? scaleSlowToFast = stod(outVal.c_str()) : keyNotFound = true;
+	configManager->getConfigValue("scaleFastToSlow", &outVal) ?	scaleFastToSlow = stod(outVal.c_str()) : keyNotFound = true;
 	
 	if(keyNotFound) {
 		cout << "Error! Key not found!" << endl;
