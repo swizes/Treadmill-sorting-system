@@ -9,28 +9,36 @@
 #include "ReadySend.h"
 
 ReadySend rdySend;
-static int rdyS = 0;
+//static int rdyS = 0;
 
 Give_New_Puck::Give_New_Puck(Context* con): State::State(con){
 
 	//BandController* bc = BandController::getInstance();
 
 //	rdySend = new ReadySend();
-	if(rdyS == 0){
-		rdySend.start(NULL);
-		rdyS = 1;
-	}
+//	if(rdyS == 0){
+//		rdySend.start(NULL);
+//		rdyS = 1;
+//	}
+
 
 	printf("Give_New_Puck()\n");
     HAL *hal = HAL::getInstance();
 
-    rdySend.setBusy(1);
-    rdySend.stop();
+//    rdySend.setBusy(1);
     rdySend.start(NULL);
 
     //Receive FiFo Entry (Puck ID) from Band1
     puckStruct puck;
     ser.recvPacket(&puck);
+
+
+    rdySend.stop();
+//    puck.id = 666;
+//    puck.metal = false;
+//    puck.holeOnTop = true;
+//    puck.needUserInteraction = false;
+//    puck.size = 2750;
 
     Puck* p = new Puck();
     p->setPuckFromStruct(puck);
@@ -39,9 +47,9 @@ Give_New_Puck::Give_New_Puck(Context* con): State::State(con){
 
 
 
-    rdySend.setBusy(0);
-    rdySend.stop();
-    rdySend.start(NULL);
+//    rdySend.setBusy(0);
+//    rdySend.stop();
+//    rdySend.start(NULL);
 
     int loop = 1;
 	while(loop){

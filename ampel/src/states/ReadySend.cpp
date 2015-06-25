@@ -22,11 +22,19 @@ ReadySend::~ReadySend() {
 void ReadySend::execute(void* con){
 	Serial ser;
 	Packet p;
+	Timer *time = new Timer();
+	time->createTimer();
+	time->setTimer(5,10);
+
+
 	while(1){
-		p.num = this->busy;
+		p.num = 1;
 		ser.sendPacket(&p);
-		Timer time;
-		time.waitForTimeOut(0,100000000);
+
+		cout << "Timer created" << endl;
+		time->waitForTimeOut(0,100000000);
+
+
 		//cout << "Ready" << endl;
 	}
 

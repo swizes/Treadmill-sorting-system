@@ -12,6 +12,8 @@ Road_To_Exit::Road_To_Exit(Context* con): State::State(con){
 
 	BandController* bc = BandController::getInstance();
 
+	cout << "Road To Exit ----- PuckId: " << this->con_->getPuck()->getId() << endl;
+
 	this->con_->getPuck()->runBandFast();
 	bc->refreshBand();
 
@@ -21,10 +23,8 @@ Road_To_Exit::Road_To_Exit(Context* con): State::State(con){
 
 	Timer* timer = new Timer();
 	timer->waitForTimeOut(0,300000000);
-
+	delete(timer);
 	hal->close_gate();
-
-	cout << "Road To Exit ----- PuckId: " << this->con_->getPuck()->getId() << endl;
 }
 
 Road_To_Exit::~Road_To_Exit(){

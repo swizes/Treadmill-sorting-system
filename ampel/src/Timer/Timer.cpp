@@ -6,14 +6,15 @@
  */
 
 #include "Timer.h"
+#include <errno.h>
 
 TimerManagement *timeM;
-int channel;
-int connection;
+int channel = -1;
+int connection = -1;
 
 
 Timer::Timer() {
-	//std::cout << "ctor Timer" << std::endl;
+	std::cout << "ctor Timer" << std::endl;
 	TimerManagement *time = TimerManagement::getInstance();
 	timeM = time;
 	timerid = -1;
@@ -30,7 +31,7 @@ Timer::~Timer() {
 void Timer::createTimer(){
 
 	if((timer_create(CLOCK_REALTIME, &timerEvent, &timerid))==-1){
-		std::cout << "Timer not created" << std::endl;
+		std::cout << "Timer not created : "  << errno << std::endl;
 		exit(1);
 	}else{
 		 timeM->addTimer(this);
@@ -39,16 +40,19 @@ void Timer::createTimer(){
 }
 
 int Timer::createTimerPulse(){
-    if( (channel  = ChannelCreate(0)) == -1){
+    if(  (channel  = ChannelCreate(0)) == -1){
     	cout << "exit in timer 1" << endl;
         //exit(EXIT_FAILURE);
     	return 0;
     }
-    if( (connection = ConnectAttach(0, 0, channel, 0, 0)) == -1){
-    	cout << "exit in timer 2" << endl;
-        //exit(EXIT_FAILURE);
-    	return 0;
+    if(connection == -1 ){
+        if( ( connection = ConnectAttach(0, 0, channel, 0, 0)) == -1){
+        	cout << "exit in timer 2" << endl;
+            //exit(EXIT_FAILURE);
+        	return 0;
+        }
     }
+
 
     SIGEV_PULSE_INIT (&timerEvent, connection, SIGEV_PULSE_PRIO_INHERIT, 0, 0);
 
@@ -78,6 +82,11 @@ void Timer::setTimer(int s, int ns){
 }
 
 void Timer::deleteTimer(){
+	if(connection != -1) ConnectDetach(connection);
+	if(channel != -1) ChannelDestroy(channel);
+	connection = -1;
+	channel = -1;
+
 	timer_delete(timerid);
 	timeM->deleteTimer(this);
 	stop = 1;
@@ -121,19 +130,19 @@ void Timer::getTime(struct timespec *offset){
 void Timer::waitForTimeOut(int s, int ns){
 
 	struct _pulse pulse;
-	int channel = createTimerPulse();
+	channel = createTimerPulse();
 	setTimer(s,ns);
 	//Timer timer;
 	MsgReceivePulse(channel, &pulse, sizeof(pulse), NULL);
-	ConnectDetach(connection);
+	deleteTimer();
 }
 
 void Timer::waitForTimeOut(){
 	struct _pulse pulse;
-	int channel = createTimerPulse();
+	channel = createTimerPulse();
 	//Timer timer;
 	MsgReceivePulse(channel, &pulse, sizeof(pulse), NULL);
-	ConnectDetach(connection);
+	deleteTimer();
 
 }
 
