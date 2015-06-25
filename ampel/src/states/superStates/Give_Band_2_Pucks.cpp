@@ -31,7 +31,7 @@ Give_Band_2_Pucks::Give_Band_2_Pucks(Context* con): State::State(con){
 	//Wenn Band2 sagt ist frei, sendet es eine 1
 	while(res){
 		ser->recvPacket(&p);
-		printf("Received Packet. %d\n", p.num);
+		//printf("Received Packet. %d\n", p.num);
 		if(p.num == 1){
 			res = 0;
 		}

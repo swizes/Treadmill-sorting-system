@@ -127,8 +127,8 @@ Reihenfolge::Reihenfolge(Context* con): State::State(con){
 //	cout << "[LAST:" << puck->getSizeTyp()  << "  ID:" << puck->getId() << "  Hole:" << puck->isHoleOnTop()
 //		 << " Metal:" << puck->isMetal() << "]"  << endl;
 //	puck = bc->getReservedPuck();
-	cout << "[RSRV:" << puck->getSizeTyp()  << "  ID:" << puck->getId() << "  Hole:" << puck->isHoleOnTop()
-		 << " Metal:" << puck->isMetal() << "]"  << endl;
+	cout << "[RSRV:" << tempPuck->getSizeTyp()  << "  ID:" << tempPuck->getId() << "  Hole:" << tempPuck->isHoleOnTop()
+		 << " Metal:" << tempPuck->isMetal() << "]"  << endl;
 
 
 	bc->refreshBand();
