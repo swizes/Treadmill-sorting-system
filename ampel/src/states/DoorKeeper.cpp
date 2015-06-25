@@ -34,8 +34,8 @@ DoorKeeper* DoorKeeper::getInstance() {
 
 
 DoorKeeper::DoorKeeper(void ) {
-	greenLight = true;
-	right = right_;
+	greenLightOn = true;
+	allowPuck = right_;
 }
 
 
@@ -49,28 +49,28 @@ DoorKeeper::~DoorKeeper() {
 void DoorKeeper::startTimer(void* con){
 	HAL *hal= HAL::getInstance();
 	Context* c = (Context*) con;
-	Timer* timer = new Timer();
-	if(!greenLight) {
-		right = false;
+
+	//If greenlight is not on, do not let another puck
+	if(!greenLightOn) {
+		allowPuck = false;
 	} else {
 		hal->turn_greenLight_off();
-		greenLight = false;
+		greenLightOn = false;
 		c->setState(new Birth(c));
-		timer->waitForTimeOut(1,500000000);
-		if(!right) {
+		delay(1500);
+		//If next puck is not allowed, go to Error Handling, otherwise turn green light on and let the puck.
+		if(!allowPuck) {
 			c->setState(new Error_Handling(c));
 		} else {
 			hal->turn_greenLight_on();
-			greenLight = true;
-			right = true;
+			greenLightOn = true;
+			allowPuck = true;
 		}
 
 	}
 
 
 }
-
-
 
 void DoorKeeper::shutdown(){
     cout << "DoorKeeper shutdown" << endl;
