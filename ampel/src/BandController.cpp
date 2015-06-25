@@ -32,6 +32,7 @@ BandController::BandController() {
 	runSlowly = false;
 	puckCounter = 0;
 	errCode = 0;
+	slideCounter = 0;
 
 	lastPuck.setHoleOnTop(false);
 	lastPuck.setMetal(false);
@@ -59,6 +60,16 @@ void BandController::addPuck(Puck* puck){
 
 	}
 }
+
+
+void BandController::incSlideCounter() {
+	slideCounter++;
+}
+
+int BandController::getSlideCounter(void) {
+	return slideCounter;
+}
+
 int BandController::getPuckCounter(void) {
 	return puckCounter;
 }

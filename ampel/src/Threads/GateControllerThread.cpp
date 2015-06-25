@@ -14,13 +14,7 @@
 
  */
 
-
-
 #include "GateControllerThread.h"
-
-
-
-
 
 //Only One PC can be the SENDER! 
 

@@ -32,6 +32,9 @@ public:
 	int   getPuckCounter(void);
 	void  refreshBand();
 
+	int getSlideCounter(void);
+	void incSlideCounter();
+
 	int   getErrcode(void);
 	void  setErrcode(int errCode);
 
@@ -49,6 +52,7 @@ private:
 	Puck reservedPuck;
 	Puck lastPuck;
 	int errCode;
+	int slideCounter;
 
 };
 

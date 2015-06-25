@@ -84,17 +84,6 @@ private:
 	Road_to_Metal& operator=(const Road_to_Metal& other);
 };
 
-//NOT NEEDED
-//class Metal_Detected: public State {
-//public:
-//	Metal_Detected(Context* con);
-//	virtual ~ Metal_Detected();
-//	virtual void Puck_in_Gate_false(void);
-//	//virtual void Metal_detection_true(void);
-//private:
-//	Metal_Detected(const Metal_Detected& other);
-//	Metal_Detected& operator=(const Metal_Detected& other);
-//};
 
 class Is_In_Gate: public State {
 public:
@@ -117,14 +106,14 @@ private:
 	Road_To_Sorting_Out& operator=(const Road_To_Sorting_Out& other);
 };
 
-class Flipping_Puck: public State {
+class Road_To_Slide: public State {
 public:
-	Flipping_Puck(Context* con);
-	virtual ~ Flipping_Puck();
+	Road_To_Slide(Context* con);
+	virtual ~ Road_To_Slide();
 	virtual void Slide_full_true(void);
 private:
-	Flipping_Puck(const Flipping_Puck& other);
-	Flipping_Puck& operator=(const Flipping_Puck& other);
+	Road_To_Slide(const Road_To_Slide& other);
+	Road_To_Slide& operator=(const Road_To_Slide& other);
 };
 
 class Is_In_Slide: public State {

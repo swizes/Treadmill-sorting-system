@@ -13,11 +13,25 @@ Is_In_Slide::Is_In_Slide(Context* con): State::State(con){
 
 	cout << "Is In Slide ----- PuckId: " << this->con_->getPuck()->getId() << endl;
 
-	Dispatcher* dsp = Dispatcher::getInstance();
-	dsp->addListeners( this->con_, SLIDE_FULL_FALSE);
+
+	//When puck is in slide, increase the counter by 1
+	BandController *bc = BandController::getInstance();
+	bc->incSlideCounter();
+
+
+	//Slide ist voll, oder Puck haengt fest => UserInteraktion!
+	//Maximum allowed amount of pucks inside the slide is 4. If Max is reached, go to error handling
+	//TODO: Errcode etc.
+	if (bc->getSlideCounter() == 4){
+		new (this) Error_Handling(NULL);
+	} else {
+		Dispatcher* dsp = Dispatcher::getInstance();
+		dsp->addListeners( this->con_, SLIDE_FULL_FALSE);
+	}
+
 
 	//TODO: ErrorHandling => After Timeout und EVENT nicht eingetreten
-	//Slide ist voll, oder Puck haengt fest => UserInteraktion!
+
 
 }
 

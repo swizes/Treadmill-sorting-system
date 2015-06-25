@@ -16,10 +16,21 @@ Ready::Ready(Context* con): State::State(con){
     this->con_ = new Context();
     this->con_->setState(this);
 
+
+
     if(!cal->isBand()){ //Band 1
         Dispatcher* dsp = Dispatcher::getInstance();
         dsp->addListeners( this->con_, RUNNING_IN_TRUE);
     }
+
+    	/* TODO:Start is pressed and waiting for new puck
+        * Start timer
+        * Timer *timer = new Timer();
+        * if(getTime == 10) {
+        * new (this) Not_Exist || Error_Handling(this->con_)
+        * }
+        * If no puck after x sec, go to not exist(idle) or error_handling
+        */
 }
 
 Ready::~Ready(){

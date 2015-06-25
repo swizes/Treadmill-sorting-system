@@ -33,6 +33,9 @@ void Search_for_Hole::In_Height_false(void){
 	bc->refreshBand();
 
 	cout << "PuckType: " << this->con_->getPuck()->getSizeTyp()  << "  ID: " << this->con_->getPuck()->getId() << endl;
+
+	Puck *puck = this->con_->getPuck();
+
 	if(puck->getSizeTyp() == OK){
 		if(puck->isHoleOnTop()){
 			puck->setUserInteractionNeeded(true);
