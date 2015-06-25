@@ -23,15 +23,12 @@ void ReadySend::execute(void* con){
 	Serial ser;
 	Packet p;
 	Timer *time = new Timer();
-	time->createTimer();
-	time->setTimer(5,10);
 
 
 	while(1){
-		p.num = 1;
+		p.num = this->busy;
 		ser.sendPacket(&p);
 
-		cout << "Timer created" << endl;
 		time->waitForTimeOut(0,100000000);
 
 

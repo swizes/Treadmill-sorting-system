@@ -21,9 +21,10 @@ Road_To_Exit::Road_To_Exit(Context* con): State::State(con){
 	Dispatcher* dsp = Dispatcher::getInstance();
 	dsp->addListeners( this->con_, RUNNING_OUT_TRUE);
 
-	Timer* timer = new Timer();
-	timer->waitForTimeOut(0,300000000);
-	delete(timer);
+	//Timer* timer = new Timer();
+	//timer->waitForTimeOut(0,300000000);
+	//delete(timer);
+	delay(300);
 	hal->close_gate();
 }
 

@@ -61,9 +61,7 @@ int main(int argc, char *argv[]) {
 	if(!cal->isBand()){//is band1!<
 		State* s = new Ready(NULL);
 	}else{
-		cout << "Before Give" << endl;
 		State* state = new Give_New_Puck(NULL);
-		cout << "After Give" << endl;
 	}
 
 
