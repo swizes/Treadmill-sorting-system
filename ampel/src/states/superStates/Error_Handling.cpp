@@ -35,8 +35,5 @@ Error_Handling::~Error_Handling(){
 	printf("~Error Handling()\n");
 }
 
-void errors_print(int err) {
-	cout << "ERROR: " << err << endl;
-}
 //TODO: Error Handling function
 
