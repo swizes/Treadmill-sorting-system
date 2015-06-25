@@ -14,9 +14,11 @@ Waiting_for_arriving_Puck::Waiting_for_arriving_Puck(Context* con): State::State
 //    printf("Push START\n");
 //    HAL *hal = HAL::getInstance();
     //while(!(hal->is_startButton_pushed()));
-	
+	cout << "PUCK INFO    " << this->con_->getPuck()->isMetal() << "   HOLE   "  << this->con_->getPuck()->isHoleOnTop() << endl;
     // Move to State: Give_Band_2_Pucks
 	new (this) Give_Band_2_Pucks(this->con_);
+
+
 }
 
 Waiting_for_arriving_Puck::~Waiting_for_arriving_Puck(){

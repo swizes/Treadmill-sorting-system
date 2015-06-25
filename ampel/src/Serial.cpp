@@ -12,6 +12,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include "Serial.h"
+#include <iostream>
 
 Serial::Serial() {
 	this->dev_ = "/dev/ser1";
@@ -21,6 +22,7 @@ Serial::Serial() {
 	}
 
 	this->config();
+
 }
 
 Serial::~Serial(){
