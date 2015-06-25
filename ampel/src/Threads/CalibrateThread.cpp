@@ -139,10 +139,14 @@ void CalibrateThread::execute(void*) {
 	time.stopTimer();
 	time.setTimer(TIMERSTART,0);
 	while(hal->is_puck_in_gate()==0){}
+	hal->open_gate();
 	time.getTime(&offset);
 	HeighttoGateFast = TIMERSTART_MS - timespecToMs(&offset);
 	printf("HeighttoGateFast : %d\n",HeighttoGateFast);
 
+
+	while(hal->is_puck_in_gate()==1){}
+	hal->close_gate();
 	//Braucht man eigentlich nicht?!
 //	hal->close_gate();
 //	while (hal->is_slide_full() == 0) {
@@ -154,6 +158,7 @@ void CalibrateThread::execute(void*) {
 	time.stopTimer();
 	time.setTimer(TIMERSTART,0);
 	while(hal->is_puck_running_out()==0){}
+	hal->band_stop();
 	time.getTime(&offset);
 	GatetoL1Fast = TIMERSTART_MS - timespecToMs(&offset);
 	printf("GatetoL1Fast : %d\n",GatetoL1Fast);
@@ -169,9 +174,11 @@ void CalibrateThread::execute(void*) {
 	hal->band_right_normal();
 	while (hal->is_puck_in_height_determination() == 0) {
 	}
-	hal->open_gate();
 	while (hal->is_puck_in_height_determination() == 1) {
 	}
+	while(hal->is_puck_in_gate()==0){}
+	hal->open_gate();
+	while(hal->is_puck_in_gate()==1){}
 	hal->close_gate();
 	while (hal->is_puck_running_out() == 0) {
 	}
@@ -207,6 +214,7 @@ void CalibrateThread::execute(void*) {
 	printf("HeighttoGateSlow : %d\n",HeighttoGateSlow);
 	hal->open_gate();
 
+
 	//Gate to Exit
 	time.stopTimer();
 	time.setTimer(TIMERSTART,0);
@@ -214,8 +222,8 @@ void CalibrateThread::execute(void*) {
 	time.getTime(&offset);
 	GatetoL1Slow = TIMERSTART_MS - timespecToMs(&offset);
 	printf("GatetoL1Slow : %d\n",GatetoL1Slow);
+	hal->close_gate();
 	hal->band_stop();
-
 
 	//L0 to L1 slow
 	cout << "Put a puck in L0" << endl;
@@ -227,10 +235,11 @@ void CalibrateThread::execute(void*) {
 
 	while(hal->is_puck_in_gate()==0){}
 	hal->open_gate();
-	while(hal->is_puck_in_gate()==1){}
-	hal->close_gate();
+
+
 	while (hal->is_puck_running_out() == 0) {
 	}
+	hal->close_gate();
 	time.getTime(&offset);
 	L0toL1Slow = TIMERSTART_MS - timespecToMs(&offset);
 	printf("L0toL1Slow : %d\n", L0toL1Slow);
