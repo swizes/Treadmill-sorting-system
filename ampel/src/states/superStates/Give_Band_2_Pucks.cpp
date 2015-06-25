@@ -38,17 +38,20 @@ Give_Band_2_Pucks::Give_Band_2_Pucks(Context* con): State::State(con){
 	}
 
 	//bc->refreshBand();
-	bc->delPuck(this->con_->getPuck());
+
 	hal->turn_yellowLight_on();
 	while(hal->is_puck_running_out()==1){
 
 	}
 	hal->turn_yellowLight_off();
-	bc->refreshBand();
+
 	puckStruct puck = con->getPuck()->getPuckStruct();
+
 	ser->sendPacket(&puck);
 
 
+	bc->delPuck(this->con_->getPuck());
+	bc->refreshBand();
 
 	//bc->refreshGate();
 //	Dispatcher* dsp = Dispatcher::getInstance();

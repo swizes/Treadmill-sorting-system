@@ -32,12 +32,15 @@ Give_New_Puck::Give_New_Puck(Context* con): State::State(con){
     puckStruct puck;
     ser.recvPacket(&puck);
 
+    cout << "Puck ID: " << puck.id;
+    cout << "    Puck Metal: " << puck.metal;
+    cout << "    Puck Hole: " << puck.holeOnTop << endl;
+
+
     Puck* p = new Puck();
     p->setPuckFromStruct(puck);
     this->con_ = new Context(p);
     this->con_->setState(this);
-
-
 
     rdySend.setBusy(0);
     rdySend.stop();

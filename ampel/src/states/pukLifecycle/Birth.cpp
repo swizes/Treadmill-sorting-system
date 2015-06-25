@@ -9,7 +9,7 @@
 
 Birth::Birth(Context* con): State::State(con){
 
-	HAL *hal = HAL::getInstance();
+//	HAL *hal = HAL::getInstance();
 	//hal->turn_greenLight_off();
 
 
@@ -21,7 +21,7 @@ Birth::Birth(Context* con): State::State(con){
 	Dispatcher* dsp = Dispatcher::getInstance();
 	dsp->addListeners( this->con_, RUNNING_IN_FALSE);
 
-	cout << "Birth ----- PuckId: " << this->con_->getPuck()->getId() << endl;
+	std::cout << "Birth ----- PuckId: " << this->con_->getPuck()->getId() << std::endl;
 
 
 }
