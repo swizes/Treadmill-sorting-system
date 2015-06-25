@@ -10,6 +10,7 @@
 
 Is_In_Gate::Is_In_Gate(Context* con) :
 		State::State(con) {
+
 	BandController* bc = BandController::getInstance();
 	Dispatcher* dsp = Dispatcher::getInstance();
 	CalibrateThread *cal = CalibrateThread::getInstance();
@@ -17,8 +18,7 @@ Is_In_Gate::Is_In_Gate(Context* con) :
 	HAL *hal = HAL::getInstance();
 
 	if (this->con_->getPuck()->getSizeTyp() == OK) {
-		cout << "Is In Gate --- PuckId: " << this->con_->getPuck()->getId()
-				<< endl;
+		cout << "Is In Gate --- PuckId: " << this->con_->getPuck()->getId() << endl;
 		dsp->addListeners(this->con_, PUCK_IN_GATE_FALSE);
 		dsp->addListeners(this->con_, METAL_DETECTION_TRUE);
 
@@ -27,9 +27,9 @@ Is_In_Gate::Is_In_Gate(Context* con) :
 		} else {
 			// Band2: Reihenfolge..
 			// if( (LastPuckIsMetal && !ThisPuckIsMetal) || (!LastPuckIsMetal && ThisPuckIsMetal) )
-			if ((bc->getLastPuck()->isMetal() && !con_->getPuck()->isMetal())
+			if ((bc->getLastPuck()->isMetal() && !this->con_->getPuck()->isMetal())
 					|| (!bc->getLastPuck()->isMetal()
-							&& con_->getPuck()->isMetal())) {
+					&& this->con_->getPuck()->isMetal())) {
 				hal->open_gate();
 			}
 
@@ -44,7 +44,7 @@ Is_In_Gate::~Is_In_Gate() {
 
 void Is_In_Gate::Puck_in_Gate_false(void) {
 
-	con_->getPuck()->setMetal(false);
+	this->con_->getPuck()->setMetal(false);
 
 	// Stop listen to Event Transmission1
 	Dispatcher* dsp = Dispatcher::getInstance();
@@ -57,7 +57,7 @@ void Is_In_Gate::Puck_in_Gate_false(void) {
 
 void Is_In_Gate::Metal_detection_true(void) {
 
-	con_->getPuck()->setMetal(true);
+	this->con_->getPuck()->setMetal(true);
 
 	// Stop listen to Event Transmission1
 	Dispatcher* dsp = Dispatcher::getInstance();

@@ -9,8 +9,6 @@
 
 Reihenfolge::Reihenfolge(Context* con): State::State(con){
 //entry:	
-	Puck *puck;
-	CalibrateThread *cal = CalibrateThread::getInstance();
 
     int isLastPuckMetal = 0,
         isThisPuckMetal = 0,

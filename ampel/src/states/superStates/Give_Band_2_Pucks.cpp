@@ -11,14 +11,10 @@ Give_Band_2_Pucks::Give_Band_2_Pucks(Context* con): State::State(con){
 //entry:	
 //do:
 	printf("Give_Band_2_Pucks()\n");
-	//TODO: Send ready PUCK ID to Band2
+
     HAL *hal = HAL::getInstance();
-    //while(!(hal->is_startButton_pushed()));
 
     BandController* bc = BandController::getInstance();
-
-    //warte, bis puck aus lichtschranke genommen wurde.
-    //while(hal->is_puck_running_out() == 1);
 
     this->con_->getPuck()->stopBand();
     bc->refreshBand();
@@ -37,8 +33,7 @@ Give_Band_2_Pucks::Give_Band_2_Pucks(Context* con): State::State(con){
 		}
 	}
 
-	//bc->refreshBand();
-
+	//Band 2 frei => Gelbe Leuchte an!
 	hal->turn_yellowLight_on();
 	while(hal->is_puck_running_out()==1){
 
@@ -52,15 +47,6 @@ Give_Band_2_Pucks::Give_Band_2_Pucks(Context* con): State::State(con){
 
 	bc->delPuck(this->con_->getPuck());
 	bc->refreshBand();
-
-	//bc->refreshGate();
-//	Dispatcher* dsp = Dispatcher::getInstance();
-//	dsp->printListeners();
-//	printf("END puk-lifecycle\n");
-
-
-    // Move to State: Working_Band1
-	//new (this) Working_Band1(this->con_);
 }
 
 Give_Band_2_Pucks::~Give_Band_2_Pucks(){

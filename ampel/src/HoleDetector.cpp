@@ -8,7 +8,7 @@ using namespace std;
 	//static int max_ground_height = 900;
 	static int min_puck_height = 4096-2800;
 	static int min_hole_diff = 500;
-	static int max_hole_diff = 1200;
+//	static int max_hole_diff = 1200;
 
 	static int max_runthrough_time_fast = 0;
 	static int max_runthrough_time_fast_ms = 600;
@@ -25,9 +25,7 @@ using namespace std;
 	static bool debugOutput = false;
 
 bool HoleDetector::detectHole(HAL *hal, bool runningSlow) {
-	int measured_max_height = 0;
-	int measured_min_height = 0;
-	int mheight, puckheight0, puckheight1;
+	int mheight, puckheight0;
 	int elapsed_time = 0, elapsed_time_ns = 0;
 	int max_time = runningSlow ? max_runthrough_time_slow : max_runthrough_time_fast;
 	int max_time_ms = runningSlow ? max_runthrough_time_slow_ms : max_runthrough_time_fast_ms;

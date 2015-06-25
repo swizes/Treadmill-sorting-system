@@ -99,9 +99,6 @@ CalibrateThread::CalibrateThread() {
 }
 
 CalibrateThread::~CalibrateThread() {
-
-	// TODO Auto-generated destructor stub
-
 	cout << "dtor Calibrate" << endl;
 }
 
@@ -262,7 +259,7 @@ void CalibrateThread::execute(void*) {
 	hal->band_stop();
 
 
-	//Locherkennung todo delay not ok
+	//Hole measurement
 	cout << "Put a non Metal Puck with Hole on Top" << endl;
 	while(hal->is_puck_running_in()==0){}
 	hal->band_right_normal();

@@ -11,7 +11,6 @@
 Height_Measurement::Height_Measurement(Context* con): State::State(con){
 
 	cout << "Height Measurement ----- PuckId: " << this->con_->getPuck()->getId() << endl;
-	BandController* bc = BandController::getInstance();
 
 	HAL *hal = HAL::getInstance();
 
@@ -47,14 +46,10 @@ Height_Measurement::Height_Measurement(Context* con): State::State(con){
 
 
 	if(height >= hole-VARIANZ && height <= hole+VARIANZ){
-//		cout << "Hat Loch" << endl;
 		this->con_->getPuck()->setHoleOnTop(true);
 		this->con_->getPuck()->setUserInteractionNeeded(false);
 		this->con_->getPuck()->setSizeTyp(OK);
 	}
-
-	//TODO: PreCond is_Height_ok
-	//Maybe go in ErrorHandling if is_Height_ok @ false
 
 	//Lambda transition
 	new (this) Search_for_Hole(this->con_);

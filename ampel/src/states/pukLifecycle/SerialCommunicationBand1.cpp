@@ -13,8 +13,6 @@
 
 SerialCommunicationBand1::SerialCommunicationBand1(Context* con): State::State(con){
 	printf("SerialCommunicationBand1\n");
-
-	Dispatcher* dsp = Dispatcher::getInstance();
 	HAL* hal = HAL::getInstance();
 
 

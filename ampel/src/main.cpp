@@ -59,9 +59,11 @@ int main(int argc, char *argv[]) {
 	cout << "-----------------------------------" << endl;
 	
 	if(!cal->isBand()){//is band1!<
-		State* s = new Ready(NULL);
+//		State* s = new Ready(NULL);
+		new Ready(NULL);
 	}else{
-		State* state = new Give_New_Puck(NULL);
+//		State* state = new Give_New_Puck(NULL);
+		new Give_New_Puck(NULL);
 	}
 
 

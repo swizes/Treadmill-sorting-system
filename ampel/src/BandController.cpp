@@ -27,7 +27,7 @@ BandController* BandController::getInstance(){
 }
 
 BandController::BandController() {
-	//std::cout << "ctor BandController" << stud::endl;
+	//std::cout << "ctor BandController" << std::endl;
 	stopped = false;
 	runSlowly = false;
 	puckCounter = 0;
@@ -132,10 +132,10 @@ void  BandController::setRecenctPuck(Puck* puck){
 	memcpy( getRecentPuck() , puck, sizeof(Puck));
 }
 
-	int BandController::getErrcode(void){
-		return errCode;
-	}
+int BandController::getErrcode(void){
+	return errCode;
+}
 
-	void BandController::setErrcode(int errCode){
-		this->errCode=errCode;
-	}
+void BandController::setErrcode(int errCode){
+	this->errCode=errCode;
+}

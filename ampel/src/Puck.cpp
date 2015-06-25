@@ -14,21 +14,16 @@ Puck::Puck() {
 	metal = false;
 	holeOnTop = false;
 	size = 0;
-	//sizeTyp = UNKNOWN;
 	sizeTyp = NOT_OK;	//Default sortingPuck out
 	id = idCount++;
 	needUserInteraction = false;
 	stopBand_ = 0;
 	runBandSlowly_ = 0;
 	runBandFast_ = 0;
-
-//	std::cout << "ID: " << id << "  idCount: " << idCount << std::endl;
-
-//	std::cout << "Puck is created" << std::endl;
 }
 
 
-//Copy Constructor
+//TODO: evtl Copy Constructor anlegen?!
 //Puck::Puck(const Puck &obj){
 //	metal = obj.metal;
 //}

@@ -18,12 +18,9 @@ Road_To_Exit::Road_To_Exit(Context* con): State::State(con){
 
 	Dispatcher* dsp = Dispatcher::getInstance();
 	dsp->addListeners( this->con_, RUNNING_OUT_TRUE);
-//
-//	Timer* timer = new Timer();
-//	timer->waitForTimeOut(0,300000000);
-//
+
 	delay(300);
-hal->close_gate();
+	hal->close_gate();
 
 	cout << "Road To Exit ----- PuckId: " << this->con_->getPuck()->getId() << endl;
 	cout << "TYPE IS : " << this->con_->getPuck()->isMetal() << endl;
@@ -38,7 +35,6 @@ Road_To_Exit::~Road_To_Exit(){
 
 void Road_To_Exit::Running_out_true(void){
 
-	HAL *hal= HAL::getInstance();
 	// Stop listen to Event Transmission1
 	Dispatcher* dsp = Dispatcher::getInstance();
 	dsp->remListeners( this->con_, RUNNING_OUT_TRUE);
@@ -47,7 +43,6 @@ void Road_To_Exit::Running_out_true(void){
 
 	//Band2
 	if(ct->isBand() == 1){
-		//hal->band_stop();
 		BandController* bc = BandController::getInstance();
 
 		bc->delPuck(this->con_->getPuck());

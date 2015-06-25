@@ -46,7 +46,8 @@ GateControllerThread* GateControllerThread::getInstance(){
 GateControllerThread::GateControllerThread(void) {
 	timer = new Timer();
 	cout << "ctor GateControllerThread" << endl;
-
+	run = 0;
+	wait = 0;
 }
 
 

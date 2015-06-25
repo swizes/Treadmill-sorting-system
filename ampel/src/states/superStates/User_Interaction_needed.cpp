@@ -26,7 +26,6 @@ User_Interaction_needed::User_Interaction_needed(Context* con): State::State(con
     //Check  User_Interaction_needed ? 1 : 0
 	
     if(this->con_->getPuck()->isUserInteractionNeeded()){
-        HAL *hal = HAL::getInstance();
         printf("UserInterAction needed: true\n");
         //printf("Waiting for User Interaction (Press START after)\n");
         //while(!(hal->is_startButton_pushed()));
