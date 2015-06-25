@@ -25,8 +25,9 @@ void ReadySend::execute(void* con){
 	while(1){
 		p.num = this->busy;
 		ser.sendPacket(&p);
-		Timer time;
-		time.waitForTimeOut(0,100000000);
+		//Timer time;
+		//time.waitForTimeOut(0,100000000);
+		delay(100);
 		//cout << "Ready" << endl;
 	}
 

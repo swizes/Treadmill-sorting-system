@@ -44,7 +44,9 @@ public:
 		state_(NULL) {
 		this->puck = p;
 		errCode = this->errCode;//???
+
 	}
+
 
 	virtual void setState(Transitions* state) {
 		state_ = state;
