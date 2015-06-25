@@ -48,7 +48,6 @@ Give_New_Puck::Give_New_Puck(Context* con): State::State(con){
 
     int loop = 1;
 	while(loop){
-		cout << "give_new_puck" << endl;
         if( hal->is_startButton_pushed()==0) {
             hal->band_left_normal();
             // Move to State: Working_Band2
