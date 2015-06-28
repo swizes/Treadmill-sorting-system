@@ -43,9 +43,6 @@ public:
 		return GatetoL1Slow;
 	}
 
-	int getHeighttoGateFast() const {
-		return HeighttoGateFast;
-	}
 
 	int getHeighttoGateSlow() const {
 		return HeighttoGateSlow;
@@ -95,6 +92,34 @@ public:
 		return scaleSlowToFast;
 	}
 
+	bool isConfigLoaded() const {
+		return configLoaded;
+	}
+
+	int getHeightToGateFast() const {
+		return HeightToGateFast;
+	}
+
+	int getHeightToMetalFast() const {
+		return HeightToMetalFast;
+	}
+
+	int getHoleHeightMetal() const {
+		return holeHeightMetal;
+	}
+
+	int getInGateToSlideFast() const {
+		return InGateToSlideFast;
+	}
+
+	int getMetalToIsInGateFast() const {
+		return MetalToIsInGateFast;
+	}
+
+	int getOutGateToL1Fast() const {
+		return OutGateToL1Fast;
+	}
+
 private:
 	CalibrateThread();
 	CalibrateThread(const CalibrateThread& b);      ///< Copy-Konstruktor. Privat, deshalb kann dieses Objekt nicht als "Call-by-value" uebergeben werden.
@@ -104,12 +129,19 @@ private:
 	int timespecToMs(struct timespec *);
 	void saveConfig();
 	int getMeanValueHeight();
+	void saveCalcMean();
+	int mean(int *, int);
+	int getMedianValueHeight();
 
 
 	static CalibrateThread* instance_;
 	ConfigManager* configManager;
 	int L0toHeightFast;
-	int HeighttoGateFast;
+	int HeightToMetalFast;
+	int MetalToIsInGateFast;
+	int InGateToSlideFast;
+	int OutGateToL1Fast;
+	int HeightToGateFast;
 	int L0toL1Fast;
 	int GatetoL1Fast;
 	int L0toHeightSlow;
@@ -126,6 +158,15 @@ private:
 
 	double scaleSlowToFast;
 	double scaleFastToSlow;
+
+	int L0toHeightFastAr[3];
+	int HeightToMetalFastAr[3];
+	int MetalToIsInGateFastAr[3];
+	int InGateToSlideFastAr[3];
+	int OutGateToL1FastAr[3];
+	int HeightToGateFastAr[3];
+	int L0toL1FastAr[3];
+	int GatetoL1FastAr[3];
 };
 
 #endif /* COMMUNNICATIONTHREAD_H_ */
