@@ -80,9 +80,7 @@ CalibrateThread::CalibrateThread() {
 	configManager->getConfigValue("L0toL1Slow", &outVal) ? L0toL1Slow = atoi(outVal.c_str()) : keyNotFound = true;
 	configManager->getConfigValue("GatetoL1Slow", &outVal) ? GatetoL1Slow = atoi(outVal.c_str()) : keyNotFound = true;
 	configManager->getConfigValue("noPuckHeight", &outVal) ? noPuckHeight = atoi(outVal.c_str()) : keyNotFound = true;
-
 	configManager->getConfigValue("band", &outVal) ? band = atoi(outVal.c_str()) : keyNotFound = true;
-
 	configManager->getConfigValue("bigPuck", &outVal) ? bigPuck = atoi(outVal.c_str()) : keyNotFound = true;
 	configManager->getConfigValue("smallPuck", &outVal) ? smallPuck = atoi(outVal.c_str()) : keyNotFound = true;
 	configManager->getConfigValue("holeHeight", &outVal) ? holeHeight = atoi(outVal.c_str()) : keyNotFound = true;
