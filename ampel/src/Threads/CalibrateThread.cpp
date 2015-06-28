@@ -89,6 +89,22 @@ CalibrateThread::CalibrateThread() {
 	configManager->getConfigValue("holeHeightMetal", &outVal) ? holeHeight = atoi(outVal.c_str()) : keyNotFound = true;
 	configManager->getConfigValue("scaleSlowToFast", &outVal) ? scaleSlowToFast = atof(outVal.c_str()) : keyNotFound = true;
 	configManager->getConfigValue("scaleFastToSlow", &outVal) ?	scaleFastToSlow = atof(outVal.c_str()) : keyNotFound = true;
+	configManager->getConfigValue("L0toHeightFast", &outVal) ? L0toHeightFast = atoi(outVal.c_str()) : keyNotFound = true;
+	configManager->getConfigValue("HeightToMetalFast", &outVal) ? HeightToMetalFast = atoi(outVal.c_str()) : keyNotFound = true;
+	configManager->getConfigValue("MetalToIsInGateFast", &outVal) ? MetalToIsInGateFast = atoi(outVal.c_str()) : keyNotFound = true;
+	configManager->getConfigValue("InGateToSlideFast", &outVal) ? InGateToSlideFast = atoi(outVal.c_str()) : keyNotFound = true;
+	configManager->getConfigValue("OutGateToL1Fast", &outVal) ? OutGateToL1Fast = atof(outVal.c_str()) : keyNotFound = true;
+	configManager->getConfigValue("HeightToGateFast", &outVal) ?	HeightToGateFast = atof(outVal.c_str()) : keyNotFound = true;
+	configManager->getConfigValue("GatetoL1Fast", &outVal) ? GatetoL1Fast = atoi(outVal.c_str()) : keyNotFound = true;
+	configManager->getConfigValue("L0toHeightFast2SD", &outVal) ? L0toHeightFast2SD = atoi(outVal.c_str()) : keyNotFound = true;
+	configManager->getConfigValue("HeightToMetalFast2SD", &outVal) ? HeightToMetalFast2SD = atoi(outVal.c_str()) : keyNotFound = true;
+	configManager->getConfigValue("MetalToIsInGateFast2SD", &outVal) ? MetalToIsInGateFast2SD = atof(outVal.c_str()) : keyNotFound = true;
+	configManager->getConfigValue("InGateToSlideFast2SD", &outVal) ?	InGateToSlideFast2SD = atof(outVal.c_str()) : keyNotFound = true;
+	configManager->getConfigValue("OutGateToL1Fast2SD", &outVal) ? OutGateToL1Fast2SD = atoi(outVal.c_str()) : keyNotFound = true;
+	configManager->getConfigValue("HeightToGateFast2SD", &outVal) ? HeightToGateFast2SD = atoi(outVal.c_str()) : keyNotFound = true;
+	configManager->getConfigValue("L0toL1Fast2SD", &outVal) ? L0toL1Fast2SD = atoi(outVal.c_str()) : keyNotFound = true;
+	configManager->getConfigValue("GatetoL1Fast2SD", &outVal) ? GatetoL1Fast2SD = atoi(outVal.c_str()) : keyNotFound = true;
+
 	
 	if(keyNotFound) {
 		cout << "Error! Key not found!" << endl;
@@ -117,36 +133,13 @@ void CalibrateThread::execute(void*) {
 	HAL *hal = HAL::getInstance();
 
 	Timer time;
+	Timer time2;
 	time.createTimer();
 
 	//Get Height with no Puck in Measurement
 	noPuckHeight = hal->get_height_measure();
 
 	struct timespec offset;
-/*
-	cout << "Put a Puck in L0" << endl;
-	while (hal->is_puck_running_in() == 0) {
-	}
-
-	//LO to Height
-	time.setTimer(TIMERSTART,0);
-	hal->band_right_normal();
-	while (hal->is_puck_in_height_determination() == 0) {
-	}
-	time.getTime(&offset);
-	L0toHeightFast = TIMERSTART_MS - timespecToMs(&offset);
-
-	//Height to Gate
-	time.stopTimer();
-	time.setTimer(TIMERSTART,0);
-	while(hal->is_puck_in_gate()==0){}
-	time.getTime(&offset);
-	HeightToGateFast = TIMERSTART_MS-timespecToMs(&offset);
-	printf("HeightToGateFast : %d\n",HeightToGateFast);
-	hal->close_gate();
-	while (hal->is_slide_full() == 0) {
-	}
-	hal->band_stop();*/
 
 	//L0 to L1
 	for (int i = 0; i < 3;i++){
@@ -155,22 +148,29 @@ void CalibrateThread::execute(void*) {
 		while (hal->is_puck_running_in() == 0) {}
 		time.stopTimer();
 		time.setTimer(TIMERSTART, 0);
+		time2.setTimer(TIMERSTART, 0);
 
 		hal->band_right_normal();
 
 		while (hal->is_puck_in_height_determination() == 0){}
 		time.getTime(&offset);
 		L0toHeightFastAr[i] = TIMERSTART_MS-timespecToMs(&offset);
+		time.setTimer(TIMERSTART, 0);
 		hal->open_gate();
 		while(hal->is_metal_detected()==0){}
 		time.getTime(&offset);
 		HeightToMetalFastAr[i] = TIMERSTART_MS-timespecToMs(&offset);
+		time.setTimer(TIMERSTART, 0);
 		while(hal->is_puck_in_gate()==0){}
 		time.getTime(&offset);
 		MetalToIsInGateFastAr[i] = TIMERSTART_MS-timespecToMs(&offset);
+		time.setTimer(TIMERSTART, 0);
 		while (hal->is_puck_running_out() == 0) {}
-		time.getTime(&offset);
+		time2.getTime(&offset);
 		L0toL1FastAr[i] = TIMERSTART_MS-timespecToMs(&offset);
+		time.getTime(&offset);
+		GatetoL1FastAr[i] = TIMERSTART_MS-timespecToMs(&offset);
+		time.setTimer(TIMERSTART, 0);
 
 		printf("L0toL1Fast : %d\n",L0toL1FastAr[i]);
 
@@ -330,6 +330,13 @@ int CalibrateThread::timespecToMs(struct timespec *time) {
 	return sec * 1000 + nsec / 1000 / 1000;
 }
 
+void CalibrateThread::msToTimespec(int ms, struct timespec * time) {
+	uint64_t sec = ms/1000;
+	uint64_t nsec = (ms-sec*1000)*1000000;
+	time->tv_sec = sec;
+	time->tv_nsec = nsec;
+}
+
 void CalibrateThread::saveConfig() {
 	char buf [33];
 
@@ -347,11 +354,25 @@ void CalibrateThread::saveConfig() {
 	configManager->setConfigValue("smallPuck", std::string(itoa(smallPuck, buf,10)));
 	configManager->setConfigValue("holeHeight", std::string(itoa(holeHeight, buf,10)));
 	configManager->setConfigValue("holeHeightMetal", std::string(itoa(holeHeightMetal, buf,10)));
-	sprintf(buf,"%.12f",scaleSlowToFast);
-	configManager->setConfigValue("scaleSlowToFast", std::string(buf));
-	sprintf(buf,"%.12f",scaleFastToSlow);
-	configManager->setConfigValue("scaleFastToSlow", std::string(buf));
+	sprintf(buf,"%.12f",scaleSlowToFast);configManager->setConfigValue("scaleSlowToFast", std::string(buf));
+	sprintf(buf,"%.12f",scaleFastToSlow);configManager->setConfigValue("scaleFastToSlow", std::string(buf));
 	configManager->setConfigValue("configset", "1");
+	configManager->setConfigValue("L0toHeightFast", std::string(itoa(L0toHeightFast, buf,10)));
+	configManager->setConfigValue("HeightToMetalFast", std::string(itoa(HeightToMetalFast, buf,10)));
+	configManager->setConfigValue("MetalToIsInGateFast", std::string(itoa(MetalToIsInGateFast, buf,10)));
+	configManager->setConfigValue("InGateToSlideFast", std::string(itoa(InGateToSlideFast, buf,10)));
+	configManager->setConfigValue("OutGateToL1Fast", std::string(itoa(OutGateToL1Fast, buf,10)));
+	configManager->setConfigValue("HeightToGateFast", std::string(itoa(HeightToGateFast, buf,10)));
+	configManager->setConfigValue("GatetoL1Fast", std::string(itoa(GatetoL1Fast, buf,10)));
+	configManager->setConfigValue("L0toHeightFast2SD", std::string(itoa(L0toHeightFast2SD, buf,10)));
+	configManager->setConfigValue("HeightToMetalFast2SD", std::string(itoa(HeightToMetalFast2SD, buf,10)));
+	configManager->setConfigValue("MetalToIsInGateFast2SD", std::string(itoa(MetalToIsInGateFast2SD, buf,10)));
+	configManager->setConfigValue("InGateToSlideFast2SD", std::string(itoa(InGateToSlideFast2SD, buf,10)));
+	configManager->setConfigValue("OutGateToL1Fast2SD", std::string(itoa(OutGateToL1Fast2SD, buf,10)));
+	configManager->setConfigValue("HeightToGateFast2SD", std::string(itoa(HeightToGateFast2SD, buf,10)));
+	configManager->setConfigValue("L0toL1Fast2SD", std::string(itoa(L0toL1Fast2SD, buf,10)));
+	configManager->setConfigValue("GatetoL1Fast2SD", std::string(itoa(GatetoL1Fast2SD, buf,10)));
+
 
 
 	if(!configManager->writeDefaultConfig())
@@ -385,23 +406,42 @@ int CalibrateThread::getMedianValueHeight(){
 	return height[2];
 }
 
-int CalibrateThread::mean(int *ar, int anzahl){
-	int sum;
-	for(int i = 0; i < anzahl;i++){
-		sum *= ar[i];
+int CalibrateThread::mean(int *ar, int length){
+	int sum = 0;
+	for(int i = 0; i < length;i++){
+		sum += ar[i];
 	}
-	return sum/anzahl;
+	return sum/length;
 
 }
 
 void CalibrateThread::saveCalcMean(){
 
 	L0toHeightFast = mean(L0toHeightFastAr,3);
+	L0toHeightFast2SD = 2*calcStandardDeviation(L0toHeightFast,L0toHeightFastAr,3);
 	HeightToMetalFast = mean(HeightToMetalFastAr,3);
+	HeightToMetalFast2SD = 2*calcStandardDeviation(HeightToMetalFast,HeightToMetalFastAr,3);
 	MetalToIsInGateFast= mean(MetalToIsInGateFastAr,3);
+	MetalToIsInGateFast2SD = 2*calcStandardDeviation(MetalToIsInGateFast,MetalToIsInGateFastAr,3);
 	InGateToSlideFast= mean(InGateToSlideFastAr,3);
+	InGateToSlideFast2SD = 2*calcStandardDeviation(InGateToSlideFast,InGateToSlideFastAr,3);
 	OutGateToL1Fast= mean(OutGateToL1FastAr,3);
+	OutGateToL1Fast2SD = 2*calcStandardDeviation(OutGateToL1Fast,OutGateToL1FastAr,3);
 	HeightToGateFast= mean(HeightToGateFastAr,3);
+	HeightToGateFast2SD = 2*calcStandardDeviation(HeightToGateFast,HeightToGateFastAr,3);
 	L0toL1Fast= mean(L0toL1FastAr,3);
+	L0toL1Fast2SD = 2*calcStandardDeviation(L0toL1Fast,L0toL1FastAr,3);
 	GatetoL1Fast= mean(GatetoL1FastAr,3);
+	GatetoL1Fast2SD = 2*calcStandardDeviation(GatetoL1Fast,GatetoL1FastAr,3);
+
+}
+
+int CalibrateThread::calcStandardDeviation(int mean, int *ar, int length){
+	int abw = 0;
+	for(int i = 0; i < length;i++){
+		abw += abs(mean-ar[i]);
+	}
+	abw /= length;
+	abw = sqrt(abw);
+	return abw;
 }
