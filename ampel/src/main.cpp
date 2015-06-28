@@ -59,11 +59,12 @@ int main(int argc, char *argv[]) {
 	cout << "-----------------------------------" << endl;
 	
 	if(!cal->isBand()){//is band1!<
+		cout << "band1" << endl;
 		State* s = new Ready(NULL);
 	}else{
-		State* state = new Give_New_Puck(NULL);
+		cout << "band2" << endl;
+		State* s = new Give_New_Puck(NULL);
 	}
-
 
 	dspt.join();
 

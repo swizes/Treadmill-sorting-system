@@ -72,7 +72,7 @@ CalibrateThread::CalibrateThread() {
 	bool keyNotFound = false;
 
 	configManager->getConfigValue("L0toHeightFast", &outVal) ? L0toHeightFast = atoi(outVal.c_str()) : keyNotFound = true;
-	configManager->getConfigValue("HeighttoGateFast", &outVal) ? HeighttoGateFast = atoi(outVal.c_str()) : keyNotFound = true;
+	configManager->getConfigValue("HeightToGateFast", &outVal) ? HeightToGateFast = atoi(outVal.c_str()) : keyNotFound = true;
 	configManager->getConfigValue("L0toL1Fast", &outVal) ? L0toL1Fast = atoi(outVal.c_str()) : keyNotFound = true;
 	configManager->getConfigValue("GatetoL1Fast", &outVal) ? GatetoL1Fast = atoi(outVal.c_str()) : keyNotFound = true;
 	configManager->getConfigValue("L0toHeightSlow", &outVal) ? L0toHeightSlow = atoi(outVal.c_str()) : keyNotFound = true;
@@ -123,7 +123,7 @@ void CalibrateThread::execute(void*) {
 	noPuckHeight = hal->get_height_measure();
 
 	struct timespec offset;
-
+/*
 	cout << "Put a Puck in L0" << endl;
 	while (hal->is_puck_running_in() == 0) {
 	}
@@ -141,34 +141,42 @@ void CalibrateThread::execute(void*) {
 	time.setTimer(TIMERSTART,0);
 	while(hal->is_puck_in_gate()==0){}
 	time.getTime(&offset);
-	HeighttoGateFast = TIMERSTART_MS-timespecToMs(&offset);
-	printf("HeighttoGateFast : %d\n",HeighttoGateFast);
+	HeightToGateFast = TIMERSTART_MS-timespecToMs(&offset);
+	printf("HeightToGateFast : %d\n",HeightToGateFast);
 	hal->close_gate();
 	while (hal->is_slide_full() == 0) {
 	}
-	hal->band_stop();
+	hal->band_stop();*/
 
 	//L0 to L1
+	for (int i = 0; i < 3;i++){
+		cout << "Put a Metall puck in L0" << endl;
 
-	cout << "Put a puck in L0" << endl;
+		while (hal->is_puck_running_in() == 0) {}
+		time.stopTimer();
+		time.setTimer(TIMERSTART, 0);
 
-	while (hal->is_puck_running_in() == 0) {
+		hal->band_right_normal();
+
+		while (hal->is_puck_in_height_determination() == 0){}
+		time.getTime(&offset);
+		L0toHeightFastAr[i] = TIMERSTART_MS-timespecToMs(&offset);
+		hal->open_gate();
+		while(hal->is_metal_detected()==0){}
+		time.getTime(&offset);
+		HeightToMetalFastAr[i] = TIMERSTART_MS-timespecToMs(&offset);
+		while(hal->is_puck_in_gate()==0){}
+		time.getTime(&offset);
+		MetalToIsInGateFastAr[i] = TIMERSTART_MS-timespecToMs(&offset);
+		while (hal->is_puck_running_out() == 0) {}
+		time.getTime(&offset);
+		L0toL1FastAr[i] = TIMERSTART_MS-timespecToMs(&offset);
+
+		printf("L0toL1Fast : %d\n",L0toL1FastAr[i]);
+
+		hal->band_stop();
+		hal->close_gate();
 	}
-	time.stopTimer();
-	time.setTimer(TIMERSTART, 0);
-
-	hal->band_right_normal();
-	hal->open_gate();
-
-	while (hal->is_puck_running_out() == 0) {
-	}
-	time.getTime(&offset);
-	L0toL1Fast = TIMERSTART_MS-timespecToMs(&offset);
-
-	printf("L0toL1Fast : %d\n",L0toL1Fast);
-
-	hal->band_stop();
-	hal->close_gate();
 
 	cout << "Put puck in L0" << endl;
 	while (hal->is_puck_running_in() == 0) {
@@ -263,9 +271,6 @@ void CalibrateThread::execute(void*) {
 
 	holeHeight = getMeanValueHeight();
 	hal->band_right_normal();
-//	hal->open_gate();
-//	while(hal->is_puck_in_gate()==0){}
-//	hal->close_gate();
 	while(hal->is_slide_full()==0){}
 	hal->band_stop();
 
@@ -277,9 +282,6 @@ void CalibrateThread::execute(void*) {
 
 	holeHeightMetal = getMeanValueHeight();
 	hal->band_right_normal();
-//	hal->open_gate();
-//	while(hal->is_puck_in_gate()==0){}
-//	hal->close_gate();
 	while(hal->is_slide_full()==0){}
 	hal->band_stop();
 
@@ -332,7 +334,7 @@ void CalibrateThread::saveConfig() {
 	char buf [33];
 
 	configManager->setConfigValue("L0toHeightFast", std::string(itoa(L0toHeightFast, buf,10)));
-	configManager->setConfigValue("HeighttoGateFast", std::string(itoa(HeighttoGateFast, buf,10)));
+	configManager->setConfigValue("HeightToGateFast", std::string(itoa(HeightToGateFast, buf,10)));
 	configManager->setConfigValue("L0toL1Fast", std::string(itoa(L0toL1Fast, buf,10)));
 	configManager->setConfigValue("GatetoL1Fast", std::string(itoa(GatetoL1Fast, buf,10)));
 	configManager->setConfigValue("L0toHeightSlow", std::string(itoa(L0toHeightSlow, buf,10)));
@@ -368,4 +370,38 @@ int CalibrateThread::getMeanValueHeight(){
 	}
 	height = height/5;
 	return height;
+}
+
+int CalibrateThread::getMedianValueHeight(){
+	HAL *hal = HAL::getInstance();
+	int heightSum = 0;
+	int height[5];
+	for(int i = 0; i  < 5;i++){
+		height[i] = hal->get_height_measure();
+		//heightSum *= height[i];
+	}
+		//int heightMean = heightSum/5;
+	/*sort(*/height/*)*/;
+	return height[2];
+}
+
+int CalibrateThread::mean(int *ar, int anzahl){
+	int sum;
+	for(int i = 0; i < anzahl;i++){
+		sum *= ar[i];
+	}
+	return sum/anzahl;
+
+}
+
+void CalibrateThread::saveCalcMean(){
+
+	L0toHeightFast = mean(L0toHeightFastAr,3);
+	HeightToMetalFast = mean(HeightToMetalFastAr,3);
+	MetalToIsInGateFast= mean(MetalToIsInGateFastAr,3);
+	InGateToSlideFast= mean(InGateToSlideFastAr,3);
+	OutGateToL1Fast= mean(OutGateToL1FastAr,3);
+	HeightToGateFast= mean(HeightToGateFastAr,3);
+	L0toL1Fast= mean(L0toL1FastAr,3);
+	GatetoL1Fast= mean(GatetoL1FastAr,3);
 }
