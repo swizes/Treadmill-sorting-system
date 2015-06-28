@@ -13,6 +13,7 @@
 
 #include <stdint.h>
 #include <pthread.h>
+#include <math.h>
 #include "lib/HAWThread.h"
 #include "Serial.h"
 
@@ -35,6 +36,8 @@ public:
 	static CalibrateThread* getInstance();
 	bool configLoaded;
 
+	int timespecToMs(struct timespec *);
+	void msToTimespec(int, struct timespec *);
 	int getGatetoL1Fast() const {
 		return GatetoL1Fast;
 	}
@@ -43,9 +46,6 @@ public:
 		return GatetoL1Slow;
 	}
 
-	int getHeighttoGateFast() const {
-		return HeighttoGateFast;
-	}
 
 	int getHeighttoGateSlow() const {
 		return HeighttoGateSlow;
@@ -95,28 +95,94 @@ public:
 		return scaleSlowToFast;
 	}
 
+	bool isConfigLoaded() const {
+		return configLoaded;
+	}
+
+	int getHeightToGateFast() const {
+		return HeightToGateFast;
+	}
+
+	int getHeightToMetalFast() const {
+		return HeightToMetalFast;
+	}
+
+	int getHoleHeightMetal() const {
+		return holeHeightMetal;
+	}
+
+	int getInGateToSlideFast() const {
+		return InGateToSlideFast;
+	}
+
+	int getMetalToIsInGateFast() const {
+		return MetalToIsInGateFast;
+	}
+
+	int getOutGateToL1Fast() const {
+		return OutGateToL1Fast;
+	}
+
+	int getGatetoL1Fast2Sd() const {
+		return GatetoL1Fast2SD;
+	}
+
+	int getHeightToGateFast2Sd() const {
+		return HeightToGateFast2SD;
+	}
+
+	int getHeightToMetalFast2Sd() const {
+		return HeightToMetalFast2SD;
+	}
+
+	int getInGateToSlideFast2Sd() const {
+		return InGateToSlideFast2SD;
+	}
+
+	int getL0toHeightFast2Sd() const {
+		return L0toHeightFast2SD;
+	}
+
+	int getL0toL1Fast2Sd() const {
+		return L0toL1Fast2SD;
+	}
+
+	int getMetalToIsInGateFast2Sd() const {
+		return MetalToIsInGateFast2SD;
+	}
+
+	int getOutGateToL1Fast2Sd() const {
+		return OutGateToL1Fast2SD;
+	}
+
 private:
 	CalibrateThread();
 	CalibrateThread(const CalibrateThread& b);      ///< Copy-Konstruktor. Privat, deshalb kann dieses Objekt nicht als "Call-by-value" uebergeben werden.
 	CalibrateThread& operator=(CalibrateThread& b);
 	virtual void execute(void*); ///< Geerbt aus HAWThread. Muss implementiert werden.
 	virtual void shutdown();
-	int timespecToMs(struct timespec *);
 	void saveConfig();
 	int getMeanValueHeight();
+	void saveCalcMean();
+	int mean(int *, int);
+	int getMedianValueHeight();
+	int calcStandardDeviation(int, int* ,int);
 
 
 	static CalibrateThread* instance_;
 	ConfigManager* configManager;
 	int L0toHeightFast;
-	int HeighttoGateFast;
-	int GatetoL1Fast;
+	int HeightToMetalFast;
+	int MetalToIsInGateFast;
+	int InGateToSlideFast;
+	int OutGateToL1Fast;
+	int HeightToGateFast;
 	int L0toL1Fast;
-
+	int GatetoL1Fast;
 	int L0toHeightSlow;
 	int HeighttoGateSlow;
-	int GatetoL1Slow;
 	int L0toL1Slow;
+	int GatetoL1Slow;
 	int noPuckHeight;
 	bool band; // 0 ->Band1 1->Band2
 
@@ -127,6 +193,24 @@ private:
 
 	double scaleSlowToFast;
 	double scaleFastToSlow;
+
+	int L0toHeightFastAr[3];
+	int HeightToMetalFastAr[3];
+	int MetalToIsInGateFastAr[3];
+	int InGateToSlideFastAr[3];
+	int OutGateToL1FastAr[3];
+	int HeightToGateFastAr[3];
+	int L0toL1FastAr[3];
+	int GatetoL1FastAr[3];
+
+	int L0toHeightFast2SD;
+	int HeightToMetalFast2SD;
+	int MetalToIsInGateFast2SD;
+	int InGateToSlideFast2SD;
+	int OutGateToL1Fast2SD;
+	int HeightToGateFast2SD;
+	int L0toL1Fast2SD;
+	int GatetoL1Fast2SD;
 };
 
 #endif /* COMMUNNICATIONTHREAD_H_ */
