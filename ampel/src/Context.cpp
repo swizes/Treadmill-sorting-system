@@ -15,13 +15,16 @@
 class Context: public Transitions {
 private:
 	Transitions* state_;
+
 	Puck* puck;
 	int errCode;
 public:
+	Timer* timer;
 	Context() :
 		state_(NULL) {
 //		printf("Context()\n");
 		puck = new Puck();
+		timer = new Timer();
 		errCode = -1;
 	}
 
@@ -112,6 +115,8 @@ public:
 	void setErrcode(int errCode){
 		this->errCode=errCode;
 	}
+
+
 
 private:
 	Context(const Context& other);

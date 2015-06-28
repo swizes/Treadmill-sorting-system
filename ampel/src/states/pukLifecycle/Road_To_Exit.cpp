@@ -14,7 +14,12 @@ Road_To_Exit::Road_To_Exit(Context* con): State::State(con){
 
 	this->con_->getPuck()->runBandFast();
 	bc->refreshBand();
+	CalibrateThread *cal = CalibrateThread::getInstance();
 
+	uint64_t time = cal->getOutGateToL1Fast();
+	timespec *t;
+	cal->msToTimespec(time,t);
+	con_->timer->setTimer(t->tv_sec,t->tv_nsec);
 
 	Dispatcher* dsp = Dispatcher::getInstance();
 	dsp->addListeners( this->con_, RUNNING_OUT_TRUE);
@@ -32,7 +37,14 @@ hal->close_gate();
 }
 
 Road_To_Exit::~Road_To_Exit(){
+	CalibrateThread *cal = CalibrateThread::getInstance();
 	printf("~Road_to_Exit()\n");
+	timespec *t;
+	con_->timer->getTime(t);
+	int ms = cal->timespecToMs(t);
+	if(ms <= 0){
+		printf("To Late Puk: %d\n", con_->getPuck()->getId());
+	}
 
 }
 

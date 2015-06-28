@@ -11,8 +11,14 @@ Road_to_Height::Road_to_Height(Context* con): State::State(con){
 
 
 	Dispatcher* dsp = Dispatcher::getInstance();
+	CalibrateThread *cal = CalibrateThread::getInstance();
 	HAL *hal = HAL::getInstance();
 	dsp->addListeners( this->con_, IN_HEIGHT_TRUE);
+
+	uint64_t time = cal->getL0toHeightFast();
+	timespec *t;
+	cal->msToTimespec(time,t);
+	con_->timer->setTimer(t->tv_sec,t->tv_nsec);
 //
 //	Timer *pulse = new Timer();
 //	Timer timer;
@@ -31,8 +37,13 @@ Road_to_Height::~Road_to_Height(){
 }
 
 void Road_to_Height::In_Height_true (void){
-
-
+	CalibrateThread *cal = CalibrateThread::getInstance();
+	timespec *t;
+	con_->timer->getTime(t);
+	int ms = cal->timespecToMs(t);
+	if(ms <= 0){
+		printf("Falscher Puk: %d\n", con_->getPuck()->getId());
+	}
 	// Stop listen to Event Transmission1
 	Dispatcher* dsp = Dispatcher::getInstance();
 
