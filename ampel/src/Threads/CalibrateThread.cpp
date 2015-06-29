@@ -13,12 +13,7 @@
  *	
 
  */
-
 #include "CalibrateThread.h"
-#include "HAL.h"
-#include "./Timer/Timer.h"
-#include "ConfigManager.h"
-
 
 #define TIMERSTART 20
 #define TIMERSTART_MS TIMERSTART * 1000
@@ -424,3 +419,23 @@ int CalibrateThread::calcStandardDeviation(int mean, int *ar, int length){
 	abw = sqrt(abw);
 	return abw;
 }
+// Help Function for State to Set Timeout to Next Sensor
+int CalibrateThread::setTimeout(Timer *timer,int timeout, int sd2){
+	timer->createTimer();
+	timeout = timeout+sd2; // Timeout + 2Standard Deviation
+	struct timespec *t;
+	msToTimespec(timeout,t);
+	//timer->waitForTimeout(t->tv_sec,t->tv_nsec);
+	cout << "Puck missing" << endl;
+}
+
+//CheckTimeout
+int CalibrateThread::checkTimeout(Timer *timer, int sd2){
+	struct timespec *t;
+	timer->getTime(t);
+	int ms = timespecToMs(t);
+	if(ms > sd2){
+		cout << "Puck too early" << endl;
+	}
+}
+

@@ -16,6 +16,9 @@
 #include <math.h>
 #include "lib/HAWThread.h"
 #include "Serial.h"
+#include "HAL.h"
+#include "./Timer/Timer.h"
+#include "ConfigManager.h"
 
 #include <fcntl.h>
 #include <termios.h>
@@ -38,6 +41,9 @@ public:
 
 	int timespecToMs(struct timespec *);
 	void msToTimespec(int, struct timespec *);
+	int setTimeout(Timer *,int, int);
+	int checkTimeout(Timer *,int);
+
 
 	int getGatetoL1Slow() const {
 		return GatetoL1Slow;
