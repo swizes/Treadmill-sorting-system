@@ -38,9 +38,6 @@ public:
 
 	int timespecToMs(struct timespec *);
 	void msToTimespec(int, struct timespec *);
-	int getGatetoL1Fast() const {
-		return GatetoL1Fast;
-	}
 
 	int getGatetoL1Slow() const {
 		return GatetoL1Slow;
@@ -123,9 +120,6 @@ public:
 		return OutGateToL1Fast;
 	}
 
-	int getGatetoL1Fast2Sd() const {
-		return GatetoL1Fast2SD;
-	}
 
 	int getHeightToGateFast2Sd() const {
 		return HeightToGateFast2SD;
@@ -178,7 +172,6 @@ private:
 	int OutGateToL1Fast;
 	int HeightToGateFast;
 	int L0toL1Fast;
-	int GatetoL1Fast;
 	int L0toHeightSlow;
 	int HeighttoGateSlow;
 	int L0toL1Slow;
@@ -201,7 +194,6 @@ private:
 	int OutGateToL1FastAr[3];
 	int HeightToGateFastAr[3];
 	int L0toL1FastAr[3];
-	int GatetoL1FastAr[3];
 
 	int L0toHeightFast2SD;
 	int HeightToMetalFast2SD;
@@ -210,7 +202,6 @@ private:
 	int OutGateToL1Fast2SD;
 	int HeightToGateFast2SD;
 	int L0toL1Fast2SD;
-	int GatetoL1Fast2SD;
 };
 
 #endif /* COMMUNNICATIONTHREAD_H_ */
