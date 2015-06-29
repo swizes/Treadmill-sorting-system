@@ -38,6 +38,7 @@ public:
 		// Delete Inner Object too!
 		if (state_ != NULL) {
 			delete state_;
+			delete timer;
 			state_ = NULL;
 		}
 		delete puck;

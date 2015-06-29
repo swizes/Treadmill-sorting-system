@@ -18,13 +18,9 @@ Road_to_Height::Road_to_Height(Context* con): State::State(con){
 	uint64_t time = cal->getL0toHeightFast();
 	timespec *t;
 	cal->msToTimespec(time,t);
-	con_->timer->setTimer(t->tv_sec,t->tv_nsec);
-//
-//	Timer *pulse = new Timer();
-//	Timer timer;
-//	pulse->waitForTimeOut(1,500000000);
-//	BandController* bc = BandController::getInstance();
-//	cout << "Timer Expire" << endl;
+	//con_->timer->stopTimer();
+	//con_->timer->deleteTimer();
+	//con_->timer->setTimer(t->tv_sec,t->tv_nsec);
 
 
 	//hal->band_right_slowly();
@@ -38,12 +34,12 @@ Road_to_Height::~Road_to_Height(){
 
 void Road_to_Height::In_Height_true (void){
 	CalibrateThread *cal = CalibrateThread::getInstance();
-	timespec *t;
+/*	timespec *t;
 	con_->timer->getTime(t);
 	int ms = cal->timespecToMs(t);
 	if(ms <= 0){
 		printf("Falscher Puk: %d\n", con_->getPuck()->getId());
-	}
+	}*/
 	// Stop listen to Event Transmission1
 	Dispatcher* dsp = Dispatcher::getInstance();
 
