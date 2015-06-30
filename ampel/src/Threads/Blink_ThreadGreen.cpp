@@ -45,6 +45,9 @@ Blink_ThreadGreen* Blink_ThreadGreen::getInstance() {
 Blink_ThreadGreen::Blink_ThreadGreen(void ) {
 	hal = HAL::getInstance();
 
+	time = 0;
+	off = true;
+	countBlink = 0;
 }
 
 

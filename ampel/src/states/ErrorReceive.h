@@ -16,30 +16,23 @@
 #include <string.h>
 #include "states/PuckStates.h"
 
-#ifndef READYSEND_H_
-#define READYSEND_H_
+#ifndef ERRORRECEIVE_H_
+#define ERRORRECEIVE_H_
 
 using namespace thread;
 
-class ReadySend: public HAWThread{
+class ErrorReceive: public HAWThread{
 public:
-	ReadySend();
-	virtual ~ReadySend();
+	ErrorReceive();
+	virtual ~ErrorReceive();
 
-	int getBusy() const {
-		return busy;
-	}
 
-	void setBusy(int busy) {
-		this->busy = busy;
-	}
 
 private:
-	ReadySend(const ReadySend& b);      ///< Copy-Konstruktor. Privat, deshalb kann dieses Objekt nicht als "Call-by-value" uebergeben werden.
-	ReadySend& operator=(ReadySend& b);
+	ErrorReceive(const ErrorReceive& b);      ///< Copy-Konstruktor. Privat, deshalb kann dieses Objekt nicht als "Call-by-value" uebergeben werden.
+	ErrorReceive& operator=(ErrorReceive& b);
 	virtual void execute(void* con); ///< Geerbt aus HAWThread. Muss implementiert werden.
 	virtual void shutdown();
-	int busy ;
 };
 
 #endif /* PUCKLIFCYCLEFSM_H_ */

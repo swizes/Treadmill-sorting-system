@@ -70,22 +70,9 @@ void Dispatcher:: addListeners(Transitions* listener, EVENTS event){
 void Dispatcher:: remListeners(Transitions* listener, EVENTS event){
 	// Remove Listener from a specific Event
 	int res = 0;
-	int j = -1;
+
 
 	for(int i=0; i<MAXLISTENERS-1; i++){
-
-		//Liste von hinten nach vorne kopieren
-//		if(j >= 0 && listeners_[event][i] != NULL){
-//			listeners_[event][j] = listeners_[event][i];
-//			listeners_[event][i] = NULL;
-//			j++;
-//		}
-//
-//		if( listeners_[event][i] == listener){
-//			listeners_[event][i] = NULL;
-//			res = 1;
-//			j = i;
-//		}
 
 		if(listeners_[event][i] == listener){
 			res = 1;
@@ -121,7 +108,7 @@ void Dispatcher:: printListeners(){
 	for(int i=0; i<NEVENTS; i++){
 		for(int j=0; j<MAXLISTENERS; j++){
 			if(listeners_[i][j] != NULL){
-				//printf("Event: %d Listener: %d\n", i, j);
+				printf("Event: %d Listener: %d\n", i, j);
 			}
 		}
 	}
@@ -181,7 +168,6 @@ void Dispatcher:: listenForEvents(){
 				//printf("Got an Interrupt, Bit: %d value: %d\n", stateChanged+EVENT_OFFSET, val);
 				callListeners((EVENTS)(stateChanged+EVENT_OFFSET));
 			}
-			//printf("Got an Interrupt, Bit: %d value: %d\n", stateChanged, val);
 		} catch (exception& e) {
 			cout << "exception caught: " << e.what() << endl;
 		}

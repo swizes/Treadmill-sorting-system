@@ -26,8 +26,8 @@ void Road_To_Sorting_Out::Puck_in_Gate_true(void){
 	Dispatcher* dsp = Dispatcher::getInstance();
 	dsp->remListeners( this->con_, PUCK_IN_GATE_TRUE);
 
-	// Move to State Metal_Detected
-	new (this) Flipping_Puck(this->con_);
+	// Move to State Road_To_Slide
+	new (this) Road_To_Slide(this->con_);
 }
 
 

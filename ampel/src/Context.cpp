@@ -51,7 +51,6 @@ public:
 
 	}
 
-
 	virtual void setState(Transitions* state) {
 		state_ = state;
 	}
@@ -123,4 +122,5 @@ private:
 	Context(const Context& other);
 	Context& operator=(const Context& other);
 };
+
 #endif

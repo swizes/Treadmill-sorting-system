@@ -17,14 +17,13 @@ Timer::Timer() {
 	TimerManagement *time = TimerManagement::getInstance();
 	timeM = time;
 	timerid = -1;
-
+	stop = false;
 
 }
 
 Timer::~Timer() {
 	//std::cout << "dtor Timer" << std::endl;
 	this->deleteTimer();
-	// TODO Auto-generated destructor stub
 }
 
 void Timer::createTimer(){

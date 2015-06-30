@@ -37,9 +37,6 @@ CommunicationThread::CommunicationThread(void) {
 
 
 CommunicationThread::~CommunicationThread() {
-
-	// TODO Auto-generated destructor stub
-
 	cout << "dtor Communication Test" << endl;
 }
 
@@ -99,17 +96,9 @@ void CommunicationThread::execute(void*){
 		cout << "Error in Serial Communication" << endl;
 
 	}
-
-
-
 }
-
-
-
-
 
 void CommunicationThread::shutdown(){
     cout << "Communication Test shutdown" << endl;
-
 }
 

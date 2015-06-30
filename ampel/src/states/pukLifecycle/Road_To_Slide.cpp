@@ -1,5 +1,5 @@
 /*
- * Flipping_Puck.cpp
+ * Road_To_Slide.cpp
  *
  *  Created on: 30.05.2015
  *      Author: swizes
@@ -8,18 +8,22 @@
 
 #include "PuckStates.h"
 
-Flipping_Puck::Flipping_Puck(Context* con): State::State(con){
+Road_To_Slide::Road_To_Slide(Context* con): State::State(con){
+	cout << "Road_To_Slide ----- PuckId: " << this->con_->getPuck()->getId() << endl;
+
 	Dispatcher* dsp = Dispatcher::getInstance();
 	dsp->addListeners( this->con_, SLIDE_FULL_TRUE);
-	cout << "Flipping Puck ----- PuckId: " << this->con_->getPuck()->getId() << endl;
+
+
+
 }
 
-Flipping_Puck::~Flipping_Puck(){
+Road_To_Slide::~Road_To_Slide(){
 	printf("~Flipping Puck()\n");
 
 }
 
-void Flipping_Puck::Slide_full_true(void){
+void Road_To_Slide::Slide_full_true(void){
 
 
 	// Stop listen to Event Transmission1

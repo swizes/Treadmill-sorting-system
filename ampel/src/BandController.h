@@ -11,7 +11,7 @@
 #include "Puck.h"
 #include "HAL.h"
 #include <string.h>
-
+#include "Errors.h"
 
 
 #define MAX_PUCKS 10
@@ -29,8 +29,14 @@ public:
 	Puck* getLastPuck(void);
 	void  setRecenctPuck(Puck* puck);
 	void  setLastPuck(Puck* puck);
-	int getPuckCounter(void);
-	void refreshBand();
+	int   getPuckCounter(void);
+	void  refreshBand();
+
+	int getSlideCounter(void);
+	void incSlideCounter();
+
+	int   getErrcode(void);
+	void  setErrcode(int errCode);
 
 private:
 	BandController(const BandController& other);
@@ -45,6 +51,8 @@ private:
 	bool runSlowly;
 	Puck reservedPuck;
 	Puck lastPuck;
+	int errCode;
+	int slideCounter;
 
 };
 

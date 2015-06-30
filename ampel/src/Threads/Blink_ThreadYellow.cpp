@@ -44,7 +44,9 @@ Blink_ThreadYellow* Blink_ThreadYellow::getInstance() {
  */
 Blink_ThreadYellow::Blink_ThreadYellow(void ) {
 	hal = HAL::getInstance();
-
+	time = 0;
+	off = true;
+	countBlink = 0;
 }
 
 

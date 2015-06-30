@@ -29,9 +29,17 @@ Puck::Puck() {
 
 
 //Copy Constructor
-//Puck::Puck(const Puck &obj){
-//	metal = obj.metal;
-//}
+Puck::Puck(const Puck &obj){
+	metal = obj.metal;
+	holeOnTop = obj.holeOnTop;
+	size = obj.size;
+	sizeTyp = obj.sizeTyp;
+	id = obj.id;
+	needUserInteraction = obj.needUserInteraction;
+	stopBand_ = obj.stopBand_;
+	runBandSlowly_ = obj.runBandSlowly_;
+	runBandFast_ = obj.runBandFast_;
+}
 
 Puck::~Puck() {
 
