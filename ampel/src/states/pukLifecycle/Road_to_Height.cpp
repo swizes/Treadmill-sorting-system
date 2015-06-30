@@ -9,22 +9,11 @@
 
 Road_to_Height::Road_to_Height(Context* con): State::State(con){
 
-
 	Dispatcher* dsp = Dispatcher::getInstance();
-	CalibrateThread *cal = CalibrateThread::getInstance();
-	HAL *hal = HAL::getInstance();
 	dsp->addListeners( this->con_, IN_HEIGHT_TRUE);
 
-	uint64_t time = cal->getL0toHeightFast();
-	timespec *t;
-	cal->msToTimespec(time,t);
-	//con_->timer->stopTimer();
-	//con_->timer->deleteTimer();
-	//con_->timer->setTimer(t->tv_sec,t->tv_nsec);
-
-
-	//hal->band_right_slowly();
 	cout << "Road To Height ----- PuckId: " << this->con_->getPuck()->getId() << endl;
+
 }
 
 Road_to_Height::~Road_to_Height(){
@@ -33,19 +22,18 @@ Road_to_Height::~Road_to_Height(){
 }
 
 void Road_to_Height::In_Height_true (void){
-	CalibrateThread *cal = CalibrateThread::getInstance();
-/*	timespec *t;
-	con_->timer->getTime(t);
-	int ms = cal->timespecToMs(t);
-	if(ms <= 0){
-		printf("Falscher Puk: %d\n", con_->getPuck()->getId());
-	}*/
+
+
 	// Stop listen to Event Transmission1
 	Dispatcher* dsp = Dispatcher::getInstance();
+	BandController* bc = BandController::getInstance();
 
-	HAL *hal = HAL::getInstance();
-	//hal->turn_greenLight_on();
-	hal->band_right_slowly();
+//	HAL *hal = HAL::getInstance();
+//	hal->band_right_slowly();
+
+	//TODO: Check, da eig nicht ueber HAL auf Band zugegriffen werden soll
+	this->con_->getPuck()->runBandSlowly();
+	bc->refreshBand();
 
 	dsp->remListeners( this->con_, IN_HEIGHT_TRUE);
 
