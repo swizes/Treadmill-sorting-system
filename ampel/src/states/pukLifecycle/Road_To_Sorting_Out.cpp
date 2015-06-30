@@ -10,7 +10,7 @@
 Road_To_Sorting_Out::Road_To_Sorting_Out(Context* con): State::State(con){
 
 	Dispatcher* dsp = Dispatcher::getInstance();
-	dsp->addListeners( this->con_, PUCK_IN_GATE_TRUE);
+	dsp->addListeners( this->con_, SLIDE_FULL_TRUE);
 	cout << "Road To Sorting Out ----- PuckId: " << this->con_->getPuck()->getId() << endl;
 }
 
@@ -19,15 +19,15 @@ Road_To_Sorting_Out::~Road_To_Sorting_Out(){
 
 }
 
-void Road_To_Sorting_Out::Puck_in_Gate_true(void){
+void Road_To_Sorting_Out::Slide_full_true(void){
 
 
 	// Stop listen to Event Transmission1
 	Dispatcher* dsp = Dispatcher::getInstance();
-	dsp->remListeners( this->con_, PUCK_IN_GATE_TRUE);
+	dsp->remListeners( this->con_, SLIDE_FULL_TRUE);
 
-	// Move to State Road_To_Slide
-	new (this) Road_To_Slide(this->con_);
+	// Move to State Is_In_Slide
+	new (this) Is_In_Slide(this->con_);
 }
 
 

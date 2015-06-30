@@ -26,6 +26,7 @@
 #include "Threads/Blink_ThreadRed.h"
 #include "BandController.h"
 #include "Tests/BlinkTest.h"
+#include "Threads/E_Stop_Thread.h"
 
 using namespace std;
 
@@ -38,35 +39,38 @@ int main(int argc, char *argv[]) {
     #endif
 	//RUN Calibration
 
-	HAL *hal = HAL::getInstance();
-	CalibrateThread *cal = CalibrateThread::getInstance();
-	int resetCounter = 0;
-	//EINRICHBETRIEB
-	if(hal->is_startButton_pushed()) {
-		cout << "Press 2 times Reset Button in 10 seconds for Calibration" << endl;
-		Timer *timer = new Timer();
-		timer->setTimer(10,0);
-		timer->waitForTimeOut();
-		if(hal->getResetCounter() == 2){
-				cal->start(NULL);
-				cal->join();
-				cout << "Calibration is done!" << endl;
-			} else {
-				cout << "Timeout, switching to normal mode" << endl;
-			}
-		}
 
+
+//	//EINRICHBETRIEB
+//	HAL *hal = HAL::getInstance();
 //	CalibrateThread *cal = CalibrateThread::getInstance();
-//	cal->start(NULL);
-//	cal->join();
-//	cout << "cal done" << endl;
+//	if(hal->is_startButton_pushed()) {
+//		cout << "Press 2 times Reset Button in 10 seconds for Calibration" << endl;
+//		delay(3000);
+//		if(hal->getResetCounter() == 2){
+//				cal->start(NULL);
+//				cal->join();
+//				cout << "Calibration is done!" << endl;
+//			} else {
+//				cout << "Timeout, switching to normal mode" << endl;
+//				cout << hal->getResetCounter() << endl;
+//			}
+//
+//		}
+
+	CalibrateThread *cal = CalibrateThread::getInstance();
+	cal->start(NULL);
+	cal->join();
+	cout << "cal done" << endl;
 	
     /*Serielle Verbindung funkitoniert nur wenn sich System nicht in der Simulation befindet
     /dev/ser1 steht nicht zur Verfuegung. 		*/
 
 	DispatcherThread dspt;
-	dspt.start(NULL);
+	E_Stop_Thread estt;
 
+	estt.start(NULL);
+	dspt.start(NULL);
 
 	BandController* bc = BandController::getInstance();
 	bc->refreshBand();
@@ -85,7 +89,7 @@ int main(int argc, char *argv[]) {
 
 
 	dspt.join();
-
+	estt.join();
 		//Hal_Test_Thread htt;
 		//htt.start(NULL);
 		//htt.join();

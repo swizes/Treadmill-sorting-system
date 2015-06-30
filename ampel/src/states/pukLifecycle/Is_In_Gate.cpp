@@ -10,31 +10,67 @@
 
 Is_In_Gate::Is_In_Gate(Context* con) :
 		State::State(con) {
-
 	BandController* bc = BandController::getInstance();
 	Dispatcher* dsp = Dispatcher::getInstance();
 	CalibrateThread *cal = CalibrateThread::getInstance();
 
 	HAL *hal = HAL::getInstance();
+    cout << "Is In Gate --- PuckId: " << this->con_->getPuck()->getId()
+				<< endl;
 
-	if (this->con_->getPuck()->getSizeTyp() == OK) {
-		cout << "Is In Gate --- PuckId: " << this->con_->getPuck()->getId() << endl;
-		dsp->addListeners(this->con_, PUCK_IN_GATE_FALSE);
-		dsp->addListeners(this->con_, METAL_DETECTION_TRUE);
 
-		if (!cal->isBand()) { //Band1
-			hal->open_gate();
-		} else {
-			// Band2: Reihenfolge..
-			// if( (LastPuckIsMetal && !ThisPuckIsMetal) || (!LastPuckIsMetal && ThisPuckIsMetal) )
-			if ((bc->getLastPuck()->isMetal() && !this->con_->getPuck()->isMetal())
-					|| (!bc->getLastPuck()->isMetal()
-					&& this->con_->getPuck()->isMetal())) {
-				hal->open_gate();
-			}
+//    cout << "LAST PUCK METAL" << bc->getLastPuck()->isMetal() << endl;
+//
+//    if (cal->isBand()) { //Band2
+//        // if( (LastPuckIsMetal && !ThisPuckIsMetal) || (!LastPuckIsMetal && ThisPuckIsMetal) )
+//        if ((bc->getLastPuck()->isMetal() && !con_->getPuck()->isMetal())
+//            || (!bc->getLastPuck()->isMetal()
+//            && con_->getPuck()->isMetal())) {
+//        	 this->con_->getPuck()->setSizeTyp(OK);
+//             cout << "REIHENFOLGE OK" << endl;
+//        } else {
+//            this->con_->getPuck()->setSizeTyp(NOT_OK);
+//            cout << "REIHENFOLGE NOT OK" << endl;
+//
+//        }
+//    }
+
+
+
+
+	if (cal->isBand()) { //Band2
+
+		static int lastMetal = 0;
+
+		cout << "LAST PUCK METAL " << lastMetal<< endl;
+		// if( (LastPuckIsMetal && !ThisPuckIsMetal) || (!LastPuckIsMetal && ThisPuckIsMetal) )
+		if ( (lastMetal == 1 && this->con_->getPuck()->isMetal() == 0) ) {
+			lastMetal = 0;
+			this->con_->getPuck()->setSizeTyp(OK);
+			cout << "REIHENFOLGE OK" << endl;
+		}else if((lastMetal == 0 && this->con_->getPuck()->isMetal() == 1)){
+			lastMetal = 1;
+			this->con_->getPuck()->setSizeTyp(OK);
+			cout << "REIHENFOLGE OK" << endl;
+		}
+		else {
+			this->con_->getPuck()->setSizeTyp(NOT_OK);
+			cout << "REIHENFOLGE NOT OK" << endl;
 
 		}
 	}
+
+    if (this->con_->getPuck()->getSizeTyp() == OK) {
+        hal->open_gate();
+		dsp->addListeners(this->con_, PUCK_IN_GATE_FALSE);
+		dsp->addListeners(this->con_, METAL_DETECTION_TRUE);
+	} else {
+        if (!cal->isBand()) {//Band1
+            cout << "SHOULD NEVER HAPPEN" <<endl;//implement error
+        }
+        // Move to State Road_To_Sorting_Out
+        new (this) Road_To_Sorting_Out(this->con_);
+    }
 }
 
 Is_In_Gate::~Is_In_Gate() {
@@ -44,7 +80,7 @@ Is_In_Gate::~Is_In_Gate() {
 
 void Is_In_Gate::Puck_in_Gate_false(void) {
 
-	this->con_->getPuck()->setMetal(false);
+	con_->getPuck()->setMetal(false);
 
 	// Stop listen to Event Transmission1
 	Dispatcher* dsp = Dispatcher::getInstance();
@@ -57,7 +93,7 @@ void Is_In_Gate::Puck_in_Gate_false(void) {
 
 void Is_In_Gate::Metal_detection_true(void) {
 
-	this->con_->getPuck()->setMetal(true);
+	con_->getPuck()->setMetal(true);
 
 	// Stop listen to Event Transmission1
 	Dispatcher* dsp = Dispatcher::getInstance();

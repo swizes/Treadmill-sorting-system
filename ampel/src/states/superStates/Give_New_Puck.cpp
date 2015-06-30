@@ -53,12 +53,12 @@ Give_New_Puck::Give_New_Puck(Context* con): State::State(con){
             hal->turn_greenLight_off();
             loop = 0;
         }
-        if( hal->is_resetButton_pushed()==1){
-            hal->band_stop();
-            // Move to State: Working_Band2
-            new (this) Ready(this->con_);
-            loop=0;
-        }
+//        if( hal->is_resetButton_pushed()==1){
+//            hal->band_stop();
+//            // Move to State: Working_Band2
+//            new (this) Ready(this->con_);
+//            loop=0;
+//        }
     }
 }
 

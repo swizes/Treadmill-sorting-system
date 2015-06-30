@@ -100,7 +100,7 @@ class Road_To_Sorting_Out: public State {
 public:
 	Road_To_Sorting_Out(Context* con);
 	virtual ~ Road_To_Sorting_Out();
-	virtual void Puck_in_Gate_true(void);
+	virtual void Slide_full_true(void);
 private:
 	Road_To_Sorting_Out(const Road_To_Sorting_Out& other);
 	Road_To_Sorting_Out& operator=(const Road_To_Sorting_Out& other);

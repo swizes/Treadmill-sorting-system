@@ -41,6 +41,9 @@ Height_Measurement::Height_Measurement(Context* con): State::State(con){
 	this->con_->getPuck()->setSizeTyp(NOT_OK);
 	if(height >=  minHeight && height <= maxHeight){
 		this->con_->getPuck()->setSizeTyp(OK);
+		if(ct->isBand()){
+			this->con_->getPuck()->setSizeTyp(NOT_OK);
+		}
 		this->con_->getPuck()->setUserInteractionNeeded(true);
 
 	}
