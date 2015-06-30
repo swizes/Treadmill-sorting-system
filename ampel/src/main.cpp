@@ -26,6 +26,7 @@
 #include "Threads/Blink_ThreadRed.h"
 #include "BandController.h"
 #include "Tests/BlinkTest.h"
+#include "PortCListenerThread.h"
 
 using namespace std;
 
@@ -66,6 +67,9 @@ int main(int argc, char *argv[]) {
 
 	DispatcherThread dspt;
 	dspt.start(NULL);
+
+	PortCListenerThread pcl;
+	pcl.start(NULL);
 
 	BandController* bc = BandController::getInstance();
 	bc->refreshBand();
