@@ -120,7 +120,7 @@ Reihenfolge::Reihenfolge(Context* con): State::State(con){
     	this->con_ = new Context(bc->getRecentPuck());
     	this->con_->setState(this);
 
-    	printf("Bitte den Puck mit dem ReservePuck austauschen\n");
+    	printf("[ PUCK MIT RESERVEPUCK AUSTAUSCHEN ]\n");
     	//Set This ReservedPuck as LastPuck for nextPuck!
     }else{
     	//Set This Puck as LastPuck for nextPuck!
