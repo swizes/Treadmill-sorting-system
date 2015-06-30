@@ -11,6 +11,7 @@
 TimerManagement* TimerManagement::instance_ = NULL;
 
 vector<Timer*> data;
+bool timeScaleSet = false;
 
 /**
 * c'tor for the Thread-safe singleton HAL implementation
@@ -39,6 +40,23 @@ void TimerManagement::addTimer(Timer *timer){
 	data.push_back(timer);
 }
 
+void TimerManagement::updateTimer(Timer *timer) {
+	if(timer->currentScale == 1 && this->timeScaleSet)
+	{
+		if(timeScaleFactor == 0) {
+			cout << "Error! timeScaleFactor not set / = 0" << endl;
+		} else {
+			cout << "scale new timer" << endl;
+		}
+
+		timespec t_spec;
+		timer->getTime(&t_spec);
+		timer->currentScale = timeScaleFactor;
+		cout << "spec sec:" << t_spec.tv_sec << "nsec:" << t_spec.tv_nsec << endl;
+		timer->setTimer(t_spec.tv_sec*timeScaleFactor, t_spec.tv_nsec*timeScaleFactor);
+	}
+}
+
 void TimerManagement::deleteTimer(Timer *timer){
 	for(uint8_t i = 0;i < data.size();i++){
 		if(data.at(i) == timer){
@@ -56,6 +74,7 @@ void TimerManagement::stopTimer(){
 		data.at(i)->stopTimer();
 	}
 }
+
 void TimerManagement::continueTimer(){
 	int length = data.size();
 	for(int i = 0; i < length;i++){
@@ -63,3 +82,37 @@ void TimerManagement::continueTimer(){
 	}
 }
 
+void TimerManagement::setTimeScaleFactor(double timeScaleFactor){
+	this->timeScaleFactor = timeScaleFactor;
+}
+
+void TimerManagement::setScaleTime(bool scaleTime) {
+	if(scaleTime == this->timeScaleSet) return;
+	if(timeScaleFactor == 0) {
+		cout << "Error! timeScaleFactor not set / = 0" << endl;
+	}
+
+	this->timeScaleSet = scaleTime;
+	timespec t_spec;
+
+	cout << "set TimerManagement scaleTimme" << endl;
+	if(scaleTime) {
+		//upscale time
+		for(int i = 0; i < data.size(); i++){
+			if (data.at(i)->scaleTime) {
+				cout << "upscale timer " << i << endl;
+				data.at(i)->getTime(&t_spec);
+				data.at(i)->setTimer(t_spec.tv_sec*timeScaleFactor, t_spec.tv_nsec*timeScaleFactor);
+			}
+		}
+	} else {
+		//downscale
+		for(int i = 0; i < data.size(); i++){
+			if (data.at(i)->scaleTime) {
+				cout << "upscale timer " << i << endl;
+				data.at(i)->getTime(&t_spec);
+				data.at(i)->setTimer(t_spec.tv_sec/timeScaleFactor, t_spec.tv_nsec/timeScaleFactor);
+			}
+		}
+	}
+}

@@ -25,6 +25,8 @@ private:
 	virtual void execute(void*); ///< Geerbt aus HAWThread. Muss implementiert werden.
 	virtual void shutdown();
 
+	void test1();
+	void test2();
 };
 
 #endif /* TIMER_TEST_THREAD_H_ */

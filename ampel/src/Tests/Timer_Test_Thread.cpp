@@ -24,7 +24,11 @@ Timer_Test_Thread::~Timer_Test_Thread() {
 }
 
 void Timer_Test_Thread::execute(void*){
+	//test1();
+	test2();
+}
 
+void Timer_Test_Thread::test1() {
 	TimerManagement *timeM = TimerManagement::getInstance();
 	Timer timer2;
 	timer2.createTimer();
@@ -86,20 +90,46 @@ void Timer_Test_Thread::execute(void*){
 
 
 
-    cout << "Test erfolgreich Timer" << endl;
+	cout << "Test erfolgreich Timer" << endl;
 
-    cout << "Pulse Timer" << endl;
-    timeM->deleteTimer();
-    Timer pulseTimer;
+	cout << "Pulse Timer" << endl;
+	timeM->deleteTimer();
+	Timer pulseTimer;
 
-    struct _pulse  pulse;
-    int channel = pulseTimer.createTimerPulse();
-    pulseTimer.setTimer(2,0);
-    timeM->stopTimer();
-    delay(1000);
-    timeM->continueTimer();
-    //Blockiert bis Pulse
-    MsgReceivePulse(channel, &pulse, sizeof (pulse), NULL);
+	struct _pulse  pulse;
+	int channel = pulseTimer.createTimerPulse();
+	pulseTimer.setTimer(2,0);
+	timeM->stopTimer();
+	delay(1000);
+	timeM->continueTimer();
+	//Blockiert bis Pulse
+	MsgReceivePulse(channel, &pulse, sizeof (pulse), NULL);
+}
+
+void Timer_Test_Thread::test2() {
+	cout << "test timing" << endl;
+	Timer timer0;
+
+	struct timespec t0, t1;
+	clock_gettime( CLOCK_REALTIME, &t0 );
+	cout << "start at " << t0.tv_sec << ":" << t0.tv_nsec << endl;
+	timer0.waitForTimeOut(2,0);
+	clock_gettime( CLOCK_REALTIME, &t1 );
+	cout << "end at " << t1.tv_sec << ":" << t1.tv_nsec << endl;
+	cout << "diff: " << t1.tv_sec - t0.tv_sec << ":" << (t1.tv_nsec - t0.tv_nsec) / 1000000 << ":" << ((t1.tv_nsec - t0.tv_nsec) % 1000000) / 1000 << endl;
+
+	cout << "timeScale test" << endl;
+	Timer timer1;
+	TimerManagement *timeM = TimerManagement::getInstance();
+	timeM->setTimeScaleFactor(0.5);
+	timeM->setScaleTime(true);
+	clock_gettime( CLOCK_REALTIME, &t0 );
+	cout << "start at " << t0.tv_sec << ":" << t0.tv_nsec << endl;
+	timer1.waitForTimeOut(2,0, true);
+	clock_gettime( CLOCK_REALTIME, &t1 );
+	cout << "end at " << t1.tv_sec << ":" << t1.tv_nsec << endl;
+	cout << "diff: " << t1.tv_sec - t0.tv_sec << ":" << (t1.tv_nsec - t0.tv_nsec) / 1000000 << ":" << ((t1.tv_nsec - t0.tv_nsec) % 1000000) / 1000 << endl;
+
 
 
 }

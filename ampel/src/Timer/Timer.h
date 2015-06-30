@@ -18,7 +18,6 @@
 #include "TimerManagement.h"
 
 
-
 class Timer {
 
 private:
@@ -29,10 +28,10 @@ private:
 	struct sigevent timerEvent;
 	bool stop;
 
-
 public:
 	void createTimer();
 	int createTimerPulse();
+	void waitForTimeOut(int, int, bool scaleTime);
 	void waitForTimeOut(int, int);
 	void waitForTimeOut();
 	void deleteTimer();
@@ -42,6 +41,9 @@ public:
 	void continueTimer();
 	Timer();
 	virtual ~Timer();
+
+	bool scaleTime;
+	double currentScale;
 };
 
 #endif /* TIMER_H_ */
