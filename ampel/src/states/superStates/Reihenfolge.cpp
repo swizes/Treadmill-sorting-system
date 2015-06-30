@@ -111,15 +111,15 @@ Reihenfolge::Reihenfolge(Context* con): State::State(con){
 		 << " Metal:" << puck->isMetal() << "]"  << endl;
 
 
-    if(switchWithReserved){
+     if(switchWithReserved){
     	bc->setLastPuck(bc->getReservedPuck());
     	bc->setReservedPuck(bc->getRecentPuck());
     	bc->setRecenctPuck(bc->getLastPuck());
-
-    	//Aktuellen Context ueberschreiben
+        
+        //Aktuellen Context ueberschreiben
     	this->con_ = new Context(bc->getRecentPuck());
     	this->con_->setState(this);
-
+        
     	printf("[ PUCK MIT RESERVEPUCK AUSTAUSCHEN ]\n");
     	//Set This ReservedPuck as LastPuck for nextPuck!
     }else{
