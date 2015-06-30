@@ -121,11 +121,13 @@ void CalibrateThread::execute(void*) {
 	//Get Height with no Puck in Measurement
 	noPuckHeight = hal->get_height_measure();
 
+
+
+
 	struct timespec offset;
 
 	//LO to Height fast
 	cout << "Put a Puck in L0" << endl;
-
 	while (hal->is_puck_running_in() == 0) {
 	}
 	time.setTimer(TIMERSTART,0);

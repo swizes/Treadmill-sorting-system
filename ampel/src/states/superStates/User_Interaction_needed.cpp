@@ -16,6 +16,7 @@ User_Interaction_needed::User_Interaction_needed(Context* con): State::State(con
 
 //do:
     if( !(con->getPuck()->isHoleOnTop()) ){
+
     	con->getPuck()->setUserInteractionNeeded(true) ;
     }else{
     	con->getPuck()->setUserInteractionNeeded(false) ;

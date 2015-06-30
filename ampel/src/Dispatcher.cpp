@@ -94,6 +94,8 @@ void Dispatcher:: remListeners(Transitions* listener, EVENTS event){
 void Dispatcher:: callListeners(EVENTS event){
 	// Call for every registered Listener
 	// the Method that corresponds with event.
+
+
 	for(int i=0; i<MAXLISTENERS; i++){
 		if( listeners_[event][i] != NULL){
 			(listeners_[event][i]->*methods[event])();

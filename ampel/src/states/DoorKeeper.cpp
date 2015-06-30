@@ -31,27 +31,21 @@ DoorKeeper* DoorKeeper::getInstance() {
 	return instance_;
 }
 
-
-
-DoorKeeper::DoorKeeper(void ) {
+DoorKeeper::DoorKeeper(void) {
 	greenLightOn = true;
 	allowPuck = right_;
 }
 
-
-
 DoorKeeper::~DoorKeeper() {
-    cout << "dtor: DoorKeeper" << endl;
+	cout << "dtor: DoorKeeper" << endl;
 }
 
-
-
-void DoorKeeper::startTimer(void* con){
-	HAL *hal= HAL::getInstance();
+void DoorKeeper::startTimer(void* con) {
+	HAL *hal = HAL::getInstance();
 	Context* c = (Context*) con;
 
 	//If greenlight is not on, do not let another puck
-	if(!greenLightOn) {
+	if (!greenLightOn) {
 		allowPuck = false;
 	} else {
 		hal->turn_greenLight_off();
@@ -59,25 +53,17 @@ void DoorKeeper::startTimer(void* con){
 		c->setState(new Birth(c));
 		delay(1500);
 		//If next puck is not allowed, go to Error Handling, otherwise turn green light on and let the puck.
-		if(!allowPuck) {
+		if (!allowPuck) {
 			c->setState(new Error_Handling(c));
 		} else {
 			hal->turn_greenLight_on();
 			greenLightOn = true;
 			allowPuck = true;
 		}
-
 	}
-
-
 }
 
-void DoorKeeper::shutdown(){
-    cout << "DoorKeeper shutdown" << endl;
+void DoorKeeper::shutdown() {
+	cout << "DoorKeeper shutdown" << endl;
 }
-
-
-
-
-
 

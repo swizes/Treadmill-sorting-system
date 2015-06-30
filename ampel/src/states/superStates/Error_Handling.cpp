@@ -13,14 +13,16 @@ Error_Handling::Error_Handling(Context* con): State::State(con){
 	printf("Error Handling()\n");
 	HAL *hal = HAL::getInstance();
 	BandController *bc = BandController::getInstance();
-	this->con_->getPuck()->stopBand();
-	bc->refreshBand();
+
+	hal->band_stop();
+	hal->turn_greenLight_off();
 	hal->turn_redLight_on();
 
-	errors_print( bc->getErrcode() );
+
+	errors_print(bc->getErrcode());
 
 	cout << "Push <<RESET>>" << endl;
-	while( !hal->is_resetButton_pushed() ){}
+	while( hal->is_resetButton_pushed() ){}
 
 	hal->turn_redLight_off();
 

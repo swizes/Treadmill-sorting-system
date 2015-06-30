@@ -7,6 +7,9 @@
 #include "../Threads/CalibrateThread.h"
 #include "../BandController.h"
 #include "../Threads/GateControllerThread.h"
+#include "../Threads/Blink_ThreadRed.h"
+#include "../Threads/Blink_ThreadGreen.h"
+#include "../Threads/Blink_ThreadYellow.h"
 #include <cstdlib>
 #include <iostream>
 
@@ -122,7 +125,6 @@ public:
 	virtual ~ Is_In_Slide();
 	virtual void Slide_full_false(void);
 private:
-	Context* con;
 	Is_In_Slide(const Is_In_Slide& other);
 	Is_In_Slide& operator=(const Is_In_Slide& other);
 };

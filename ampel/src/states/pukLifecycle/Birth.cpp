@@ -11,6 +11,7 @@ Birth::Birth(Context* con): State::State(con){
 
 	BandController* bc = BandController::getInstance();
 	bc->addPuck(this->con_->getPuck());
+
 	this->con_->getPuck()->runBandFast();
 	bc->refreshBand();
 

@@ -29,7 +29,6 @@ Is_In_Slide::Is_In_Slide(Context* con): State::State(con){
 		dsp->addListeners( this->con_, SLIDE_FULL_FALSE);
 	}
 
-
 	//TODO: ErrorHandling => After Timeout und EVENT nicht eingetreten
 
 

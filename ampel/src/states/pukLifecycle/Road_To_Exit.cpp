@@ -19,7 +19,7 @@ Road_To_Exit::Road_To_Exit(Context* con): State::State(con){
 	Dispatcher* dsp = Dispatcher::getInstance();
 	dsp->addListeners( this->con_, RUNNING_OUT_TRUE);
 
-	delay(300);
+	delay(600);
 	hal->close_gate();
 
 	cout << "Road To Exit ----- PuckId: " << this->con_->getPuck()->getId() << endl;
@@ -41,12 +41,22 @@ void Road_To_Exit::Running_out_true(void){
 
 	CalibrateThread* ct = CalibrateThread::getInstance();
 
+
+
 	//Band2
 	if(ct->isBand() == 1){
 		BandController* bc = BandController::getInstance();
 
 		bc->delPuck(this->con_->getPuck());
 		bc->refreshBand();
+
+
+		//TODO: ENDE VOM BAND 2 DATEN AUSGEBEN
+		//cout << "PUCK ID: " << this->con_->getPuck()->getId() << endl;
+		//cout << "PUCK TYP: " << this->con_->getPuck()->getSizeTyp() << endl;
+		//TODO: getHeightBand1
+		//cout << "HÖHEN-MESSWERT VON BAND 1" << this->con_->getPuck()->getHeightBand1
+		//cout << "HÖHEN-MESSWERT VON BAND 2" << this->con_->getPuck()->getHeightBand2
 
 		new (this) Give_New_Puck(NULL);
 	}else{
