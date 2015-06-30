@@ -26,6 +26,7 @@
 #include "Threads/Blink_ThreadRed.h"
 #include "BandController.h"
 #include "Tests/BlinkTest.h"
+#include "Threads/E_Stop_Thread.h"
 
 using namespace std;
 
@@ -66,8 +67,10 @@ int main(int argc, char *argv[]) {
     /dev/ser1 steht nicht zur Verfuegung. 		*/
 
 	DispatcherThread dspt;
-	dspt.start(NULL);
+	E_Stop_Thread estt;
 
+	estt.start(NULL);
+	dspt.start(NULL);
 
 	BandController* bc = BandController::getInstance();
 	bc->refreshBand();
@@ -86,7 +89,7 @@ int main(int argc, char *argv[]) {
 
 
 	dspt.join();
-
+	estt.join();
 		//Hal_Test_Thread htt;
 		//htt.start(NULL);
 		//htt.join();
