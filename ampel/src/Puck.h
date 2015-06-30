@@ -40,6 +40,7 @@ private:
 
 public:
 	Puck();
+	Puck(const Puck &obj);
 	Puck(puckStruct);
 	virtual ~Puck();
 	void setPuckFromStruct(puckStruct);
