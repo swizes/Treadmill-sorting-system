@@ -28,7 +28,7 @@ class Transitions{
 	  virtual void Slide_full_false(void) = 0;
 	  virtual void Running_out_false(void) = 0;
 
-	  virtual ~Transitions(void);
+	  virtual ~Transitions(void) {}
 
 };
 
