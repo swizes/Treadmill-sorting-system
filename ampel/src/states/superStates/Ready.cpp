@@ -38,7 +38,6 @@ Ready::~Ready(){
 }
 
 void Ready::Running_In_true(void){
-
 	BandController* bc = BandController::getInstance();
 	if(bc->getPuckCounter() == MAX_PUCKS){
 		new (this) Error_Handling(this->con_);

@@ -110,7 +110,9 @@ Reihenfolge::Reihenfolge(Context* con): State::State(con){
     	bc->setRecenctPuck(bc->getLastPuck());
         
         //Aktuellen Context ueberschreiben
-    	this->con_ = new Context(bc->getRecentPuck());
+    	Timer* t = new Timer();
+
+    	this->con_ = new Context(bc->getRecentPuck(), t);
     	this->con_->setState(this);
         
     	printf("[ PUCK MIT RESERVEPUCK AUSTAUSCHEN ]\n");

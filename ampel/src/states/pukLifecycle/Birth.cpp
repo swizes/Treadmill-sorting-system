@@ -18,6 +18,7 @@ Birth::Birth(Context* con): State::State(con){
 	Dispatcher* dsp = Dispatcher::getInstance();
 	dsp->addListeners( this->con_, RUNNING_IN_FALSE);
 
+
 	std::cout << "Birth ----- PuckId: " << this->con_->getPuck()->getId() << std::endl;
 
 }
@@ -28,7 +29,7 @@ Birth::~Birth(){
 }
 
 void Birth::Running_In_false(void){
-
+	this->con_->getTimer()->setTimer(3,0);
 	// Stop listen to Event Transmission1
 	Dispatcher* dsp = Dispatcher::getInstance();
 	dsp->remListeners( this->con_, RUNNING_IN_FALSE);

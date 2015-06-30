@@ -36,7 +36,8 @@ Give_New_Puck::Give_New_Puck(Context* con) :
 
 	Puck* p = new Puck();
 	p->setPuckFromStruct(puck);
-	this->con_ = new Context(p);
+	Timer* t = new Timer();
+	this->con_ = new Context(p,t);
 	this->con_->setState(this);
 
 	rdySend.setBusy(0);

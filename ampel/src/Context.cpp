@@ -11,18 +11,22 @@
 #include "Transition.h"
 #include "Dispatcher.h"
 #include "Puck.h"
+#include "Timer/Timer.h"
 
 class Context: public Transitions {
 private:
 	Transitions* state_;
 	Puck* puck;
 	int errCode;
+
+	Timer* timer_;
 public:
 	Context() :
 		state_(NULL) {
 //		printf("Context()\n");
 		puck = new Puck();
 		errCode = -1;
+		timer_ = new Timer();
 	}
 
 	virtual ~Context() {
@@ -40,11 +44,11 @@ public:
 		delete puck;
 	}
 
-	Context(Puck* p) :
+	Context(Puck* p, Timer* t) :
 		state_(NULL) {
 		this->puck = p;
 		errCode = this->errCode;//???
-
+		this->timer_ = t;
 	}
 
 	virtual void setState(Transitions* state) {
@@ -110,6 +114,10 @@ public:
 
 	void setErrcode(int errCode){
 		this->errCode=errCode;
+	}
+
+	Timer* getTimer(void) {
+		return timer_;
 	}
 
 private:
