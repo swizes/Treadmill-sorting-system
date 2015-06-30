@@ -17,7 +17,6 @@
 #include "HAL.h"
 #include "./Timer/Timer.h"
 #include "ConfigManager.h"
-#include <stdlib.h>
 
 
 #define TIMERSTART 20
@@ -87,8 +86,8 @@ CalibrateThread::CalibrateThread() {
 	configManager->getConfigValue("smallPuck", &outVal) ? smallPuck = atoi(outVal.c_str()) : keyNotFound = true;
 	configManager->getConfigValue("holeHeight", &outVal) ? holeHeight = atoi(outVal.c_str()) : keyNotFound = true;
 	configManager->getConfigValue("holeHeightMetal", &outVal) ? holeHeight = atoi(outVal.c_str()) : keyNotFound = true;
-	configManager->getConfigValue("scaleSlowToFast", &outVal) ? scaleSlowToFast = atof(outVal.c_str(), NULL) : keyNotFound = true;
-	configManager->getConfigValue("scaleFastToSlow", &outVal) ?	scaleFastToSlow = atof(outVal.c_str(), NULL) : keyNotFound = true;
+	configManager->getConfigValue("scaleSlowToFast", &outVal) ? scaleSlowToFast = atof(outVal.c_str()) : keyNotFound = true;
+	configManager->getConfigValue("scaleFastToSlow", &outVal) ?	scaleFastToSlow = atof(outVal.c_str()) : keyNotFound = true;
 	
 	if(keyNotFound) {
 		cout << "Error! Key not found!" << endl;
@@ -99,6 +98,9 @@ CalibrateThread::CalibrateThread() {
 }
 
 CalibrateThread::~CalibrateThread() {
+
+	// TODO Auto-generated destructor stub
+
 	cout << "dtor Calibrate" << endl;
 }
 
@@ -259,7 +261,7 @@ void CalibrateThread::execute(void*) {
 	hal->band_stop();
 
 
-	//Hole measurement
+	//Locherkennung todo delay not ok
 	cout << "Put a non Metal Puck with Hole on Top" << endl;
 	while(hal->is_puck_running_in()==0){}
 	hal->band_right_normal();
