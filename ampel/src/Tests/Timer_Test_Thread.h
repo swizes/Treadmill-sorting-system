@@ -14,6 +14,10 @@
 
 using namespace thread;
 
+class TestClass {
+	void waitForTimeoutFunc();
+};
+
 class Timer_Test_Thread: public HAWThread {
 public:
 	Timer_Test_Thread();
@@ -27,6 +31,10 @@ private:
 
 	void test1();
 	void test2();
+	void getTestClass(TestClass *testclass);
+	void killTestClass(TestClass *testclass);
 };
+
+
 
 #endif /* TIMER_TEST_THREAD_H_ */

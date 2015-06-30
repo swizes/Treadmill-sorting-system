@@ -14,6 +14,7 @@
 #include "../Timer/Timer.h"
 #include <time.h>
 
+TestClass *tclass;
 
 Timer_Test_Thread::Timer_Test_Thread() {
 	cout << "ctor Timer Test" << endl;
@@ -25,7 +26,9 @@ Timer_Test_Thread::~Timer_Test_Thread() {
 
 void Timer_Test_Thread::execute(void*){
 	//test1();
-	test2();
+	//test2();
+	tclass = new TestClass();
+	this->waitForTimeoutFunc();
 }
 
 void Timer_Test_Thread::test1() {
@@ -134,11 +137,34 @@ void Timer_Test_Thread::test2() {
 
 }
 
+void Timer_Test_Thread::test3() {
+
+}
+
 
 void Timer_Test_Thread::shutdown(){
     cout << "Timer Test shutdown" << endl;
 }
 
+void Timer_Test_Thread::getTestClass(TestClass *testclass) {
+	testclass = this->tclass;
+}
+
+void TestClass::waitForTimeoutFunc() {
+	timer t;
+
+	cout << "wait for timeout test func. Waiting.." << endl;
+	t.waitForTimeOut(8,0);
+	cout << "after wait for timeout" << endl;
+}
 
 
+void Timer_Test_Thread::killTestClass(TestClass *testclass)
+{
+	timer t2;
 
+	cout << "kill testclass in 2 secs..." << endl;
+	t2.waitForTimeout(2,0);
+	delete(testclass);
+	cout << "testclass deleted" << endl;
+}

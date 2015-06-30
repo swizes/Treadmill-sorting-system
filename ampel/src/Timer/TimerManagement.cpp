@@ -41,19 +41,26 @@ void TimerManagement::addTimer(Timer *timer){
 }
 
 void TimerManagement::updateTimer(Timer *timer) {
+	if(timeScaleFactor == 0) {
+		cout << "Error! timeScaleFactor not set / = 0" << endl;
+		return;
+	}
+
+	timespec t_spec;
+
 	if(timer->currentScale == 1 && this->timeScaleSet)
 	{
-		if(timeScaleFactor == 0) {
-			cout << "Error! timeScaleFactor not set / = 0" << endl;
-		} else {
-			cout << "scale new timer" << endl;
-		}
+		cout << "scale up new timer" << endl;
 
-		timespec t_spec;
 		timer->getTime(&t_spec);
 		timer->currentScale = timeScaleFactor;
 		cout << "spec sec:" << t_spec.tv_sec << "nsec:" << t_spec.tv_nsec << endl;
 		timer->setTimer(t_spec.tv_sec*timeScaleFactor, t_spec.tv_nsec*timeScaleFactor);
+	} else if (timer->currentScale != 1 && !this->timeScaleSet) {
+		timer->getTime(&t_spec);
+		timer->currentScale = 1;
+		cout << "spec sec:" << t_spec.tv_sec << "nsec:" << t_spec.tv_nsec << endl;
+		timer->setTimer(t_spec.tv_sec/timeScaleFactor, t_spec.tv_nsec/timeScaleFactor);
 	}
 }
 
@@ -95,14 +102,15 @@ void TimerManagement::setScaleTime(bool scaleTime) {
 	this->timeScaleSet = scaleTime;
 	timespec t_spec;
 
-	cout << "set TimerManagement scaleTimme" << endl;
+	cout << "set TimerManagement scaleTime" << endl;
 	if(scaleTime) {
 		//upscale time
 		for(int i = 0; i < data.size(); i++){
-			if (data.at(i)->scaleTime) {
+			if (data.at(i)->scaleTime && data.at(i)->timeScaleFactor = 1) {
 				cout << "upscale timer " << i << endl;
 				data.at(i)->getTime(&t_spec);
 				data.at(i)->setTimer(t_spec.tv_sec*timeScaleFactor, t_spec.tv_nsec*timeScaleFactor);
+				data.at(i)->currentScale = timeScaleFactor;
 			}
 		}
 	} else {
@@ -112,6 +120,7 @@ void TimerManagement::setScaleTime(bool scaleTime) {
 				cout << "upscale timer " << i << endl;
 				data.at(i)->getTime(&t_spec);
 				data.at(i)->setTimer(t_spec.tv_sec/timeScaleFactor, t_spec.tv_nsec/timeScaleFactor);
+				data.at(i)->currentScale = 1;
 			}
 		}
 	}

@@ -26,6 +26,7 @@
 #include "Threads/Blink_ThreadRed.h"
 #include "BandController.h"
 #include "Tests/BlinkTest.h"
+#include "Tests/Timer_Test_Thread.h"
 
 using namespace std;
 
@@ -37,6 +38,16 @@ int main(int argc, char *argv[]) {
 		cout << "WARNING: SYSTEM IN SIMULATION!!!" << endl;
     #endif
 	//RUN Calibration
+
+	Timer_Test_Thread ttest;
+	cout << "starte Timer Test Thread" << endl;
+	ttest.start(NULL);
+
+	TestClass *tc;
+	ttest.getTestClass(tc);
+	ttest.killTestClass(tc);
+	ttest.join();
+	return;
 
 	HAL *hal = HAL::getInstance();
 	CalibrateThread *cal = CalibrateThread::getInstance();
