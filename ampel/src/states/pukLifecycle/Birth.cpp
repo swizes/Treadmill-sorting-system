@@ -9,10 +9,6 @@
 
 Birth::Birth(Context* con): State::State(con){
 
-//	HAL *hal = HAL::getInstance();
-	//hal->turn_greenLight_off();
-
-
 	BandController* bc = BandController::getInstance();
 	bc->addPuck(this->con_->getPuck());
 	this->con_->getPuck()->runBandFast();
@@ -23,7 +19,6 @@ Birth::Birth(Context* con): State::State(con){
 
 	std::cout << "Birth ----- PuckId: " << this->con_->getPuck()->getId() << std::endl;
 
-
 }
 
 Birth::~Birth(){
@@ -32,7 +27,6 @@ Birth::~Birth(){
 }
 
 void Birth::Running_In_false(void){
-
 
 	// Stop listen to Event Transmission1
 	Dispatcher* dsp = Dispatcher::getInstance();

@@ -30,6 +30,7 @@ HAL* HAL::getInstance(){
 		if( instance_ == NULL){
 		    instance_ = new HAL();
 		    //instance_->reset();
+
 		}
 		pthread_mutex_unlock(&mtx_);
 	}
@@ -46,7 +47,7 @@ HAL::HAL(){
     if( ThreadCtl(_NTO_TCTL_IO_PRIV,0) == -1 ){
         cout << "Can't get Hardware access, therefore can't do anything." << endl;
     }
-
+    resetCounter = 0;
 	out8(IO_CONTROL_ADDRESS, BM_IO_CONTROL);
 }
 
@@ -336,8 +337,14 @@ int HAL:: is_stopButton_pushed(void){
 * @return 0 = false, 1 = true
 */
 int HAL:: is_resetButton_pushed(void){
-	return (in8(PORT_C) & BM_RESET_BUTTON_STATUS);
+	int resetButton = 0;
+	if((in8(PORT_C) & BM_RESET_BUTTON_STATUS)){
+		resetCounter++;
+		resetButton = true;
+	}
+	return resetButton;
 }
+
 
 /**
 * Shows if the e-stopp button is pushed

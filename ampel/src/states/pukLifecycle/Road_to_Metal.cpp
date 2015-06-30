@@ -23,10 +23,10 @@ Road_to_Metal::~Road_to_Metal(){
 
 void Road_to_Metal::Puck_in_Gate_true(void){
 
-
 	// Stop listen to Event Transmission2
 	Dispatcher* dsp = Dispatcher::getInstance();
 	dsp->remListeners( this->con_, PUCK_IN_GATE_TRUE);
+
 
 	// Move to State Is In Gate
 	new (this) Is_In_Gate(this->con_);

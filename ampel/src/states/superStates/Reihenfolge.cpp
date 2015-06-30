@@ -9,7 +9,6 @@
 
 Reihenfolge::Reihenfolge(Context* con): State::State(con){
 //entry:	
-	Puck *puck;
 
     int isLastPuckMetal = 0,
         isThisPuckMetal = 0,
@@ -19,6 +18,7 @@ Reihenfolge::Reihenfolge(Context* con): State::State(con){
     	wasThereLastPuck   = 0;
 
     int switchWithReserved = 0;
+    int isInReihenfolge = 0;
 
 	printf("Reihenfolge()\n");
 //	printf("-------------\n");
@@ -58,58 +58,51 @@ Reihenfolge::Reihenfolge(Context* con): State::State(con){
 	//Sub-Automaton = Overkill -> If/Else
     // LastPuckMetal ? 
     if(isLastPuckMetal){
-//    	cout << "[LastPuck: Metal]";
         if(isThisPuckMetal){
-//        	cout << " + [ThisPuck: Metal]";
         	//if reserved=NULL -> new reserved
         	wasThereReservPuck++;
             if(isRsrvPuckMetal && (wasThereReservPuck!=1)){
-//            	cout << " + [ReservedPuck: Metal]";
                 //...
-//            	cout << " -> [ThisPuck == ReservedPuck]";
             }else{//isRsrvPuckMetal:NO
-//            	cout << " + [ReservedPuck: NOT Metal]";
             	switchWithReserved = 1;
+            	isInReihenfolge = 1;
             }
-            cout << " -> [Reihenfolge: NOT OK]" << endl;
         }else{//isThisPuckMetal:NO
-//        	cout << " + [ThisPuck: NOT Metal]";
-            //...
-        	cout << " -> [Reinhenfolge:OK]";
+        	isInReihenfolge = 1;
         }
     }else{//isLastPuckMetal:NO
-//    	cout << "[LastPuck: NOT Metal]";
         if(isThisPuckMetal){
-//        	cout << " + [ThisPuck: Metal]";
-            //...
-        	cout << " -> [Reinhenfolge:OK]";
+        	isInReihenfolge = 1;
         }else{//isThisPuckMetal:NO
-//        	cout << " + [ThisPuck: NOT Metal]";
         	//if reserved=NULL -> new reserved
         	wasThereReservPuck++;
             if(isRsrvPuckMetal && (wasThereReservPuck!=1)){
-//            	cout << " + [ReservedPuck: Metal]";
             	switchWithReserved = 1;
+            	isInReihenfolge = 1;
             }else{//isRsrvPuckMetal:NO
-//            	cout << " + [ReservedPuck: NOT Metal]";
                 //...
-//            	cout << " -> [ThisPuck == ReservedPuck]";
             }
-            cout << " -> [Reihenfolge: NOT OK]" << endl;
         }
     }
     cout<<endl;
 
-    puck = bc->getRecentPuck();
-    cout << "[RCND:" << puck->getSizeTyp()  << "  ID:" << puck->getId() << "  Hole:" << puck->isHoleOnTop()
-		 << " Metal:" << puck->isMetal() << "]"  << endl;
-    puck = bc->getLastPuck();
-	cout << "[LAST:" << puck->getSizeTyp()  << "  ID:" << puck->getId() << "  Hole:" << puck->isHoleOnTop()
-		 << " Metal:" << puck->isMetal() << "]"  << endl;
-	puck = bc->getReservedPuck();
-	cout << "[RSRV:" << puck->getSizeTyp()  << "  ID:" << puck->getId() << "  Hole:" << puck->isHoleOnTop()
-		 << " Metal:" << puck->isMetal() << "]"  << endl;
+    //Output: RecentPuck, LastPuck, ReservedPuck BEFORE they got switched
+//    puck = bc->getRecentPuck();
+//    cout << "[RCND:" << puck->getSizeTyp()  << "  ID:" << puck->getId() << "  Hole:" << puck->isHoleOnTop()
+//		 << " Metal:" << puck->isMetal() << "]"  << endl;
+//    puck = bc->getLastPuck();
+//	cout << "[LAST:" << puck->getSizeTyp()  << "  ID:" << puck->getId() << "  Hole:" << puck->isHoleOnTop()
+//		 << " Metal:" << puck->isMetal() << "]"  << endl;
+//	puck = bc->getReservedPuck();
+//	cout << "[RSRV:" << puck->getSizeTyp()  << "  ID:" << puck->getId() << "  Hole:" << puck->isHoleOnTop()
+//		 << " Metal:" << puck->isMetal() << "]"  << endl;
 
+    if(isInReihenfolge){
+    	printf("[Reihenfolge: OK]\n");
+    }else{
+    	printf("[Reihenfolge: FALSE]\n");
+    	bc->getRecentPuck()->setSizeTyp(NOT_OK);
+    }
 
      if(switchWithReserved){
     	bc->setLastPuck(bc->getReservedPuck());
@@ -126,22 +119,25 @@ Reihenfolge::Reihenfolge(Context* con): State::State(con){
     	//Set This Puck as LastPuck for nextPuck!
     	bc->setLastPuck(bc->getRecentPuck());
     }
+
     printf("-------------\n");
     
-    puck = bc->getRecentPuck();
-    cout << "[RCND:" << puck->getSizeTyp()  << "  ID:" << puck->getId() << "  Hole:" << puck->isHoleOnTop()
-		 << " Metal:" << puck->isMetal() << "]"  << endl;
-    puck = bc->getLastPuck();
-	cout << "[LAST:" << puck->getSizeTyp()  << "  ID:" << puck->getId() << "  Hole:" << puck->isHoleOnTop()
-		 << " Metal:" << puck->isMetal() << "]"  << endl;
-	puck = bc->getReservedPuck();
-	cout << "[RSRV:" << puck->getSizeTyp()  << "  ID:" << puck->getId() << "  Hole:" << puck->isHoleOnTop()
-		 << " Metal:" << puck->isMetal() << "]"  << endl;
+    //Output: RecentPuck, LastPuck, ReservedPuck AFTER they got switched
+//    puck = bc->getRecentPuck();
+//    cout << "[RCND:" << puck->getSizeTyp()  << "  ID:" << puck->getId() << "  Hole:" << puck->isHoleOnTop()
+//		 << " Metal:" << puck->isMetal() << "]"  << endl;
+//    puck = bc->getLastPuck();
+//	cout << "[LAST:" << puck->getSizeTyp()  << "  ID:" << puck->getId() << "  Hole:" << puck->isHoleOnTop()
+//		 << " Metal:" << puck->isMetal() << "]"  << endl;
+//	puck = bc->getReservedPuck();
+	cout << "[RSRV:" << tempPuck->getSizeTyp()  << "  ID:" << tempPuck->getId() << "  Hole:" << tempPuck->isHoleOnTop()
+		 << " Metal:" << tempPuck->isMetal() << "]"  << endl;
 
 
 	bc->refreshBand();
 
-    // Move to State: Waiting_for_arriving_Puck
+
+	// Move to State: Waiting_for_arriving_Puck
 	new (this) Waiting_for_arriving_Puck(this->con_);
 }
 

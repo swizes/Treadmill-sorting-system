@@ -8,58 +8,63 @@
 #include "PuckStates.h"
 #include "../../HAL.h"
 
-Is_In_Gate::Is_In_Gate(Context* con): State::State(con){
+Is_In_Gate::Is_In_Gate(Context* con) :
+		State::State(con) {
 
+	BandController* bc = BandController::getInstance();
 	Dispatcher* dsp = Dispatcher::getInstance();
-	dsp->addListeners( this->con_, PUCK_IN_GATE_FALSE);
-	dsp->addListeners( this->con_, METAL_DETECTION_TRUE);
-	HAL *hal= HAL::getInstance();
-	hal->open_gate();
+	CalibrateThread *cal = CalibrateThread::getInstance();
 
-	if(this->con_->getPuck()->getSizeTyp() == OK){
-			cout << "Is In Gate --- Puck Type is OK --- PuckId: " << this->con_->getPuck()->getId() << endl;
+	HAL *hal = HAL::getInstance();
+
+	if (this->con_->getPuck()->getSizeTyp() == OK) {
+		cout << "Is In Gate --- PuckId: " << this->con_->getPuck()->getId() << endl;
+		dsp->addListeners(this->con_, PUCK_IN_GATE_FALSE);
+		dsp->addListeners(this->con_, METAL_DETECTION_TRUE);
+
+		if (!cal->isBand()) { //Band1
+			hal->open_gate();
 		} else {
-			cout << "Is In Gate --- Puck Type is NOT OK --- PuckId: " << this->con_->getPuck()->getId() << endl;
+			// Band2: Reihenfolge..
+			// if( (LastPuckIsMetal && !ThisPuckIsMetal) || (!LastPuckIsMetal && ThisPuckIsMetal) )
+			if ((bc->getLastPuck()->isMetal() && !this->con_->getPuck()->isMetal())
+					|| (!bc->getLastPuck()->isMetal()
+					&& this->con_->getPuck()->isMetal())) {
+				hal->open_gate();
+			}
+
 		}
-
-
+	}
 }
 
-Is_In_Gate::~Is_In_Gate(){
+Is_In_Gate::~Is_In_Gate() {
 	printf("~Is in Gate()\n");
 
 }
 
-void Is_In_Gate::Puck_in_Gate_false(void){
+void Is_In_Gate::Puck_in_Gate_false(void) {
 
-
-
-
-	con_->getPuck()->setMetal(false);
+	this->con_->getPuck()->setMetal(false);
 
 	// Stop listen to Event Transmission1
 	Dispatcher* dsp = Dispatcher::getInstance();
-	dsp->remListeners( this->con_, PUCK_IN_GATE_FALSE);
-	dsp->remListeners( this->con_, METAL_DETECTION_TRUE);
+	dsp->remListeners(this->con_, PUCK_IN_GATE_FALSE);
+	dsp->remListeners(this->con_, METAL_DETECTION_TRUE);
 
 	// Move to State Road to Exit
 	new (this) Road_To_Exit(this->con_);
 }
 
-void Is_In_Gate::Metal_detection_true(void){
+void Is_In_Gate::Metal_detection_true(void) {
 
-
-
-	con_->getPuck()->setMetal(true);
+	this->con_->getPuck()->setMetal(true);
 
 	// Stop listen to Event Transmission1
 	Dispatcher* dsp = Dispatcher::getInstance();
-	dsp->remListeners( this->con_, PUCK_IN_GATE_FALSE);
-	dsp->remListeners( this->con_, METAL_DETECTION_TRUE);
+	dsp->remListeners(this->con_, PUCK_IN_GATE_FALSE);
+	dsp->remListeners(this->con_, METAL_DETECTION_TRUE);
 
 	// Move to State Road to Exit
 	new (this) Road_To_Exit(this->con_);
 }
-
-
 

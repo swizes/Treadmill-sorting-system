@@ -37,9 +37,6 @@ DispatcherThread::DispatcherThread(void) {
 
 
 DispatcherThread::~DispatcherThread() {
-
-	// TODO Auto-generated destructor stub
-
 	cout << "dtor Dispatcher" << endl;
 }
 

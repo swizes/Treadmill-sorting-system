@@ -22,9 +22,9 @@ using namespace thread;
 class Blink_ThreadYellow: public HAWThread {
     /* Variablen deklarationen */
     private:
-		bool off = true;
-		int time = 0;
-		int countBlink = 0;
+		bool off;
+		int time;
+		int countBlink;
 		HAL *hal;
 
         static pthread_mutex_t mtx_; ///< Synchronisationsmutex.

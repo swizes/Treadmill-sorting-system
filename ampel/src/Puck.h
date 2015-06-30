@@ -124,7 +124,6 @@ public:
 	}
 
 	void setSizeTyp(SIZE sizeTyp) {
-//		std::cout << "set sizetype: " << sizeTyp << std::endl;
 		this->sizeTyp = sizeTyp;
 	}
 };

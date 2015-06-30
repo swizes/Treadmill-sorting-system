@@ -39,7 +39,7 @@ private:
 	ReadySend& operator=(ReadySend& b);
 	virtual void execute(void* con); ///< Geerbt aus HAWThread. Muss implementiert werden.
 	virtual void shutdown();
-	int busy = 1;
+	int busy ;
 };
 
 #endif /* PUCKLIFCYCLEFSM_H_ */

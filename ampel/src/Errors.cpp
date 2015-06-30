@@ -5,9 +5,11 @@
  *      Author: Roland M
  */
  
- #include "Errors.h"
+#include "Errors.h"
+#include <stdio.h>
 
-int errors_print(int errcode){
+
+void errors_print(int errcode){
     printf("[ERROR]: ");
     switch(errcode){
         
@@ -68,11 +70,15 @@ int errors_print(int errcode){
     case ERROR_2SOON_FP2IiS:
         printf("too soon from <Flipping Puck> to <Is In Slide>");
         break;
+
         
     //Other
     case ERROR_SLIDEFULL:
         printf("slide is full");
         break;
+    case ERROR_MAX_PUCKS:
+    	printf("maximum pucks on band reached");
+		break;
     
  
     //
@@ -83,7 +89,7 @@ int errors_print(int errcode){
     
     printf("\n");
 
- return errcode;
+ //return errcode;
 }
  
  

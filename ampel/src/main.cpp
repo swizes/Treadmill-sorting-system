@@ -21,7 +21,6 @@
 #include "Dispatcher.h"
 #include "State.cpp"
 #include "HAL.h"
-#include "HoleDetector.h"
 #include "states/ReadySend.h"
 #include "Threads/DispatcherThread.h"
 #include "Threads/Blink_ThreadRed.h"
@@ -39,11 +38,28 @@ int main(int argc, char *argv[]) {
     #endif
 	//RUN Calibration
 
-
+	HAL *hal = HAL::getInstance();
 	CalibrateThread *cal = CalibrateThread::getInstance();
-	cal->start(NULL);
-	cal->join();
-	cout << "cal done" << endl;
+	int resetCounter = 0;
+	//EINRICHBETRIEB
+	if(hal->is_startButton_pushed()) {
+		cout << "Press 2 times Reset Button in 10 seconds for Calibration" << endl;
+		Timer *timer = new Timer();
+		timer->setTimer(10,0);
+		timer->waitForTimeOut();
+		if(hal->getResetCounter() == 2){
+				cal->start(NULL);
+				cal->join();
+				cout << "Calibration is done!" << endl;
+			} else {
+				cout << "Timeout, switching to normal mode" << endl;
+			}
+		}
+
+//	CalibrateThread *cal = CalibrateThread::getInstance();
+//	cal->start(NULL);
+//	cal->join();
+//	cout << "cal done" << endl;
 	
     /*Serielle Verbindung funkitoniert nur wenn sich System nicht in der Simulation befindet
     /dev/ser1 steht nicht zur Verfuegung. 		*/
@@ -59,9 +75,11 @@ int main(int argc, char *argv[]) {
 	cout << "-----------------------------------" << endl;
 	
 	if(!cal->isBand()){//is band1!<
-		State* s = new Ready(NULL);
+//		State* s = new Ready(NULL);
+		new Ready(NULL);
 	}else{
-		State* state = new Give_New_Puck(NULL);
+//		State* state = new Give_New_Puck(NULL);
+		new Give_New_Puck(NULL);
 	}
 
 

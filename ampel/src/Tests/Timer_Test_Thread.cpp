@@ -42,13 +42,16 @@ void Timer_Test_Thread::execute(void*){
 	offset.tv_nsec = result.tv_nsec;
 	offset.tv_sec  = result.tv_sec;
 	timeM->stopTimer();
-	printf("OfS: %ld, OfNs: %ld\n",offset.tv_sec,offset.tv_nsec);
+
+	cout << "OfS: " << offset.tv_sec << ",  OfNs: " << offset.tv_nsec << endl;
 
 	delay(500);
 	timeM->continueTimer();
 	timer.getTime(&result);
 
-	printf("Sec: %ld, nSec: %ld, diffSec: %ld, diffnSec: %ld\n",result.tv_sec,result.tv_nsec,result.tv_sec-offset.tv_sec,result.tv_nsec-offset.tv_nsec);
+	cout << "Sec: " << result.tv_sec << ",  nSec: " << result.tv_nsec << ",  diffSec: " << result.tv_sec-offset.tv_sec
+			<< ",  diffnSec: " << result.tv_nsec-offset.tv_nsec << endl;
+
 
 	timer.deleteTimer();
 
@@ -67,7 +70,7 @@ void Timer_Test_Thread::execute(void*){
 	timer10.getTime(&time10);
 	delay(500);
 
-	printf("S: %ld, NS: %ld, S: %ld, NS: %ld\n",time15.tv_sec,time15.tv_nsec,time10.tv_sec,time10.tv_nsec);
+	cout << "S: " << time15.tv_sec << ",  NS: " << time15.tv_nsec << ",  S: " << time10.tv_sec << ",  NS: " << time10.tv_nsec << endl;
 	//timer15.stopTimer();
 	delay(500);
 	timeM->stopTimer();
@@ -78,8 +81,8 @@ void Timer_Test_Thread::execute(void*){
 
 	timer10.getTime(&time10);
 	timer15.getTime(&time15);
-	printf("S: %ld, NS: %ld, S: %ld, NS: %ld\n",time15.tv_sec,time15.tv_nsec,time10.tv_sec,time10.tv_nsec);
 
+	cout << "S: " << time15.tv_sec << ",  NS: " << time15.tv_nsec << ",  S: " << time10.tv_sec << ",  NS: " << time10.tv_nsec << endl;
 
 
 

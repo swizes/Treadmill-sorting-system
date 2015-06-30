@@ -29,4 +29,7 @@
  #define ERROR_2SOON_FP2IiS        208 /* too soon from <Flipping Puck> to <Is In Slide> */
  
  //
- #define ERROR_SLIDEFULL            300 /* slide is full */
+#define ERROR_SLIDEFULL            300 /* slide is full */
+#define ERROR_MAX_PUCKS            301 /* maximum pucks on band reached */
+
+void errors_print(int errcode);

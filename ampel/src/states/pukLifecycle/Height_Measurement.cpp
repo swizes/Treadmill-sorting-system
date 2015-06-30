@@ -11,7 +11,6 @@
 Height_Measurement::Height_Measurement(Context* con): State::State(con){
 
 	cout << "Height Measurement ----- PuckId: " << this->con_->getPuck()->getId() << endl;
-	BandController* bc = BandController::getInstance();
 
 	HAL *hal = HAL::getInstance();
 
@@ -30,6 +29,11 @@ Height_Measurement::Height_Measurement(Context* con): State::State(con){
 	int maxHeight = ct->getBigPuck()+VARIANZ;
 	int hole = ct->getHoleHeight();
 
+	//If height is bigger than maximum allowed height, go to error handling
+	//TODO: err code
+	if (height > maxHeight) {
+		new (this) Error_Handling(this->con_);
+	} else {
 
 	//Height is equal or bigger than an incorrect Type
 	//and equal or less than a CorrectType
@@ -44,20 +48,15 @@ Height_Measurement::Height_Measurement(Context* con): State::State(con){
 	Dispatcher* dsp = Dispatcher::getInstance();
 	dsp->printListeners();
 
-
-
 	if(height >= hole-VARIANZ && height <= hole+VARIANZ){
-//		cout << "Hat Loch" << endl;
 		this->con_->getPuck()->setHoleOnTop(true);
 		this->con_->getPuck()->setUserInteractionNeeded(false);
 		this->con_->getPuck()->setSizeTyp(OK);
 	}
 
-	//TODO: PreCond is_Height_ok
-	//Maybe go in ErrorHandling if is_Height_ok @ false
-
-	//Lambda transition
-	new (this) Search_for_Hole(this->con_);
+		//Lambda transition
+		new (this) Search_for_Hole(this->con_);
+	}//else
 }
 
 Height_Measurement::~Height_Measurement(){
