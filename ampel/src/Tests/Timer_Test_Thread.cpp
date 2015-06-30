@@ -28,7 +28,7 @@ void Timer_Test_Thread::execute(void*){
 	//test1();
 	//test2();
 	tclass = new TestClass();
-	this->waitForTimeoutFunc();
+	tclass->waitForTimeoutFunc();
 }
 
 void Timer_Test_Thread::test1() {
@@ -137,11 +137,6 @@ void Timer_Test_Thread::test2() {
 
 }
 
-void Timer_Test_Thread::test3() {
-
-}
-
-
 void Timer_Test_Thread::shutdown(){
     cout << "Timer Test shutdown" << endl;
 }
@@ -151,7 +146,7 @@ void Timer_Test_Thread::getTestClass(TestClass *testclass) {
 }
 
 void TestClass::waitForTimeoutFunc() {
-	timer t;
+	Timer t;
 
 	cout << "wait for timeout test func. Waiting.." << endl;
 	t.waitForTimeOut(8,0);
@@ -161,10 +156,10 @@ void TestClass::waitForTimeoutFunc() {
 
 void Timer_Test_Thread::killTestClass(TestClass *testclass)
 {
-	timer t2;
+	Timer t2;
 
 	cout << "kill testclass in 2 secs..." << endl;
-	t2.waitForTimeout(2,0);
+	t2.waitForTimeOut(2,0);
 	delete(testclass);
 	cout << "testclass deleted" << endl;
 }

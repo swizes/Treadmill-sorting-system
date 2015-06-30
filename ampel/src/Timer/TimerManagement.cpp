@@ -106,7 +106,7 @@ void TimerManagement::setScaleTime(bool scaleTime) {
 	if(scaleTime) {
 		//upscale time
 		for(int i = 0; i < data.size(); i++){
-			if (data.at(i)->scaleTime && data.at(i)->timeScaleFactor = 1) {
+			if (data.at(i)->scaleTime && data.at(i)->currentScale == 1) {
 				cout << "upscale timer " << i << endl;
 				data.at(i)->getTime(&t_spec);
 				data.at(i)->setTimer(t_spec.tv_sec*timeScaleFactor, t_spec.tv_nsec*timeScaleFactor);

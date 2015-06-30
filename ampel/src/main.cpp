@@ -38,7 +38,7 @@ int main(int argc, char *argv[]) {
 		cout << "WARNING: SYSTEM IN SIMULATION!!!" << endl;
     #endif
 	//RUN Calibration
-
+	/*
 	Timer_Test_Thread ttest;
 	cout << "starte Timer Test Thread" << endl;
 	ttest.start(NULL);
@@ -47,10 +47,11 @@ int main(int argc, char *argv[]) {
 	ttest.getTestClass(tc);
 	ttest.killTestClass(tc);
 	ttest.join();
-	return;
-
+	return 0;
+	*/
 	HAL *hal = HAL::getInstance();
 	CalibrateThread *cal = CalibrateThread::getInstance();
+	/*
 	int resetCounter = 0;
 	//EINRICHBETRIEB
 	if(hal->is_startButton_pushed()) {
@@ -66,11 +67,11 @@ int main(int argc, char *argv[]) {
 				cout << "Timeout, switching to normal mode" << endl;
 			}
 		}
-
-//	CalibrateThread *cal = CalibrateThread::getInstance();
-//	cal->start(NULL);
-//	cal->join();
-//	cout << "cal done" << endl;
+	*/
+	//CalibrateThread *cal = CalibrateThread::getInstance();
+	cal->start(NULL);
+	cal->join();
+	cout << "cal done" << endl;
 	
     /*Serielle Verbindung funkitoniert nur wenn sich System nicht in der Simulation befindet
     /dev/ser1 steht nicht zur Verfuegung. 		*/

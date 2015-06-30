@@ -15,6 +15,7 @@
 using namespace thread;
 
 class TestClass {
+public:
 	void waitForTimeoutFunc();
 };
 
@@ -22,6 +23,8 @@ class Timer_Test_Thread: public HAWThread {
 public:
 	Timer_Test_Thread();
 	virtual ~Timer_Test_Thread();
+	void getTestClass(TestClass *testclass);
+	void killTestClass(TestClass *testclass);
 
 private:
 	Timer_Test_Thread(const Timer_Test_Thread& b);      ///< Copy-Konstruktor. Privat, deshalb kann dieses Objekt nicht als "Call-by-value" uebergeben werden.
@@ -31,8 +34,9 @@ private:
 
 	void test1();
 	void test2();
-	void getTestClass(TestClass *testclass);
-	void killTestClass(TestClass *testclass);
+
+	TestClass *tclass;
+
 };
 
 
