@@ -19,6 +19,7 @@ Timer::Timer() {
 	timerid = -1;
 	stop = false;
 	currentScale = 1;
+	shouldContinue = false;
 }
 
 Timer::~Timer() {
@@ -79,7 +80,7 @@ void Timer::setTimer(int s, int ns, bool scaleTime){
 }
 
 void Timer::setTimer(int s, int ns) {
-	setTimer(s, ns, false);
+	setTimer(s, ns, scaleTime);
 }
 
 void Timer::deleteTimer(){
@@ -147,5 +148,8 @@ void Timer::waitForTimeOut(){
 
 }
 
+bool Timer::isStopped() {
+	return stop;
+}
 
 

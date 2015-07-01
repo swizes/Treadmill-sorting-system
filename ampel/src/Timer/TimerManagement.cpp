@@ -60,14 +60,19 @@ void TimerManagement::updateTimer(Timer *timer) {
 		timer->getTime(&t_spec);
 		timer->currentScale = timeScaleFactor;
 		cout << "spec sec:" << t_spec.tv_sec << "nsec:" << t_spec.tv_nsec << endl;
+		if(timer->isStopped() && timer->shouldContinue) timer->continueTimer();
+
 		timer->setTimer(t_spec.tv_sec*timeScaleFactor, t_spec.tv_nsec*timeScaleFactor);
 	} else if (timer->currentScale != 1 && this->currentTimeScale == FAST) {
 		timer->getTime(&t_spec);
 		timer->currentScale = 1;
 		cout << "spec sec:" << t_spec.tv_sec << "nsec:" << t_spec.tv_nsec << endl;
+		if(timer->isStopped() && timer->shouldContinue) timer->continueTimer();
+
 		timer->setTimer(t_spec.tv_sec/timeScaleFactor, t_spec.tv_nsec/timeScaleFactor);
 	} else if (this->currentTimeScale == STOPPED) {
 		timer->stopTimer();
+		timer->shouldContinue = true;
 	}
 }
 
@@ -115,6 +120,7 @@ void TimerManagement::setScaleTime(TIMESCALE scaleTime) {
 		for(int i = 0; i < data.size(); i++){
 			if (data.at(i)->scaleTime && data.at(i)->currentScale == 1) {
 				cout << "upscale timer " << i << endl;
+				if(data.at(i)->isStopped && data.at(i)->shouldContinue) data.at(i)->continueTimer();
 				data.at(i)->getTime(&t_spec);
 				data.at(i)->setTimer(t_spec.tv_sec*timeScaleFactor, t_spec.tv_nsec*timeScaleFactor);
 				data.at(i)->currentScale = timeScaleFactor;
@@ -125,6 +131,7 @@ void TimerManagement::setScaleTime(TIMESCALE scaleTime) {
 		for(int i = 0; i < data.size(); i++){
 			if (data.at(i)->scaleTime && data.at(i).currentScale != 1) {
 				cout << "upscale timer " << i << endl;
+				if(data.at(i)->isStopped && data.at(i)->shouldContinue) data.at(i)->continueTimer();
 				data.at(i)->getTime(&t_spec);
 				data.at(i)->setTimer(t_spec.tv_sec/timeScaleFactor, t_spec.tv_nsec/timeScaleFactor);
 				data.at(i)->currentScale = 1;
@@ -134,6 +141,7 @@ void TimerManagement::setScaleTime(TIMESCALE scaleTime) {
 		for(int i = 0; i < data.size(); i++){
 			if (data.at(i)->scaleTime) {
 				cout << "stop timer " << i << endl;
+				if(!data.at(i)->isStopped) data.at(i)->shouldContinue = true;
 				data.at(i)->stopTimer();
 			}
 		}

@@ -40,10 +40,12 @@ public:
 	void getTime(struct timespec *);
 	void stopTimer();
 	void continueTimer();
+	bool isStopped();
 	Timer();
 	virtual ~Timer();
 
 	bool scaleTime;
+	bool shouldContinue;
 	double currentScale;
 };
 
