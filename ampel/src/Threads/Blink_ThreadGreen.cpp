@@ -43,7 +43,7 @@ Blink_ThreadGreen* Blink_ThreadGreen::getInstance() {
  *  @param times bestimmt wie oft das gruene Licht blinken soll. 
  */
 Blink_ThreadGreen::Blink_ThreadGreen(void ) {
-	hal = HAL::getInstance();
+	led = LEDControllerThread::getInstance();
 
 	time = 0;
 	off = true;
@@ -69,21 +69,22 @@ Blink_ThreadGreen::~Blink_ThreadGreen() {
  * Der Thread endet nach Ende dieser Methode. 
  */
 void Blink_ThreadGreen::execute(void*){
-	while(1){
+	int run = 1;
+	while(run){
 		if(countBlink < 0){
-			hal->turn_greenLight_on();
-			this->stop();
+			led->setGreen(1);
+			run = 0;
 		}
 		while(countBlink > 0){
-			hal->turn_greenLight_on();
+			led->setGreen(1);
 			usleep(time);
-			hal->turn_greenLight_off();
+			led->setGreen(0);
 			usleep(time);
 			countBlink--;
 		}
 		if(countBlink == 0){
-			hal->turn_greenLight_off();
-			this->stop();
+			led->setGreen(0);
+			run = 0;
 		}
 	}
 }

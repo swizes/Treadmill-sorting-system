@@ -7,12 +7,14 @@
 #include "../Threads/CalibrateThread.h"
 #include "../BandController.h"
 #include "../Threads/GateControllerThread.h"
+#include "../Threads/SerialCommunicationThread.h"
 #include <cstdlib>
 #include <iostream>
 
 /*
  * PUK LIFE CYCLE:
  */
+
 
 class NotExist: public State {
 public:
@@ -90,7 +92,6 @@ public:
 	Is_In_Gate(Context* con);
 	virtual ~ Is_In_Gate();
 	virtual void Puck_in_Gate_false(void);
-	virtual void Metal_detection_true(void);
 private:
 	Is_In_Gate(const Is_In_Gate& other);
 	Is_In_Gate& operator=(const Is_In_Gate& other);
@@ -100,7 +101,7 @@ class Road_To_Sorting_Out: public State {
 public:
 	Road_To_Sorting_Out(Context* con);
 	virtual ~ Road_To_Sorting_Out();
-	virtual void Puck_in_Gate_true(void);
+	virtual void Slide_full_true(void);
 private:
 	Road_To_Sorting_Out(const Road_To_Sorting_Out& other);
 	Road_To_Sorting_Out& operator=(const Road_To_Sorting_Out& other);

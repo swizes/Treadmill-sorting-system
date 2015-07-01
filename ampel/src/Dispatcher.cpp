@@ -158,6 +158,7 @@ void Dispatcher:: listenForEvents(){
 			//log2 for changed registerbit
 			stateChanged = (float) log(stateChanged) / (float) log(2);
 
+
 			//Shift -> 0 or 1
 			val = !(val << stateChanged);
 

@@ -8,27 +8,34 @@
 #include "PuckStates.h"
 #include "ReadySend.h"
 
-ReadySend rdySend;
+
 static int rdyS = 0;
 
 Give_New_Puck::Give_New_Puck(Context* con): State::State(con){
 
+	ReadySend* rdySend = ReadySend::getInstance();
 
 	if(rdyS == 0){
-		rdySend.start(NULL);
+		rdySend->start(NULL);
 		rdyS = 1;
 	}
 
 	printf("Give_New_Puck()\n");
     HAL *hal = HAL::getInstance();
 
-    rdySend.setBusy(1);
-    rdySend.stop();
-    rdySend.start(NULL);
+    rdySend->setBusy(1);
+    rdySend->stop();
+    rdySend->start(NULL);
 
     //Receive FiFo Entry (Puck ID) from Band1
     puckStruct puck;
     ser.recvPacket(&puck);
+    static int i = 0;
+
+//    puck.id = i++;
+//    puck.holeOnTop = 0;
+//    puck.sizetyp = NOT_OK;
+//    puck.metal = 0;
 
     cout << "Puck ID: " << puck.id;
     cout << "    Puck Metal: " << puck.metal;
@@ -40,9 +47,9 @@ Give_New_Puck::Give_New_Puck(Context* con): State::State(con){
     this->con_ = new Context(p);
     this->con_->setState(this);
 
-    rdySend.setBusy(0);
-    rdySend.stop();
-    rdySend.start(NULL);
+    rdySend->setBusy(0);
+    rdySend->stop();
+    rdySend->start(NULL);
 
     int loop = 1;
 	while(loop){
@@ -53,12 +60,12 @@ Give_New_Puck::Give_New_Puck(Context* con): State::State(con){
             hal->turn_greenLight_off();
             loop = 0;
         }
-        if( hal->is_resetButton_pushed()==1){
-            hal->band_stop();
-            // Move to State: Working_Band2
-            new (this) Ready(this->con_);
-            loop=0;
-        }
+//        if( hal->is_resetButton_pushed()==1){
+//            hal->band_stop();
+//            // Move to State: Working_Band2
+//            new (this) Ready(this->con_);
+//            loop=0;
+//        }
     }
 }
 

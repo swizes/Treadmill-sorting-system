@@ -13,11 +13,12 @@
 enum SIZE{OK,NOT_OK,UNKNOWN};
 
 typedef struct{
-
+	int type;
 	bool metal;
 	bool holeOnTop;
 	bool needUserInteraction;
 	int size;
+	int sizeBand1;
 	SIZE sizetyp;
 	int id;
 
@@ -30,6 +31,7 @@ private:
 	bool holeOnTop;
 	bool needUserInteraction;
 	int size;
+	int sizeBand1;
 	SIZE sizeTyp;
 	int id;
 	static int idCount;
@@ -125,6 +127,14 @@ public:
 
 	void setSizeTyp(SIZE sizeTyp) {
 		this->sizeTyp = sizeTyp;
+	}
+
+	int getSizeBand1() const {
+		return sizeBand1;
+	}
+
+	void setSizeBand1(int sizeBand1) {
+		this->sizeBand1 = sizeBand1;
 	}
 };
 

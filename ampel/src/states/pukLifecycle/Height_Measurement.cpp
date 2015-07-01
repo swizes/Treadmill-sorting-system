@@ -27,7 +27,8 @@ Height_Measurement::Height_Measurement(Context* con): State::State(con){
 	//
 	int minHeight = ct->getBigPuck()-VARIANZ;
 	int maxHeight = ct->getBigPuck()+VARIANZ;
-	int hole = ct->getHoleHeight();
+	int holeNonMetal = ct->getHoleHeight();
+	int holeMetal = ct->getHoleHeightMetal();
 
 	//If height is bigger than maximum allowed height, go to error handling
 	//TODO: err code
@@ -41,6 +42,9 @@ Height_Measurement::Height_Measurement(Context* con): State::State(con){
 	this->con_->getPuck()->setSizeTyp(NOT_OK);
 	if(height >=  minHeight && height <= maxHeight){
 		this->con_->getPuck()->setSizeTyp(OK);
+		if(ct->isBand()){
+			this->con_->getPuck()->setSizeTyp(NOT_OK);
+		}
 		this->con_->getPuck()->setUserInteractionNeeded(true);
 
 	}
@@ -48,7 +52,8 @@ Height_Measurement::Height_Measurement(Context* con): State::State(con){
 	Dispatcher* dsp = Dispatcher::getInstance();
 	dsp->printListeners();
 
-	if(height >= hole-VARIANZ && height <= hole+VARIANZ){
+	if((height >= holeNonMetal-VARIANZ && height <= holeNonMetal+VARIANZ) ||
+			(height >= holeMetal- VARIANZ && height <= holeMetal+VARIANZ) ){
 		this->con_->getPuck()->setHoleOnTop(true);
 		this->con_->getPuck()->setUserInteractionNeeded(false);
 		this->con_->getPuck()->setSizeTyp(OK);

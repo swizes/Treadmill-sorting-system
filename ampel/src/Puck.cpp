@@ -14,6 +14,7 @@ Puck::Puck() {
 	metal = false;
 	holeOnTop = false;
 	size = 0;
+	sizeBand1 = 0;
 	//sizeTyp = UNKNOWN;
 	sizeTyp = NOT_OK;	//Default sortingPuck out
 	id = idCount++;
@@ -33,6 +34,7 @@ Puck::Puck(const Puck &obj){
 	metal = obj.metal;
 	holeOnTop = obj.holeOnTop;
 	size = obj.size;
+	sizeBand1 = obj.sizeBand1;
 	sizeTyp = obj.sizeTyp;
 	id = obj.id;
 	needUserInteraction = obj.needUserInteraction;
@@ -50,6 +52,7 @@ void Puck::setPuckFromStruct(puckStruct puckS) {
 	this->metal = puckS.metal;
 	this->holeOnTop = puckS.holeOnTop;
 	this->size = puckS.size;
+	this->sizeBand1 = puckS.sizeBand1;
 	this->sizeTyp = puckS.sizetyp;
 	this->id = puckS.id;
 	this->needUserInteraction = puckS.needUserInteraction;
@@ -63,6 +66,7 @@ puckStruct Puck::getPuckStruct(void){
 	puckS.sizetyp = this->sizeTyp;
 	puckS.id = this->id;
 	puckS.needUserInteraction = this->needUserInteraction;
+	puckS.sizeBand1 = this->sizeBand1;
 	return puckS;
 
 }

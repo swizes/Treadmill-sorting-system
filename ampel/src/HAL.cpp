@@ -341,6 +341,7 @@ int HAL:: is_resetButton_pushed(void){
 	if((in8(PORT_C) & BM_RESET_BUTTON_STATUS)){
 		resetCounter++;
 		resetButton = true;
+		cout << "IN IF"<< resetCounter << endl;
 	}
 	return resetButton;
 }
