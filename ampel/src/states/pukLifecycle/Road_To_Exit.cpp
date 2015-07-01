@@ -9,8 +9,15 @@
 
 Road_To_Exit::Road_To_Exit(Context* con): State::State(con){
 	HAL *hal= HAL::getInstance();
-
 	BandController* bc = BandController::getInstance();
+	CalibrateThread *cal = CalibrateThread::getInstance();
+
+	cal->msToTimespec((cal->getOutGateToL1Fast() - cal->getOutGateToL1Fast2Sd()), &this->con_->t_tooSoon);
+	this->con_->timer_tooSoon->setTimer(this->con_->t_tooSoon.tv_sec, this->con_->t_tooSoon.tv_nsec);
+
+	cal->msToTimespec((cal->getOutGateToL1Fast() + cal->getOutGateToL1Fast2Sd()) , &this->con_->t_tooLate);
+	this->con_->timer_tooLate->setTimer(this->con_->t_tooLate.tv_sec, this->con_->t_tooLate.tv_nsec);
+
 
 	this->con_->getPuck()->runBandFast();
 	bc->refreshBand();
@@ -38,8 +45,13 @@ void Road_To_Exit::Running_out_true(void){
 	// Stop listen to Event Transmission1
 	Dispatcher* dsp = Dispatcher::getInstance();
 	dsp->remListeners( this->con_, RUNNING_OUT_TRUE);
-
 	CalibrateThread* ct = CalibrateThread::getInstance();
+
+	this->con_->timer_tooSoon->getTime(&this->con_->t_tooSoon);
+	if(this->con_->t_tooSoon.tv_sec > 0 && this->con_->t_tooSoon.tv_nsec > 0){
+		con_->setErrcode(ERROR_2SOON_RtoE);
+		new (this) Error_Handling(this->con_);
+	}
 
 	//Band2
 	if(ct->isBand() == 1){

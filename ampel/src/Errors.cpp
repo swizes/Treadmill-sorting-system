@@ -9,7 +9,7 @@
 #include <stdio.h>
 
 
-void errors_print(int errcode){
+int  errors_print(int errcode){
     printf("[ERROR]: ");
     switch(errcode){
         
@@ -41,6 +41,9 @@ void errors_print(int errcode){
     case ERROR_TIMOUT_FP2IiS:
         printf("timeout from <Flipping Puck> to <Is In Slide>");
         break;
+    case ERROR_TIMOUT_RtoE:
+		printf(" timeout in <Road to Exit>");
+		break;
         
     // TooSoon
     case ERROR_2SOON_Birth2RtoH:
@@ -70,6 +73,9 @@ void errors_print(int errcode){
     case ERROR_2SOON_FP2IiS:
         printf("too soon from <Flipping Puck> to <Is In Slide>");
         break;
+    case ERROR_2SOON_RtoE:
+    	printf(" too soon in <Road to Exit>");
+    	break;
 
         
     //Other
@@ -78,6 +84,9 @@ void errors_print(int errcode){
         break;
     case ERROR_MAX_PUCKS:
     	printf("maximum pucks on band reached");
+		break;
+    case ERROR_2BIG4PUCK:
+    	printf("object on line is too big");
 		break;
     
  
@@ -89,7 +98,7 @@ void errors_print(int errcode){
     
     printf("\n");
 
- //return errcode;
+ return errcode;
 }
  
  

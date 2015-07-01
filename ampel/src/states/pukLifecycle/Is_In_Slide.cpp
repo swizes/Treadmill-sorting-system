@@ -8,7 +8,7 @@
 
 #include "PuckStates.h"
 
-Timer* timer;
+
 
 Is_In_Slide::Is_In_Slide(Context* con): State::State(con){
 
@@ -50,7 +50,8 @@ Is_In_Slide::Is_In_Slide(Context* con): State::State(con){
 
 	if(hal->is_slide_full()){
 		hal->band_stop();
-		cout << "ERROR SLIDE FULL" << endl;
+		con_->setErrcode(ERROR_SLIDEFULL);
+		new (this) Error_Handling(this->con_);
 	}
 
 }

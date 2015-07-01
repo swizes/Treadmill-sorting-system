@@ -16,6 +16,7 @@
  #define ERROR_TIMOUT_SfH2RtoSO     106 /* timeout from <Search for Hole> to <Road to Sorting Out> */
  #define ERROR_TIMOUT_RtoSO2FP      107 /* timeout from <Road to Sorting Out> to <Flipping Puck> */
  #define ERROR_TIMOUT_FP2IiS        108 /* timeout from <Flipping Puck> to <Is In Slide> */
+ #define ERROR_TIMOUT_RtoE			109 /*  timeout in <Road to Exit> */
  
  // TooSoon
  #define ERROR_2SOON_Birth2RtoH    200 /* too soon from <Birth> to <Road to Height> */
@@ -27,9 +28,10 @@
  #define ERROR_2SOON_SfH2RtoSO     206 /* too soon from <Search for Hole> to <Road to Sorting Out> */
  #define ERROR_2SOON_RtoSO2FP      207 /* too soon from <Road to Sorting Out> to <Flipping Puck> */
  #define ERROR_2SOON_FP2IiS        208 /* too soon from <Flipping Puck> to <Is In Slide> */
- 
+ #define ERROR_2SOON_RtoE          209 /* too soon in <Road to Exit> */
  //
 #define ERROR_SLIDEFULL            300 /* slide is full */
 #define ERROR_MAX_PUCKS            301 /* maximum pucks on band reached */
+#define ERROR_2BIG4PUCK            302 /* object on line is too big */
 
-void errors_print(int errcode);
+int errors_print(int errcode);

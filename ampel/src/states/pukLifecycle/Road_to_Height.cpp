@@ -5,6 +5,7 @@
  *      Author: Roland
  */
 #include "PuckStates.h"
+#include "Errors.h"
 
 
 Road_to_Height::Road_to_Height(Context* con): State::State(con){
@@ -15,11 +16,11 @@ Road_to_Height::Road_to_Height(Context* con): State::State(con){
 
 
 	cal->msToTimespec(cal->getL0toHeightFast() - cal->getL0toHeightFast2Sd(), &this->con_->t_tooSoon);
-	this->con_->timer_tooSoon->setTimer(this->con_->t_tooSoon.tv_sec, this->con_->t_tooSoon.tv_nsec, true);
+	this->con_->timer_tooSoon->setTimer(this->con_->t_tooSoon.tv_sec, this->con_->t_tooSoon.tv_nsec);
 
 	cout << "Road To Height ----- PuckId: " << this->con_->getPuck()->getId() << endl;
 	cal->msToTimespec(cal->getL0toHeightFast() + cal->getL0toHeightFast2Sd() , &this->con_->t_tooLate);
-	this->con_->timer_tooLate->setTimer(this->con_->t_tooLate.tv_sec, this->con_->t_tooLate.tv_nsec, true);
+	this->con_->timer_tooLate->setTimer(this->con_->t_tooLate.tv_sec, this->con_->t_tooLate.tv_nsec);
 
 
 }
@@ -38,7 +39,8 @@ void Road_to_Height::In_Height_true (void){
 //	CalibrateThread *cal = CalibrateThread::getInstance();
 	this->con_->timer_tooSoon->getTime(&this->con_->t_tooSoon);
 	if(this->con_->t_tooSoon.tv_sec > 0 && this->con_->t_tooSoon.tv_nsec > 0){
-		cout << "ERROR: PUCK ZUVIEL AUF BAND" << endl;
+		con_->setErrcode(ERROR_2SOON_RtoH2HM);
+		new (this) Error_Handling(this->con_);
 	}
 
 //	HAL *hal = HAL::getInstance();

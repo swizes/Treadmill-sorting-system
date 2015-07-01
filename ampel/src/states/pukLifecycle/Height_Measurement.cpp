@@ -48,6 +48,10 @@ Height_Measurement::Height_Measurement(Context* con): State::State(con){
 		this->con_->getPuck()->setUserInteractionNeeded(true);
 
 	}
+	if(height > maxHeight){
+		con_->setErrcode(ERROR_2BIG4PUCK);
+		new (this) Error_Handling(this->con_);
+	}
 
 	Dispatcher* dsp = Dispatcher::getInstance();
 	dsp->printListeners();
