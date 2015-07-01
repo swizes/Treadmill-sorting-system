@@ -126,7 +126,7 @@ void Timer_Test_Thread::test2() {
 	cout << "timeScale test" << endl;
 	Timer timer1;
 	TimerManagement *timeM = TimerManagement::getInstance();
-	timeM->setTimeScaleFactor(0.5);
+	timeM->setTimeScaleFactor(2);
 	timeM->setScaleTime(SLOW);
 	clock_gettime( CLOCK_REALTIME, &t0 );
 	cout << "start at " << t0.tv_sec << ":" << t0.tv_nsec << endl;
@@ -135,7 +135,7 @@ void Timer_Test_Thread::test2() {
 	cout << "end at " << t1.tv_sec << ":" << t1.tv_nsec << endl;
 	cout << "diff: " << t1.tv_sec - t0.tv_sec << ":" << (t1.tv_nsec - t0.tv_nsec) / 1000000 << ":" << ((t1.tv_nsec - t0.tv_nsec) % 1000000) / 1000 << endl;
 
-	cout << "expected 1 sec" << endl;
+	cout << "expected 4 sec" << endl;
 
 	cout << "multi timeScale test" << endl;
 	Timer timer2;
@@ -160,13 +160,15 @@ void Timer_Test_Thread::test2() {
 	timer3.getTime(&ts3);
 	cout << "timer2:" << ts2.tv_sec << ":" << ts2.tv_nsec << endl;
 	cout << "timer3:" << ts3.tv_sec << ":" << ts3.tv_nsec << endl;
+	cout << "expected 4 and 8" << endl;
 
-	delay(2000);
+	cout << "wait 4 secs" << endl;
+	delay(4000);
 	timer2.getTime(&ts2);
 	timer3.getTime(&ts3);
 	cout << "timer2:" << ts2.tv_sec << ":" << ts2.tv_nsec << endl;
 	cout << "timer3:" << ts3.tv_sec << ":" << ts3.tv_nsec << endl;
-	cout << "expected 2 and 4" << endl;
+	cout << "expected 0 and 4" << endl;
 
 	cout << "set fast" << endl;
 	timeM->setScaleTime(FAST);
@@ -174,7 +176,7 @@ void Timer_Test_Thread::test2() {
 	timer3.getTime(&ts3);
 	cout << "timer2:" << ts2.tv_sec << ":" << ts2.tv_nsec << endl;
 	cout << "timer3:" << ts3.tv_sec << ":" << ts3.tv_nsec << endl;
-	cout << "expected 1 and 2" << endl;
+	cout << "expected 0 and 2" << endl;
 }
 
 void Timer_Test_Thread::shutdown(){
