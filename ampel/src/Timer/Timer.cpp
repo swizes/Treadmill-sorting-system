@@ -8,8 +8,8 @@
 #include "Timer.h"
 
 TimerManagement *timeM;
-int channel;
-int connection;
+int channel = -1;
+int connection = -1;
 
 
 Timer::Timer() {
@@ -18,7 +18,8 @@ Timer::Timer() {
 	timeM = time;
 	timerid = -1;
 	stop = false;
-
+	currentScale = 1;
+	shouldContinue = false;
 }
 
 Timer::~Timer() {
@@ -27,7 +28,6 @@ Timer::~Timer() {
 }
 
 void Timer::createTimer(){
-
 	if((timer_create(CLOCK_REALTIME, &timerEvent, &timerid))==-1){
 		std::cout << "Timer not created" << std::endl;
 		exit(1);
@@ -56,11 +56,13 @@ int Timer::createTimerPulse(){
 
 }
 
-void Timer::setTimer(int s, int ns){
+void Timer::setTimer(int s, int ns, bool scaleTime, bool shouldUpdate){
 	if(timerid == -1){
 		createTimer();
 	}
-	if(timerid != -1 && stop){
+
+	if(timerid != -1 ){
+		this->scaleTime = scaleTime;
 		val.it_value.tv_sec = s;
 		val.it_value.tv_nsec= ns;
 		val.it_interval.tv_sec = 0;
@@ -74,6 +76,15 @@ void Timer::setTimer(int s, int ns){
 		}
 	}
 
+	if(shouldUpdate) timeM->updateTimer(this);
+}
+
+void Timer::setTimer(int s, int ns, bool scaleTime){
+	setTimer(s, ns, scaleTime, true);
+}
+
+void Timer::setTimer(int s, int ns) {
+	setTimer(s, ns, scaleTime);
 }
 
 void Timer::deleteTimer(){
@@ -87,7 +98,7 @@ void Timer::deleteTimer(){
 void Timer::stopTimer(){
 	if(timerid != -1 && !stop){
 		getTime(&stopval);
-		setTimer(0,0);
+		setTimer(900000,0, scaleTime, false);
 		stop = 1;
 	}
 
@@ -117,14 +128,19 @@ void Timer::getTime(struct timespec *offset){
 	}
 
 }
-void Timer::waitForTimeOut(int s, int ns){
 
+void Timer::waitForTimeOut(int s, int ns, bool scaleTime){
 	struct _pulse pulse;
+	this->scaleTime = scaleTime;
 	int channel = createTimerPulse();
 	setTimer(s,ns);
 	//Timer timer;
 	MsgReceivePulse(channel, &pulse, sizeof(pulse), NULL);
 	ConnectDetach(connection);
+}
+
+void Timer::waitForTimeOut(int s, int ns){
+	waitForTimeOut(s, ns, false);
 }
 
 void Timer::waitForTimeOut(){
@@ -136,5 +152,8 @@ void Timer::waitForTimeOut(){
 
 }
 
+bool Timer::isStopped() {
+	return stop;
+}
 
 

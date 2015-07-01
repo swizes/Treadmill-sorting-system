@@ -24,11 +24,12 @@ SerialCommunicationThread* SerialCommunicationThread::getInstance() {
 }
 
 SerialCommunicationThread::SerialCommunicationThread() {
-	cout << "ReadySend" << endl;
+	cout << "ctor SerialCommunicationThread" << endl;
 	type = 1;
 }
 
 SerialCommunicationThread::~SerialCommunicationThread() {
+	cout << "dtor SerialCommunicationThread" << endl;
 	// TODO Auto-generated destructor stub
 }
 
@@ -36,77 +37,65 @@ SerialCommunicationThread::~SerialCommunicationThread() {
 
 void SerialCommunicationThread::execute(void* con){
 	Serial ser;
-	Packet p;
 	while(1){
-		p.num = this->type;
-		ser.sendPacket(&p);
-		ser.recvPacket(&p);
-		/*nothing = 0;
-		  error = 1;
-		  receivePuck = 2;
-		  sendPuck = 3;
-		 */
-		switch(p.num){
-			case 0:
-			case 1:
-				cout << "Error Handling"  << endl;
-			case 2:
-				cout << "Send Request" << endl;
-				if (type == 3){
-					ser.sendPacket(&ps);
-					received = 1;
-					ser.recvPacket(&p);
-					type = 0;
-				}
-			case 3:
-				cout << "Receive Request"  << endl;
-				if (type == 2){
-					ser.sendPacket(&p);
-					ser.recvPacket(&ps);
-					type = 0;
-				}
-			default: cout <<"error Wrong Code" << endl;
+		puckStruct puck;
+		puck.type = 0;
+		if(ps.type == 3 || ps.type == 2){
+			ser.sendPacket(&ps);
+		}else{
+			ser.sendPacket(&puck);
 		}
-		//Timer time;
-		//time.waitForTimeOut(0,100000000);
+		//cout << "Before Packet" << endl;
+		ser.recvPacket(&puck);
+		//cout << "Packet" << endl;
+		ps = puck;
+		switch(ps.type){
+			case 0:
+			case 1: pthread_cond_signal( &condSend ); cout << "Send Puck" << endl;// 0 = NIX; 1= recPuck; 2= sendPuck 3= Error
+			case 2:	pthread_cond_signal( &condRec ); cout << "Receive Puck" << endl;
+			case 3: cout << "ERROR" << endl;
+			//default: cout << "Wrong Code" << (int)ps.type << endl;
+		}
 		delay(100);
-		//cout << "Ready" << endl;
 	}
 
 }
 
 void SerialCommunicationThread::shutdown(){
-
+	cout << "Shutdown SerialCommunication" << endl;
 }
 
-void SerialCommunicationThread::receivePuck(Puck *puck){
-	type = 2;
-	int i = 1;
-	while(i){
-			delay(100);
-			if(received ==1){
-				puck->setPuckFromStruct(ps);
-				i = 0;
-				received = 0;
-			}
-	}
+void SerialCommunicationThread::receivePuck(puckStruct *puck){
+	cout << "Receive Puck" << endl;
+	pthread_cond_wait( &condRec, &mutexRec );
+	copyPuck(puck);
 }
 
-void SerialCommunicationThread::sendPuck(Puck *puck){
-	ps = puck->getPuckStruct();
-	type = 3;
+void SerialCommunicationThread::sendPuck(puckStruct *puck){
+	cout << "Send Puck" << endl;
+	copyPuck(puck);
+	ps.type = 2;
+	pthread_cond_wait( &condSend, &mutexSend );
 }
 
 void SerialCommunicationThread::sendError(){
-	type = 1;
+	ps.type =3;
+
+}
+
+void SerialCommunicationThread::copyPuck(puckStruct *puck){
+	ps.type = puck->type;
+	ps.id = puck->id;
+	ps.holeOnTop = puck->holeOnTop;
+	ps.metal = puck->metal;
+	ps.needUserInteraction = puck->needUserInteraction;
+	ps.size = puck->size;
+	ps.sizeBand1 = puck->size;
+	ps.sizetyp = puck->sizetyp;
+	ps.type = puck->type;
 }
 
 void SerialCommunicationThread::busy(){
-	type = 0;
+
 }
 
-/*void ReadSend::rdy(){
-	stop();
-	type = 1;
-	start();
-}*/

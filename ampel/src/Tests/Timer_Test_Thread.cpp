@@ -14,6 +14,7 @@
 #include "../Timer/Timer.h"
 #include <time.h>
 
+TestClass *tclass;
 
 Timer_Test_Thread::Timer_Test_Thread() {
 	cout << "ctor Timer Test" << endl;
@@ -24,7 +25,13 @@ Timer_Test_Thread::~Timer_Test_Thread() {
 }
 
 void Timer_Test_Thread::execute(void*){
+	//test1();
+	test2();
+	//tclass = new TestClass();
+	//tclass->waitForTimeoutFunc();
+}
 
+void Timer_Test_Thread::test1() {
 	TimerManagement *timeM = TimerManagement::getInstance();
 	Timer timer2;
 	timer2.createTimer();
@@ -86,29 +93,115 @@ void Timer_Test_Thread::execute(void*){
 
 
 
-    cout << "Test erfolgreich Timer" << endl;
+	cout << "Test erfolgreich Timer" << endl;
 
-    cout << "Pulse Timer" << endl;
-    timeM->deleteTimer();
-    Timer pulseTimer;
+	cout << "Pulse Timer" << endl;
+	timeM->deleteTimer();
+	Timer pulseTimer;
 
-    struct _pulse  pulse;
-    int channel = pulseTimer.createTimerPulse();
-    pulseTimer.setTimer(2,0);
-    timeM->stopTimer();
-    delay(1000);
-    timeM->continueTimer();
-    //Blockiert bis Pulse
-    MsgReceivePulse(channel, &pulse, sizeof (pulse), NULL);
-
-
+	struct _pulse  pulse;
+	int channel = pulseTimer.createTimerPulse();
+	pulseTimer.setTimer(2,0);
+	timeM->stopTimer();
+	delay(1000);
+	timeM->continueTimer();
+	//Blockiert bis Pulse
+	MsgReceivePulse(channel, &pulse, sizeof (pulse), NULL);
 }
 
+void Timer_Test_Thread::test2() {
+	cout << "test timing" << endl;
+	Timer timer0;
+
+	struct timespec t0, t1;
+	clock_gettime( CLOCK_REALTIME, &t0 );
+	cout << "start at " << t0.tv_sec << ":" << t0.tv_nsec << endl;
+	timer0.waitForTimeOut(2,0);
+	clock_gettime( CLOCK_REALTIME, &t1 );
+	cout << "end at " << t1.tv_sec << ":" << t1.tv_nsec << endl;
+	cout << "diff: " << t1.tv_sec - t0.tv_sec << ":" << (t1.tv_nsec - t0.tv_nsec) / 1000000 << ":" << ((t1.tv_nsec - t0.tv_nsec) % 1000000) / 1000 << endl;
+
+	cout << "expected 2 secs" << endl;
+
+	cout << "timeScale test" << endl;
+	Timer timer1;
+	TimerManagement *timeM = TimerManagement::getInstance();
+	timeM->setTimeScaleFactor(2);
+	timeM->setScaleTime(SLOW);
+	clock_gettime( CLOCK_REALTIME, &t0 );
+	cout << "start at " << t0.tv_sec << ":" << t0.tv_nsec << endl;
+	timer1.waitForTimeOut(2,0, true);
+	clock_gettime( CLOCK_REALTIME, &t1 );
+	cout << "end at " << t1.tv_sec << ":" << t1.tv_nsec << endl;
+	cout << "diff: " << t1.tv_sec - t0.tv_sec << ":" << (t1.tv_nsec - t0.tv_nsec) / 1000000 << ":" << ((t1.tv_nsec - t0.tv_nsec) % 1000000) / 1000 << endl;
+
+	cout << "expected 4 sec" << endl;
+
+	cout << "multi timeScale test" << endl;
+	Timer timer2;
+	Timer timer3;
+	timespec ts2, ts3;
+
+	timer2.setTimer(2,0,true);
+	timer3.setTimer(4,0,true);
+
+	timeM->setTimeScaleFactor(2.0);
+
+	cout << "set stopped" << endl;
+	timeM->setScaleTime(STOPPED);
+
+	cout << "wait 4 secs..";
+	delay(4000);
+	cout << " done" << endl;
+
+	cout << "set slow" << endl;
+	timeM->setScaleTime(SLOW);
+	timer2.getTime(&ts2);
+	timer3.getTime(&ts3);
+	cout << "timer2:" << ts2.tv_sec << ":" << ts2.tv_nsec << endl;
+	cout << "timer3:" << ts3.tv_sec << ":" << ts3.tv_nsec << endl;
+	cout << "expected 4 and 8" << endl;
+
+	cout << "wait 4 secs" << endl;
+	delay(4000);
+	timer2.getTime(&ts2);
+	timer3.getTime(&ts3);
+	cout << "timer2:" << ts2.tv_sec << ":" << ts2.tv_nsec << endl;
+	cout << "timer3:" << ts3.tv_sec << ":" << ts3.tv_nsec << endl;
+	cout << "expected 0 and 4" << endl;
+
+	cout << "set fast" << endl;
+	timeM->setScaleTime(FAST);
+	timer2.getTime(&ts2);
+	timer3.getTime(&ts3);
+	cout << "timer2:" << ts2.tv_sec << ":" << ts2.tv_nsec << endl;
+	cout << "timer3:" << ts3.tv_sec << ":" << ts3.tv_nsec << endl;
+	cout << "expected 0 and 2" << endl;
+}
 
 void Timer_Test_Thread::shutdown(){
     cout << "Timer Test shutdown" << endl;
 }
 
+void Timer_Test_Thread::getTestClass(TestClass *testclass) {
+	testclass = this->tclass;
+}
+
+void TestClass::waitForTimeoutFunc() {
+	Timer t;
+
+	cout << "wait for timeout test func. Waiting.." << endl;
+	t.waitForTimeOut(8,0);
+	cout << "after wait for timeout" << endl;
+}
 
 
+void Timer_Test_Thread::killTestClass(TestClass *testclass)
+{
+	Timer t2;
 
+	cout << "kill testclass in 2 secs..." << endl;
+	t2.waitForTimeOut(2,0);
+	delete(testclass);
+	cout << "testclass deleted" << endl;
+}

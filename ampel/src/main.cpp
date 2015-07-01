@@ -23,14 +23,19 @@
 #include "HAL.h"
 #include "states/ReadySend.h"
 #include "Threads/DispatcherThread.h"
+#include "Threads/SerialCommunicationThread.h"
 #include "Threads/Blink_ThreadRed.h"
 #include "BandController.h"
 #include "Tests/BlinkTest.h"
 #include "Threads/E_Stop_Thread.h"
+#include "Tests/Timer_Test_Thread.h"
 
 using namespace std;
 
 int main(int argc, char *argv[]) {
+	SerialCommunicationThread *sct = SerialCommunicationThread::getInstance();
+	sct->start(NULL);
+
 	printf("Version 0.9\n");
     // Baut Verbindung zu Simulation auf
 	#ifdef SIMULATION
@@ -39,7 +44,18 @@ int main(int argc, char *argv[]) {
     #endif
 	//RUN Calibration
 
+	/*
+	Timer_Test_Thread ttest;
+	cout << "starte Timer Test Thread" << endl;
+	ttest.start(NULL);
 
+//	TestClass *tc;
+//	ttest.getTestClass(tc);
+//	ttest.killTestClass(tc);
+
+	ttest.join();
+	return 0;
+*/
 
 //	//EINRICHBETRIEB
 //	HAL *hal = HAL::getInstance();
