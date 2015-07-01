@@ -6,7 +6,7 @@
  */
 #include "PuckStates.h"
 
-
+Timer *timer;
 Birth::Birth(Context* con): State::State(con){
 
 	BandController* bc = BandController::getInstance();
@@ -18,7 +18,10 @@ Birth::Birth(Context* con): State::State(con){
 	dsp->addListeners( this->con_, RUNNING_IN_FALSE);
 
 	std::cout << "Birth ----- PuckId: " << this->con_->getPuck()->getId() << std::endl;
-
+	timer = new Timer();
+	cout << "create timer" << endl;
+	//timer->waitForTimeOut(10,0);
+	cout << "after create timer" << endl;
 }
 
 Birth::~Birth(){
@@ -34,6 +37,8 @@ void Birth::Running_In_false(void){
 
 	// Move to State Road to Height.
 	new (this) Road_to_Height(this->con_);
+	cout << "after road to height create" << endl;
+	//delete(this);
 }
 
 

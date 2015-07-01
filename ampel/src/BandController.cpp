@@ -6,12 +6,14 @@
  */
 
 #include "BandController.h"
+#include "Timer/TimerManagement.h"
 
 using namespace std;
 
 
 BandController* BandController::instance = NULL;
 HAL *hal = HAL::getInstance();
+TimerManagement* timerManager = TimerManagement::getInstance();
 
 BandController* BandController::getInstance(){
 	static pthread_mutex_t mtx_ = PTHREAD_MUTEX_INITIALIZER;
@@ -118,10 +120,13 @@ void BandController::refreshBand(){
 
 	if(stop||hal->is_puck_running_out()){
 		hal->band_stop();
+		timerManager->setScaleTime(STOPPED);
 	}else if(slow){
 		hal->band_right_slowly();
+		timerManager->setScaleTime(SLOW);
 	}else if(fast){
 		hal->band_right_normal();
+		timerManager->setScaleTime(FAST);
 	}
 
 }
