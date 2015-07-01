@@ -24,6 +24,8 @@ SerialCommunicationThread* SerialCommunicationThread::getInstance() {
 }
 
 SerialCommunicationThread::SerialCommunicationThread() {
+	pthread_mutex_lock( &mutexSend );
+	pthread_mutex_lock( &mutexRec );
 	cout << "ctor SerialCommunicationThread" << endl;
 	type = 1;
 }
@@ -68,16 +70,18 @@ void SerialCommunicationThread::shutdown(){
 }
 
 void SerialCommunicationThread::receivePuck(puckStruct *puck){
-	cout << "Receive Puck" << endl;
+	cout << "Receive Puck Block" << endl;
 	pthread_cond_wait( &condRec, &mutexRec );
 	copyPuck(puck);
+	cout << "Receive Puck UnBlock" << endl;
 }
 
 void SerialCommunicationThread::sendPuck(puckStruct *puck){
-	cout << "Send Puck" << endl;
+	cout << "Send Puck Block" << endl;
 	copyPuck(puck);
 	ps.type = 2;
 	pthread_cond_wait( &condSend, &mutexSend );
+	cout << "Send Puck UnBlock" << endl;
 }
 
 void SerialCommunicationThread::sendError(){
