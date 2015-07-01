@@ -23,8 +23,9 @@ using namespace thread;
 
 class SerialCommunicationThread: public HAWThread{
 public:
-	void receivePuck(Puck *puck);
-	void sendPuck(Puck *puck);
+	void receivePuck(puckStruct *puck);
+	void sendPuck(puckStruct *puck);
+	void copyPuck(puckStruct *puck);
 	void sendError();
 	void busy();
 	void rdy();
@@ -50,6 +51,10 @@ private:
 	bool received = 0;
 	static pthread_mutex_t mtx_; ///< Synchronisationsmutex.
 	static SerialCommunicationThread* instance_;
+	pthread_mutex_t mutexSend = PTHREAD_MUTEX_INITIALIZER;
+	pthread_cond_t condSend = PTHREAD_COND_INITIALIZER;
+	pthread_mutex_t mutexRec = PTHREAD_MUTEX_INITIALIZER;
+	pthread_cond_t condRec = PTHREAD_COND_INITIALIZER;
 };
 
 #endif /* SERIALCOMMUNICATIONTHREAD_H_ */

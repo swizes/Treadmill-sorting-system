@@ -23,6 +23,7 @@
 #include "HAL.h"
 #include "states/ReadySend.h"
 #include "Threads/DispatcherThread.h"
+#include "Threads/SerialCommunicationThread.h"
 #include "Threads/Blink_ThreadRed.h"
 #include "BandController.h"
 #include "Tests/BlinkTest.h"
@@ -31,6 +32,9 @@
 using namespace std;
 
 int main(int argc, char *argv[]) {
+	SerialCommunicationThread *sct = SerialCommunicationThread::getInstance();
+	sct->start(NULL);
+
 	printf("Version 0.9\n");
     // Baut Verbindung zu Simulation auf
 	#ifdef SIMULATION
