@@ -16,11 +16,11 @@ Road_to_Height::Road_to_Height(Context* con): State::State(con){
 
 
 	cal->msToTimespec(cal->getL0toHeightFast() - cal->getL0toHeightFast2Sd(), &this->con_->t_tooSoon);
-	this->con_->timer_tooSoon->setTimer(this->con_->t_tooSoon.tv_sec, this->con_->t_tooSoon.tv_nsec);
+	this->con_->timer_tooSoon->setTimer(this->con_->t_tooSoon.tv_sec, this->con_->t_tooSoon.tv_nsec, true);
 
 	cout << "Road To Height ----- PuckId: " << this->con_->getPuck()->getId() << endl;
 	cal->msToTimespec(cal->getL0toHeightFast() + cal->getL0toHeightFast2Sd() , &this->con_->t_tooLate);
-	this->con_->timer_tooLate->setTimer(this->con_->t_tooLate.tv_sec, this->con_->t_tooLate.tv_nsec);
+	this->con_->timer_tooLate->setTimer(this->con_->t_tooLate.tv_sec, this->con_->t_tooLate.tv_nsec, true);
 
 
 }

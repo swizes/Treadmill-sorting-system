@@ -18,10 +18,10 @@ Road_to_Metal::Road_to_Metal(Context* con): State::State(con){
 	cout << "Road To Metal ----- PuckId: " << this->con_->getPuck()->getId() << endl;
 
 	cal->msToTimespec((cal->getHeightToGateFast() - cal->getHeightToGateFast2Sd()), &this->con_->t_tooSoon);
-	this->con_->timer_tooSoon->setTimer(this->con_->t_tooSoon.tv_sec, this->con_->t_tooSoon.tv_nsec);
+	this->con_->timer_tooSoon->setTimer(this->con_->t_tooSoon.tv_sec, this->con_->t_tooSoon.tv_nsec, true);
 
 	cal->msToTimespec(cal->getHeightToGateFast() + cal->getHeightToGateFast2Sd() , &this->con_->t_tooLate);
-	this->con_->timer_tooLate->setTimer(this->con_->t_tooLate.tv_sec, this->con_->t_tooLate.tv_nsec);
+	this->con_->timer_tooLate->setTimer(this->con_->t_tooLate.tv_sec, this->con_->t_tooLate.tv_nsec, true);
 
 }
 

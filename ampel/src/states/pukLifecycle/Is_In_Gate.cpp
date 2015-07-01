@@ -22,10 +22,10 @@ Is_In_Gate::Is_In_Gate(Context* con) :
 
 
 	cal->msToTimespec((cal->getHeightToGateFast()), &this->con_->t_tooSoon);
-	this->con_->timer_tooSoon->setTimer(this->con_->t_tooSoon.tv_sec, this->con_->t_tooSoon.tv_nsec);
+	this->con_->timer_tooSoon->setTimer(this->con_->t_tooSoon.tv_sec, this->con_->t_tooSoon.tv_nsec, true);
 
 	cal->msToTimespec(cal->getHeightToGateFast() + (3*cal->getHeightToGateFast2Sd()) , &this->con_->t_tooLate);
-	this->con_->timer_tooLate->setTimer(this->con_->t_tooLate.tv_sec, this->con_->t_tooLate.tv_nsec);
+	this->con_->timer_tooLate->setTimer(this->con_->t_tooLate.tv_sec, this->con_->t_tooLate.tv_nsec, true);
 
 
 	if (cal->isBand()) { //Band2

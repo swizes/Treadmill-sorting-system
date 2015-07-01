@@ -13,10 +13,10 @@ Road_To_Exit::Road_To_Exit(Context* con): State::State(con){
 	CalibrateThread *cal = CalibrateThread::getInstance();
 
 	cal->msToTimespec((cal->getOutGateToL1Fast() - cal->getOutGateToL1Fast2Sd()), &this->con_->t_tooSoon);
-	this->con_->timer_tooSoon->setTimer(this->con_->t_tooSoon.tv_sec, this->con_->t_tooSoon.tv_nsec);
+	this->con_->timer_tooSoon->setTimer(this->con_->t_tooSoon.tv_sec, this->con_->t_tooSoon.tv_nsec, true);
 
 	cal->msToTimespec((cal->getOutGateToL1Fast() + cal->getOutGateToL1Fast2Sd()) , &this->con_->t_tooLate);
-	this->con_->timer_tooLate->setTimer(this->con_->t_tooLate.tv_sec, this->con_->t_tooLate.tv_nsec);
+	this->con_->timer_tooLate->setTimer(this->con_->t_tooLate.tv_sec, this->con_->t_tooLate.tv_nsec, true);
 
 
 	this->con_->getPuck()->runBandFast();
