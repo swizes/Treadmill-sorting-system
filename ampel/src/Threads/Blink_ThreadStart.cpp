@@ -1,5 +1,5 @@
 /**
- * @file    Blink_ThreadYellow.cpp
+ * @file    Blink_Thread.cpp
  * @author
  * @version 0.1
  *
@@ -8,7 +8,7 @@
 
 #include <unistd.h>
 #include <time.h>
-#include "Blink_ThreadYellow.h"
+#include "Blink_ThreadStart.h"
 #include "lib/Lock.h"
 #include "lib/HWaccess.h"
 
@@ -16,20 +16,20 @@
 
 
 
-Blink_ThreadYellow* Blink_ThreadYellow::instance_ = NULL;
+Blink_ThreadStart* Blink_ThreadStart::instance_ = NULL;
 
 /**
  * c'tor for the Thread-safe singleton Calibration implementation
  * @param none
  * @return A Pointer to the Singleton Calibration Object
  */
-Blink_ThreadYellow* Blink_ThreadYellow::getInstance() {
+Blink_ThreadStart* Blink_ThreadStart::getInstance() {
 	static pthread_mutex_t mtx_ = PTHREAD_MUTEX_INITIALIZER;
 
 	if (instance_ == NULL) {
 		pthread_mutex_lock(&mtx_);
 		if (instance_ == NULL) {
-			instance_ = new Blink_ThreadYellow();
+			instance_ = new Blink_ThreadStart();
 		}
 		pthread_mutex_unlock(&mtx_);
 	}
@@ -42,8 +42,9 @@ Blink_ThreadYellow* Blink_ThreadYellow::getInstance() {
  *  Genauer beschreibender Text für Doxygen...
  *  @param times bestimmt wie oft das gruene Licht blinken soll. 
  */
-Blink_ThreadYellow::Blink_ThreadYellow(void ) {
-	lct = LEDControllerThread::getInstance();
+Blink_ThreadStart::Blink_ThreadStart(void ) {
+	led = LEDControllerThread::getInstance();
+
 	time = 0;
 	off = true;
 	countBlink = 0;
@@ -57,7 +58,7 @@ Blink_ThreadYellow::Blink_ThreadYellow(void ) {
  * beim Bereinigen des Stacks, bei Methodenende automatisch deallokiert.
  * --> Automatischer Dekonstruktoraufruf.  
  */
-Blink_ThreadYellow::~Blink_ThreadYellow() {
+Blink_ThreadStart::~Blink_ThreadStart() {
     cout << "dtor: Blink_Thread" << endl;
 }
 
@@ -67,22 +68,22 @@ Blink_ThreadYellow::~Blink_ThreadYellow() {
  * Die oberklasse HAW-Thread erzwingt die Implementierung der execute Methode.  
  * Der Thread endet nach Ende dieser Methode. 
  */
-void Blink_ThreadYellow::execute(void*){
+void Blink_ThreadStart::execute(void*){
 	int run = 1;
 	while(run){
 		if(countBlink < 0){
-			lct->setYellow(1);
+			led->setStart(1);
 			run = 0;
 		}
 		while(countBlink > 0){
-			lct->setYellow(1);
+			led->setStart(1);
 			usleep(time);
-			lct->setYellow(0);
+			led->setStart(0);
 			usleep(time);
 			countBlink--;
 		}
 		if(countBlink == 0){
-			lct->setYellow(0);
+			led->setStart(0);
 			run = 0;
 		}
 	}
@@ -95,11 +96,11 @@ void Blink_ThreadYellow::execute(void*){
  * Sie wird nach Ende der execute-Methode aufgerufen und dient dem 
  * evtl. aufraumen das Threadablauf.
  */
-void Blink_ThreadYellow::shutdown(){
+void Blink_ThreadStart::shutdown(){
     cout << "Blink_Thread shutdown" << endl;
 }
 
-void Blink_ThreadYellow::setLED(int countBlink, int time){
+void Blink_ThreadStart::setLED(int countBlink, int time){
 	//Negative countBlink werte bewirken Dauerleuchten 0 bedeutet aus und Positive Werte die anzahl
 	//time ist Zeit in Microsekunden zwischen dem ein und ausschalten
 	this->stop();
