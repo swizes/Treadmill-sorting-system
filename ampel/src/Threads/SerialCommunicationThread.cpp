@@ -24,48 +24,55 @@ SerialCommunicationThread* SerialCommunicationThread::getInstance() {
 }
 
 SerialCommunicationThread::SerialCommunicationThread() {
-	cout << "ReadySend" << endl;
+	cout << "ctor SerialCommunicationThread" << endl;
 	type = 1;
 }
 
 SerialCommunicationThread::~SerialCommunicationThread() {
+	cout << "dtor SerialCommunicationThread" << endl;
 	// TODO Auto-generated destructor stub
 }
 
 
 
 void SerialCommunicationThread::execute(void* con){
-	Serial ser;
-	puckStruct puck;
-	puck.type = 0;
-	if(ps.type == 3 || ps.type == 2){
-		ser.sendPacket(&ps);
-	}else{
-		ser.sendPacket(&puck);
+	while(1){
+		Serial ser;
+		puckStruct puck;
+		puck.type = 0;
+		if(ps.type == 3 || ps.type == 2){
+			ser.sendPacket(&ps);
+		}else{
+			ser.sendPacket(&puck);
+		}
+		//cout << "Before Packet" << endl;
+		ser.recvPacket(&puck);
+		//cout << "Packet" << endl;
+		ps = puck;
+		switch(ps.type){
+			case 0:
+			case 1: pthread_cond_signal( &condSend ); cout << "Send Puck" << endl;// 0 = NIX; 1= recPuck; 2= sendPuck 3= Error
+			case 2:	pthread_cond_signal( &condRec ); cout << "Receive Puck" << endl;
+			case 3: cout << "ERROR" << endl;
+			//default: cout << "Wrong Code" << (int)ps.type << endl;
+		}
+		delay(100);
 	}
-	ser.recvPacket(&puck);
-	ps = puck;
-	switch(ps.type){
-		case 0:
-		case 1: pthread_cond_signal( &condSend );// 0 = NIX; 1= recPuck; 2= sendPuck 3= Error
-		case 2:	pthread_cond_signal( &condRec );
-		case 3: cout << "ERROR" << endl;
-		default: cout << "Wrong Code" << endl;
-	}
-	delay(100);
 
 }
 
 void SerialCommunicationThread::shutdown(){
-
+	cout << "Shutdown SerialCommunication" << endl;
 }
 
 void SerialCommunicationThread::receivePuck(puckStruct *puck){
+	cout << "Receive Puck" << endl;
 	pthread_cond_wait( &condRec, &mutexRec );
 	copyPuck(puck);
 }
 
 void SerialCommunicationThread::sendPuck(puckStruct *puck){
+	cout << "Send Puck" << endl;
 	copyPuck(puck);
 	ps.type = 2;
 	pthread_cond_wait( &condSend, &mutexSend );
