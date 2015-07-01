@@ -15,9 +15,12 @@ Road_to_Height::Road_to_Height(Context* con): State::State(con){
 
 
 	cal->msToTimespec(cal->getL0toHeightFast() - cal->getL0toHeightFast2Sd(), &this->con_->t_tooSoon);
-	this->con_->timer_tooSoon->setTimer(this->con_->t_tooSoon.tv_sec, this->con_->t_tooSoon.tv_nsec);
+	this->con_->timer_tooSoon->setTimer(this->con_->t_tooSoon.tv_sec, this->con_->t_tooSoon.tv_nsec, true);
 
 	cout << "Road To Height ----- PuckId: " << this->con_->getPuck()->getId() << endl;
+	cal->msToTimespec(cal->getL0toHeightFast() + cal->getL0toHeightFast2Sd() , &this->con_->t_tooLate);
+	this->con_->timer_tooLate->setTimer(this->con_->t_tooLate.tv_sec, this->con_->t_tooLate.tv_nsec, true);
+
 
 }
 
@@ -33,7 +36,6 @@ void Road_to_Height::In_Height_true (void){
 	Dispatcher* dsp = Dispatcher::getInstance();
 	BandController* bc = BandController::getInstance();
 //	CalibrateThread *cal = CalibrateThread::getInstance();
-
 	this->con_->timer_tooSoon->getTime(&this->con_->t_tooSoon);
 	if(this->con_->t_tooSoon.tv_sec > 0 && this->con_->t_tooSoon.tv_nsec > 0){
 		cout << "ERROR: PUCK ZUVIEL AUF BAND" << endl;
