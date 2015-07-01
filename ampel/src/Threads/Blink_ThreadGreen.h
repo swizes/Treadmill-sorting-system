@@ -15,6 +15,7 @@
 #include <stdint.h>
 #include <pthread.h>
 #include "lib/HAWThread.h"
+#include "LEDControllerThread.h"
 #include "../HAL.h"
 
 using namespace thread;
@@ -25,7 +26,7 @@ class Blink_ThreadGreen: public HAWThread {
 		bool off;
 		int time;
 		int countBlink;
-		HAL *hal;
+		LEDControllerThread *led;
 
         static pthread_mutex_t mtx_; ///< Synchronisationsmutex.
 

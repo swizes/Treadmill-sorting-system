@@ -21,9 +21,12 @@
 #include "Dispatcher.h"
 #include "State.cpp"
 #include "HAL.h"
-#include "states/ReadySend.h"
+#include "Threads/LEDControllerThread.h"
 #include "Threads/DispatcherThread.h"
 #include "Threads/Blink_ThreadRed.h"
+#include "Threads/Blink_ThreadYellow.h"
+#include "Threads/Blink_ThreadGreen.h"
+#include "Threads/LEDControllerThread.h"
 #include "BandController.h"
 #include "Tests/BlinkTest.h"
 
@@ -39,6 +42,12 @@ int main(int argc, char *argv[]) {
 	//RUN Calibration
 
 	HAL *hal = HAL::getInstance();
+	LEDControllerThread *lct = LEDControllerThread::getInstance();
+	lct->start(NULL);
+
+	//lct->setGreen(1);
+
+	while(1){}
 	CalibrateThread *cal = CalibrateThread::getInstance();
 	int resetCounter = 0;
 	//EINRICHBETRIEB

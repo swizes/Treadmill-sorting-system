@@ -70,7 +70,6 @@ void LEDControllerThread::execute(void*){
 	while(1){
 		if(green == 1){
 			hal->turn_greenLight_on();
-			cout << "Turn Green Led ON"<< endl;
 		}else{
 			hal->turn_greenLight_off();
 		}

@@ -44,8 +44,8 @@ class LEDControllerThread: public HAWThread {
 	}
 
 	void setGreen(bool green) {
-		pthread_cond_signal( &cond );
 		this->green = green;
+		pthread_cond_signal( &cond );
 	}
 
 	bool isRed() const {
@@ -53,8 +53,8 @@ class LEDControllerThread: public HAWThread {
 	}
 
 	void setRed(bool red) {
-		pthread_cond_signal( &cond );
 		this->red = red;
+		pthread_cond_signal( &cond );
 	}
 
 	bool isReset() const {
@@ -62,8 +62,8 @@ class LEDControllerThread: public HAWThread {
 	}
 
 	void setReset(bool reset) {
-		pthread_cond_signal( &cond );
 		this->reset = reset;
+		pthread_cond_signal( &cond );
 	}
 
 	bool isStart() const {
@@ -71,8 +71,8 @@ class LEDControllerThread: public HAWThread {
 	}
 
 	void setStart(bool start) {
-		pthread_cond_signal( &cond );
 		this->startLED = start;
+		pthread_cond_signal( &cond );
 	}
 
 	bool isYellow() const {
@@ -80,8 +80,8 @@ class LEDControllerThread: public HAWThread {
 	}
 
 	void setYellow(bool yellow) {
-		pthread_cond_signal( &cond );
 		this->yellow = yellow;
+		pthread_cond_signal( &cond );
 	}
 
     private:

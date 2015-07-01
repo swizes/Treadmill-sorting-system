@@ -68,10 +68,11 @@ Blink_ThreadYellow::~Blink_ThreadYellow() {
  * Der Thread endet nach Ende dieser Methode. 
  */
 void Blink_ThreadYellow::execute(void*){
-	while(1){
+	int run = 1;
+	while(run){
 		if(countBlink < 0){
 			lct->setYellow(1);
-			this->stop();
+			run = 0;
 		}
 		while(countBlink > 0){
 			lct->setYellow(1);
@@ -82,7 +83,7 @@ void Blink_ThreadYellow::execute(void*){
 		}
 		if(countBlink == 0){
 			lct->setYellow(0);
-			this->stop();
+			run = 0;
 		}
 	}
 }
