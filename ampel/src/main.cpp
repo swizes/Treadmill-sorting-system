@@ -33,8 +33,7 @@
 using namespace std;
 
 int main(int argc, char *argv[]) {
-	SerialCommunicationThread *sct = SerialCommunicationThread::getInstance();
-	sct->start(NULL);
+
 
 	printf("Version 0.9\n");
     // Baut Verbindung zu Simulation auf
