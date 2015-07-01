@@ -24,13 +24,23 @@ Road_to_Metal::~Road_to_Metal(){
 void Road_to_Metal::Puck_in_Gate_true(void){
 
 	// Stop listen to Event Transmission2
+	HAL *hal = HAL::getInstance();
 	Dispatcher* dsp = Dispatcher::getInstance();
 	dsp->remListeners( this->con_, PUCK_IN_GATE_TRUE);
 
+	if(hal->is_metal_detected()){
+		this->con_->getPuck()->setMetal(true);
+		cout << "HAT METAL" << endl;
+	}else{
+		this->con_->getPuck()->setMetal(false);
+	}
 
 	// Move to State Is In Gate
 	new (this) Is_In_Gate(this->con_);
 }
+
+
+
 
 
 
