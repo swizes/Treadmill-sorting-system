@@ -15,7 +15,7 @@
 using namespace std;
 class Timer; // forward declaration
 
-
+enum TIMESCALE {STOPPED, SLOW, FAST};
 class TimerManagement {
 
 private:
@@ -31,7 +31,7 @@ public:
 	void deleteTimer();
 	void continueTimer();
 	void setTimeScaleFactor(double timeScaleFactor);
-	void setScaleTime(bool scaleTime);
+	void setScaleTime(TIMESCALE scaleTime);
 	virtual ~TimerManagement();
 	void updateTimer(Timer *timer);
 };
