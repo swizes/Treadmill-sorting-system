@@ -6,6 +6,7 @@
  */
 
 #include "PuckStates.h"
+#include "../../Threads/SerialCommunicationThread.h"
 
 Give_Band_2_Pucks::Give_Band_2_Pucks(Context* con): State::State(con){
 //entry:	
@@ -19,8 +20,13 @@ Give_Band_2_Pucks::Give_Band_2_Pucks(Context* con): State::State(con){
     this->con_->getPuck()->stopBand();
     bc->refreshBand();
 
+    SerialCommunicationThread *sct = SerialCommunicationThread::getInstance();
 
-    Serial* ser = new Serial();
+	puckStruct puck = con->getPuck()->getPuckStruct();
+
+    sct->sendPuck(&puck);
+
+   /* Serial* ser = new Serial();
 	int res = 1;
 	Packet p;
 
@@ -31,7 +37,7 @@ Give_Band_2_Pucks::Give_Band_2_Pucks(Context* con): State::State(con){
 		if(p.num == 1){
 			res = 0;
 		}
-	}
+	}*/
 
 	//Band 2 frei => Gelbe Leuchte an!
 	hal->turn_yellowLight_on();
@@ -40,9 +46,7 @@ Give_Band_2_Pucks::Give_Band_2_Pucks(Context* con): State::State(con){
 	}
 	hal->turn_yellowLight_off();
 
-	puckStruct puck = con->getPuck()->getPuckStruct();
 
-	ser->sendPacket(&puck);
 
 
 	bc->delPuck(this->con_->getPuck());
