@@ -51,10 +51,10 @@ private:
 	bool received = 0;
 	static pthread_mutex_t mtx_; ///< Synchronisationsmutex.
 	static SerialCommunicationThread* instance_;
-	pthread_mutex_t mutexSend = PTHREAD_MUTEX_INITIALIZER;
-	pthread_cond_t condSend = PTHREAD_COND_INITIALIZER;
-	pthread_mutex_t mutexRec = PTHREAD_MUTEX_INITIALIZER;
-	pthread_cond_t condRec = PTHREAD_COND_INITIALIZER;
+	pthread_mutex_t mutexSend;
+	pthread_cond_t condSend;
+	pthread_mutex_t mutexRec;
+	pthread_cond_t condRec;
 };
 
 #endif /* SERIALCOMMUNICATIONTHREAD_H_ */

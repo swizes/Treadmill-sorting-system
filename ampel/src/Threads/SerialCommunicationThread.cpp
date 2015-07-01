@@ -24,9 +24,11 @@ SerialCommunicationThread* SerialCommunicationThread::getInstance() {
 }
 
 SerialCommunicationThread::SerialCommunicationThread() {
-	pthread_mutex_lock( &mutexSend );
-	pthread_mutex_lock( &mutexRec );
 	cout << "ctor SerialCommunicationThread" << endl;
+	pthread_mutex_init ( &mutexSend, NULL);
+	pthread_mutex_init ( &mutexRec, NULL);
+	pthread_cond_init( &condSend,NULL);
+	pthread_cond_init( &condRec,NULL);
 	type = 1;
 }
 
@@ -40,8 +42,7 @@ SerialCommunicationThread::~SerialCommunicationThread() {
 void SerialCommunicationThread::execute(void* con){
 	Serial ser;
 	while(1){
-		pthread_mutex_lock( &mutexSend );
-		pthread_mutex_lock( &mutexRec );
+		//cout << "Start"  << endl;
 		puckStruct puck;
 		puck.type = 0;
 		if(ps.type == 3 || ps.type == 2){
@@ -52,13 +53,14 @@ void SerialCommunicationThread::execute(void* con){
 		//cout << "Before Packet" << endl;
 		ser.recvPacket(&puck);
 		//cout << "Packet" << endl;
-		ps = puck;
-		switch(ps.type){
-			case 0:
-			case 1: pthread_cond_signal( &condSend ); cout << "Send Puck" << endl;// 0 = NIX; 1= recPuck; 2= sendPuck 3= Error
-			case 2:	pthread_cond_signal( &condRec ); cout << "Receive Puck" << endl;
-			case 3: cout << "ERROR" << endl;
-			//default: cout << "Wrong Code" << (int)ps.type << endl;
+		//ps = puck;
+		//puck.type = 2;
+		switch(puck.type){
+			case 0:	cout << "PINGPONG" << endl; break;
+			case 1: pthread_mutex_unlock( &mutexSend );pthread_cond_signal( &condSend ); cout << "Send Puck" << endl; break;// 0 = NIX; 1= recPuck; 2= sendPuck 3= Error
+			case 2:	pthread_mutex_unlock( &mutexRec );cout << "Receive Puck" << endl; pthread_cond_signal( &condRec ); cout << "Receive Puck" << endl; break;
+			case 3: cout << "ERROR" << endl; break;
+			default: cout /*<< Wrong Code"*/ << (int)puck.type; break;
 		}
 		delay(100);
 	}
@@ -71,6 +73,7 @@ void SerialCommunicationThread::shutdown(){
 
 void SerialCommunicationThread::receivePuck(puckStruct *puck){
 	cout << "Receive Puck Block" << endl;
+	pthread_mutex_lock( &mutexRec );
 	pthread_cond_wait( &condRec, &mutexRec );
 	copyPuck(puck);
 	cout << "Receive Puck UnBlock" << endl;
@@ -80,6 +83,7 @@ void SerialCommunicationThread::sendPuck(puckStruct *puck){
 	cout << "Send Puck Block" << endl;
 	copyPuck(puck);
 	ps.type = 2;
+	pthread_mutex_lock( &mutexSend );
 	pthread_cond_wait( &condSend, &mutexSend );
 	cout << "Send Puck UnBlock" << endl;
 }

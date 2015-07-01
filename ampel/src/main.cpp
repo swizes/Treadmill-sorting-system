@@ -34,6 +34,10 @@ using namespace std;
 int main(int argc, char *argv[]) {
 	SerialCommunicationThread *sct = SerialCommunicationThread::getInstance();
 	sct->start(NULL);
+	puckStruct puck;
+	while(1){
+		sct->receivePuck(&puck);
+	}
 
 	printf("Version 0.9\n");
     // Baut Verbindung zu Simulation auf
