@@ -19,7 +19,6 @@ Give_Band_2_Pucks::Give_Band_2_Pucks(Context* con): State::State(con){
     this->con_->getPuck()->stopBand();
     bc->refreshBand();
 
-
     Serial* ser = new Serial();
 	int res = 1;
 	Packet p;
@@ -35,16 +34,14 @@ Give_Band_2_Pucks::Give_Band_2_Pucks(Context* con): State::State(con){
 
 	//Band 2 frei => Gelbe Leuchte an!
 	hal->turn_yellowLight_on();
-	while(hal->is_puck_running_out()==1){
 
-	}
-	hal->turn_yellowLight_off();
+	while(hal->is_puck_running_out()==1){}
+
 
 	puckStruct puck = con->getPuck()->getPuckStruct();
 
 	ser->sendPacket(&puck);
-
-
+	hal->turn_yellowLight_off();
 	bc->delPuck(this->con_->getPuck());
 	bc->refreshBand();
 }
