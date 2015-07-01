@@ -15,26 +15,28 @@ Road_to_Height::Road_to_Height(Context* con): State::State(con){
 
 	cout << "Road To Height ----- PuckId: " << this->con_->getPuck()->getId() << endl;
 
+
 		Timer time;
 		struct timespec result;
 		time.getTime(&result);
 
-
-
-	//TODO: how to check if puck is in height
+	//TODO: how to check if puck is in height?
+	//Not sure?!?!
 	///// ********** ///////
-	/*
-	 * bool timeout = false;
-	 * while(!timeout) {
-	 *    if(!(result.tv_sec <= 0) && IN_HEIGHT_TRUE){
-	 *      timeout = true;
-	 *      dsp->addListeners( this->con_, IN_HEIGHT_TRUE);
-	 *    } else {
-	 *    	cout << "Waited too much, puck betrayed us" << endl;
-	 *    	new (this) Error_Handling(this->con_);
-	 *    }
-	 * }
-	 */
+
+//	  bool timeout = false;
+//	  	 while(!timeout) {
+//
+//	  	 //If time is not out and puck is in height, addListener and go to height measurement
+//	     if(!(result.tv_sec <= 0) && IN_HEIGHT_TRUE){
+//	       timeout = true;
+//	       dsp->addListeners( this->con_, IN_HEIGHT_TRUE);
+//	     } else if (result.tv_sec <= 0) {
+//	     	cout << "Waited too much, puck betrayed us" << endl;
+//	     	new (this) Error_Handling(this->con_);
+//	     }
+//	  }
+
 }
 
 Road_to_Height::~Road_to_Height(){
