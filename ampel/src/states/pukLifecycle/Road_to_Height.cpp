@@ -40,6 +40,7 @@ void Road_to_Height::In_Height_true (void){
 	this->con_->timer_tooSoon->getTime(&this->con_->t_tooSoon);
 	if(this->con_->t_tooSoon.tv_sec > 0 && this->con_->t_tooSoon.tv_nsec > 0){
 		con_->setErrcode(ERROR_2SOON_RtoH2HM);
+		cout << "ERRCODE: " << con_->getErrcode() << endl;
 		new (this) Error_Handling(this->con_);
 	}
 

@@ -10,6 +10,7 @@
 #include "../Threads/SerialCommunicationThread.h"
 #include <cstdlib>
 #include <iostream>
+#include "../Errors.h"
 
 /*
  * PUK LIFE CYCLE:
