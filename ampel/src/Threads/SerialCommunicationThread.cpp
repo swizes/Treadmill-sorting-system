@@ -36,8 +36,8 @@ SerialCommunicationThread::~SerialCommunicationThread() {
 
 
 void SerialCommunicationThread::execute(void* con){
+	Serial ser;
 	while(1){
-		Serial ser;
 		puckStruct puck;
 		puck.type = 0;
 		if(ps.type == 3 || ps.type == 2){
