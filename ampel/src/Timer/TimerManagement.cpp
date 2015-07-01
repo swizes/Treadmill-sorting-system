@@ -120,28 +120,28 @@ void TimerManagement::setScaleTime(TIMESCALE scaleTime) {
 		for(int i = 0; i < data.size(); i++){
 			if (data.at(i)->scaleTime && data.at(i)->currentScale == 1) {
 				cout << "upscale timer " << i << endl;
-				if(data.at(i)->isStopped && data.at(i)->shouldContinue) data.at(i)->continueTimer();
+				if(data.at(i)->isStopped() && data.at(i)->shouldContinue) data.at(i)->continueTimer();
 				data.at(i)->getTime(&t_spec);
-				data.at(i)->setTimer(t_spec.tv_sec*timeScaleFactor, t_spec.tv_nsec*timeScaleFactor);
+				data.at(i)->setTimer(t_spec.tv_sec*timeScaleFactor, t_spec.tv_nsec*timeScaleFactor, true, false);
 				data.at(i)->currentScale = timeScaleFactor;
 			}
 		}
 	} else if(scaleTime == FAST) {
 		//downscale
 		for(int i = 0; i < data.size(); i++){
-			if (data.at(i)->scaleTime && data.at(i).currentScale != 1) {
+			if (data.at(i)->scaleTime && data.at(i)->currentScale != 1) {
 				cout << "upscale timer " << i << endl;
-				if(data.at(i)->isStopped && data.at(i)->shouldContinue) data.at(i)->continueTimer();
+				if(data.at(i)->isStopped() && data.at(i)->shouldContinue) data.at(i)->continueTimer();
 				data.at(i)->getTime(&t_spec);
-				data.at(i)->setTimer(t_spec.tv_sec/timeScaleFactor, t_spec.tv_nsec/timeScaleFactor);
+				data.at(i)->setTimer(t_spec.tv_sec/timeScaleFactor, t_spec.tv_nsec/timeScaleFactor, true, false);
 				data.at(i)->currentScale = 1;
 			}
 		}
-	} else if(scaleTime == STOP) {
+	} else if(scaleTime == STOPPED) {
 		for(int i = 0; i < data.size(); i++){
 			if (data.at(i)->scaleTime) {
 				cout << "stop timer " << i << endl;
-				if(!data.at(i)->isStopped) data.at(i)->shouldContinue = true;
+				if(!data.at(i)->isStopped()) data.at(i)->shouldContinue = true;
 				data.at(i)->stopTimer();
 			}
 		}

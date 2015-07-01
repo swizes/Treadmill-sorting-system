@@ -38,17 +38,18 @@ int main(int argc, char *argv[]) {
 		cout << "WARNING: SYSTEM IN SIMULATION!!!" << endl;
     #endif
 	//RUN Calibration
-	/*
+
 	Timer_Test_Thread ttest;
 	cout << "starte Timer Test Thread" << endl;
 	ttest.start(NULL);
-
+/*
 	TestClass *tc;
 	ttest.getTestClass(tc);
 	ttest.killTestClass(tc);
+*/
 	ttest.join();
 	return 0;
-	*/
+
 	HAL *hal = HAL::getInstance();
 	CalibrateThread *cal = CalibrateThread::getInstance();
 	/*

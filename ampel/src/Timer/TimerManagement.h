@@ -23,6 +23,7 @@ private:
 	TimerManagement();
 	double timeScaleFactor;
 	bool timeScaleSet;
+	TIMESCALE currentTimeScale;
 public:
 	static TimerManagement* getInstance();
 	void addTimer(Timer*);

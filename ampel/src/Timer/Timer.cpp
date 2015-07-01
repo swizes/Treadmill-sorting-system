@@ -56,7 +56,7 @@ int Timer::createTimerPulse(){
 
 }
 
-void Timer::setTimer(int s, int ns, bool scaleTime){
+void Timer::setTimer(int s, int ns, bool scaleTime, bool shouldUpdate){
 	if(timerid == -1){
 		createTimer();
 	}
@@ -76,7 +76,11 @@ void Timer::setTimer(int s, int ns, bool scaleTime){
 		}
 	}
 
-	timeM->updateTimer(this);
+	if(shouldUpdate) timeM->updateTimer(this);
+}
+
+void Timer::setTimer(int s, int ns, bool scaleTime){
+	setTimer(s, ns, scaleTime, true);
 }
 
 void Timer::setTimer(int s, int ns) {
@@ -94,7 +98,7 @@ void Timer::deleteTimer(){
 void Timer::stopTimer(){
 	if(timerid != -1 && !stop){
 		getTime(&stopval);
-		setTimer(0,0);
+		setTimer(900000,0, scaleTime, false);
 		stop = 1;
 	}
 

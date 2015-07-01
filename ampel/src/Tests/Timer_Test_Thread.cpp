@@ -26,9 +26,9 @@ Timer_Test_Thread::~Timer_Test_Thread() {
 
 void Timer_Test_Thread::execute(void*){
 	//test1();
-	//test2();
-	tclass = new TestClass();
-	tclass->waitForTimeoutFunc();
+	test2();
+	//tclass = new TestClass();
+	//tclass->waitForTimeoutFunc();
 }
 
 void Timer_Test_Thread::test1() {
@@ -144,23 +144,23 @@ void Timer_Test_Thread::test2() {
 
 	timer2.setTimer(2,0,true);
 	timer3.setTimer(4,0,true);
-	TimerManagement *timeM = TimerManagement::getInstance();
+
 	timeM->setTimeScaleFactor(2.0);
 
 	cout << "set stopped" << endl;
-	timeM->setScaleTime(STOP);
+	timeM->setScaleTime(STOPPED);
 
-	cout << "timer2:" << ts2.tv_sec << ":" << ts2.tv_nsec << endl;
-	cout << "timer3:" << ts3.tv_sec << ":" << ts3.tv_nsec << endl;
-	delay(1000);
-	cout << "after delay:" << endl;
+	cout << "wait 4 secs..";
+	delay(4000);
+	cout << " done" << endl;
+
+	cout << "set slow" << endl;
+	timeM->setScaleTime(SLOW);
 	timer2.getTime(&ts2);
 	timer3.getTime(&ts3);
 	cout << "timer2:" << ts2.tv_sec << ":" << ts2.tv_nsec << endl;
 	cout << "timer3:" << ts3.tv_sec << ":" << ts3.tv_nsec << endl;
 
-	cout << "set slow" << endl;
-	timeM->setScaleTime(SLOW);
 	delay(2000);
 	timer2.getTime(&ts2);
 	timer3.getTime(&ts3);
