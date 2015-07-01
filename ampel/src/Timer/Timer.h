@@ -36,6 +36,7 @@ public:
 	void waitForTimeOut();
 	void deleteTimer();
 	void setTimer(int,int);
+	void setTimer(int,int, bool scaleTime);
 	void getTime(struct timespec *);
 	void stopTimer();
 	void continueTimer();

@@ -121,6 +121,8 @@ void Timer_Test_Thread::test2() {
 	cout << "end at " << t1.tv_sec << ":" << t1.tv_nsec << endl;
 	cout << "diff: " << t1.tv_sec - t0.tv_sec << ":" << (t1.tv_nsec - t0.tv_nsec) / 1000000 << ":" << ((t1.tv_nsec - t0.tv_nsec) % 1000000) / 1000 << endl;
 
+	cout << "expected 2 secs" << endl;
+
 	cout << "timeScale test" << endl;
 	Timer timer1;
 	TimerManagement *timeM = TimerManagement::getInstance();

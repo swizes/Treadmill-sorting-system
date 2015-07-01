@@ -55,12 +55,13 @@ int Timer::createTimerPulse(){
 
 }
 
-void Timer::setTimer(int s, int ns){
+void Timer::setTimer(int s, int ns, bool scaleTime){
 	if(timerid == -1){
 		createTimer();
 	}
 
 	if(timerid != -1 ){
+		this->scaleTime = scaleTime;
 		val.it_value.tv_sec = s;
 		val.it_value.tv_nsec= ns;
 		val.it_interval.tv_sec = 0;
@@ -75,6 +76,10 @@ void Timer::setTimer(int s, int ns){
 	}
 
 	timeM->updateTimer(this);
+}
+
+void Timer::setTimer(int s, int ns) {
+	setTimer(s, ns, false);
 }
 
 void Timer::deleteTimer(){
