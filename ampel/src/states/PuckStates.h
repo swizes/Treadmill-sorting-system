@@ -7,6 +7,7 @@
 #include "../Threads/CalibrateThread.h"
 #include "../BandController.h"
 #include "../Threads/GateControllerThread.h"
+#include "../Threads/SerialCommunicationThread.h"
 #include <cstdlib>
 #include <iostream>
 
