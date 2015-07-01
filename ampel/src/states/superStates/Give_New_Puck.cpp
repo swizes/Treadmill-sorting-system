@@ -30,6 +30,12 @@ Give_New_Puck::Give_New_Puck(Context* con): State::State(con){
     //Receive FiFo Entry (Puck ID) from Band1
     puckStruct puck;
     ser.recvPacket(&puck);
+    static int i = 0;
+
+//    puck.id = i++;
+//    puck.holeOnTop = 0;
+//    puck.sizetyp = NOT_OK;
+//    puck.metal = 0;
 
     cout << "Puck ID: " << puck.id;
     cout << "    Puck Metal: " << puck.metal;

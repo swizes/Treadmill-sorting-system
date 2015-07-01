@@ -23,7 +23,7 @@ Road_To_Exit::Road_To_Exit(Context* con): State::State(con){
 	hal->close_gate();
 
 	cout << "Road To Exit ----- PuckId: " << this->con_->getPuck()->getId() << endl;
-	cout << "TYPE IS : " << this->con_->getPuck()->isMetal() << endl;
+	cout << "METAL   : " << this->con_->getPuck()->isMetal() << endl;
 	cout << "HOLE IS : " << this->con_->getPuck()->isHoleOnTop() << endl;
 
 }

@@ -159,6 +159,11 @@ void CalibrateThread::execute(void*) {
 		MetalToIsInGateFastAr[i] = TIMERSTART_MS-timespecToMs(&offset);
 		time.stopTimer();
 		time.setTimer(TIMERSTART, 0);
+
+		while(hal->is_puck_in_gate()==1){}
+		delay(300);
+		hal->close_gate();
+
 		while (hal->is_puck_running_out() == 0) {}
 		time2.getTime(&offset);
 		L0toL1FastAr[i] = TIMERSTART_MS-timespecToMs(&offset);
@@ -169,29 +174,15 @@ void CalibrateThread::execute(void*) {
 		printf("L0toL1Fast : %d\n",L0toL1FastAr[i]);
 
 		hal->band_stop();
-		hal->close_gate();
 
 		HeightToGateFastAr[i] = HeightToMetalFastAr[i] + MetalToIsInGateFastAr[i] ;
 	}
 
-	cout << "Put puck in L0" << endl;
-	while (hal->is_puck_running_in() == 0) {
-	}
-
-
-	//LO to Height
-	time.stopTimer();
-	time.setTimer(TIMERSTART, 0);
-	hal->band_right_slowly();
-	while (hal->is_puck_in_height_determination() == 0) {
-	}
-	time.getTime(&offset);
-	L0toHeightSlow = TIMERSTART_MS - timespecToMs(&offset);
 
 	cout << "Put a puck in L0" << endl;
 	while(hal->is_puck_running_in()==0){}
 
-	//LO to Height
+	//LO to Height Slow
 	time.stopTimer();
 	time.setTimer(TIMERSTART,0);
 	hal->band_right_slowly();
@@ -199,7 +190,6 @@ void CalibrateThread::execute(void*) {
 	time.getTime(&offset);
 	L0toHeightSlow = TIMERSTART_MS-timespecToMs(&offset);
 	printf("L0ToHeightSlow : %d\n",L0toHeightSlow);
-	hal->open_gate();
 
 	//Height to Gate
 	time.stopTimer();
@@ -207,9 +197,22 @@ void CalibrateThread::execute(void*) {
 	while(hal->is_puck_in_gate()==0){}
 	time.getTime(&offset);
 	HeighttoGateSlow = TIMERSTART_MS-timespecToMs(&offset);
+	hal->open_gate();
 	printf("HeighttoGateSlow : %d\n",HeighttoGateSlow);
+
+
+	//Gate to RunningOut Slow
+	while(hal->is_puck_in_gate() == 1){}
+	time.stopTimer();
+	time.setTimer(TIMERSTART,0);
+	delay(600);
 	hal->close_gate();
-	while(hal->is_slide_full()==0){}
+
+	while (hal->is_puck_running_out() == 0) {}
+
+	time.getTime(&offset);
+	GatetoL1Slow = TIMERSTART_MS-timespecToMs(&offset);
+	printf("GateToL1Slow : %d\n",GatetoL1Slow);
 	hal->band_stop();
 
 
@@ -221,7 +224,12 @@ void CalibrateThread::execute(void*) {
 	time.stopTimer();
 	time.setTimer(TIMERSTART, 0);
 	hal->band_right_slowly();
+
+	while(hal->is_puck_in_gate()==0){}
 	hal->open_gate();
+	while(hal->is_puck_in_gate()==1){}
+	delay(600);
+	hal->close_gate();
 
 	while (hal->is_puck_running_out() == 0) {
 	}
@@ -230,6 +238,8 @@ void CalibrateThread::execute(void*) {
 	printf("L0toL1Slow : %d\n", L0toL1Slow);
 	hal->band_stop();
 	hal->close_gate();
+
+
 
 	/* Height measurements */
 
