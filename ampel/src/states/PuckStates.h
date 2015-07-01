@@ -14,6 +14,7 @@
  * PUK LIFE CYCLE:
  */
 
+
 class NotExist: public State {
 public:
 	NotExist(Context* con);
@@ -90,7 +91,6 @@ public:
 	Is_In_Gate(Context* con);
 	virtual ~ Is_In_Gate();
 	virtual void Puck_in_Gate_false(void);
-	virtual void Metal_detection_true(void);
 private:
 	Is_In_Gate(const Is_In_Gate& other);
 	Is_In_Gate& operator=(const Is_In_Gate& other);
