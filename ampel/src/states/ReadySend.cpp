@@ -40,6 +40,7 @@ void ReadySend::execute(void* con){
 	while(1){
 		p.num = this->busy;
 		ser.sendPacket(&p);
+		ser.recvPacket(&p);
 		//Timer time;
 		//time.waitForTimeOut(0,100000000);
 		delay(100);

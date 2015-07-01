@@ -8,6 +8,7 @@
 
 #include "PuckStates.h"
 
+Timer* timer;
 
 Is_In_Slide::Is_In_Slide(Context* con): State::State(con){
 
@@ -32,6 +33,25 @@ Is_In_Slide::Is_In_Slide(Context* con): State::State(con){
 
 	//TODO: ErrorHandling => After Timeout und EVENT nicht eingetreten
 
+	Timer* timer = new Timer();
+	timer->setTimer(2,0);
+	struct timespec t;
+
+	HAL *hal = HAL::getInstance();
+	timer->getTime(&t);
+	while(t.tv_sec != 0 && t.tv_nsec != 0){
+		timer->getTime(&t);
+		if(!hal->is_slide_full()){
+			timer->deleteTimer();
+			break;
+		}
+		delay(100);
+	}
+
+	if(hal->is_slide_full()){
+		hal->band_stop();
+		cout << "ERROR SLIDE FULL" << endl;
+	}
 
 }
 
@@ -41,7 +61,6 @@ Is_In_Slide::~Is_In_Slide(){
 }
 
 void Is_In_Slide::Slide_full_false(void){
-
 
 	// Stop listen to Event Transmission1
 	Dispatcher* dsp = Dispatcher::getInstance();
