@@ -38,6 +38,8 @@ SerialCommunicationThread::~SerialCommunicationThread() {
 void SerialCommunicationThread::execute(void* con){
 	Serial ser;
 	while(1){
+		pthread_mutex_lock( &mutexSend );
+		pthread_mutex_lock( &mutexRec );
 		puckStruct puck;
 		puck.type = 0;
 		if(ps.type == 3 || ps.type == 2){
