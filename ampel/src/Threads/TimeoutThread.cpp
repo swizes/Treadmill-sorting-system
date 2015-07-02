@@ -35,6 +35,8 @@ void TimeoutThread::execute(void*){
 		if(sig == 1) {
 			cout << "TimeoutThread: received signal " << sig << "with number" << siginfo.si_value.sival_int << endl;
 			val = siginfo.si_value.sival_int;
+
+			Error_Handling::callError(val);
 		}
 	}
 }
