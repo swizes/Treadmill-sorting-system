@@ -44,9 +44,9 @@ Give_New_Puck::Give_New_Puck(Context* con) :
 	rdySend.start(NULL);
 
 	hal->turn_yellowLight_on();
-//	while (hal->is_puck_running_out() == 1) {
-//	}
-
+	while (hal->is_puck_running_out() == 1) {
+	}
+	hal->turn_yellowLight_off();
 	int loop = 1;
 	while (loop) {
 		if (hal->is_startButton_pushed() == 0) {
