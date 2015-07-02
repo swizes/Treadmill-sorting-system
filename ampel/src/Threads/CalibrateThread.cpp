@@ -120,7 +120,23 @@ void CalibrateThread::execute(void*) {
 
 
 	cout << "Calibration started" << endl;
+	LEDControllerThread *led = LEDControllerThread::getInstance();
+	led->start(NULL);
+	Blink_ThreadGreen *gre = Blink_ThreadGreen::getInstance();
+	Blink_ThreadYellow *yel = Blink_ThreadYellow::getInstance();
+	Blink_ThreadRed *red = Blink_ThreadRed::getInstance();
+	Blink_ThreadReset *res = Blink_ThreadReset::getInstance();
+	Blink_ThreadStart *start = Blink_ThreadStart::getInstance();
 	HAL *hal = HAL::getInstance();
+	red->setLED(50,200000);
+	delay(200);
+	yel->setLED(50,200000);
+	delay(200);
+	gre->setLED(50,200000);
+	delay(200);
+	start->setLED(50,200000);
+	delay(200);
+	res->setLED(50,200000);
 
 	Timer time;
 	Timer time2;

@@ -13,7 +13,6 @@
 enum SIZE{OK,NOT_OK,UNKNOWN};
 
 typedef struct{
-	int type;
 	bool metal;
 	bool holeOnTop;
 	bool needUserInteraction;
