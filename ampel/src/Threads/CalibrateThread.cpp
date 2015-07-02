@@ -319,22 +319,15 @@ void CalibrateThread::execute(void*) {
 	}
 
 	red->setLED(0,200000);
-	//delay(200);
+	delay(200);
 	yel->setLED(0,200000);
-	//delay(200);
+	delay(200);
 	gre->setLED(0,200000);
-	//delay(200);
+	delay(200);
 	start->setLED(0,200000);
-	//delay(200);
+	delay(200);
 	res->setLED(0,200000);
 	
-
-	hal->turn_redLight_off();
-	hal->turn_yellowLight_off();
-	hal->turn_greenLight_off();
-
-
-
 	saveCalcMean();
 	scaleFastToSlow = ((double)L0toL1Slow)/((double)L0toL1Fast);
 	scaleSlowToFast = ((double)L0toL1Fast)/((double)L0toL1Slow);
