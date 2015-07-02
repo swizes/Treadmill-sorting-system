@@ -12,11 +12,12 @@ Road_To_Exit::Road_To_Exit(Context* con): State::State(con){
 	BandController* bc = BandController::getInstance();
 	CalibrateThread *cal = CalibrateThread::getInstance();
 
+
 	cal->msToTimespec((cal->getOutGateToL1Fast() - cal->getOutGateToL1Fast2Sd()), &this->con_->t_tooSoon);
 	this->con_->timer_tooSoon->setTimer(this->con_->t_tooSoon.tv_sec, this->con_->t_tooSoon.tv_nsec, true);
 
-	cal->msToTimespec((cal->getOutGateToL1Fast() + cal->getOutGateToL1Fast2Sd()) , &this->con_->t_tooLate);
-	this->con_->timer_tooLate->createSignalTimer(this->con_->t_tooLate.tv_sec, this->con_->t_tooLate.tv_nsec, ERROR_TIMOUT_IiG2RtoE);
+//	cal->msToTimespec((cal->getOutGateToL1Fast() + cal->getOutGateToL1Fast2Sd()) , &this->con_->t_tooLate);
+//	this->con_->timer_tooLate->createSignalTimer(this->con_->t_tooLate.tv_sec, this->con_->t_tooLate.tv_nsec, ERROR_TIMOUT_IiG2RtoE);
 
 
 	this->con_->getPuck()->runBandFast();
@@ -42,7 +43,7 @@ Road_To_Exit::~Road_To_Exit(){
 
 void Road_To_Exit::Running_out_true(void){
 
-	this->con_->timer_tooLate->stopTimer();
+//	this->con_->timer_tooLate->stopTimer();
 	// Stop listen to Event Transmission1
 	Dispatcher* dsp = Dispatcher::getInstance();
 	dsp->remListeners( this->con_, RUNNING_OUT_TRUE);

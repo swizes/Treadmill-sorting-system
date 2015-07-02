@@ -19,8 +19,8 @@ Road_to_Height::Road_to_Height(Context* con): State::State(con){
 	this->con_->timer_tooSoon->setTimer(this->con_->t_tooSoon.tv_sec, this->con_->t_tooSoon.tv_nsec, true);
 
 	cout << "Road To Height ----- PuckId: " << this->con_->getPuck()->getId() << endl;
-	cal->msToTimespec(cal->getL0toHeightFast() + cal->getL0toHeightFast2Sd() , &this->con_->t_tooLate);
-	this->con_->timer_tooLate->createSignalTimer(this->con_->t_tooLate.tv_sec, this->con_->t_tooLate.tv_nsec, ERROR_TIMOUT_RtoH2HM);
+//	cal->msToTimespec(cal->getL0toHeightFast() + cal->getL0toHeightFast2Sd() , &this->con_->t_tooLate);
+//	this->con_->timer_tooLate->createSignalTimer(this->con_->t_tooLate.tv_sec, this->con_->t_tooLate.tv_nsec, ERROR_TIMOUT_RtoH2HM);
 
 
 }
@@ -33,7 +33,7 @@ Road_to_Height::~Road_to_Height(){
 void Road_to_Height::In_Height_true (void){
 
 	cout << "stop timer in height true" << endl;
-	this->con_->timer_tooLate->stopTimer();
+//	this->con_->timer_tooLate->stopTimer();
 	// Stop listen to Event Transmission1
 	Dispatcher* dsp = Dispatcher::getInstance();
 	BandController* bc = BandController::getInstance();
