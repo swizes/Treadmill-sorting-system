@@ -121,7 +121,6 @@ void CalibrateThread::execute(void*) {
 
 	cout << "Calibration started" << endl;
 	LEDControllerThread *led = LEDControllerThread::getInstance();
-	led->start(NULL);
 	Blink_ThreadGreen *gre = Blink_ThreadGreen::getInstance();
 	Blink_ThreadYellow *yel = Blink_ThreadYellow::getInstance();
 	Blink_ThreadRed *red = Blink_ThreadRed::getInstance();
