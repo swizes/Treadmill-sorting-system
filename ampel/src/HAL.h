@@ -74,7 +74,6 @@ private:
     HAL& operator=(const HAL& other);
     virtual ~HAL();
     Timer *timer;
-    int resetCounter;
 
 public:
     static HAL* getInstance();
@@ -122,11 +121,6 @@ public:
 	int is_resetButton_pushed(void);
 	int is_eStopButton_pushed(void);
 	uint16_t get_height_measure(void);
-
-	int getResetCounter(){
-		return resetCounter;
-	}
-
 };
 
 

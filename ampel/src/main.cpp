@@ -33,7 +33,9 @@ using namespace std;
 
 int main(int argc, char *argv[]) {
 	LEDControllerThread *led = LEDControllerThread::getInstance();
+	HAL *hal = HAL::getInstance();
 	led->start(NULL);
+	CalibrateThread *cal = CalibrateThread::getInstance();
 
 	printf("Version 0.9\n");
     // Baut Verbindung zu Simulation auf
@@ -41,43 +43,77 @@ int main(int argc, char *argv[]) {
         IOaccess_open();
 		cout << "WARNING: SYSTEM IN SIMULATION!!!" << endl;
     #endif
-	//RUN Calibration
 
-	/*
-	Timer_Test_Thread ttest;
-	cout << "starte Timer Test Thread" << endl;
-	ttest.start(NULL);
+		//RUN Calibration
+			bool timeOut = false;
+			bool startButton = false;
+			int loop = 1;
+			int resetCounter = 0;
+			while (loop) {
+				if (!(hal->is_startButton_pushed())) {
+					Timer time;
+					Timer timer;
+					cout << "Timer started" << endl;
+					timer.waitForTimeOut(2, 0);
+					timer.deleteTimer();
 
-//	TestClass *tc;
-//	ttest.getTestClass(tc);
-//	ttest.killTestClass(tc);
+					struct timespec result;
+					cout << "Press 2 times Reset Button or Press Start again to skip Calibration" << endl;
+					while (hal->is_startButton_pushed() && !timeOut) {
+						time.setTimer(5, 0);
+						hal->turn_yellowLight_on();
 
-	ttest.join();
-	return 0;
-*/
+						//nicht gedrueckt
+						while (!hal->is_resetButton_pushed() && !timeOut) {
 
-//	//EINRICHBETRIEB
-//	HAL *hal = HAL::getInstance();
-//	CalibrateThread *cal = CalibrateThread::getInstance();
-//	if(hal->is_startButton_pushed()) {
-//		cout << "Press 2 times Reset Button in 10 seconds for Calibration" << endl;
-//		delay(3000);
-//		if(hal->getResetCounter() == 2){
-//				cal->start(NULL);
-//				cal->join();
-//				cout << "Calibration is done!" << endl;
-//			} else {
-//				cout << "Timeout, switching to normal mode" << endl;
-//				cout << hal->getResetCounter() << endl;
-//			}
-//
-//		}
+							if (!(hal->is_startButton_pushed())) {
+								startButton = true;
+								loop = 0;
+								hal->turn_yellowLight_off();
+								break;
+							}
 
-	CalibrateThread *cal = CalibrateThread::getInstance();
-	cal->start(NULL);
-	cal->join();
-	cout << "cal done" << endl;
-	
+
+							time.getTime(&result);
+							if (result.tv_sec == 0) {
+								hal->turn_yellowLight_off();
+								hal->turn_greenLight_off();
+								hal->turn_redLight_on();
+								cout << "Timeout, too late" << endl;
+								timeOut = true;
+								loop = 0;
+								break;
+							}
+						}
+
+						while (hal->is_resetButton_pushed() && !timeOut && !startButton) {
+
+						}
+						if(!timeOut){
+							cout << "Button gedrueckt:  " << resetCounter << endl;
+						}
+						delay(50);
+						resetCounter++;
+						if (resetCounter == 1) {
+							hal->turn_greenLight_on();
+
+						}
+						if (resetCounter == 2) {
+							hal->turn_yellowLight_off();
+							hal->turn_greenLight_off();
+							//CalibrateThread *cal1 = CalibrateThread::getInstance();
+							cal->start(NULL);
+							cal->join();
+							cout << "cal done" << endl;
+							loop = 0;
+							break;
+						}
+						//if
+
+					} //while start button = 0
+				} //if
+			} //while loop
+
     /*Serielle Verbindung funkitoniert nur wenn sich System nicht in der Simulation befindet
     /dev/ser1 steht nicht zur Verfuegung. 		*/
 
@@ -94,7 +130,10 @@ int main(int argc, char *argv[]) {
 	cout << "Vor Start der FSM" << endl;
 	cout << "-----------------------------------" << endl;
 	
-	if(!cal->isBand()){//is band1!<
+
+	if(timeOut == true) {
+		new Error_Handling(NULL);
+	} else if(!cal->isBand()){//is band1!<
 //		State* s = new Ready(NULL);
 		new Ready(NULL);
 	}else{

@@ -93,7 +93,6 @@ void LEDControllerThread::execute(void*){
 		}else{
 			hal->turn_startLED_off();
 		}
-		cout << "Refresh" << endl;
 		pthread_cond_wait( &cond, &mutex );
 	}
 }
