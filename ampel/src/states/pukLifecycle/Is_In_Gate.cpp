@@ -25,7 +25,7 @@ Is_In_Gate::Is_In_Gate(Context* con) :
 	this->con_->timer_tooSoon->setTimer(this->con_->t_tooSoon.tv_sec, this->con_->t_tooSoon.tv_nsec, true);
 
 	cal->msToTimespec(cal->getHeightToGateFast() + (3*cal->getHeightToGateFast2Sd()) , &this->con_->t_tooLate);
-	this->con_->timer_tooLate->createSignalTimer(this->con_->t_tooLate.tv_sec, this->con_->t_tooLate.tv_nsec, true);
+	this->con_->timer_tooLate->createSignalTimer(this->con_->t_tooLate.tv_sec, this->con_->t_tooLate.tv_nsec, ERROR_TIMOUT_IiG2RtoE);
 
 
 	if (cal->isBand()) { //Band2
