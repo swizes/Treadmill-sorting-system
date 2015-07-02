@@ -64,6 +64,7 @@ void Timer::createSignalTimer(int s, int ns, int errorcode) {
 	if(timerid != -1){
 		timer_settime(timerid, 0, &nval,NULL);
 		cout << "done" << endl;
+		stop = 0;
 	} else {
 		cout << "error" << endl;
 	}

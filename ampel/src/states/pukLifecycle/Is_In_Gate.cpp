@@ -72,6 +72,8 @@ Is_In_Gate::~Is_In_Gate() {
 
 void Is_In_Gate::Puck_in_Gate_false(void) {
 
+	this->con_->timer_tooLate->stopTimer();
+
 	// Stop listen to Event Transmission1
 	Dispatcher* dsp = Dispatcher::getInstance();
 	dsp->remListeners(this->con_, PUCK_IN_GATE_FALSE);

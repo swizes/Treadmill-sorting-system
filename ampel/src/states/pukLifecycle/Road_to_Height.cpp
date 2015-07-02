@@ -32,7 +32,8 @@ Road_to_Height::~Road_to_Height(){
 
 void Road_to_Height::In_Height_true (void){
 
-
+	cout << "stop timer in height true" << endl;
+	this->con_->timer_tooLate->stopTimer();
 	// Stop listen to Event Transmission1
 	Dispatcher* dsp = Dispatcher::getInstance();
 	BandController* bc = BandController::getInstance();

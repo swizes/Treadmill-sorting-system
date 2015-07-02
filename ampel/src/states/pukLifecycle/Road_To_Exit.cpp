@@ -42,6 +42,7 @@ Road_To_Exit::~Road_To_Exit(){
 
 void Road_To_Exit::Running_out_true(void){
 
+	this->con_->timer_tooLate->stopTimer();
 	// Stop listen to Event Transmission1
 	Dispatcher* dsp = Dispatcher::getInstance();
 	dsp->remListeners( this->con_, RUNNING_OUT_TRUE);

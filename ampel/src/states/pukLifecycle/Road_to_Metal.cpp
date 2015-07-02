@@ -32,6 +32,7 @@ Road_to_Metal::~Road_to_Metal(){
 
 void Road_to_Metal::Puck_in_Gate_true(void){
 
+	this->con_->timer_tooLate->stopTimer();
 	// Stop listen to Event Transmission2
 	HAL *hal = HAL::getInstance();
 	Dispatcher* dsp = Dispatcher::getInstance();
