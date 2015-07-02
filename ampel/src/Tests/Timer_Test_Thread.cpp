@@ -26,7 +26,8 @@ Timer_Test_Thread::~Timer_Test_Thread() {
 
 void Timer_Test_Thread::execute(void*){
 	//test1();
-	test2();
+	//test2();
+	test3();
 	//tclass = new TestClass();
 	//tclass->waitForTimeoutFunc();
 }
@@ -177,6 +178,19 @@ void Timer_Test_Thread::test2() {
 	cout << "timer2:" << ts2.tv_sec << ":" << ts2.tv_nsec << endl;
 	cout << "timer3:" << ts3.tv_sec << ":" << ts3.tv_nsec << endl;
 	cout << "expected 0 and 2" << endl;
+}
+
+void Timer_Test_Thread::test3() {
+	cout << "Start test 3" << endl;
+	cout << "create/start signal timer" << endl;
+	Timer timersig;
+	timersig.createSignalTimer(2,1);
+	timespec offset;
+	while(true) {
+		timersig.getTime(&offset);
+		if(offset.tv_nsec < 800) continue;
+		cout << "rem: " << offset.tv_sec << " : " << offset.tv_nsec << endl;
+	}
 }
 
 void Timer_Test_Thread::shutdown(){

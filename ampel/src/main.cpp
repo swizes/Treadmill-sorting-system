@@ -28,6 +28,7 @@
 #include "Tests/BlinkTest.h"
 #include "Threads/E_Stop_Thread.h"
 #include "Tests/Timer_Test_Thread.h"
+#include "Threads/TimeoutThread.h"
 
 using namespace std;
 
@@ -41,9 +42,11 @@ int main(int argc, char *argv[]) {
         IOaccess_open();
 		cout << "WARNING: SYSTEM IN SIMULATION!!!" << endl;
     #endif
+
+
 	//RUN Calibration
 
-	/*
+/*
 	Timer_Test_Thread ttest;
 	cout << "starte Timer Test Thread" << endl;
 	ttest.start(NULL);
@@ -53,6 +56,7 @@ int main(int argc, char *argv[]) {
 //	ttest.killTestClass(tc);
 
 	ttest.join();
+	timeoutThread.join();
 	return 0;
 */
 
@@ -78,6 +82,9 @@ int main(int argc, char *argv[]) {
 	cal->join();
 	cout << "cal done" << endl;
 	
+	TimeoutThread timeoutThread;
+	timeoutThread.start(NULL);
+
     /*Serielle Verbindung funkitoniert nur wenn sich System nicht in der Simulation befindet
     /dev/ser1 steht nicht zur Verfuegung. 		*/
 

@@ -31,6 +31,7 @@ private:
 public:
 	void createTimer();
 	int createTimerPulse();
+	void createSignalTimer(int s, int ns, int errorcode);
 	void waitForTimeOut(int, int, bool scaleTime);
 	void waitForTimeOut(int, int);
 	void waitForTimeOut();
