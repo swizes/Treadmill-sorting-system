@@ -130,15 +130,15 @@ void CalibrateThread::execute(void*) {
 	Blink_ThreadReset *res = Blink_ThreadReset::getInstance();
 	Blink_ThreadStart *start = Blink_ThreadStart::getInstance();
 	HAL *hal = HAL::getInstance();
-	red->setLED(50,200000);
+	red->setLED(50000,200000);
 	delay(200);
-	yel->setLED(50,200000);
+	yel->setLED(50000,200000);
 	delay(200);
-	gre->setLED(50,200000);
+	gre->setLED(50000,200000);
 	delay(200);
-	start->setLED(50,200000);
+	start->setLED(50000,200000);
 	delay(200);
-	res->setLED(50,200000);
+	res->setLED(50000,200000);
 
 	Timer time;
 	Timer time2;
@@ -321,7 +321,15 @@ void CalibrateThread::execute(void*) {
 		}
 	}
 
-
+	red->setLED(0,200000);
+	delay(200);
+	yel->setLED(0,200000);
+	delay(200);
+	gre->setLED(0,200000);
+	delay(200);
+	start->setLED(0,200000);
+	delay(200);
+	res->setLED(0,200000);
 	
 	saveCalcMean();
 	scaleFastToSlow = ((double)L0toL1Slow)/((double)L0toL1Fast);

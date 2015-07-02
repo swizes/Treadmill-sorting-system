@@ -51,6 +51,7 @@ int main(int argc, char *argv[]) {
 		//RUN Calibration
 			bool timeOut = false;
 			bool startButton = false;
+			bool calDone = false;
 			int loop = 1;
 			int resetCounter = 0;
 			while (loop) {
@@ -84,7 +85,6 @@ int main(int argc, char *argv[]) {
 								hal->turn_greenLight_off();
 								hal->turn_redLight_on();
 								cout << "Timeout, too late" << endl;
-								timeOut = true;
 								loop = 0;
 								break;
 							}
@@ -108,6 +108,8 @@ int main(int argc, char *argv[]) {
 							//CalibrateThread *cal1 = CalibrateThread::getInstance();
 							cal->start(NULL);
 							cal->join();
+							timeOut = false;
+							calDone = true;
 							cout << "cal done" << endl;
 							loop = 0;
 							break;
@@ -137,8 +139,7 @@ int main(int argc, char *argv[]) {
 	cout << "Vor Start der FSM" << endl;
 	cout << "-----------------------------------" << endl;
 	
-
-	if(timeOut == true) {
+	if(timeOut == true && !calDone) {
 		new Error_Handling(NULL);
 	} else if(!cal->isBand()){//is band1!<
 //		State* s = new Ready(NULL);
