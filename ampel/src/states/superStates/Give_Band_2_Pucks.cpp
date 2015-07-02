@@ -23,18 +23,14 @@ Give_Band_2_Pucks::Give_Band_2_Pucks(Context* con): State::State(con){
 	int res = 1;
 	Packet p;
 
-
 	//Wenn Band2 sagt ist frei, sendet es eine 1
-	hal->turn_redLight_on();
 	while(res){
-
 		ser->recvPacket(&p);
 		printf("Received Packet. %d\n", p.num);
 		if(p.num == 1){
 			res = 0;
 		}
 	}
-	hal->turn_redLight_off();
 
 	//Band 2 frei => Gelbe Leuchte an!
 
