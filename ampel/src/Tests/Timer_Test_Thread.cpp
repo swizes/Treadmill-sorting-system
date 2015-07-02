@@ -184,7 +184,7 @@ void Timer_Test_Thread::test3() {
 	cout << "Start test 3" << endl;
 	cout << "create/start signal timer" << endl;
 	Timer timersig;
-	timersig.createSignalTimer(2,1);
+	timersig.createSignalTimer(2,1,10);
 	timespec offset;
 	while(true) {
 		timersig.getTime(&offset);
