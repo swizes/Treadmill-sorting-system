@@ -6,6 +6,7 @@
  */
 
 #include "TimerManagement.h"
+#include "ConfigManager.h"
 
 
 TimerManagement* TimerManagement::instance_ = NULL;

@@ -14,6 +14,7 @@
 
  */
 #include "CalibrateThread.h"
+#include "Timer/TimerManagement.h"
 
 #define TIMERSTART 20
 #define TIMERSTART_MS TIMERSTART * 1000
@@ -96,6 +97,8 @@ CalibrateThread::CalibrateThread() {
 	configManager->getConfigValue("HeightToGateFast2SD", &outVal) ? HeightToGateFast2SD = atoi(outVal.c_str()) : keyNotFound = true;
 	configManager->getConfigValue("L0toL1Fast2SD", &outVal) ? L0toL1Fast2SD = atoi(outVal.c_str()) : keyNotFound = true;
 	
+	TimerManagement::getInstance()->setTimeScaleFactor(scaleFastToSlow);
+
 	if(keyNotFound) {
 		cout << "Error! Key not found!" << endl;
 	} else {
