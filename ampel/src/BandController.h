@@ -27,6 +27,7 @@ public:
 	Puck* getReservedPuck(void);
 	Puck* getRecentPuck(void);
 	Puck* getLastPuck(void);
+	Puck* getPuck(int id);
 	void  setRecenctPuck(Puck* puck);
 	void  setLastPuck(Puck* puck);
 	int   getPuckCounter(void);

@@ -9,6 +9,7 @@
 #include "../Threads/GateControllerThread.h"
 #include <cstdlib>
 #include <iostream>
+#include "../Errors.h"
 
 /*
  * PUK LIFE CYCLE:
@@ -152,6 +153,7 @@ class Error_Handling: public State {
 public:
 	Error_Handling(Context* con);
 	virtual ~ Error_Handling();
+	static void callError(int errcode);
 	//TODO: Error Handling function
 private:
 	Error_Handling(const Error_Handling& other);

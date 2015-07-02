@@ -5,6 +5,7 @@
  *      Author: Roland, Tobi
  */
 #include "PuckStates.h"
+#include "Errors.h"
 
 #define VARIANZ 150
 
@@ -47,6 +48,11 @@ Height_Measurement::Height_Measurement(Context* con): State::State(con){
 		}
 		this->con_->getPuck()->setUserInteractionNeeded(true);
 
+	}
+	if(height > maxHeight){
+		con_->setErrcode(ERROR_2BIG4PUCK);
+		printf("ErrCode: %d\n", con_->getErrcode());
+		new (this) Error_Handling(this->con_);
 	}
 
 	Dispatcher* dsp = Dispatcher::getInstance();

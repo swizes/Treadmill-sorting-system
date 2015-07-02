@@ -19,12 +19,18 @@ private:
 	Puck* puck;
 	int errCode;
 public:
-	Timer* timer;
+
+	Timer* timer_tooSoon;
+	struct timespec t_tooSoon;
+	Timer* timer_tooLate;
+	struct timespec t_tooLate;
+
 	Context() :
 		state_(NULL) {
 //		printf("Context()\n");
 		puck = new Puck();
-		timer = new Timer();
+		timer_tooSoon = new Timer();
+		timer_tooLate = new Timer();
 		errCode = -1;
 	}
 
@@ -38,7 +44,8 @@ public:
 		// Delete Inner Object too!
 		if (state_ != NULL) {
 			delete state_;
-			delete timer;
+			timer_tooSoon->deleteTimer();
+			timer_tooLate->deleteTimer();
 			state_ = NULL;
 		}
 		delete puck;
@@ -48,6 +55,8 @@ public:
 		state_(NULL) {
 		this->puck = p;
 		errCode = this->errCode;//???
+		timer_tooSoon = new Timer();
+		timer_tooLate = new Timer();
 
 	}
 
