@@ -42,7 +42,7 @@ void TimerManagement::addTimer(Timer *timer){
 
 void TimerManagement::updateTimer(Timer *timer) {
 	if(timeScaleFactor == 0) {
-		cout << "Error! timeScaleFactor not set / = 0" << endl;
+//		cout << "Error! timeScaleFactor not set / = 0" << endl;
 		return;
 	}
 
@@ -108,7 +108,7 @@ void TimerManagement::setTimeScaleFactor(double timeScaleFactor){
 void TimerManagement::setScaleTime(TIMESCALE scaleTime) {
 	if(scaleTime == this->currentTimeScale) return;
 	if(timeScaleFactor == 0) {
-		cout << "Error! timeScaleFactor not set / = 0" << endl;
+//		cout << "Error! timeScaleFactor not set / = 0" << endl;
 	}
 
 	this->currentTimeScale = scaleTime;

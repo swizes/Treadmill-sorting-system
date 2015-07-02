@@ -19,6 +19,14 @@
 #include "HAL.h"
 #include "./Timer/Timer.h"
 #include "ConfigManager.h"
+#include "Blink_ThreadRed.h"
+#include "Blink_ThreadGreen.h"
+#include "Blink_ThreadYellow.h"
+#include "Blink_ThreadStart.h"
+#include "Blink_ThreadReset.h"
+#include "LEDControllerThread.h"
+
+
 
 #include <fcntl.h>
 #include <termios.h>

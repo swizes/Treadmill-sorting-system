@@ -21,10 +21,9 @@
 #include "Dispatcher.h"
 #include "State.cpp"
 #include "HAL.h"
-#include "states/ReadySend.h"
 #include "Threads/DispatcherThread.h"
-#include "Threads/SerialCommunicationThread.h"
 #include "Threads/Blink_ThreadRed.h"
+#include "Threads/LEDControllerThread.h"
 #include "BandController.h"
 #include "Tests/BlinkTest.h"
 #include "Threads/E_Stop_Thread.h"
@@ -34,8 +33,8 @@
 using namespace std;
 
 int main(int argc, char *argv[]) {
-	SerialCommunicationThread *sct = SerialCommunicationThread::getInstance();
-	sct->start(NULL);
+	LEDControllerThread *led = LEDControllerThread::getInstance();
+	led->start(NULL);
 
 	printf("Version 0.9\n");
     // Baut Verbindung zu Simulation auf

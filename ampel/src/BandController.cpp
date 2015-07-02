@@ -99,6 +99,10 @@ void BandController::delPuck(Puck* puck){
 	puckCounter--;
 }
 
+Puck* BandController::getPuck(int id){
+	return pucklist[id];
+}
+
 void BandController::refreshBand(){
 
 	if(puckCounter == 0){

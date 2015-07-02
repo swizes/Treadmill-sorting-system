@@ -24,7 +24,7 @@ using namespace thread;
 class ReadySend: public HAWThread{
 public:
 
-	static ReadySend* getInstance();
+	ReadySend();
 
 	virtual ~ReadySend();
 
@@ -37,12 +37,10 @@ public:
 	}
 
 private:
-	ReadySend();
 	ReadySend(const ReadySend& b);      ///< Copy-Konstruktor. Privat, deshalb kann dieses Objekt nicht als "Call-by-value" uebergeben werden.
 	ReadySend& operator=(ReadySend& b);
 	virtual void execute(void* con); ///< Geerbt aus HAWThread. Muss implementiert werden.
 	virtual void shutdown();
-	static ReadySend* instance_;
 	int busy ;
 };
 
