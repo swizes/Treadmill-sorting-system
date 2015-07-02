@@ -28,6 +28,7 @@
 #include "Tests/BlinkTest.h"
 #include "Threads/E_Stop_Thread.h"
 #include "Tests/Timer_Test_Thread.h"
+#include "Threads/TimeoutThread.h"
 
 using namespace std;
 
@@ -43,6 +44,9 @@ int main(int argc, char *argv[]) {
         IOaccess_open();
 		cout << "WARNING: SYSTEM IN SIMULATION!!!" << endl;
     #endif
+
+
+	//RUN Calibration
 
 		//RUN Calibration
 			bool timeOut = false;
@@ -122,6 +126,9 @@ int main(int argc, char *argv[]) {
 
 	estt.start(NULL);
 	dspt.start(NULL);
+
+	TimeoutThread timeoutThread;
+	timeoutThread.start(NULL);
 
 	BandController* bc = BandController::getInstance();
 	bc->refreshBand();

@@ -21,7 +21,7 @@ Road_to_Metal::Road_to_Metal(Context* con): State::State(con){
 	this->con_->timer_tooSoon->setTimer(this->con_->t_tooSoon.tv_sec, this->con_->t_tooSoon.tv_nsec, true);
 
 	cal->msToTimespec(cal->getHeightToGateFast() + cal->getHeightToGateFast2Sd() , &this->con_->t_tooLate);
-	this->con_->timer_tooLate->setTimer(this->con_->t_tooLate.tv_sec, this->con_->t_tooLate.tv_nsec, true);
+	this->con_->timer_tooLate->createSignalTimer(this->con_->t_tooLate.tv_sec, this->con_->t_tooLate.tv_nsec, ERROR_TIMOUT_RtoM2IiG);
 
 }
 
@@ -32,6 +32,7 @@ Road_to_Metal::~Road_to_Metal(){
 
 void Road_to_Metal::Puck_in_Gate_true(void){
 
+	this->con_->timer_tooLate->stopTimer();
 	// Stop listen to Event Transmission2
 	HAL *hal = HAL::getInstance();
 	Dispatcher* dsp = Dispatcher::getInstance();

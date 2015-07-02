@@ -6,6 +6,7 @@
  */
 
 #include "Timer.h"
+#include <sys/siginfo.h>
 
 TimerManagement *timeM;
 int channel = -1;
@@ -35,6 +36,40 @@ void Timer::createTimer(){
 		 timeM->addTimer(this);
 		 stop = 1;
 	}
+}
+
+void Timer::createSignalTimer(int s, int ns, int errorcode) {
+	struct sigevent event;
+
+	cout << "create signal timer..";
+
+	//SIGEV_SIGNAL_INIT (&event, 200);
+	//SIGEV_SIGNAL_CODE_INIT (&event, 1, 1, 1);
+	SIGEV_SIGNAL_VALUE_INIT(&event, 1, errorcode);
+	//&event
+
+	if((timer_create (CLOCK_REALTIME, &event, &timerid))==-1){
+		std::cout << "Timer not created" << std::endl;
+		exit(1);
+	}else{
+		 timeM->addTimer(this);
+		 stop = 1;
+	}
+
+	itimerspec nval;
+	nval.it_value.tv_sec = s;
+	nval.it_value.tv_nsec= ns;
+	nval.it_interval.tv_sec = 0;
+	nval.it_interval.tv_nsec = 0;
+	if(timerid != -1){
+		timer_settime(timerid, 0, &nval,NULL);
+		cout << "done" << endl;
+		stop = 0;
+	} else {
+		cout << "error" << endl;
+	}
+
+
 }
 
 int Timer::createTimerPulse(){
