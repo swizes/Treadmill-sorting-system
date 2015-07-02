@@ -43,12 +43,10 @@ int main(int argc, char *argv[]) {
 		cout << "WARNING: SYSTEM IN SIMULATION!!!" << endl;
     #endif
 
-	TimeoutThread timeoutThread;
-	timeoutThread.start(NULL);
 
 	//RUN Calibration
 
-
+/*
 	Timer_Test_Thread ttest;
 	cout << "starte Timer Test Thread" << endl;
 	ttest.start(NULL);
@@ -60,7 +58,7 @@ int main(int argc, char *argv[]) {
 	ttest.join();
 	timeoutThread.join();
 	return 0;
-
+*/
 
 //	//EINRICHBETRIEB
 //	HAL *hal = HAL::getInstance();
@@ -84,6 +82,9 @@ int main(int argc, char *argv[]) {
 	cal->join();
 	cout << "cal done" << endl;
 	
+	TimeoutThread timeoutThread;
+	timeoutThread.start(NULL);
+
     /*Serielle Verbindung funkitoniert nur wenn sich System nicht in der Simulation befindet
     /dev/ser1 steht nicht zur Verfuegung. 		*/
 
